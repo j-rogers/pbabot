@@ -8,9 +8,9 @@ TOKEN = "NTA5NTc5MjMwMTk2MjY5MDY2.DsP2mA.poKbR9OIjKp_cE02vCASuMPeIVM"
 
 # Extract data from file
 filename = "data.pickle"
-data = {}
 clocks = []
 contacts = []
+data = {"clocks": clocks, "contacts": contacts}
 try:
 	data = pickle.loads(open(filename, "rb").read())
 	clocks = data["clocks"]
@@ -71,6 +71,7 @@ async def on_message(message):
 .contacts: Displays the current list of contacts.
 .addcontact <contact name> <description>: Adds a new contact.
 .deletecontact <contact name>: Deletes a contact.
+.drugs: Displays a list of drugs
 .rip: Displays a list of dead characters and how they died.
 .f: Same as '.rip'
 .refresh: Reloads the clock and contact data.```"""
@@ -211,7 +212,7 @@ Tech:
 		await client.send_message(message.channel, msg.format(message))
 
 	# Displays a list of characters who've died, and how they died
-	elif message.content.startswith(".rip") or message.content.startswith(".f"):
+	elif message.content.startswith(".rip") or message.content == ".f":
 		# Form the message
 		msg = """```Martin:
 	Christof died to the hands of Syntax Terror's drones whilst surrounded by police.\n
@@ -219,6 +220,19 @@ F in chat please.```"""
 
 		# Send message
 		await client.send_message(message.channel, msg.format(message))
+
+	# Display a list of drugs
+	elif message.content.startswith(".drugs"):
+		# Form the message
+		msg = """```Use the following commands to find detailed information about each drug.\n
+.spank: Spank
+.motherfuck: Motherfuck
+.domo: Domo
+.clutch: Clutch
+.meatloaf: Meatloaf```"""
+		# Send the message
+		await client.send_message(message.channel, msg.format(message))
+
 
 	###############################################################################################################################################
 	###############################################################################################################################################
@@ -237,7 +251,7 @@ F in chat please.```"""
 		await client.send_message(message.channel, msg.format(message))
 
 	# Apply First Aid
-	elif message.content.startswith(".applyfirstaid"):
+	elif message.content.startswith(".applyfirstaid") or message.content.startswith(".firstaid"):
 		# Form the message
 		msg = """```When you treat someone’s wounds using appropriate medical equipment, roll Cool.\n
 	10+: if their Harm Clock is at 2100 or less, reduce their harm by two segments. If their Harm Clock is at more than 2100, reduce their harm by one segment
@@ -402,7 +416,7 @@ take +1-harm
 		await client.send_message(message.channel, msg.format(message))
 
 	# Getting Paid
-	elif message.content.startswith(".gettingpaid"):
+	elif message.content.startswith(".gettingpaid") or message.content.startswith(".getpaid"):
 		# Form the message
 		msg = """```When you go to a meet to get paid by your employer, roll and add the number of unfilled segments on the Legwork Clock.\n
 	10+: choose 3 from the list below
@@ -446,7 +460,7 @@ take +1-harm
 		await client.send_message(message.channel, msg.format(message))
 
 	# Compromise Security
-	elif message.content.startswith(".compsec"):
+	elif message.content.startswith(".compsec") or message.content.startswith("compromisesecurity"):
 		# Form the message
 		msg = """```When you attempt to compromise a sub-system’s security, roll Mind.\n
 		10+: gain 3 hold over the sub-system you have compromised
@@ -458,7 +472,7 @@ You may spend 1 hold to activate a security measure on that sub-system.```"""
 		await client.send_message(message.channel, msg.format(message))
 
 	# Manipulate Systems
-	elif message.content.startswith(".mansys"):
+	elif message.content.startswith(".mansys") or message.content.startswith("manipulatesystem") or message.content.startswith("manipulatesystems"):
 		# Form the message
 		msg = """```When you attempt to manipulate a digitally-controlled aspect of a facility, roll Synth.\n
 	10+: gain 3 hold over the sub-system you are manipulating
@@ -891,12 +905,92 @@ During the mission, spend 1 hold for one of the following effects:
 
 	###############################################################################################################################################
 	###############################################################################################################################################
+	################################################################# DRUG COMMANDS ###############################################################
+	###############################################################################################################################################
+	###############################################################################################################################################
+
+	# Spank
+	elif message.content.startswith(".spank"):
+		# Form the message
+		msg = """```While Active:
+	+1 Meat
+	-1 Synth
+	+unreliable on cyber gear
+	+1 Harm on Melee Attacks
+	+short\n
+Withdrawal:
+	-2 Style
+	-1 Meat
+	-long```"""
+
+		#Send the message
+		await client.send_message(message.channel, msg.format(message))
+
+	# Motherfuck
+	elif message.content.startswith(".motherfuck"):
+		# Form the message
+		msg = """```While Active:
+	+2 Edge
+	-2 Cool
+	-long\n
+Withdrawal:
+	-1 Cool
+	-day```"""
+
+		#Send the message
+		await client.send_message(message.channel, msg.format(message))
+
+	# Domo
+	elif message.content.startswith(".domo"):
+		# Form the message
+		msg = """```While Active:
+	+2 Synth
+	-1 Everything else
+	Take 1 Harm (increases per use per day)
+	-instant\n
+Withdrawal:
+	-1 Synth
+	+Harmful on cybergear
+	-short```"""
+
+		#Send the message
+		await client.send_message(message.channel, msg.format(message))
+
+	# Clutch
+	elif message.content.startswith(".clutch"):
+		# Form the message
+		msg = """```While Active:
+	-1 to Take Harm move
+	-1 Mind
+	-short\n
+Withdrawal:
+	Cardiac arrest if taken more than twice a day```"""
+
+		#Send the message
+		await client.send_message(message.channel, msg.format(message))
+
+	# Meatloaf
+	elif message.content.startswith(".meatloaf"):
+		# Form the message
+		msg = """```While Active:
+	+fast reflexes
+	-short\n
+Withdrawal:
+	-2 Meat
+	-2 Edge
+	-long```"""
+
+		#Send the message
+		await client.send_message(message.channel, msg.format(message))
+
+	###############################################################################################################################################
+	###############################################################################################################################################
 	############################################################ MISCELLANEOUS COMMANDS ###########################################################
 	###############################################################################################################################################
 	###############################################################################################################################################
 
 	# Rolls 2d6 dice
-	elif message.content.startswith(".roll"):
+	elif message.content.startswith(".roll") or message.content.startswith("dice"):
 		# Generate the roll
 		dice1 = random.randint(1, 6)
 		dice2 = random.randint(1, 6)
@@ -1167,6 +1261,21 @@ During the mission, spend 1 hold for one of the following effects:
 	#################################################################### GARBAGE ##################################################################
 	###############################################################################################################################################
 	###############################################################################################################################################
+
+	elif message.content.startswith(".log"):
+		# Get log message from message
+		tokens = message.content.split(".log ")
+		log = tokens[1]
+
+		# Write to the file
+		file = open("log.txt", "a")
+		file.write(log + "\n")
+		file.close()
+		print("Log saved: \"" + log + "\"")
+
+		# Form and send message
+		msg = "```Log saved.```"
+		await client.send_message(message.channel, msg.format(message))
 
 	else:
 		msg = "```Invalid command. Type '.help' for a list of commands.```"
