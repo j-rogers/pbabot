@@ -66,7 +66,8 @@ async def on_message(message):
 .addcontact <contact name> <description>: Adds a new contact.
 .deletecontact <contact name>: Deletes a contact.
 .rip: Displays a list of dead characters and how they died.
-.f: Same as '.rip'```"""
+.f: Same as '.rip'
+.refresh: Reloads the clock and contact data.```"""
 
 		# Send the message
 		await client.send_message(message.channel, msg.format(message))
@@ -169,7 +170,14 @@ Tech:
 		for clock in clocks:
 			name = clock[0]
 			value = clock[1]
-			msg += name + ": " + value + "\n"
+
+			if value == "1200": msg += name + ": □□□□ □□□□ □□□□ □ □ □\n"
+			elif value == "1500": msg += name + ": ■■■■ □□□□ □□□□ □ □ □\n"
+			elif value == "1800": msg += name + ": ■■■■ ■■■■ □□□□ □ □ □\n"
+			elif value == "2100": msg += name + ": ■■■■ ■■■■ ■■■■ □ □ □\n"
+			elif value == "2200": msg += name + ": ■■■■ ■■■■ ■■■■ ■ □ □\n"
+			elif value == "2300": msg += name + ": ■■■■ ■■■■ ■■■■ ■ ■ □\n"
+			elif value == "0000": msg += name + ": ■■■■ ■■■■ ■■■■ ■ ■ ■\n"
 
 		if msg == "```":
 			msg += "No clocks have been added."
@@ -959,10 +967,10 @@ During the mission, spend 1 hold for one of the following effects:
 		# Find the clock to be deleted
 		for clock in clocks:
 			# Case insensitive
-			name = clock[0].lower()
+			clockName = clock[0].lower()
 			inName = name.lower()
 
-			if name == inName:
+			if clockName == inName:
 				clocks.remove(clock)
 
 		# Update file
@@ -985,6 +993,9 @@ During the mission, spend 1 hold for one of the following effects:
 		tokens = message.content.split(".increaseclock ")
 		name = tokens[1]
 
+		# Flag for catching incorrect input
+		found = False
+
 		# Find the clock to be increased
 		updatedClock = ()
 		for clock in clocks:
@@ -993,12 +1004,16 @@ During the mission, spend 1 hold for one of the following effects:
 			inName = name.lower()
 
 			if cName == inName:
+				# Set flag
+				found = True
+
 				# Find the next value
 				value = clock[1]
 				if value == "1200": value = "1500"
 				elif value == "1500": value = "1800"
 				elif value == "1800": value = "2100"
-				elif value == "2100": value = "2300"
+				elif value == "2100": value = "2200"
+				elif value == "2200": value = "2300"
 				elif value == "2300": value = "0000"
 				elif value == "0000":
 					msg = "```Clock is already at midnight.```"
@@ -1006,9 +1021,15 @@ During the mission, spend 1 hold for one of the following effects:
 					return
 
 				# Create new tuple and replace previous one
-				updatedClock = (name, value)
+				updatedClock = (clock[0], value)
 				index = clocks.index(clock)
 				clocks[index] = updatedClock
+
+		# Check if the clock was found
+		if not found:
+			msg = "```Clock \"" + name + "\" not found.```"
+			await client.send_message(message.channel, msg.format(message))
+			return
 
 
 		# Update file
@@ -1031,6 +1052,9 @@ During the mission, spend 1 hold for one of the following effects:
 		tokens = message.content.split(".decreaseclock ")
 		name = tokens[1]
 
+		# Flag for if the clock was found
+		found = False
+
 		# Find the clock to be decreased
 		updatedClock = ()
 		for clock in clocks:
@@ -1039,10 +1063,14 @@ During the mission, spend 1 hold for one of the following effects:
 			inName = name.lower()
 
 			if cName == inName:
+				# Set flag
+				found = True
+
 				# Find the previous value
 				value = clock[1]
 				if value == "0000": value = "2300"
-				elif value == "2300": value = "2100"
+				elif value == "2300": value = "2200"
+				elif value == "2200": value = "2100"
 				elif value == "2100": value = "1800"
 				elif value == "1800": value = "1500"
 				elif value == "1500": value = "1200"
@@ -1053,13 +1081,20 @@ During the mission, spend 1 hold for one of the following effects:
 
 				# Create new tuple and replace previous one
 				updatedClock = (name, value)
+				print(updatedClock)
 				index = clocks.index(clock)
 				clocks[index] = updatedClock
+
+		# Check if the clock was found
+		if not found:
+			msg = "```Clock \"" + name + "\" not found.```"
+			await client.send_message(message.channel, msg.format(message))
+			return
 
 
 		# Update file
 		file = open(filename, "wb")
-		file.write(pickle.dumps(contacts))
+		file.write(pickle.dumps(clocks))
 		file.close()
 		print("Clock update reflected in file (DECREASE): (" + updatedClock[0] + ", " + updatedClock[1] + ")")
 
@@ -1096,12 +1131,12 @@ During the mission, spend 1 hold for one of the following effects:
 
 		# Update file
 		file = open(filenameContacts, "wb")
-		file.write(pickle.dumps(clocks))
+		file.write(pickle.dumps(contacts))
 		file.close()
 		print("Contact added to file: {" + tokens[1] + ", " + description + "}")
 
 		# Reload contacts data
-		clocks = pickle.loads(open(filenameContacts, "rb").read())
+		contacts = pickle.loads(open(filenameContacts, "rb").read())
 		print("File reloaded")
 
 		# Form message and send
@@ -1117,10 +1152,10 @@ During the mission, spend 1 hold for one of the following effects:
 		# Find the clock to be deleted
 		for c in contacts:
 			# Case insensitive
-			name = c[0].lower()
+			cName = c[0].lower()
 			inName = name.lower()
 
-			if name == inName:
+			if cName == inName:
 				contacts.remove(c)
 
 		# Update file
@@ -1130,11 +1165,44 @@ During the mission, spend 1 hold for one of the following effects:
 		print("Contact deleted from file: " + tokens[1])
 
 		# Reload clocks data
-		clocks = pickle.loads(open(filenameContacts, "rb").read())
+		contacts = pickle.loads(open(filenameContacts, "rb").read())
 		print("File reloaded")
 
 		# Form message and send
 		msg = "```Deleted contact " + name + ".```"
+		await client.send_message(message.channel, msg.format(message))
+
+	# Refreshes the clocks and contacts file
+	elif message.content.startswith(".refresh"):
+		msg = "```"
+
+		# Attempt to refresh clock data
+		try:
+			clocks = pickle.loads(open(filename, "rb").read())
+			print("Clock data extracted.")
+			msg += "Clocks file refreshed."
+		except EOFError:
+			print("No clocks in file.")
+			msg += "Refresh failed: No clocks were found in the file."
+		except FileNotFoundError:
+			print("No clock file found.")
+			msg += "Refresh failed: No clock file found."
+
+		# Attempt to refresh contact data
+		try:
+			contacts = pickle.loads(open(filenameContacts, "rb").read())
+			print("Contacts data extracted.")
+			msg += " Contacts file refreshed."
+		except EOFError:
+			print("No contacts in file.")
+			msg += " Refresh failed: No contacts were found in the file."
+		except FileNotFoundError:
+			print("No contacts file found")
+			msg += " Refresh failed: No contact file found."
+
+		msg += "```"
+
+		# Send message
 		await client.send_message(message.channel, msg.format(message))
 
 	###############################################################################################################################################
