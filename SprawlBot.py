@@ -6,29 +6,35 @@ import pickle
 #TOKEN = "NTE3MTQyNTcyMzkzODI0MjY2.Dt9-Jg.d0QaXh9Gi0CyR16bWps_KFwwbds"
 TOKEN = "NTA5NTc5MjMwMTk2MjY5MDY2.DsP2mA.poKbR9OIjKp_cE02vCASuMPeIVM"
 
-# Extract clock data from file
+# Extract data from file
+filename = "data.pickle"
+data = {}
 clocks = []
-filename = "clocks.pickle"
-try:
-	clocks = pickle.loads(open(filename, "rb").read())
-	print("Clock data extracted.")
-except EOFError:
-	print("No clocks in file.")
-except FileNotFoundError:
-	print("No clock file found.")
-
-# Extract contact data from file
 contacts = []
-filenameContacts = "contacts.pickle"
 try:
-	contacts = pickle.loads(open(filenameContacts, "rb").read())
-	print("Contacts data extracted.")
+	data = pickle.loads(open(filename, "rb").read())
+	clocks = data["clocks"]
+	contacts = data["contacts"]
+	print("Data extracted")
 except EOFError:
-	print("No contacts in file.")
+	print("No data in file.")
 except FileNotFoundError:
-	print("No contacts file found")
+	print("No data file found.")
 
 client = discord.Client()
+
+# Updates and refreshes data file
+def updateAndRefreshData(index, newData):
+	global data
+	data[index] = newData
+	file = open(filename, "wb")
+	file.write(pickle.dumps(data))
+	file.close()
+
+	data = pickle.loads(open(filename, "rb").read())
+	clocks = data["clocks"]
+	contacts = data["contacts"]
+	print("File reloaded")
 
 # MESSAGE COMMANDS
 @client.event
@@ -892,7 +898,9 @@ During the mission, spend 1 hold for one of the following effects:
 	# Rolls 2d6 dice
 	elif message.content.startswith(".roll"):
 		# Generate the roll
-		roll = random.randint(2, 12)
+		dice1 = random.randint(1, 6)
+		dice2 = random.randint(1, 6)
+		roll = dice1 + dice2
 		msg = ""
 		
 		# Unique response based on roll
@@ -944,15 +952,9 @@ During the mission, spend 1 hold for one of the following effects:
 		# Append to clocks list
 		clocks.append(clock)
 
-		# Update file
-		file = open(filename, "wb")
-		file.write(pickle.dumps(clocks))
-		file.close()
+		# Update and refresh file
+		updateAndRefreshData("clocks", clocks)
 		print("Clock added to file: {" + tokens[1] + ", 1200}")
-
-		# Reload clocks data
-		clocks = pickle.loads(open(filename, "rb").read())
-		print("File reloaded")
 
 		# Form message and send
 		msg = "```Clock added: " + tokens[1] + " at 1200.```"
@@ -972,16 +974,10 @@ During the mission, spend 1 hold for one of the following effects:
 
 			if clockName == inName:
 				clocks.remove(clock)
-
-		# Update file
-		file = open(filename, "wb")
-		file.write(pickle.dumps(clocks))
-		file.close()
+		
+		# Update and refresh file
+		updateAndRefreshData("clocks", clocks)
 		print("Clock deleted from file: " + tokens[1])
-
-		# Reload clocks data
-		clocks = pickle.loads(open(filename, "rb").read())
-		print("File reloaded")
 
 		# Form message and send
 		msg = "```Deleted clock " + name + ".```"
@@ -1031,16 +1027,9 @@ During the mission, spend 1 hold for one of the following effects:
 			await client.send_message(message.channel, msg.format(message))
 			return
 
-
-		# Update file
-		file = open(filename, "wb")
-		file.write(pickle.dumps(clocks))
-		file.close()
+		# Update and refresh file
+		updateAndRefreshData("clocks", clocks)
 		print("Clock update reflected in file (INCREASE): (" + updatedClock[0] + ", " + updatedClock[1] + ")")
-
-		# Reload clocks data
-		clocks = pickle.loads(open(filename, "rb").read())
-		print("File reloaded")
 
 		# Form message and send
 		msg = "```" + updatedClock[0] + " clock increased to " + updatedClock[1] + ".```"
@@ -1080,7 +1069,7 @@ During the mission, spend 1 hold for one of the following effects:
 					return
 
 				# Create new tuple and replace previous one
-				updatedClock = (name, value)
+				updatedClock = (clock[0], value)
 				print(updatedClock)
 				index = clocks.index(clock)
 				clocks[index] = updatedClock
@@ -1091,16 +1080,9 @@ During the mission, spend 1 hold for one of the following effects:
 			await client.send_message(message.channel, msg.format(message))
 			return
 
-
-		# Update file
-		file = open(filename, "wb")
-		file.write(pickle.dumps(clocks))
-		file.close()
+		# Update and refresh file
+		updateAndRefreshData("clocks", clocks)
 		print("Clock update reflected in file (DECREASE): (" + updatedClock[0] + ", " + updatedClock[1] + ")")
-
-		# Reload clocks data
-		clocks = pickle.loads(open(filename, "rb").read())
-		print("File reloaded")
 
 		# Form message and send
 		msg = "```" + updatedClock[0] + " clock decreased to " + updatedClock[1] + ".```"
@@ -1129,15 +1111,9 @@ During the mission, spend 1 hold for one of the following effects:
 		# Append to contacts list
 		contacts.append(contact)
 
-		# Update file
-		file = open(filenameContacts, "wb")
-		file.write(pickle.dumps(contacts))
-		file.close()
+		# Update and refresh file
+		updateAndRefreshData("contacts", contacts)
 		print("Contact added to file: {" + tokens[1] + ", " + description + "}")
-
-		# Reload contacts data
-		contacts = pickle.loads(open(filenameContacts, "rb").read())
-		print("File reloaded")
 
 		# Form message and send
 		msg = "```Contact added: " + tokens[1] + ".```"
@@ -1158,15 +1134,9 @@ During the mission, spend 1 hold for one of the following effects:
 			if cName == inName:
 				contacts.remove(c)
 
-		# Update file
-		file = open(filenameContacts, "wb")
-		file.write(pickle.dumps(contacts))
-		file.close()
+		# Update and refresh file
+		updateAndRefreshData("contacts", contacts)
 		print("Contact deleted from file: " + tokens[1])
-
-		# Reload clocks data
-		contacts = pickle.loads(open(filenameContacts, "rb").read())
-		print("File reloaded")
 
 		# Form message and send
 		msg = "```Deleted contact " + name + ".```"
@@ -1176,29 +1146,16 @@ During the mission, spend 1 hold for one of the following effects:
 	elif message.content.startswith(".refresh"):
 		msg = "```"
 
-		# Attempt to refresh clock data
 		try:
-			clocks = pickle.loads(open(filename, "rb").read())
-			print("Clock data extracted.")
-			msg += "Clocks file refreshed."
+			data = pickle.loads(open(filename, "rb").read())
+			clocks = data["clocks"]
+			contacts = data["contacts"]
+			msg += "Data has been refreshed."
+			print("Data extracted")
 		except EOFError:
-			print("No clocks in file.")
-			msg += "Refresh failed: No clocks were found in the file."
+			print("No data in file.")
 		except FileNotFoundError:
-			print("No clock file found.")
-			msg += "Refresh failed: No clock file found."
-
-		# Attempt to refresh contact data
-		try:
-			contacts = pickle.loads(open(filenameContacts, "rb").read())
-			print("Contacts data extracted.")
-			msg += " Contacts file refreshed."
-		except EOFError:
-			print("No contacts in file.")
-			msg += " Refresh failed: No contacts were found in the file."
-		except FileNotFoundError:
-			print("No contacts file found")
-			msg += " Refresh failed: No contact file found."
+			print("No data file found.")
 
 		msg += "```"
 
