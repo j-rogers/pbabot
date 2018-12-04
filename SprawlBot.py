@@ -74,7 +74,8 @@ async def on_message(message):
 .drugs: Displays a list of drugs
 .rip: Displays a list of dead characters and how they died.
 .f: Same as '.rip'
-.refresh: Reloads the clock and contact data.```"""
+.refresh: Reloads the clock and contact data.
+.log <message>: Saves a message to the log file.```"""
 
 		# Send the message
 		await client.send_message(message.channel, msg.format(message))
@@ -460,7 +461,7 @@ take +1-harm
 		await client.send_message(message.channel, msg.format(message))
 
 	# Compromise Security
-	elif message.content.startswith(".compsec") or message.content.startswith("compromisesecurity"):
+	elif message.content.startswith(".compsec") or message.content.startswith(".compromisesecurity"):
 		# Form the message
 		msg = """```When you attempt to compromise a sub-system’s security, roll Mind.\n
 		10+: gain 3 hold over the sub-system you have compromised
@@ -472,7 +473,7 @@ You may spend 1 hold to activate a security measure on that sub-system.```"""
 		await client.send_message(message.channel, msg.format(message))
 
 	# Manipulate Systems
-	elif message.content.startswith(".mansys") or message.content.startswith("manipulatesystem") or message.content.startswith("manipulatesystems"):
+	elif message.content.startswith(".mansys") or message.content.startswith(".manipulatesystem") or message.content.startswith(".manipulatesystems"):
 		# Form the message
 		msg = """```When you attempt to manipulate a digitally-controlled aspect of a facility, roll Synth.\n
 	10+: gain 3 hold over the sub-system you are manipulating
@@ -990,7 +991,7 @@ Withdrawal:
 	###############################################################################################################################################
 
 	# Rolls 2d6 dice
-	elif message.content.startswith(".roll") or message.content.startswith("dice"):
+	elif message.content.startswith(".roll") or message.content.startswith(".dice"):
 		# Generate the roll
 		dice1 = random.randint(1, 6)
 		dice2 = random.randint(1, 6)
@@ -1236,6 +1237,12 @@ Withdrawal:
 		msg = "```Deleted contact " + name + ".```"
 		await client.send_message(message.channel, msg.format(message))
 
+	###############################################################################################################################################
+	###############################################################################################################################################
+	#################################################################### GARBAGE ##################################################################
+	###############################################################################################################################################
+	###############################################################################################################################################
+
 	# Refreshes the clocks and contacts file
 	elif message.content.startswith(".refresh"):
 		msg = "```"
@@ -1255,12 +1262,6 @@ Withdrawal:
 
 		# Send message
 		await client.send_message(message.channel, msg.format(message))
-
-	###############################################################################################################################################
-	###############################################################################################################################################
-	#################################################################### GARBAGE ##################################################################
-	###############################################################################################################################################
-	###############################################################################################################################################
 
 	elif message.content.startswith(".log"):
 		# Get log message from message
