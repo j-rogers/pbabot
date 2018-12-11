@@ -216,7 +216,7 @@ Tech:
 	elif message.content.startswith(".rip") or message.content == ".f":
 		# Form the message
 		msg = """```Martin:
-	Christof died to the hands of Syntax Terror's drones whilst surrounded by police.\n
+	Christof died to the hands of Syntax Terror's drones whilst pounded by police.\n
 F in chat please.```"""
 
 		# Send message
