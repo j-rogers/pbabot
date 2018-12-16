@@ -207,14 +207,31 @@ Reporter:
         .reliablesources: Research bonus.
         .warcorrespondent: Bonus when Acting Under Pressure.\n
 Soldier:
-	.plan: I love it when a plan comes together (Edge)
-	.exitstrategy: Exit strategy (Mind)
-	.recruiter: Recruiter (Edge)
-	.slippery: Slippery (Edge)\n
+        .herestheplan: Team bonus when you plan the mission and if you get paid.
+	.iloveitwhenaplancomestogether: Bonus [gear] and [intel]. (Roll)
+        .auraofprofessionalism: Bonus when Getting the Job or Getting Paid.
+        .chromed: Choose another piece of cyberware at character creation or in downtime.
+        .corporateknowledge: Bonus when researching a corporation.
+	.exitstrategy: Bonus to getting the fuck out of there. (Roll)
+        .handsonmanagement: Mix it up bonus.
+	.recruiter: Contact / Hit the Street bonus. (Roll)
+	.slippery: Prevents Corps from finding the teams involvement. (Roll)
+        .steadypresence: You can give pep-talks.
+        .tacticaloperations: Assess bonus.\n
 Tech:
-	.storage: Storage (Mind)
-	.blendin: Blend in (Cool)
-	.bypass: Bypass (Cool)```"""
+        .expert: You get an area of expertise.
+	.storage: Pre-mission [gear] bonus. (Roll)
+        .customiser: You can examine and modify technology.
+        .analytic: Assess replacement.
+        .blendin: You can act like you belong in places you don't. (Roll)
+	.bypass: You can subvert security measures. (Roll)
+        .chromed: Choose another piece of cyberware at character creation or in downtime.
+        .diverseinterests: Choose another area of expertise.
+        .jackofalltrades: Choose another area of expertise.
+        .obsessive: Research bonus.
+        .onit: Replacement when helping or hindering someone in a topic relating to your expertise.
+        .renaissanceman: Choose another area of expertise.\n
+                ```"""
 		# Send the message
 		await client.send_message(message.channel, msg.format(message))
 
