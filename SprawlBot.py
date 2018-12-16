@@ -239,11 +239,11 @@ Tech:
 	elif message.content.startswith(".matrix"):
 		# Form the message
 		msg = """```Use the following commands to find detailed information about each move.\n
-.login: Login (Synth)
-.melt: Melt Ice (Edge)
-.compsec: Compromise Security (Mind)
-.mansys: Manipulate Systems (Synth)
-.jackout: Jack Out (Cool)```"""
+.login: When attepting to gain access to a system, Login. (Synth)
+.melt: When figting ICE, Melt Ice (Edge)
+.compsec: When screwing around with a system's digital security, Compromise Security (Mind)
+.mansys: When interacting with the meatspace through a system, Manipulate Systems (Synth)
+.jackout: When you need to get out quick, Jack Out (Cool)```"""
 		# Send the message
 		await client.send_message(message.channel, msg.format(message))
 
@@ -303,7 +303,9 @@ Tech:
 		# Form the message
 		msg = """```Martin:
 	Christof died to the hands of Syntax Terror's drones whilst pounded by police.\n
-F in chat please.```"""
+F in chat please.\n
+                Waleed:
+                Noor died before she could give blowjobs in jail.```"""
 
 		# Send message
 		await client.send_message(message.channel, msg.format(message))
