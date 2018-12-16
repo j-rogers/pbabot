@@ -110,28 +110,91 @@ For matrix specific moves see '.matrix'.```"""
 		# Form the message
 		msg = """```Use the following commands to find each playbook-specific move. Note only moves that require a dice roll are included, for other moves check the book.\n
 Driver:
-	.hotshitdriver: Hot shit driver (Edge)\n
+        .wheels: You start with a car.
+        .secondskin: When jacked into your vehicle with a neural interface you get bonuses to your rolls.
+        .chromed: Choose another piece of cyberware at character creation or in downtime.
+        .daredevil: Bonus when you drive straight into danger.
+        .dronejockey: You get with two drones.
+        .eyeinthesky: Roll replacement when helping or interfering while piloting a drone.
+        .hotshitdriver: Bonus while hight-tension driving. (Roll)
+        .iceman: Fast talk replacement.
+        .righttoolforthejob: You have two additional cyber-linked vehicles.
+        .sweetride: Replacement and bonus to Hit the street while in your vehicle.\n
 Fixer:
-	.hustling: Hustling (Edge)
-	.iknowpeople: I know people (Style)
-	.reputation: Reputation (Edge)\n
+	.hustling: Gives hustling jobs. (Roll)
+	.iknowpeople: Specialized contact decleration. (Roll)
+        .backup: You have a group of associates. 
+        .ballsintheair: +1 crew and choose another job.
+        .chromed: Choose another piece of cyberware at character creation or in downtime.
+        .dealofalifetime: Hit the street bonus when selling something.
+        .facetime: Fast talk bonus.
+        .hardtofind: Hit the street bonus.
+	.reputation: Various social bonuses.
+        .salesengineer: Produce equipment bonus.
+        .smooth: Helping or hindering replacement.
+        .streetkingpin: +1 crew, choose an additional job.
+        .wordonthestreet: Meatspace research bonus.\n
 Hacker:
-	.consolecowboy: Console cowboy (Mind)\n
+        .jackin: You can access the matrix.
+	.consolecowboy: Bonus within current system. (Roll)
+        .blackicevet: Bonus against black ICE.
+        .chromed: Choose another piece of cyberware at character creation or in downtime. 
+        .icebreaker: Bonus against all ICE.
+        .neuralscars: Bonus against black ICE.
+        .programmingonthefly: Bonus to matrix moves.
+        .rep: Fast talk and Play hard ball replacements while in the matrix.
+        .searchoptimisation: Matrix research bonus.
+        .techsupport: Bonus when helping or interfering while in the matrix.
+        .zeroed: Cyberdeck bonus.\n
 Hunter:
-	.itallfits: It all fits together! (Edge)
-	.biggamehunter: Big game hunter (Edge)
-	.sniper: Sniper (Cool)\n
+        .eartotheground: Meatspace reseach bonus. 
+	.itallfits: Research bonus. (Roll)
+	.biggamehunter: Bonus when springing a trap against a researced target. (Roll)
+        .chromed: Choose another piece of cyberware at character creation or in downtime.
+        .deadbeat: Hit the street bonus.
+        .enhance: Research bonus.
+        .eyefordetail: Bonus when calmly assessing a person or place.
+        .humanterrain: Bonus when investigating a group.
+        .onthetrail: Additional use of intel against a single person.
+        .seetheangles: At the start of the action phase gain [intel] and [gear].
+	.sniper: Bonus when hiding. (Roll)\n
 Infiltrator:
-	.covertentry: Covert Entry (Cool)
-	.casethejoint: Case the joint (Edge)
-	.planb: Plan B (Cool)
-	.psychwarfare: Psychological warfare (Edge)\n
+	.covertentry: Bonus when infilatrating alone. (Roll)
+        .catburgler: On the job [gear] procurement. Used with Covert Entry.
+        .face: On the job [intel] procurement. Used with Covert Entry.
+        .assassin: Bonus to attacking unexpectedly.
+	.casethejoint: Bonus when examining a locations weaknesses. (Roll)
+        .chromed: Choose another piece of cyberware at character creation or in downtime.
+        .jackin: You can access the matrix.
+        .masterofdisguise: Fast talk bonus.
+        .motherduck: Allows Covert Entry hold you spend to work for the whole team.
+	.planb: When shit hits the fan and you have to get out. (Roll)
+	.psychologicalwarfare: When you attempt to demoralise the enemy by leaving evidence of violence. (Roll)
+        .stealthoperative: Assess bonus.\n
 Killer:
-	.seriousbadass: Serious badass (Style)
-	.trainedeye: Trained eye (Cool)\n
+        .customweapon: You begin with a custom weapon.
+        .emotionless: Play hard ball replacement.
+        .hard: Harm move bonus.
+        .loadedforbear: Choose another bonus weapon.
+        .moremachinethanmeat: Choose another piece of cyberware at character creation or in downtime.
+        .corporatesecrets: Bonus when researching a corporation.
+        .militarybackground: Bonus when hitting the street.
+        .milspecs: Bonus to mix it up.
+	.seriousbadass: Bonus when entering a charged situation. (Roll)
+	.trainedeye: Bonus when sizing up a person, vehicle, drone or gang. (Roll)\n
 Pusher:
-	.driven: Driven (Edge)
-	.visionthing: Vision thing (Style)\n
+	.driven: Bonus when the mission furthers your vision. (Roll)
+	.visionthing: Bonus when passionately advocating your vision. (Roll)
+        .believers: You are a part of a gang, tribe, band, corporation or similar group.
+        .bringitonhome: Bonus when using Vision Thing or One Million Points of Light.
+        .chromed: Choose another piece of cyberware at character creation or in downtime.
+        .famous: Bonus against people who recognise you.
+        .innercircle: You have a loyal inner circle of believers.
+        .onemillionpointsoflight: Bonus to vision thing.
+        .opportunistic: Replacement when helping or interfering.
+        .peopleperson: Hit the street bonus.
+        .rabblerouser: Vision Thing bonus.
+        .silvertongue: Fast Talk bonus.\n
 Reporter:
 	.live: Live and on the air (Edge)
 	.nose: Nose for a story (Edge)
