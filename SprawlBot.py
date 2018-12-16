@@ -240,9 +240,9 @@ Tech:
 		# Form the message
 		msg = """```Use the following commands to find detailed information about each move.\n
 .login: When attepting to gain access to a system, Login. (Synth)
-.melt: When figting ICE, Melt Ice (Edge)
-.compsec: When screwing around with a system's digital security, Compromise Security (Mind)
-.mansys: When interacting with the meatspace through a system, Manipulate Systems (Synth)
+.meltice: When figting ICE, Melt Ice (Edge)
+.compromisesecurity: When screwing around with a system's digital security, Compromise Security (Mind)
+.manipulatesystems: When interacting with the meatspace through a system, Manipulate Systems (Synth)
 .jackout: When you need to get out quick, Jack Out (Cool)```"""
 		# Send the message
 		await client.send_message(message.channel, msg.format(message))
@@ -340,7 +340,7 @@ F in chat please.\n
 		await client.send_message(message.channel, msg.format(message))
 
 	# Apply First Aid
-	elif message.content.startswith(".applyfirstaid") or message.content.startswith(".firstaid"):
+	elif message.content.startswith(".applyfirstaid") or message.content.startswith(".firstaid") or message.content.startswith("aid"):
 		# Form the message
 		msg = """```When you treat someone’s wounds using appropriate medical equipment, roll Cool.\n
 	10+: if their Harm Clock is at 2100 or less, reduce their harm by two segments. If their Harm Clock is at more than 2100, reduce their harm by one segment
@@ -369,7 +369,7 @@ In the ensuing action, you may spend 1 hold at any time to ask the MC a question
 		await client.send_message(message.channel, msg.format(message))
 
 	# Play Hardball
-	elif message.content.startswith(".playhardball"):
+	elif message.content.startswith(".playhardball") or message.content.startswith(".hardball"):
 		# Form the message
 		msg = """```When you get in someone’s face threatening violence and you intend to carry through, roll Edge.\n
 	10+: NPCs do what you want. PCs choose: do what you want, or suffer the established consequences
@@ -394,7 +394,7 @@ In the ensuing action, you may spend 1 hold at any time to ask the MC a question
 		await client.send_message(message.channel, msg.format(message))
 
 	# Mix it Up
-	elif message.content.startswith(".mixitup"):
+	elif message.content.startswith(".mixitup") or message.content.startswith(".mix"):
 		# Form the message
 		msg = """```When you use violence against an armed force to seize control of an objective, state that objective and roll Meat.\n
 	7+: you achieve your objective
@@ -452,7 +452,7 @@ In the ensuing action, you may spend 1 hold at any time to ask the MC a question
 		await client.send_message(message.channel, msg.format(message))
 
 	# Go Under the Knife
-	elif message.content.startswith(".undertheknife"):
+	elif message.content.startswith(".undertheknife") message.content.startswith(".under") or message.content.startswith(".knife"):
 		# Form the message
 		msg = """```When you have new cyberware installed by a street doctor, roll Cred spent (max +2).\n
 	10+: the operation was a complete success
@@ -466,7 +466,9 @@ When you have new cyberware installed in accordance with a corporate contract, i
 	# Harm
 	elif message.content.startswith(".fuckmeup"):
 		# Get the harm roll
-		roll = random.randint(2, 12)
+		dice1 = random.randint(1, 6)
+		dice2 = random.randint(1, 6)
+		roll = dice1 + dice2
 		msg = ""
 
 		# Message based on harm roll
@@ -490,7 +492,7 @@ take +1-harm
 		await client.send_message(message.channel, msg.format(message))
 
 	# Get the Job
-	elif message.content.startswith(".getthejob"):
+	elif message.content.startswith(".getthejob") or message.content.startswith(".job"):
 		# Form the message
 		msg = """```When you negotiate the terms of a job, roll Edge.\n
 	10+: choose 3 from the list below
@@ -505,7 +507,7 @@ take +1-harm
 		await client.send_message(message.channel, msg.format(message))
 
 	# Getting Paid
-	elif message.content.startswith(".gettingpaid") or message.content.startswith(".getpaid"):
+	elif message.content.startswith(".gettingpaid") or message.content.startswith(".getpaid") or message.content.startswith(".paid"):
 		# Form the message
 		msg = """```When you go to a meet to get paid by your employer, roll and add the number of unfilled segments on the Legwork Clock.\n
 	10+: choose 3 from the list below
@@ -539,7 +541,7 @@ take +1-harm
 		await client.send_message(message.channel, msg.format(message))
 
 	# Melt Ice
-	elif message.content.startswith(".melt"):
+	elif message.content.startswith(".melt") or message.content.startswith(".meltice"):
 		# Form the message
 		msg = """```When you attempt to evade, destroy or disable an activated ICE construct, roll Edge.\n
 	7+: you evade, destroy, or temporarily disable the system, your choice
