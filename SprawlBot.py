@@ -196,10 +196,16 @@ Pusher:
         .rabblerouser: Vision Thing bonus.
         .silvertongue: Fast Talk bonus.\n
 Reporter:
-	.live: Live and on the air (Edge)
-	.nose: Nose for a story (Edge)
-	.gatherevidence: Gather evidence (Mind)
-	.monstering: Monstering (Edge)\n
+	.liveandontheair: You can broadcast a stream to hurt your target. (Roll)
+	.noseforastory: Various mission bonuses. (Roll)
+	.gatherevidence: Various effects on story and noise clocks. (Roll)
+        .24/7livefeeds: Bonus to researching when scanning live feeds.
+        .chromed: Choose another piece of cyberware at character creation or in downtime.
+        .filthyassistants: Bonus when using research obtained [intel].
+	.monstering: You can corner someone and hound them with questions. (Roll)
+        .presspass: Bonus when revealing yourself to fast talk your way in.
+        .reliablesources: Research bonus.
+        .warcorrespondent: Bonus when Acting Under Pressure.\n
 Soldier:
 	.plan: I love it when a plan comes together (Edge)
 	.exitstrategy: Exit strategy (Mind)
