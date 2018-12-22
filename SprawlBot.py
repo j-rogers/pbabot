@@ -3,8 +3,7 @@ import random
 import pickle
 
 # API Token
-#TOKEN = "NTE3MTQyNTcyMzkzODI0MjY2.Dt9-Jg.d0QaXh9Gi0CyR16bWps_KFwwbds"
-TOKEN = "NTA5NTc5MjMwMTk2MjY5MDY2.DsP2mA.poKbR9OIjKp_cE02vCASuMPeIVM"
+TOKEN = "no"
 
 # Extract data from file
 filename = "data.pickle"
