@@ -3,8 +3,7 @@ import random
 import pickle
 
 # API Token
-#TOKEN = "NTE3MTQyNTcyMzkzODI0MjY2.Dt9-Jg.d0QaXh9Gi0CyR16bWps_KFwwbds"
-TOKEN = "NTA5NTc5MjMwMTk2MjY5MDY2.DsP2mA.poKbR9OIjKp_cE02vCASuMPeIVM"
+TOKEN = "anime is gay"
 
 # Extract data from file
 filename = "data.pickle"
@@ -110,128 +109,42 @@ For matrix specific moves see '.matrix'.```"""
 		# Form the message
 		msg = """```Use the following commands to find each playbook-specific move. Note only moves that require a dice roll are included, for other moves check the book.\n
 Driver:
-        .wheels: You start with a car.
-        .secondskin: When jacked into your vehicle with a neural interface you get bonuses to your rolls.
-        .chromed: Choose another piece of cyberware at character creation or in downtime.
-        .daredevil: Bonus when you drive straight into danger.
-        .dronejockey: You get with two drones.
-        .eyeinthesky: Roll replacement when helping or interfering while piloting a drone.
-        .hotshitdriver: Bonus while hight-tension driving. (Roll)
-        .iceman: Fast talk replacement.
-        .righttoolforthejob: You have two additional cyber-linked vehicles.
-        .sweetride: Replacement and bonus to Hit the street while in your vehicle.\n
+	.hotshitdriver: Hot shit driver (Edge)\n
 Fixer:
-	.hustling: Gives hustling jobs. (Roll)
-	.iknowpeople: Specialized contact decleration. (Roll)
-        .backup: You have a group of associates. 
-        .ballsintheair: +1 crew and choose another job.
-        .chromed: Choose another piece of cyberware at character creation or in downtime.
-        .dealofalifetime: Hit the street bonus when selling something.
-        .facetime: Fast talk bonus.
-        .hardtofind: Hit the street bonus.
-	.reputation: Various social bonuses.
-        .salesengineer: Produce equipment bonus.
-        .smooth: Helping or hindering replacement.
-        .streetkingpin: +1 crew, choose an additional job.
-        .wordonthestreet: Meatspace research bonus.\n
+	.hustling: Hustling (Edge)
+	.iknowpeople: I know people (Style)
+	.reputation: Reputation (Edge)\n
 Hacker:
-        .jackin: You can access the matrix.
-	.consolecowboy: Bonus within current system. (Roll)
-        .blackicevet: Bonus against black ICE.
-        .chromed: Choose another piece of cyberware at character creation or in downtime. 
-        .icebreaker: Bonus against all ICE.
-        .neuralscars: Bonus against black ICE.
-        .programmingonthefly: Bonus to matrix moves.
-        .rep: Fast talk and Play hard ball replacements while in the matrix.
-        .searchoptimisation: Matrix research bonus.
-        .techsupport: Bonus when helping or interfering while in the matrix.
-        .zeroed: Cyberdeck bonus.\n
+	.consolecowboy: Console cowboy (Mind)\n
 Hunter:
-        .eartotheground: Meatspace reseach bonus. 
-	.itallfits: Research bonus. (Roll)
-	.biggamehunter: Bonus when springing a trap against a researced target. (Roll)
-        .chromed: Choose another piece of cyberware at character creation or in downtime.
-        .deadbeat: Hit the street bonus.
-        .enhance: Research bonus.
-        .eyefordetail: Bonus when calmly assessing a person or place.
-        .humanterrain: Bonus when investigating a group.
-        .onthetrail: Additional use of intel against a single person.
-        .seetheangles: At the start of the action phase gain [intel] and [gear].
-	.sniper: Bonus when hiding. (Roll)\n
+	.itallfits: It all fits together! (Edge)
+	.biggamehunter: Big game hunter (Edge)
+	.sniper: Sniper (Cool)\n
 Infiltrator:
-	.covertentry: Bonus when infilatrating alone. (Roll)
-        .catburgler: On the job [gear] procurement. Used with Covert Entry.
-        .face: On the job [intel] procurement. Used with Covert Entry.
-        .assassin: Bonus to attacking unexpectedly.
-	.casethejoint: Bonus when examining a locations weaknesses. (Roll)
-        .chromed: Choose another piece of cyberware at character creation or in downtime.
-        .jackin: You can access the matrix.
-        .masterofdisguise: Fast talk bonus.
-        .motherduck: Allows Covert Entry hold you spend to work for the whole team.
-	.planb: When shit hits the fan and you have to get out. (Roll)
-	.psychologicalwarfare: When you attempt to demoralise the enemy by leaving evidence of violence. (Roll)
-        .stealthoperative: Assess bonus.\n
+	.covertentry: Covert Entry (Cool)
+	.casethejoint: Case the joint (Edge)
+	.planb: Plan B (Cool)
+	.psychwarfare: Psychological warfare (Edge)\n
 Killer:
-        .customweapon: You begin with a custom weapon.
-        .emotionless: Play hard ball replacement.
-        .hard: Harm move bonus.
-        .loadedforbear: Choose another bonus weapon.
-        .moremachinethanmeat: Choose another piece of cyberware at character creation or in downtime.
-        .corporatesecrets: Bonus when researching a corporation.
-        .militarybackground: Bonus when hitting the street.
-        .milspecs: Bonus to mix it up.
-	.seriousbadass: Bonus when entering a charged situation. (Roll)
-	.trainedeye: Bonus when sizing up a person, vehicle, drone or gang. (Roll)\n
+	.seriousbadass: Serious badass (Style)
+	.trainedeye: Trained eye (Cool)\n
 Pusher:
-	.driven: Bonus when the mission furthers your vision. (Roll)
-	.visionthing: Bonus when passionately advocating your vision. (Roll)
-        .believers: You are a part of a gang, tribe, band, corporation or similar group.
-        .bringitonhome: Bonus when using Vision Thing or One Million Points of Light.
-        .chromed: Choose another piece of cyberware at character creation or in downtime.
-        .famous: Bonus against people who recognise you.
-        .innercircle: You have a loyal inner circle of believers.
-        .onemillionpointsoflight: Bonus to vision thing.
-        .opportunistic: Replacement when helping or interfering.
-        .peopleperson: Hit the street bonus.
-        .rabblerouser: Vision Thing bonus.
-        .silvertongue: Fast Talk bonus.\n
+	.driven: Driven (Edge)
+	.visionthing: Vision thing (Style)\n
 Reporter:
-	.liveandontheair: You can broadcast a stream to hurt your target. (Roll)
-	.noseforastory: Various mission bonuses. (Roll)
-	.gatherevidence: Various effects on story and noise clocks. (Roll)
-        .24/7livefeeds: Bonus to researching when scanning live feeds.
-        .chromed: Choose another piece of cyberware at character creation or in downtime.
-        .filthyassistants: Bonus when using research obtained [intel].
-	.monstering: You can corner someone and hound them with questions. (Roll)
-        .presspass: Bonus when revealing yourself to fast talk your way in.
-        .reliablesources: Research bonus.
-        .warcorrespondent: Bonus when Acting Under Pressure.\n
+	.live: Live and on the air (Edge)
+	.nose: Nose for a story (Edge)
+	.gatherevidence: Gather evidence (Mind)
+	.monstering: Monstering (Edge)\n
 Soldier:
-        .herestheplan: Team bonus when you plan the mission and if you get paid.
-	.iloveitwhenaplancomestogether: Bonus [gear] and [intel]. (Roll)
-        .auraofprofessionalism: Bonus when Getting the Job or Getting Paid.
-        .chromed: Choose another piece of cyberware at character creation or in downtime.
-        .corporateknowledge: Bonus when researching a corporation.
-	.exitstrategy: Bonus to getting the fuck out of there. (Roll)
-        .handsonmanagement: Mix it up bonus.
-	.recruiter: Contact / Hit the Street bonus. (Roll)
-	.slippery: Prevents Corps from finding the teams involvement. (Roll)
-        .steadypresence: You can give pep-talks.
-        .tacticaloperations: Assess bonus.\n
+	.plan: I love it when a plan comes together (Edge)
+	.exitstrategy: Exit strategy (Mind)
+	.recruiter: Recruiter (Edge)
+	.slippery: Slippery (Edge)\n
 Tech:
-        .expert: You get an area of expertise.
-	.storage: Pre-mission [gear] bonus. (Roll)
-        .customiser: You can examine and modify technology.
-        .analytic: Assess replacement.
-        .blendin: You can act like you belong in places you don't. (Roll)
-	.bypass: You can subvert security measures. (Roll)
-        .chromed: Choose another piece of cyberware at character creation or in downtime.
-        .diverseinterests: Choose another area of expertise.
-        .jackofalltrades: Choose another area of expertise.
-        .obsessive: Research bonus.
-        .onit: Replacement when helping or hindering someone in a topic relating to your expertise.
-        .renaissanceman: Choose another area of expertise.\n
-                ```"""
+	.storage: Storage (Mind)
+	.blendin: Blend in (Cool)
+	.bypass: Bypass (Cool)```"""
 		# Send the message
 		await client.send_message(message.channel, msg.format(message))
 
@@ -239,11 +152,11 @@ Tech:
 	elif message.content.startswith(".matrix"):
 		# Form the message
 		msg = """```Use the following commands to find detailed information about each move.\n
-.login: When attepting to gain access to a system, Login. (Synth)
-.meltice: When figting ICE, Melt Ice (Edge)
-.compromisesecurity: When screwing around with a system's digital security, Compromise Security (Mind)
-.manipulatesystems: When interacting with the meatspace through a system, Manipulate Systems (Synth)
-.jackout: When you need to get out quick, Jack Out (Cool)```"""
+.login: Login (Synth)
+.melt: Melt Ice (Edge)
+.compsec: Compromise Security (Mind)
+.mansys: Manipulate Systems (Synth)
+.jackout: Jack Out (Cool)```"""
 		# Send the message
 		await client.send_message(message.channel, msg.format(message))
 
@@ -302,10 +215,10 @@ Tech:
 	elif message.content.startswith(".rip") or message.content == ".f":
 		# Form the message
 		msg = """```Martin:
-	Christof died to the hands of Syntax Terror's drones whilst pounded by police.\n
-F in chat please.\n
-                Waleed:
-                Noor died before she could give blowjobs in jail.```"""
+	Christof died to the hands of Syntax Terror's drones whilst surrounded by police.\n
+Waleed:
+	Noor attempted to seduce a guard and got beaten up. She then proceeded to call in a bomb threat and get arrested. She killed herself in holding.\n
+F in chat please.```"""
 
 		# Send message
 		await client.send_message(message.channel, msg.format(message))
@@ -340,7 +253,7 @@ F in chat please.\n
 		await client.send_message(message.channel, msg.format(message))
 
 	# Apply First Aid
-	elif message.content.startswith(".applyfirstaid") or message.content.startswith(".firstaid") or message.content.startswith("aid"):
+	elif message.content.startswith(".applyfirstaid") or message.content.startswith(".firstaid"):
 		# Form the message
 		msg = """```When you treat someone’s wounds using appropriate medical equipment, roll Cool.\n
 	10+: if their Harm Clock is at 2100 or less, reduce their harm by two segments. If their Harm Clock is at more than 2100, reduce their harm by one segment
@@ -369,7 +282,7 @@ In the ensuing action, you may spend 1 hold at any time to ask the MC a question
 		await client.send_message(message.channel, msg.format(message))
 
 	# Play Hardball
-	elif message.content.startswith(".playhardball") or message.content.startswith(".hardball"):
+	elif message.content.startswith(".playhardball"):
 		# Form the message
 		msg = """```When you get in someone’s face threatening violence and you intend to carry through, roll Edge.\n
 	10+: NPCs do what you want. PCs choose: do what you want, or suffer the established consequences
@@ -394,7 +307,7 @@ In the ensuing action, you may spend 1 hold at any time to ask the MC a question
 		await client.send_message(message.channel, msg.format(message))
 
 	# Mix it Up
-	elif message.content.startswith(".mixitup") or message.content.startswith(".mix"):
+	elif message.content.startswith(".mixitup"):
 		# Form the message
 		msg = """```When you use violence against an armed force to seize control of an objective, state that objective and roll Meat.\n
 	7+: you achieve your objective
@@ -452,7 +365,7 @@ In the ensuing action, you may spend 1 hold at any time to ask the MC a question
 		await client.send_message(message.channel, msg.format(message))
 
 	# Go Under the Knife
-	elif message.content.startswith(".undertheknife") message.content.startswith(".under") or message.content.startswith(".knife"):
+	elif message.content.startswith(".undertheknife"):
 		# Form the message
 		msg = """```When you have new cyberware installed by a street doctor, roll Cred spent (max +2).\n
 	10+: the operation was a complete success
@@ -466,9 +379,7 @@ When you have new cyberware installed in accordance with a corporate contract, i
 	# Harm
 	elif message.content.startswith(".fuckmeup"):
 		# Get the harm roll
-		dice1 = random.randint(1, 6)
-		dice2 = random.randint(1, 6)
-		roll = dice1 + dice2
+		roll = random.randint(2, 12)
 		msg = ""
 
 		# Message based on harm roll
@@ -492,7 +403,7 @@ take +1-harm
 		await client.send_message(message.channel, msg.format(message))
 
 	# Get the Job
-	elif message.content.startswith(".getthejob") or message.content.startswith(".job"):
+	elif message.content.startswith(".getthejob"):
 		# Form the message
 		msg = """```When you negotiate the terms of a job, roll Edge.\n
 	10+: choose 3 from the list below
@@ -507,7 +418,7 @@ take +1-harm
 		await client.send_message(message.channel, msg.format(message))
 
 	# Getting Paid
-	elif message.content.startswith(".gettingpaid") or message.content.startswith(".getpaid") or message.content.startswith(".paid"):
+	elif message.content.startswith(".gettingpaid") or message.content.startswith(".getpaid"):
 		# Form the message
 		msg = """```When you go to a meet to get paid by your employer, roll and add the number of unfilled segments on the Legwork Clock.\n
 	10+: choose 3 from the list below
@@ -541,7 +452,7 @@ take +1-harm
 		await client.send_message(message.channel, msg.format(message))
 
 	# Melt Ice
-	elif message.content.startswith(".melt") or message.content.startswith(".meltice"):
+	elif message.content.startswith(".melt"):
 		# Form the message
 		msg = """```When you attempt to evade, destroy or disable an activated ICE construct, roll Edge.\n
 	7+: you evade, destroy, or temporarily disable the system, your choice
@@ -1353,6 +1264,7 @@ Withdrawal:
 		# Send message
 		await client.send_message(message.channel, msg.format(message))
 
+	# Logs a message to a text file
 	elif message.content.startswith(".log"):
 		# Get log message from message
 		tokens = message.content.split(".log ")
