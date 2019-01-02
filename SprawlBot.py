@@ -3,7 +3,7 @@ import random
 import pickle
 
 # API Token
-TOKEN = "no"
+TOKEN = open("token.txt", 'r').read()
 
 # Extract data from file
 filename = "data.pickle"
@@ -59,7 +59,7 @@ async def on_message(message):
 .help: Displays this help message.
 .roll: Rolls 2d6 dice.
 .moves: Displays a list of basic moves.
-.playbooks: Displays a list of playbook specific moves.
+.playbooks: Displays a list of playbooks.
 .matrix: Displays a list of matrix-specific moves.
 .custom: Displays a list of custom moves.
 .clocks: Displays the current list of clocks.
@@ -73,6 +73,7 @@ async def on_message(message):
 .drugs: Displays a list of drugs
 .rip: Displays a list of dead characters and how they died.
 .f: Same as '.rip'
+.remember: Displays a message of a memorable moment.
 .refresh: Reloads the clock and contact data.
 .log <message>: Saves a message to the log file.```"""
 
@@ -107,130 +108,210 @@ For matrix specific moves see '.matrix'.```"""
 	# Displays list of playbooks
 	elif message.content.startswith(".playbooks"):
 		# Form the message
-		msg = """```Use the following commands to find each playbook-specific move. Note only moves that require a dice roll are included, for other moves check the book.\n
-Driver:
-        .wheels: You start with a car.
-        .secondskin: When jacked into your vehicle with a neural interface you get bonuses to your rolls.
-        .chromed: Choose another piece of cyberware at character creation or in downtime.
-        .daredevil: Bonus when you drive straight into danger.
-        .dronejockey: You get with two drones.
-        .eyeinthesky: Roll replacement when helping or interfering while piloting a drone.
-        .hotshitdriver: Bonus while hight-tension driving. (Roll)
-        .iceman: Fast talk replacement.
-        .righttoolforthejob: You have two additional cyber-linked vehicles.
-        .sweetride: Replacement and bonus to Hit the street while in your vehicle.\n
-Fixer:
-	.hustling: Gives hustling jobs. (Roll)
-	.iknowpeople: Specialized contact decleration. (Roll)
-        .backup: You have a group of associates. 
-        .ballsintheair: +1 crew and choose another job.
-        .chromed: Choose another piece of cyberware at character creation or in downtime.
-        .dealofalifetime: Hit the street bonus when selling something.
-        .facetime: Fast talk bonus.
-        .hardtofind: Hit the street bonus.
-	.reputation: Various social bonuses.
-        .salesengineer: Produce equipment bonus.
-        .smooth: Helping or hindering replacement.
-        .streetkingpin: +1 crew, choose an additional job.
-        .wordonthestreet: Meatspace research bonus.\n
-Hacker:
-        .jackin: You can access the matrix.
-	.consolecowboy: Bonus within current system. (Roll)
-        .blackicevet: Bonus against black ICE.
-        .chromed: Choose another piece of cyberware at character creation or in downtime. 
-        .icebreaker: Bonus against all ICE.
-        .neuralscars: Bonus against black ICE.
-        .programmingonthefly: Bonus to matrix moves.
-        .rep: Fast talk and Play hard ball replacements while in the matrix.
-        .searchoptimisation: Matrix research bonus.
-        .techsupport: Bonus when helping or interfering while in the matrix.
-        .zeroed: Cyberdeck bonus.\n
-Hunter:
-        .eartotheground: Meatspace reseach bonus. 
-	.itallfits: Research bonus. (Roll)
-	.biggamehunter: Bonus when springing a trap against a researced target. (Roll)
-        .chromed: Choose another piece of cyberware at character creation or in downtime.
-        .deadbeat: Hit the street bonus.
-        .enhance: Research bonus.
-        .eyefordetail: Bonus when calmly assessing a person or place.
-        .humanterrain: Bonus when investigating a group.
-        .onthetrail: Additional use of intel against a single person.
-        .seetheangles: At the start of the action phase gain [intel] and [gear].
-	.sniper: Bonus when hiding. (Roll)\n
-Infiltrator:
-	.covertentry: Bonus when infilatrating alone. (Roll)
-        .catburgler: On the job [gear] procurement. Used with Covert Entry.
-        .face: On the job [intel] procurement. Used with Covert Entry.
-        .assassin: Bonus to attacking unexpectedly.
-	.casethejoint: Bonus when examining a locations weaknesses. (Roll)
-        .chromed: Choose another piece of cyberware at character creation or in downtime.
-        .jackin: You can access the matrix.
-        .masterofdisguise: Fast talk bonus.
-        .motherduck: Allows Covert Entry hold you spend to work for the whole team.
-	.planb: When shit hits the fan and you have to get out. (Roll)
-	.psychologicalwarfare: When you attempt to demoralise the enemy by leaving evidence of violence. (Roll)
-        .stealthoperative: Assess bonus.\n
-Killer:
-        .customweapon: You begin with a custom weapon.
-        .emotionless: Play hard ball replacement.
-        .hard: Harm move bonus.
-        .loadedforbear: Choose another bonus weapon.
-        .moremachinethanmeat: Choose another piece of cyberware at character creation or in downtime.
-        .corporatesecrets: Bonus when researching a corporation.
-        .militarybackground: Bonus when hitting the street.
-        .milspecs: Bonus to mix it up.
-	.seriousbadass: Bonus when entering a charged situation. (Roll)
-	.trainedeye: Bonus when sizing up a person, vehicle, drone or gang. (Roll)\n
-Pusher:
-	.driven: Bonus when the mission furthers your vision. (Roll)
-	.visionthing: Bonus when passionately advocating your vision. (Roll)
-        .believers: You are a part of a gang, tribe, band, corporation or similar group.
-        .bringitonhome: Bonus when using Vision Thing or One Million Points of Light.
-        .chromed: Choose another piece of cyberware at character creation or in downtime.
-        .famous: Bonus against people who recognise you.
-        .innercircle: You have a loyal inner circle of believers.
-        .onemillionpointsoflight: Bonus to vision thing.
-        .opportunistic: Replacement when helping or interfering.
-        .peopleperson: Hit the street bonus.
-        .rabblerouser: Vision Thing bonus.
-        .silvertongue: Fast Talk bonus.\n
-Reporter:
-	.liveandontheair: You can broadcast a stream to hurt your target. (Roll)
-	.noseforastory: Various mission bonuses. (Roll)
-	.gatherevidence: Various effects on story and noise clocks. (Roll)
-        .24/7livefeeds: Bonus to researching when scanning live feeds.
-        .chromed: Choose another piece of cyberware at character creation or in downtime.
-        .filthyassistants: Bonus when using research obtained [intel].
-	.monstering: You can corner someone and hound them with questions. (Roll)
-        .presspass: Bonus when revealing yourself to fast talk your way in.
-        .reliablesources: Research bonus.
-        .warcorrespondent: Bonus when Acting Under Pressure.\n
-Soldier:
-        .herestheplan: Team bonus when you plan the mission and if you get paid.
-	.iloveitwhenaplancomestogether: Bonus [gear] and [intel]. (Roll)
-        .auraofprofessionalism: Bonus when Getting the Job or Getting Paid.
-        .chromed: Choose another piece of cyberware at character creation or in downtime.
-        .corporateknowledge: Bonus when researching a corporation.
-	.exitstrategy: Bonus to getting the fuck out of there. (Roll)
-        .handsonmanagement: Mix it up bonus.
-	.recruiter: Contact / Hit the Street bonus. (Roll)
-	.slippery: Prevents Corps from finding the teams involvement. (Roll)
-        .steadypresence: You can give pep-talks.
-        .tacticaloperations: Assess bonus.\n
-Tech:
-        .expert: You get an area of expertise.
-	.storage: Pre-mission [gear] bonus. (Roll)
-        .customiser: You can examine and modify technology.
-        .analytic: Assess replacement.
-        .blendin: You can act like you belong in places you don't. (Roll)
-	.bypass: You can subvert security measures. (Roll)
-        .chromed: Choose another piece of cyberware at character creation or in downtime.
-        .diverseinterests: Choose another area of expertise.
-        .jackofalltrades: Choose another area of expertise.
-        .obsessive: Research bonus.
-        .onit: Replacement when helping or hindering someone in a topic relating to your expertise.
-        .renaissanceman: Choose another area of expertise.\n
-                ```"""
+		msg = """```Use the following commands to find each playbook-specific move.\n
+.driver
+.fixer
+.hacker
+.hunter
+.infiltrator
+.killer
+.pusher
+.reporter
+.soldier
+.tech```"""
+
+		# Send the message
+		await client.send_message(message.channel, msg.format(message))
+
+	# Driver
+	elif message.content.startswith(".driver"):
+		msg = """```Roll moves:
+.hotshitdriver: Bonus while hight-tension driving. (Roll)\n
+    Other moves:
+Wheels: You start with a car.
+Second Skin: When jacked into your vehicle with a neural interface you get bonuses to your rolls.
+Chromed: Choose another piece of cyberware at character creation or in downtime.
+Daredevil: Bonus when you drive straight into danger.
+Drone Jockey: You get with two drones.
+Iceman: Fast talk replacement.
+Right Tool for the Job: You have two additional cyber-linked vehicles.
+Sweet Ride: Replacement and bonus to Hit the street while in your vehicle.```"""
+
+		# Send the message
+		await client.send_message(message.channel, msg.format(message))
+
+	# Fixer
+	elif message.content.startswith(".fixer"):
+		msg = """```Roll moves:
+.hustling: Gives hustling jobs. (Roll)
+.iknowpeople: Specialized contact decleration. (Roll)\n
+	Other moves:
+Backup: You have a group of associates. 
+Balls in the Air: +1 crew and choose another job.
+Chromed: Choose another piece of cyberware at character creation or in downtime.
+Deal of a Lifetime: Hit the street bonus when selling something.
+Facetime: Fast talk bonus.
+Hard to Find: Hit the street bonus.
+Reputation: Various social bonuses.
+Sales Engineer: Produce equipment bonus.
+Smooth: Helping or hindering replacement.
+Street King Pin: +1 crew, choose an additional job.
+Word on the Street: Meatspace research bonus.```"""
+
+		# Send the message
+		await client.send_message(message.channel, msg.format(message))
+
+	# Hacker
+	elif message.content.startswith(".hacker"):
+		msg = """```Roll moves:
+.consolecowboy: Bonus within current system. (Roll)\n
+    Other moves:
+.jackin: You can access the matrix.
+.consolecowboy: Bonus within current system. (Roll)
+.blackicevet: Bonus against black ICE.
+.chromed: Choose another piece of cyberware at character creation or in downtime. 
+.icebreaker: Bonus against all ICE.
+.neuralscars: Bonus against black ICE.
+.programmingonthefly: Bonus to matrix moves.
+.rep: Fast talk and Play hard ball replacements while in the matrix.
+.searchoptimisation: Matrix research bonus.
+.techsupport: Bonus when helping or interfering while in the matrix.
+.zeroed: Cyberdeck bonus.```"""
+
+		# Send the message
+		await client.send_message(message.channel, msg.format(message))
+	
+	# Hunter
+	elif message.content.startswith(".hunter"):
+		msg = """```Roll moves:
+.itallfits: Research bonus. (Roll)
+.biggamehunter: Bonus when springing a trap against a researced target. (Roll)
+.sniper: Bonus when hiding. (Roll)\n
+    Other moves:
+.eartotheground: Meatspace reseach bonus. 
+.chromed: Choose another piece of cyberware at character creation or in downtime.
+.deadbeat: Hit the street bonus.
+.enhance: Research bonus.
+.eyefordetail: Bonus when calmly assessing a person or place.
+.humanterrain: Bonus when investigating a group.
+.onthetrail: Additional use of intel against a single person.
+.seetheangles: At the start of the action phase gain [intel] and [gear].```"""
+
+		# Send the message
+		await client.send_message(message.channel, msg.format(message))
+	
+	# Infiltrator
+	elif message.content.startswith(".infiltrator"):
+		msg = """```Roll moves:
+.covertentry: Bonus when infilatrating alone. (Roll)
+.casethejoint: Bonus when examining a locations weaknesses. (Roll)
+.planb: When shit hits the fan and you have to get out. (Roll)
+.psychologicalwarfare: When you attempt to demoralise the enemy by leaving evidence of violence. (Roll)\n
+    Other moves:
+.catburgler: On the job [gear] procurement. Used with Covert Entry.
+.face: On the job [intel] procurement. Used with Covert Entry.
+.assassin: Bonus to attacking unexpectedly.
+.chromed: Choose another piece of cyberware at character creation or in downtime.
+.jackin: You can access the matrix.
+.masterofdisguise: Fast talk bonus.
+.motherduck: Allows Covert Entry hold you spend to work for the whole team.
+.stealthoperative: Assess bonus.```"""
+
+		# Send the message
+		await client.send_message(message.channel, msg.format(message))
+	
+	# Killer
+	elif message.content.startswith(".killer"):
+		msg = """```Roll moves:
+.seriousbadass: Bonus when entering a charged situation. (Roll)
+.trainedeye: Bonus when sizing up a person, vehicle, drone or gang. (Roll)\n
+    Other moves:
+.customweapon: You begin with a custom weapon.
+.emotionless: Play hard ball replacement.
+.hard: Harm move bonus.
+.loadedforbear: Choose another bonus weapon.
+.moremachinethanmeat: Choose another piece of cyberware at character creation or in downtime.
+.corporatesecrets: Bonus when researching a corporation.
+.militarybackground: Bonus when hitting the street.
+.milspecs: Bonus to mix it up.```"""
+
+		# Send the message
+		await client.send_message(message.channel, msg.format(message))
+	
+	# Pusher
+	elif message.content.startswith(".pusher"):
+		msg = """```Roll moves:
+.driven: Bonus when the mission furthers your vision. (Roll)
+.visionthing: Bonus when passionately advocating your vision. (Roll)\n
+    Other moves:
+.believers: You are a part of a gang, tribe, band, corporation or similar group.
+.bringitonhome: Bonus when using Vision Thing or One Million Points of Light.
+.chromed: Choose another piece of cyberware at character creation or in downtime.
+.famous: Bonus against people who recognise you.
+.innercircle: You have a loyal inner circle of believers.
+.onemillionpointsoflight: Bonus to vision thing.
+.opportunistic: Replacement when helping or interfering.
+.peopleperson: Hit the street bonus.
+.rabblerouser: Vision Thing bonus.
+.silvertongue: Fast Talk bonus.```"""
+
+		# Send the message
+		await client.send_message(message.channel, msg.format(message))
+	
+	# Reporter
+	elif message.content.startswith(".reporter"):
+		msg = """```Roll moves:
+.liveandontheair: You can broadcast a stream to hurt your target. (Roll)
+.noseforastory: Various mission bonuses. (Roll)
+.gatherevidence: Various effects on story and noise clocks. (Roll)
+.monstering: You can corner someone and hound them with questions. (Roll)\n
+    Other moves:
+.24/7livefeeds: Bonus to researching when scanning live feeds.
+.chromed: Choose another piece of cyberware at character creation or in downtime.
+.filthyassistants: Bonus when using research obtained [intel].
+.presspass: Bonus when revealing yourself to fast talk your way in.
+.reliablesources: Research bonus.
+.warcorrespondent: Bonus when Acting Under Pressure.```"""
+
+		# Send the message
+		await client.send_message(message.channel, msg.format(message))
+	
+	# Soldier
+	elif message.content.startswith(".soldier"):
+		msg = """```Roll moves:
+.iloveitwhenaplancomestogether: Bonus [gear] and [intel]. (Roll)
+.exitstrategy: Bonus to getting the fuck out of there. (Roll)
+.recruiter: Contact / Hit the Street bonus. (Roll)
+.slippery: Prevents Corps from finding the teams involvement. (Roll)\n
+    Other moves:
+.herestheplan: Team bonus when you plan the mission and if you get paid.
+.auraofprofessionalism: Bonus when Getting the Job or Getting Paid.
+.chromed: Choose another piece of cyberware at character creation or in downtime.
+.corporateknowledge: Bonus when researching a corporation.
+.handsonmanagement: Mix it up bonus.
+.steadypresence: You can give pep-talks.
+.tacticaloperations: Assess bonus.```"""
+
+		# Send the message
+		await client.send_message(message.channel, msg.format(message))
+	
+	# Tech
+	elif message.content.startswith(".tech"):
+		msg = """```Roll moves:
+.storage: Pre-mission [gear] bonus. (Roll)
+.blendin: You can act like you belong in places you don't. (Roll)
+.bypass: You can subvert security measures. (Roll)\n
+    Other moves:
+.expert: You get an area of expertise.
+.customiser: You can examine and modify technology.
+.analytic: Assess replacement.
+.chromed: Choose another piece of cyberware at character creation or in downtime.
+.diverseinterests: Choose another area of expertise.
+.jackofalltrades: Choose another area of expertise.
+.obsessive: Research bonus.
+.onit: Replacement when helping or hindering someone in a topic relating to your expertise.
+.renaissanceman: Choose another area of expertise.```"""
+
 		# Send the message
 		await client.send_message(message.channel, msg.format(message))
 
@@ -451,7 +532,7 @@ In the ensuing action, you may spend 1 hold at any time to ask the MC a question
 		await client.send_message(message.channel, msg.format(message))
 
 	# Go Under the Knife
-	elif message.content.startswith(".undertheknife") message.content.startswith(".under") or message.content.startswith(".knife"):
+	elif message.content.startswith(".undertheknife") or message.content.startswith(".under") or message.content.startswith(".knife"):
 		# Form the message
 		msg = """```When you have new cyberware installed by a street doctor, roll Cred spent (max +2).\n
 	10+: the operation was a complete success
@@ -1324,6 +1405,105 @@ Withdrawal:
 
 		# Form message and send
 		msg = "```Deleted contact " + name + ".```"
+		await client.send_message(message.channel, msg.format(message))
+
+	elif message.content.startswith(".remember"):
+
+		#Generates random number to get remember message from  events that have happened in sprawl. Feel free to add more.
+
+		member = random.randint(1,41)
+		msg = ""
+
+		#Christof
+		if member == 1:
+			msg = "```Remember that time Christof tackled a Robot Synth thing to save Seraph?```"
+		elif member == 2:
+			msg ="```Remember that time Christof said he wasn't going to bring Waleed but did but never used him?```"
+		elif member == 3:
+			msg = "```Remember that time Christof forgot Waleed in a drug den and Waleed got picked up the Police and Medtech?```"
+		elif member == 4:
+			msg = "```when Christof didn\'t use Waleed to sniff for a bomb then dived in front of Maxine when it exploded?```"
+		elif member == 5:
+			msg = "```Remember that time Christof was doubting that Syntax Terror was a junkie, whilest Syntax Terrror had no pants on in a drug den?```"    
+		elif member == 6:
+			msg = "```Remember that time Christof brutally killed a bunch of goons all at once with his barehands```"
+		elif member == 7:
+			msg = "```Ever been to a Vet for serious medical attention? because Christoff has.```"
+		elif member == 8:
+			msg = "```Christof threw H4KKK3R out of the way of a building falling down, fun times for everyone.```"
+		elif member == 9:
+			msg = "```Christof charged into heavily armed police and took a shotgun to the face before finally dying to Syntax Terrors drones. F is chat please..```"
+		#laramy Fisk
+		elif member == 10:
+			msg = "```That Laramy stabbed Noor with with some drugs and Noor then ran out infront of a truck. Good times. ```" 
+		elif member == 11:
+			msg = "```That time Laramy didn't show up cause he was super high at home. Hope that mission went well.```"
+		elif member == 12:
+			msg = "```Keep the drugs away from Laramy cause he's been known to take some Meatloaf followed by other drugs and go on a killing spree both friend and foe```" 
+		elif member == 13:
+			msg = "```That time Laramy had Meatloaf and  rocket launcher thing and proceeded to shot the building to get the mission done!```" 
+		#Seraph
+		elif member == 14:
+			msg = "```That time Seraph parkoured up a convayor belt, jumped into the air and dabbed their way onto the next floor up!```"
+		elif member == 15:
+			msg = "```How long did Seraph drag Christoff's body around when he died?```" 
+		elif member == 16:
+			msg = "```*Looks in window* shots a goon in the face, gets a van. Good job Seraph.```" 
+		elif member == 17:
+			msg = "``` Seraph somehow snuck a grendade into a pot plant while being watched by gaurds and managed to get Noor to take the full on it.```"
+		elif member == 18:
+			msg = "```Remember when Seraph tried killing Tony and had their arm broken and sent to jail?```" 
+		elif member == 19:
+			msg = "```Who's got a cyber arm thanks to the Thing? Thats right Seraph does.```" 
+		#Syntax Terror
+		elif member == 21:
+			msg = "```I used my  bear drones (thats right more than one) to win the slaughterfest, -syntax terror```" 
+		elif member == 22:
+			msg = "```With enough cred Syntax terror managed to buy Seraph. Good job Syntax Terror!```" 
+		elif member == 23:
+			msg = "```Getting bear drones to blow up police to help us escapse, no problem for Syntax Terror```" 
+		#H4KKK3R
+		elif member == 24:
+			msg = "```H4KKK3R can hack a aircon, and make the room a little cold. Nice hacking right there!```" 
+		elif member == 25:
+			msg = "```H4KKK3R just jackin into the Matrix while standing in a bar, it happens more than you think. ```" 
+		elif member == 26:
+			msg = "```When H4KKK3R tried fleeing the scene only to be shot and lose some memory```" 
+		elif member == 27:
+			msg = "```That time H4KKK3R took some braind damage from failing to get past some black ice```" 
+		elif member == 28:
+		#Noor
+			msg = "```Whats for lunch?```" 
+		elif member == 29:
+			msg = "```That time Noor said they were responsible for putting a grenade in the pot plant only to then shoot themself. F in chat if you really want to but probs dont bother...```" 
+		elif member == 30:
+			msg = "```Noors good at talking and seducing people. Just kidding probably being thrown out by gaurds or getting attacked or something instead.```" 
+		elif member == 31:
+			msg = "```That time Noor was useful by having a gun out that Laramy stole and shot gaurds with.```" 
+		elif member == 32:
+			msg = "```Remember when Noor got shot because Laramy tried to steal Seraphs gun?```" 
+		#Martin Jr
+		elif member == 33:
+			msg = "```When we all tried to kill Martin JR and that manged to tank and seriously harm the entire group.```" 
+		elif member == 34:
+			msg = "```Martin JR gets injured at a bar from a gun fight, walks out of said bar into a sniper bullet, some how still managing to live and get taken to a hospital, only to then die. F in chat if you think Martin JR deserves it.```" 
+		#Azrael
+		elif member == 35:
+			msg = "```Who hides in a dumpster and 'provides'sniper cover? Azrael (to the tune of Spongebob)```" 
+		elif member == 36:
+			msg = "```When Azrael doesn't snipe people so Syntax gives their position away with a smoke grenade```" 
+		elif member == 37:
+			msg = "```Syntax Terror pinned some stuff on Azrael causing Azrael to get killed, please don't F in chat.```" 
+		#MC
+		elif member == 38:
+			msg = "```That time the MC sounds like a robot just after introducing the Thing.```" 
+		elif member == 39:
+			msg = "```MC makes somekind of robot noise... MC clock advances.```" 
+		elif member == 40:
+			msg = "```Who's getting more drunk and making the outcomes worse and worse? Thats right the MC```" 
+		elif member == 41:
+			msg = "```*Bans Waleed from the chat*```" 
+
 		await client.send_message(message.channel, msg.format(message))
 
 	###############################################################################################################################################
