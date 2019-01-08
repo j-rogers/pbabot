@@ -1411,7 +1411,7 @@ Withdrawal:
 
 		#Generates random number to get remember message from  events that have happened in sprawl. Feel free to add more.
 
-		member = random.randint(1,41)
+		member = random.randint(1,60)
 		msg = ""
 
 		#Christof
@@ -1503,6 +1503,45 @@ Withdrawal:
 			msg = "```Who's getting more drunk and making the outcomes worse and worse? Thats right the MC```" 
 		elif member == 41:
 			msg = "```*Bans Waleed from the chat*```" 
+		#Last Mission Chapater 1?
+		elif member ==42:
+			msg ="```H4KKK3R crashed his moterbike looking like an idiot when trying to buy his shiper rifle so Seraph held everyone at gun point and demanded H4KKK3R modified it so they could also use it.```"
+		elif member ==43:
+			msg ="```I'm the best hacker. -Syntax Terror```"
+		elif member ==44:
+			msg ="```When Laramy punched H4KKK3R out(on purpose) and immidiatly patched H4KKK3R up afterwards.```"
+		elif member ==45:
+			msg ="```Syntax Terror actually walked Waleed, and used his senses (Slightly) WOW!```"
+		elif member ==46:
+			msg ="```Remember that time Syntax Terror betrayed us all by rigging his Drone to remember? Because I fucking remember that.```"
+		elif member ==47:
+			msg ="```Remember when Laramy accused Syntax Terror of why the van had blown up resulting in Seraph trying to also kill Laramy and H4KKK3R```"
+		elif member ==48:
+			msg ="```Remember when all H4KKK3R wanted was a sniper rifle but the team nearly stole or killed him over it?```"
+		elif member ==49:
+			msg ="```Remember when Laramy tried throwing a grenade at Seraph after Seraph tried running him over, only to have the grenade explode on Laramy from a shit through?```"
+		elif member ==50:
+			msg ="```Remember when Seraph outright shot H4KKK3R in the head  while sneaking past police? F in chat please.```"
+		elif member ==51:
+			msg ="```That time Syntax Terrors drone blew the van up and Laramy applied first aid to himself, Seraph and H4KKK3R while being questioned by police```"
+		elif member ==52:
+			msg ="```When Laramy nearly blew himself trying to throw a grenade at Seraph and Seraph than shot what was left of Laramy dead. F in chat please.```"
+		elif member ==53:
+			msg ="```When Laramy postioned garden Gnomes in a triangle or something to make a call```"
+		elif member ==54:
+			msg ="```When Laramy was trying to get more armor or heavy ammo from Ken Tenma but butchered it by saying something stupid about marmalade?```"
+		elif member ==55:
+			msg ="```When we got into an argument about how far and fast Syntax Terror could run?```"
+		elif member ==56:
+			msg ="```*More robot noises*```"
+		elif member ==57:
+			msg ="```When Seraph used their plan B to escape by stealing a bikers bike and was gonna ride away to safety until a certain call with Syntax Terror occured.```"
+		elif member ==58:
+			msg ="```When Seraph told Syntax Terror that Laramy and H4KKK3R were dead and then Syntax Terror triggered a tracking becon resuling in Seraph being snipped dead. F in chat please or Seraph will add you to a hitlist.```"
+		elif member ==59:
+			msg ="```When Seraph was dying and their last words to Syntax Terror were 'Im pregnant with H4KKK3R'```"
+		elif member ==60:
+			msg ="```They say Syntax Terror managed to escape the buisness after he betrayed everyone. People he failed (occasionly finished) missions with, the infiltrator be paid lots of Cred for, and even one of his own drones. They also say Syntax Terror spent the rest of his days being more and more paranoid, keeping an eye behind him.  ```"
 
 		await client.send_message(message.channel, msg.format(message))
 
