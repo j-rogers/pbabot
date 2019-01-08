@@ -63,6 +63,7 @@ async def on_message(message):
 .matrix: Displays a list of matrix-specific moves.
 .custom: Displays a list of custom moves.
 .clocks: Displays the current list of clocks.
+.weapons: Displays a list of weapons and their profiles.
 .addclock <clock name>: Adds a clock with a value of 1500.
 .increaseclock <clock name>: Increases a clock by one segment.
 .decreaseclock <clock name>: Decreases a clock by one segment.
@@ -400,6 +401,45 @@ F in chat please.\n
 .clutch: Clutch
 .meatloaf: Meatloaf```"""
 		# Send the message
+		await client.send_message(message.channel, msg.format(message))
+
+	# Displays a list of weapons and their profiles
+	elif message.content.startswith(".weapons"):
+		# Form the message
+		msg = """```Firearms:
+	» Holdout pistol (2-harm hand/close discreet quick reload loud)
+	» Flechette pistol (3-harm close/near quick flechette)
+	» Revolver (2-harm close/near reload loud quick)
+	» Semi-auto pistol (2-harm close/near loud quick)
+	» Heavy revolver (3-harm close/near reload loud)
+	» Heavy pistol (3-harm close/near loud)
+	» Shotgun (3-harm close/near loud messy reload)
+	» Automatic shotgun (3-harm close/near loud messy autofire)
+	» Assault rifle (3-harm near/far loud autofire)
+	» Machine pistol (2-harm close/near loud autofire)
+	» SMG (2-harm close/near loud autofire)
+	» LMG (3-harm near/far loud messy autofire clumsy)
+	» Hunting rifle (2-harm far/ex loud)
+	» Crossbow or hunting bow (2-harm close/near/far reload)
+	» Sniper rifle (3-harm far/ex loud clumsy)
+	» Anti-materiel rifle (3-harm far/ex loud messy breach clumsy)
+	» Grenade launcher (4-harm near/far area loud messy clumsy)
+	» Grenade tube (4-harm near area reload loud messy)
+	» Assault cannon (4-harm near/far area messy breach clumsy)
+	» Missile launcher (5-harm far area messy breach clumsy)\n
+Grenades:
+	» Fragmentation grenades (4-harm near area reload loud messy)
+	» Flashbangs (s-harm near area loud reload)
+	» Gas grenades (s-harm near area reload gas)\n
+Hand weapons:
+	» Knife (2-harm hand)
+	» Club (2-harm hand)
+	» Sword (3-harm hand messy)
+	» Hand taser (s-harm hand reload)
+	» Monofilament whip (4-harm hand messy area dangerous)
+	» Shuriken or throwing knives (2-harm close numerous)```"""
+
+	# Send the message
 		await client.send_message(message.channel, msg.format(message))
 
 
