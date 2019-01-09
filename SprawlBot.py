@@ -72,6 +72,7 @@ async def on_message(message):
 .addcontact <contact name> <description>: Adds a new contact.
 .deletecontact <contact name>: Deletes a contact.
 .drugs: Displays a list of drugs
+.map: Displays a current map
 .rip: Displays a list of dead characters and how they died.
 .f: Same as '.rip'
 .remember: Displays a message of a memorable moment.
@@ -1584,6 +1585,10 @@ Withdrawal:
 			msg ="```They say Syntax Terror managed to escape the buisness after he betrayed everyone. People he failed (occasionly finished) missions with, the infiltrator be paid lots of Cred for, and even one of his own drones. They also say Syntax Terror spent the rest of his days being more and more paranoid, keeping an eye behind him.  ```"
 
 		await client.send_message(message.channel, msg.format(message))
+
+	# Sends the map
+	elif message.content.startswith(".map"):
+		await client.send_file(message.channel, "Map_Sprawl.jpg")
 
 	###############################################################################################################################################
 	###############################################################################################################################################
