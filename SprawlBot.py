@@ -383,12 +383,17 @@ Word on the Street: Meatspace research bonus.```"""
 	# Displays a list of characters who've died, and how they died
 	elif message.content.startswith(".rip") or message.content == ".f":
 		# Form the message
-		msg = """```Martin:
-	Christof died to the hands of Syntax Terror's drones whilst pounded by police.\n
-F in chat please.\n
-                Waleed:
-                Noor died before she could give blowjobs in jail.```"""
-
+		msg = """```
+Christof Romuald: Died to Syntax Terror's Bear Drones while being pounded on by Police. F in chat please.\n
+Noor 'Shareef' Jerkof: Noor's death was on their own account, they ended up shooting themself in the head when they realized they couldn't talk to people and were on their way to jail.\n
+Martin Monis Jr: That time MartinJr took the entire team on in bar shoot up, manged to walk out mostly fine then was shot in the head by a sniper.\n
+Azrael: Azrael was a shit sniper and wouldn't follow the plan, resulting in complications for Laramy and Syntax Terror. Bad mistake Azrael as we framed him resulting in a brutal death.\n
+H4KKK3R: H4KKK3R was in the car with Seraph, trying to guide Laramy to where Syntax Terror was so we could take our revenge. While Jacked into police cameras, Seraph shot them in the head. \n
+Laramy Fisk: Was murdered by Seraph. After Laramy blammed Syntax Terror on why the van blew up, Seraph didn't take kindly, resulting in Seraph running Laramy over and shotting him after he manged to live.\n
+Seraph: Seraph thought they were safe, thought Syntax Terror would be happy, were on their way to Byntax Berror, when a secret chip Syntax had implanted alerted a sniper from The business to shot Seraph dead.\n
+Syntax Terror: Syntax Terror managed to live out his days, always being paranoid and on edge.\n
+Swarf Gander: Swarf killed himself with flashbangs to try avoid hearing Mercer's music.\n 
+```"""
 		# Send message
 		await client.send_message(message.channel, msg.format(message))
 
@@ -1452,9 +1457,9 @@ Withdrawal:
 
 		#Generates random number to get remember message from  events that have happened in sprawl. Feel free to add more.
 
-		member = random.randint(1,60)
+		member = random.randint(1,96)
 		msg = ""
-
+		
 		#Christof
 		if member == 1:
 			msg = "```Remember that time Christof tackled a Robot Synth thing to save Seraph?```"
@@ -1473,7 +1478,7 @@ Withdrawal:
 		elif member == 8:
 			msg = "```Christof threw H4KKK3R out of the way of a building falling down, fun times for everyone.```"
 		elif member == 9:
-			msg = "```Christof charged into heavily armed police and took a shotgun to the face before finally dying to Syntax Terrors drones. F is chat please..```"
+			msg = "```Christof charged into heavily armed police and took a shotgun to the face before finally dying to Syntax Terrors drones. F is chat please...```"
 		#laramy Fisk
 		elif member == 10:
 			msg = "```That Laramy stabbed Noor with with some drugs and Noor then ran out infront of a truck. Good times. ```" 
@@ -1583,7 +1588,82 @@ Withdrawal:
 			msg ="```When Seraph was dying and their last words to Syntax Terror were 'Im pregnant with H4KKK3R'```"
 		elif member ==60:
 			msg ="```They say Syntax Terror managed to escape the buisness after he betrayed everyone. People he failed (occasionly finished) missions with, the infiltrator be paid lots of Cred for, and even one of his own drones. They also say Syntax Terror spent the rest of his days being more and more paranoid, keeping an eye behind him.  ```"
-
+		#Campaign 2 session 1 and 2.
+		elif member == 61:
+			msg = "```That time Daiki did some sick driving```"
+		elif member == 62:
+			msg = "```Can they see my car? Good I aim my missiles at them - Daiki```"
+		elif member == 63:
+			msg = "```That time Daiki and Swarf put Numberphille on suicide watch```"
+		elif member == 64:
+			msg = "```When Swarf paid Numberphille to take him off suicide watch.```"
+		elif member == 65:
+			msg = "```That time Mercer played the Obo and made some cred in the process```"
+		elif member == 66:
+			msg = "```*Plays the slide whistle*```"
+		elif member == 67:
+			msg = "```I'm going to start shitting on his lawn -Daiki```"
+		elif member == 68:
+			msg = "```So Daiki smellls like shit -MC ```"
+		elif member == 69:
+			msg = "```That time Mercer tried having a vision thing without actually taking the time to talk to someone remotely well.```"
+		elif member == 70:
+			msg = "```What if I drive really fast? -Daiki```"
+		elif member == 71:
+			msg = "```All those times Swarf threw a flash grenade and blinded everyone.```"
+		elif member == 72:
+			msg = "```That time Daiki got into a chase to try to impress Elina ```"
+		elif member == 73:
+			msg = "```Swarf flashbanged himself to death to avoid hearing Mercers music. F in chat please.```"
+		elif member == 74:
+			msg = "```That time Daiki became a stalker```"
+		elif member == 75:
+			msg = "```MC: You're a rapist. Daiki: NOOO!```"
+		elif member == 76:
+			msg = "```That time Daiki stalked numberphille so he could get a chicks number```"
+		elif member == 77:
+			msg = "```That time Mercer played the Keytar resulting in even more attention ebing drawn on the team```"
+		elif member == 78:
+			msg = "```That time Merver was distracted while walking to gang members resulting in a shoot out and no talking as planned.```"
+		elif member == 79:
+			msg = "```Swarf: I'm going to shoot everyone.\n MC: Even the baby?\n Swarf: Yes, even the baby. ```"
+		elif member == 80:
+			msg = "```That time everyone had to wait, because Mercer only meets TikTakToe on a Wednesday.```"
+		elif member == 81:
+			msg = "```That time Mercer helped Daiki somehow, by Daiki having 'Don't sue me' playing in the background.```"
+		#GoofyGoober
+		elif member == 82:
+			msg = "```When Daiki didn't have the right permit for a car with bullet holes and shot up passengers inside it, resulting in police being shot and a high speed chase.```" 
+		elif member == 83:
+			msg = "```When Daiki's missile hit The Trump.```" 
+		elif member == 84:
+			msg = "```When Mercer actually stopped and got out of a truck when asked by Skorpio-tensi despite knowing it was stolen.```" 
+		elif member == 85:
+			msg = "``` When Mercer manged to pretend to faint when Skorpio-tensi were trying to arrest him.```" 
+		elif member == 86:
+			msg = "```That time Mercer played Goofy Goober Rock on his Keytar and kept two gaurds frozen with pure awe. ```" 
+		elif member == 87:
+			msg = "``` That time The Donald dropped the wall. ```" 
+		elif member == 88:
+			msg = "```Remember when The Donald slammed the wall into a Skorpio-tensi gaurd against a truck, so hard it went through the truck and resulted in Mercer pretty much being dead.```" 
+		elif member == 89:
+			msg = "```That time Mercer didn't die cause The Donald dropped him off at a hosptial and didn't just kick him out of a truck onto the street.```" 
+		elif member == 90:
+			msg = "```Tgat tune Mercer jumped back into the truck and kept failing to start it resulting in lots of bullets being shot at him.```" 
+		elif member == 91:
+			msg = "```That time Daiki remote controlled their car to lead the police off the trail a little bit```" 
+		elif member == 92:
+			msg = "```That time Daiki shot missiles at a drone. Oh how the turntables.```" 
+		elif member == 93:
+			msg = "```That time Mercer actually pulled over with a stolen truck to Skorpio-tensi who knew it was stolen, then pretended to faint, stabbing one of the skorpio-tensi gaurds in the throat with his retractable knife blades, busting his Keytar out and played Goofy Goober Rock freezing the gaurds in awe.```" 
+		elif member == 94:
+			msg = "```Remember when Mercers voice kept changing?```" 
+		elif member == 95:
+			msg = "```That time the team kept doing the same thing untill something happened```" 
+		elif member == 96:
+			msg ="```Remember how Mercer walked into a bar and advanced the legwork clock before even having a mission. Good times.```"
+		
+		#Sends the message. 
 		await client.send_message(message.channel, msg.format(message))
 
 	# Sends the map
