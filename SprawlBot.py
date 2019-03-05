@@ -59,7 +59,8 @@ async def on_message(message):
 
 
 	if game == 'sprawl':
-		sprawl.handle(message)
+		response = sprawl.handle(message)
+		await client.send_message(message.channel, response.format(message))
 
 	###############################################################################################################################################
 	###############################################################################################################################################
@@ -97,262 +98,11 @@ async def on_message(message):
 		# Send the message
 		await client.send_message(message.channel, msg.format(message))
 
-	# Displays a list of moves
-	elif message.content.startswith(".moves"):
-		# Form the message
-		msg = 	"""```Use the following commands to find detailed information about each move.\n
-.actunderpressure: Act Under Pressure (Cool)
-.applyfirstaid: Apply First Aid (Cool)
-.assess: Assess (Edge)
-.playhardball: Play Hardball (Edge)
-.amidead: Acquire Agricultural Property (Meat)
-.mixitup: Mix it Up (Meat)
-.research: Research (Mind)
-.fasttalk: Fast Talk (Style)
-.hitthestreet: Hit The Street (Style)
-.undertheknife: Go Under the Knife (Cred)
-.fuckmeup: Harm
-.getthejob: Get the Job (Edge)
-.gettingpaid: Getting Paid (Legwork)
 
-For playbook specific moves see '.playbooks'.
-
-For matrix specific moves see '.matrix'.```"""
-
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
-
-	# Displays list of playbooks
-	elif message.content.startswith(".playbooks"):
-		# Form the message
-		msg = """```Use the following commands to find each playbook-specific move.\n
-.driver
-.fixer
-.hacker
-.hunter
-.infiltrator
-.killer
-.pusher
-.reporter
-.soldier
-.tech```"""
-
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
-
-	# Driver
-	elif message.content.startswith(".driver"):
-		msg = """```Roll moves:
-.hotshitdriver: Bonus while hight-tension driving. (Roll)\n
-    Other moves:
-Wheels: You start with a car.
-Second Skin: When jacked into your vehicle with a neural interface you get bonuses to your rolls.
-Chromed: Choose another piece of cyberware at character creation or in downtime.
-Daredevil: Bonus when you drive straight into danger.
-Drone Jockey: You get with two drones.
-Iceman: Fast talk replacement.
-Right Tool for the Job: You have two additional cyber-linked vehicles.
-Sweet Ride: Replacement and bonus to Hit the street while in your vehicle.```"""
-
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
-
-	# Fixer
-	elif message.content.startswith(".fixer"):
-		msg = """```Roll moves:
-.hustling: Gives hustling jobs. (Roll)
-.iknowpeople: Specialized contact decleration. (Roll)\n
-	Other moves:
-Backup: You have a group of associates. 
-Balls in the Air: +1 crew and choose another job.
-Chromed: Choose another piece of cyberware at character creation or in downtime.
-Deal of a Lifetime: Hit the street bonus when selling something.
-Facetime: Fast talk bonus.
-Hard to Find: Hit the street bonus.
-Reputation: Various social bonuses.
-Sales Engineer: Produce equipment bonus.
-Smooth: Helping or hindering replacement.
-Street King Pin: +1 crew, choose an additional job.
-Word on the Street: Meatspace research bonus.```"""
-
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
-
-	# Hacker
-	elif message.content.startswith(".hacker"):
-		msg = """```Roll moves:
-.consolecowboy: Bonus within current system. (Roll)\n
-    Other moves:
-.jackin: You can access the matrix.
-.consolecowboy: Bonus within current system. (Roll)
-.blackicevet: Bonus against black ICE.
-.chromed: Choose another piece of cyberware at character creation or in downtime. 
-.icebreaker: Bonus against all ICE.
-.neuralscars: Bonus against black ICE.
-.programmingonthefly: Bonus to matrix moves.
-.rep: Fast talk and Play hard ball replacements while in the matrix.
-.searchoptimisation: Matrix research bonus.
-.techsupport: Bonus when helping or interfering while in the matrix.
-.zeroed: Cyberdeck bonus.```"""
-
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
 	
-	# Hunter
-	elif message.content.startswith(".hunter"):
-		msg = """```Roll moves:
-.itallfits: Research bonus. (Roll)
-.biggamehunter: Bonus when springing a trap against a researced target. (Roll)
-.sniper: Bonus when hiding. (Roll)\n
-    Other moves:
-.eartotheground: Meatspace reseach bonus. 
-.chromed: Choose another piece of cyberware at character creation or in downtime.
-.deadbeat: Hit the street bonus.
-.enhance: Research bonus.
-.eyefordetail: Bonus when calmly assessing a person or place.
-.humanterrain: Bonus when investigating a group.
-.onthetrail: Additional use of intel against a single person.
-.seetheangles: At the start of the action phase gain [intel] and [gear].```"""
 
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
-	
-	# Infiltrator
-	elif message.content.startswith(".infiltrator"):
-		msg = """```Roll moves:
-.covertentry: Bonus when infilatrating alone. (Roll)
-.casethejoint: Bonus when examining a locations weaknesses. (Roll)
-.planb: When shit hits the fan and you have to get out. (Roll)
-.psychologicalwarfare: When you attempt to demoralise the enemy by leaving evidence of violence. (Roll)\n
-    Other moves:
-.catburgler: On the job [gear] procurement. Used with Covert Entry.
-.face: On the job [intel] procurement. Used with Covert Entry.
-.assassin: Bonus to attacking unexpectedly.
-.chromed: Choose another piece of cyberware at character creation or in downtime.
-.jackin: You can access the matrix.
-.masterofdisguise: Fast talk bonus.
-.motherduck: Allows Covert Entry hold you spend to work for the whole team.
-.stealthoperative: Assess bonus.```"""
 
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
-	
-	# Killer
-	elif message.content.startswith(".killer"):
-		msg = """```Roll moves:
-.seriousbadass: Bonus when entering a charged situation. (Roll)
-.trainedeye: Bonus when sizing up a person, vehicle, drone or gang. (Roll)\n
-    Other moves:
-.customweapon: You begin with a custom weapon.
-.emotionless: Play hard ball replacement.
-.hard: Harm move bonus.
-.loadedforbear: Choose another bonus weapon.
-.moremachinethanmeat: Choose another piece of cyberware at character creation or in downtime.
-.corporatesecrets: Bonus when researching a corporation.
-.militarybackground: Bonus when hitting the street.
-.milspecs: Bonus to mix it up.```"""
 
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
-	
-	# Pusher
-	elif message.content.startswith(".pusher"):
-		msg = """```Roll moves:
-.driven: Bonus when the mission furthers your vision. (Roll)
-.visionthing: Bonus when passionately advocating your vision. (Roll)\n
-    Other moves:
-.believers: You are a part of a gang, tribe, band, corporation or similar group.
-.bringitonhome: Bonus when using Vision Thing or One Million Points of Light.
-.chromed: Choose another piece of cyberware at character creation or in downtime.
-.famous: Bonus against people who recognise you.
-.innercircle: You have a loyal inner circle of believers.
-.onemillionpointsoflight: Bonus to vision thing.
-.opportunistic: Replacement when helping or interfering.
-.peopleperson: Hit the street bonus.
-.rabblerouser: Vision Thing bonus.
-.silvertongue: Fast Talk bonus.```"""
-
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
-	
-	# Reporter
-	elif message.content.startswith(".reporter"):
-		msg = """```Roll moves:
-.liveandontheair: You can broadcast a stream to hurt your target. (Roll)
-.noseforastory: Various mission bonuses. (Roll)
-.gatherevidence: Various effects on story and noise clocks. (Roll)
-.monstering: You can corner someone and hound them with questions. (Roll)\n
-    Other moves:
-.24/7livefeeds: Bonus to researching when scanning live feeds.
-.chromed: Choose another piece of cyberware at character creation or in downtime.
-.filthyassistants: Bonus when using research obtained [intel].
-.presspass: Bonus when revealing yourself to fast talk your way in.
-.reliablesources: Research bonus.
-.warcorrespondent: Bonus when Acting Under Pressure.```"""
-
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
-	
-	# Soldier
-	elif message.content.startswith(".soldier"):
-		msg = """```Roll moves:
-.iloveitwhenaplancomestogether: Bonus [gear] and [intel]. (Roll)
-.exitstrategy: Bonus to getting the fuck out of there. (Roll)
-.recruiter: Contact / Hit the Street bonus. (Roll)
-.slippery: Prevents Corps from finding the teams involvement. (Roll)\n
-    Other moves:
-.herestheplan: Team bonus when you plan the mission and if you get paid.
-.auraofprofessionalism: Bonus when Getting the Job or Getting Paid.
-.chromed: Choose another piece of cyberware at character creation or in downtime.
-.corporateknowledge: Bonus when researching a corporation.
-.handsonmanagement: Mix it up bonus.
-.steadypresence: You can give pep-talks.
-.tacticaloperations: Assess bonus.```"""
-
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
-	
-	# Tech
-	elif message.content.startswith(".tech"):
-		msg = """```Roll moves:
-.storage: Pre-mission [gear] bonus. (Roll)
-.blendin: You can act like you belong in places you don't. (Roll)
-.bypass: You can subvert security measures. (Roll)\n
-    Other moves:
-.expert: You get an area of expertise.
-.customiser: You can examine and modify technology.
-.analytic: Assess replacement.
-.chromed: Choose another piece of cyberware at character creation or in downtime.
-.diverseinterests: Choose another area of expertise.
-.jackofalltrades: Choose another area of expertise.
-.obsessive: Research bonus.
-.onit: Replacement when helping or hindering someone in a topic relating to your expertise.
-.renaissanceman: Choose another area of expertise.```"""
-
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
-
-	# Displays a list of matrix specific moves
-	elif message.content.startswith(".matrix"):
-		# Form the message
-		msg = """```Use the following commands to find detailed information about each move.\n
-.login: When attepting to gain access to a system, Login. (Synth)
-.meltice: When figting ICE, Melt Ice (Edge)
-.compromisesecurity: When screwing around with a system's digital security, Compromise Security (Mind)
-.manipulatesystems: When interacting with the meatspace through a system, Manipulate Systems (Synth)
-.jackout: When you need to get out quick, Jack Out (Cool)```"""
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
-
-	# Displays a list of custom moves
-	elif message.content.startswith(".custom"):
-		# Form the message
-		msg = """```Use the following commands to find detailed information about each move.\n
-.dogie: Git along little dogie (Style)
-.trouble: Nose for trouble (Cool)
-.goodbetter: He's good, but I'm better (Edge)```"""
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
 
 	# Displays the current list of clocks
 	elif message.content.startswith(".clocks"):
@@ -416,57 +166,6 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 ```"""
 
 		# Send message
-		await client.send_message(message.channel, msg.format(message))
-
-	# Display a list of drugs
-	elif message.content.startswith(".drugs"):
-		# Form the message
-		msg = """```Use the following commands to find detailed information about each drug.\n
-.spank: Spank
-.motherfuck: Motherfuck
-.domo: Domo
-.clutch: Clutch
-.meatloaf: Meatloaf```"""
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
-
-	# Displays a list of weapons and their profiles
-	elif message.content.startswith(".weapons"):
-		# Form the message
-		msg = """```Firearms:
-	» Holdout pistol (2-harm hand/close discreet quick reload loud)
-	» Flechette pistol (3-harm close/near quick flechette)
-	» Revolver (2-harm close/near reload loud quick)
-	» Semi-auto pistol (2-harm close/near loud quick)
-	» Heavy revolver (3-harm close/near reload loud)
-	» Heavy pistol (3-harm close/near loud)
-	» Shotgun (3-harm close/near loud messy reload)
-	» Automatic shotgun (3-harm close/near loud messy autofire)
-	» Assault rifle (3-harm near/far loud autofire)
-	» Machine pistol (2-harm close/near loud autofire)
-	» SMG (2-harm close/near loud autofire)
-	» LMG (3-harm near/far loud messy autofire clumsy)
-	» Hunting rifle (2-harm far/ex loud)
-	» Crossbow or hunting bow (2-harm close/near/far reload)
-	» Sniper rifle (3-harm far/ex loud clumsy)
-	» Anti-materiel rifle (3-harm far/ex loud messy breach clumsy)
-	» Grenade launcher (4-harm near/far area loud messy clumsy)
-	» Grenade tube (4-harm near area reload loud messy)
-	» Assault cannon (4-harm near/far area messy breach clumsy)
-	» Missile launcher (5-harm far area messy breach clumsy)\n
-Grenades:
-	» Fragmentation grenades (4-harm near area reload loud messy)
-	» Flashbangs (s-harm near area loud reload)
-	» Gas grenades (s-harm near area reload gas)\n
-Hand weapons:
-	» Knife (2-harm hand)
-	» Club (2-harm hand)
-	» Sword (3-harm hand messy)
-	» Hand taser (s-harm hand reload)
-	» Monofilament whip (4-harm hand messy area dangerous)
-	» Shuriken or throwing knives (2-harm close numerous)```"""
-
-	# Send the message
 		await client.send_message(message.channel, msg.format(message))
 
 
@@ -1734,7 +1433,7 @@ into it and you can work on them like a savvyhead on tech (cf ).
 		#Send the message
 		await client.send_message(message.channel, msg.format(message))
 	#Professional compassion
-	elif message.content.startswith("."):
+	elif message.content.startswith(".yeeeeeeeeeeeeeet"):
 		msg - """``` 
 		Professional compassion: 
 		you can choose to roll+sharp instead of roll+Hx when you help someone who’s rolling.
