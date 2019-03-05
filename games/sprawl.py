@@ -265,9 +265,9 @@ Hand weapons:
 	» Monofilament whip (4-harm hand messy area dangerous)
 	» Shuriken or throwing knives (2-harm close numerous)```"""
 
-	'''
-	Basic Move Commands
-	'''
+	###
+	# Basic moves
+	###
 
 	# Act Under Pressure
 	elif messageString == ".actunderpressure":
@@ -420,6 +420,70 @@ take +1-harm
 		Ђ The employer is identifiable
 		Ђ The meeting doesn’t attract the attention of outside parties
 		Ђ You learned something from the mission; everyone marks experience```"""
+		
+	#########################################################
+	################## MATRIX MOVE COMMANDS #################
+	#########################################################
+
+	# Login
+	elif messageString == ".login":
+		
+		msg = """```When you attempt to gain access to a system, roll Synth.\n
+	10+: you’re in clean
+	7-9: you’re in, but choose one:
+		Ђ Passive trace (+1 trace)
+		Ђ ICE is activated
+		Ђ An alert is triggered (advance the active Mission Clock)
+		Ђ Your access is restricted – take -1 ongoing to matrix moves in this system while your access is restricted
+		6-: you’re in, but the MC chooses two```"""
+		
+		
+		
+
+	# Melt Ice
+	elif messageString == ".melt" or messageString == ".meltice":
+		
+		msg = """```When you attempt to evade, destroy or disable an activated ICE construct, roll Edge.\n
+	7+: you evade, destroy, or temporarily disable the system, your choice
+	7-9: the system successfully executes a routine before you can disable it```"""
+		
+		
+		
+
+	# Compromise Security
+	elif messageString == ".compsec" or messageString == ".compromisesecurity":
+		
+		msg = """```When you attempt to compromise a sub-system’s security, roll Mind.\n
+		10+: gain 3 hold over the sub-system you have compromised
+		7-9: gain 1 hold
+		6-: you trigger an alert, which may have additional consequences\n
+You may spend 1 hold to activate a security measure on that sub-system.```"""
+		
+		
+		
+
+	# Manipulate Systems
+	elif messageString == ".mansys" or messageString == ".manipulatesystem" or messageString == ".manipulatesystems":
+		
+		msg = """```When you attempt to manipulate a digitally-controlled aspect of a facility, roll Synth.\n
+	10+: gain 3 hold over the sub-system you are manipulating
+	7-9: gain 1 hold\n
+You may spend 1 hold to activate routines on that sub-system.```"""
+		
+		
+		
+
+	# Jack Out
+	elif messageString == ".jackout":
+		
+		msg = """```When you, your programs, or your deck are about to be damaged by ICE, you can try to jack out. Roll Cool.\n
+	10+: you disconnect yourself from the system before any serious harm occurs
+	7-9: you jack out, but choose one:
+		Ђ You lose some data
+		Ђ You take some of the established consequences
+		Ђ The owners of the target system trace you to your current location
+	6-: you take the established consequences... and you’re still connected```"""
+		
 		
 		
 		
