@@ -169,79 +169,7 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 		await client.send_message(message.channel, msg.format(message))
 
 
-	###############################################################################################################################################
-	###############################################################################################################################################
-	############################################################## BASIC MOVE COMMANDS ############################################################
-	###############################################################################################################################################
-	###############################################################################################################################################
 
-	
-
-	#########################################################
-	################## MATRIX MOVE COMMANDS #################
-	#########################################################
-
-	# Login
-	elif message.content.startswith(".login"):
-		# Form the message
-		msg = """```When you attempt to gain access to a system, roll Synth.\n
-	10+: you’re in clean
-	7-9: you’re in, but choose one:
-		Ђ Passive trace (+1 trace)
-		Ђ ICE is activated
-		Ђ An alert is triggered (advance the active Mission Clock)
-		Ђ Your access is restricted – take -1 ongoing to matrix moves in this system while your access is restricted
-		6-: you’re in, but the MC chooses two```"""
-		
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
-
-	# Melt Ice
-	elif message.content.startswith(".melt") or message.content.startswith(".meltice"):
-		# Form the message
-		msg = """```When you attempt to evade, destroy or disable an activated ICE construct, roll Edge.\n
-	7+: you evade, destroy, or temporarily disable the system, your choice
-	7-9: the system successfully executes a routine before you can disable it```"""
-		
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
-
-	# Compromise Security
-	elif message.content.startswith(".compsec") or message.content.startswith(".compromisesecurity"):
-		# Form the message
-		msg = """```When you attempt to compromise a sub-system’s security, roll Mind.\n
-		10+: gain 3 hold over the sub-system you have compromised
-		7-9: gain 1 hold
-		6-: you trigger an alert, which may have additional consequences\n
-You may spend 1 hold to activate a security measure on that sub-system.```"""
-		
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
-
-	# Manipulate Systems
-	elif message.content.startswith(".mansys") or message.content.startswith(".manipulatesystem") or message.content.startswith(".manipulatesystems"):
-		# Form the message
-		msg = """```When you attempt to manipulate a digitally-controlled aspect of a facility, roll Synth.\n
-	10+: gain 3 hold over the sub-system you are manipulating
-	7-9: gain 1 hold\n
-You may spend 1 hold to activate routines on that sub-system.```"""
-		
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
-
-	# Jack Out
-	elif message.content.startswith(".jackout"):
-		# Form the message
-		msg = """```When you, your programs, or your deck are about to be damaged by ICE, you can try to jack out. Roll Cool.\n
-	10+: you disconnect yourself from the system before any serious harm occurs
-	7-9: you jack out, but choose one:
-		Ђ You lose some data
-		Ђ You take some of the established consequences
-		Ђ The owners of the target system trace you to your current location
-	6-: you take the established consequences... and you’re still connected```"""
-		
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
 
 	###############################################################################################################################################
 	###############################################################################################################################################
