@@ -12,14 +12,14 @@ def handle(message):
 	##			 ##
 	#Sixth Sense
 	if message.content.startswith(".sixthsense"):
-		msg - """``` Sixth sense: when you open your brain to the world’s psychic maelstrom,
+		msg = """``` Sixth sense: when you open your brain to the world’s psychic maelstrom,
 		roll+sharp instead of roll+weird.
 		```"""
 		#Send the message
 		
 	#infirmary	
 	elif message.content.startswith(".infrimary"):
-		msg - """```Infirmary:
+		msg = """```Infirmary:
 		you get an infirmary, a workspace with life support,
 a drug lab and a crew of 2 (Shigusa & Mox, maybe). Get patients
 into it and you can work on them like a savvyhead on tech (cf ). 
@@ -28,7 +28,7 @@ into it and you can work on them like a savvyhead on tech (cf ).
 		
 	#Professional compassion
 	elif message.content.startswith(".professionalcompassion"):
-		msg - """``` 
+		msg = """``` 
 		Professional compassion: 
 		you can choose to roll+sharp instead of roll+Hx when you help someone who’s rolling.
 		```"""
@@ -36,12 +36,12 @@ into it and you can work on them like a savvyhead on tech (cf ).
 		
 	#Battlefield grace
 	elif message.content.startswith(".battlefieldgrace"):
-		msg - """``` Battlefield grace: while you are caring for people, not fighting, you get +1armor.```"""
+		msg = """``` Battlefield grace: while you are caring for people, not fighting, you get +1armor.```"""
 		#Send the message
 		
 	#Healing touch	
 	elif message.content.startswith(".healingtouch"):
-		msg - """```Healing touch: 
+		msg = """```Healing touch: 
 		when you put your hands skin-to-skin on a
 wounded person and open your brain to them, roll+weird. 
 On a 10+, heal 1 segment. 
@@ -57,7 +57,7 @@ their experience and fate are up to the MC.```"""
 		
 	#Touched by death
 	elif message.content.startswith(".touchedbydeath"):
-		msg - """```
+		msg = """```
 		Touched by death: whenever someone in your care dies, you get
 		+1weird (max +3). 	
 		```"""
@@ -68,7 +68,7 @@ their experience and fate are up to the MC.```"""
 	##			 ##
 	#Dangerous and Sexy
 	elif message.content.startswith(".dangerousandsexy"):
-		msg - """```Dangerous & sexy:
+		msg = """```Dangerous & sexy:
 		when you enter into a charged situation, roll+hot.
 		On a 10+, hold 2. 
 		On a 7–9, hold 1. 
@@ -81,20 +81,20 @@ On a miss, your enemies identify you immediately as their foremost threat.
 		
 	#Ice Cold
 	elif message.content.startswith(".icecold"):
-		msg - """```Ice cold: when you go aggro on an NPC, roll+cool instead of roll+hard.
+		msg = """```Ice cold: when you go aggro on an NPC, roll+cool instead of roll+hard.
 		 When you go aggro on another player’s character, roll+Hx instead of roll+hard.
 		```"""
 		#Send the message
 		
 	#Merciless
 	elif message.content.startswith(".merciless"):
-		msg - """```Merciless: when you inflict harm, inflict +1harm. 
+		msg = """```Merciless: when you inflict harm, inflict +1harm. 
 		```"""
 		#Send the message
 		
 	#Visions of death.
 	elif message.content.startswith(".visionsofdeath"):
-		msg - """```Visions of death: 
+		msg = """```Visions of death: 
 		when you go into battle, roll+weird.
 		 On a 10+, name one person who’ll die and one who’ll live.
 		 On a 7–9, name one person who’ll die OR one person who’ll live. 
@@ -105,14 +105,14 @@ On a miss, your enemies identify you immediately as their foremost threat.
 		
 	#Perfect Insticts
 	elif message.content.startswith(".perfectinstincts"):
-		msg - """```Perfect instincts: 
+		msg = """```Perfect instincts: 
 		when you’ve read a charged situation and you’re acting on the MC’s answers, take +2 instead of +1.		
 		```"""
 		#Send the message
 		
 	#Impossible Reflexes.
 	elif message.content.startswith(".impossiblereflexes"):
-		msg - """```Impossible reflexes: 
+		msg = """```Impossible reflexes: 
 		the way you move unencumbered counts as armor. If you’re
 naked or nearly naked, 2-armor; if you’re wearing non-armor fashion, 1-armor. If you’re
 wearing armor, use it instead. 
@@ -125,14 +125,14 @@ wearing armor, use it instead.
 	##			 ##
 	#Unnatural lust transfixion
 	elif message.content.startswith(".unnaturallusttransfixion"):
-		msg - """```Unnatural lust transiixion: 
+		msg = """```Unnatural lust transiixion: 
 		when you try to seduce someone, roll+weird instead of roll+hot. 
 		```"""
 		#Send the message
 		
 	#Casual brain receptivity
 	elif message.content.startswith(".casualbrainreceptivity"):
-		msg - """```Casual brain receptivity: 
+		msg = """```Casual brain receptivity: 
 		when you read someone, roll+weird instead of roll+sharp.
 Your victim has to be able to see you, but you don’t have to interact. 		
 		```"""
@@ -140,7 +140,7 @@ Your victim has to be able to see you, but you don’t have to interact.
 		
 	#preternatural at will brain atturnment
 	elif message.content.startswith(".pretnernatual"):
-		msg - """``` 
+		msg = """``` 
 		Preternatural at-will brain attunement: 
 		you get +1weird (weird+3).
 		```"""
@@ -148,7 +148,7 @@ Your victim has to be able to see you, but you don’t have to interact.
 		
 	#Deep brain scan
 	elif message.content.startswith(".deepbrainscan"):
-		msg - """``` Deep brain scan: 
+		msg = """``` Deep brain scan: 
 		when you have time and physical intimacy
 		with someone — mutual intimacy like holding them in your
 		arms, or 1-sided intimacy like they’re restrained to a table — you
@@ -168,7 +168,7 @@ Your victim has to be able to see you, but you don’t have to interact.
 		
 	#Direct brain whisper projection
 	elif message.content.startswith(".directbrainwhisperprojection"):
-		msg - """```Direct-brain whisper projection: 
+		msg = """```Direct-brain whisper projection: 
 		you can roll+weird to get the effects of going aggro, without going aggro. Your victim has to
 be able to see you, but you don’t have to interact. If your victim
 forces your hand, your mind counts as a weapon (1-harm ap
@@ -178,7 +178,7 @@ close loud-optional).
 		
 	#in brain puppet string
 	elif message.content.startswith(".inbrainpupperstrings"):
-		msg - """```In-brain puppet strings: 
+		msg = """```In-brain puppet strings: 
 		when you have time and physical
 		intimacy with someone — again, mutual or 1-sided — you can
 		plant a command inside their mind. Roll+weird.
@@ -201,7 +201,7 @@ close loud-optional).
 
 	#pack alpha
 	elif message.content.startswith(".packalpha"):
-		msg - """``` 
+		msg = """``` 
 		Pack alpha: when you try to impose your will on your gang, roll+hard. 
 		On a 10+, all 3. 
 		On a 7–9, choose 1:
@@ -215,7 +215,7 @@ close loud-optional).
 		
 	#fuckingthieves
 	elif message.content.startswith(".fuckingthieves"):
-		msg - """```
+		msg = """```
 		Fucking thieves: when you have your gang search their pockets and saddlebags for something, roll+hard. 
 		It has to be something small enough to fit. 
 		On a 10+, one of you happens to have just the thing, or close enough. 
@@ -233,7 +233,7 @@ close loud-optional).
 
 	#a no shit driver
 	elif message.content.startswith(".noshitdriver"):
-		msg - """``` A no shit driver: 
+		msg = """``` A no shit driver: 
 		when behind the wheel…
 		…if you do something under fire, add your car’s power to your
 		roll.
@@ -251,14 +251,14 @@ close loud-optional).
 		
 	#Good in the clinch
 	elif message.content.startswith(".goodintheclinch"):
-		msg - """```Good in the clinch:
+		msg = """```Good in the clinch:
 		 when you do something under fire, roll+sharp instead of roll+cool.
 		```"""
 		#Send the message
 		
 	#weather eye
 	elif message.content.startswith(".weathereye"):
-		msg - """```
+		msg = """```
 		Weather eye: when you open your brain to the world’s psychic
 maelstrom, roll+sharp instead of roll+weird.
 		```"""
@@ -266,7 +266,7 @@ maelstrom, roll+sharp instead of roll+weird.
 			
 	#daredevil
 	elif message.content.startswith(".daredevil"):
-		msg - """``` Daredevil: if you go straight into danger without hedging your
+		msg = """``` Daredevil: if you go straight into danger without hedging your
 bets, you get +1armor. If you happen to be leading a gang or
 convoy, it gets +1armor too.
 		
@@ -275,7 +275,7 @@ convoy, it gets +1armor too.
 		
 	#my other car is a tank
 	elif message.content.startswith(".myothercarisatank"):
-		msg - """``` My other car is a tank: 
+		msg = """``` My other car is a tank: 
 		you get an additional car. Give it
 		mounted machine guns (3-harm close/far area messy) or
 		grenade launchers (4-harm close area messy) and +1armor.
@@ -288,14 +288,14 @@ convoy, it gets +1armor too.
 	##			 ##
 	#battle-hardened
 	elif message.content.startswith(".battlehardended"):
-		msg - """```Battle-hardened: 
+		msg = """```Battle-hardened: 
 		when you act under fire, roll+hard instead of roll+cool. 
 		```"""
 		#Send the message
 		
 	#fuck this shit
 	elif message.content.startswith(".fuckthisshit"):
-		msg - """```Fuck this shit:
+		msg = """```Fuck this shit:
 		 name your escape route and roll+hard. 
 		 On a 10+,sweet, you’re gone. 
 		 On a 7–9, you can go or stay, but if you go it costs you: leave something behind, or take something with you, the MC will tell you what. 
@@ -306,7 +306,7 @@ convoy, it gets +1armor too.
 		
 	#battlefieldinstincts
 	elif message.content.startswith(".battlefieldinstints"):
-		msg - """```Battlefield instincts:
+		msg = """```Battlefield instincts:
 		when you open your brain to the world’s
 		psychic maelstrom, roll+hard instead of roll+weird, but only in
 		battle.
@@ -315,13 +315,13 @@ convoy, it gets +1armor too.
 		
 	#blood craze
 	elif message.content.startswith(".bloodcrazed"):
-		msg - """```Bloodcrazed: whenever you inflict harm, inflict +1harm.
+		msg = """```Bloodcrazed: whenever you inflict harm, inflict +1harm.
 		```"""
 		#Send the message
 		
 	#not to be fucked with
 	elif message.content.startswith(".nottobefuckedwith"):
-		msg - """```NOT TO BE FUCKED WITH: in battle, you count as a gang
+		msg = """```NOT TO BE FUCKED WITH: in battle, you count as a gang
 (3-harm gang small), with armor according to the circumstances. 
 		```"""
 		#Send the message
@@ -331,7 +331,7 @@ convoy, it gets +1armor too.
 	##			 ##
 	#battle-hardened
 	elif message.content.startswith(".apocbasic"):
-		msg - """```Do something under fire (.dosomethingunderfire)
+		msg = """```Do something under fire (.dosomethingunderfire)
 					Go Aggro (.goaggro)
 					Seize by force (.seizebyforce)
 					Read a sitch (.readasitch)
@@ -347,7 +347,7 @@ convoy, it gets +1armor too.
 		
 	#follwothermove
 	elif message.content.startswith(".followothermove"):
-		msg - """```When you follow through on someone else’s move, roll+Hx.
+		msg = """```When you follow through on someone else’s move, roll+Hx.
 If it’s one of the MC’s characters’, roll+sharp. On a 10+, the MC
 chooses one of the following for you, as appropriate:
 • you inflict +1harm
@@ -365,7 +365,7 @@ character of her own.
 		
 	#stay the fuck down
 	elif message.content.startswith(".staythefuckdown"):
-		msg - """```When you stay the fuck down, roll+sharp. On a hit, you’re in
+		msg = """```When you stay the fuck down, roll+sharp. On a hit, you’re in
 a relatively safe spot for the rest of the battle. On a 10+, you
 come under no fire. On a 7–9, you come under only incidental
 fire. On a miss, you have to break position now or come under
@@ -376,7 +376,7 @@ concentrated fire.
 		
 	#maintainposition
 	elif message.content.startswith(".maintainposition"):
-		msg - """```
+		msg = """```
 		When you maintain an untenable position or course,
 roll+hard. On a 10+, you can hold it, and for 3 ticks you’ll come
 under only incidental fire, even past 9:00. On a 7–9, you can hold
@@ -389,7 +389,7 @@ before 9:00, now it’s 9:00.)
 		
 	#coverfire	
 	elif message.content.startswith(".coverfire"):
-		msg - """```When you provide covering fire for someone, roll+cool. On a
+		msg = """```When you provide covering fire for someone, roll+cool. On a
 10+, you keep them from coming under concentrated fire, even
 past 9:00. On a 7–9, their position or course is untenable, and
 they proceed accordingly. On a miss, they suffer concentrated
@@ -399,7 +399,7 @@ fire now. (If it’s before 9:00, now it’s 9:00.)
 		
 	#open your brain
 	elif message.content.startswith(".openyourbrain"):
-		msg - """```OPEN YOUR BRAIN
+		msg = """```OPEN YOUR BRAIN
 When you open your brain to the world’s psychic maelstrom,
 roll+weird. On a hit, the MC will tell you something new and
 interesting about the current situation, and might ask you a
@@ -412,7 +412,7 @@ already know all there is to know, the MC will tell you that.
 		
 	#read a person
 	elif message.content.startswith(".readaperson"):
-		msg - """```READ A PERSON
+		msg = """```READ A PERSON
 When you read a person in a charged interaction, roll+sharp.
 On a 10+, hold 3. On a 7–9, hold 1. While you’re interacting with
 them, spend your hold to ask their player questions, 1 for 1:
@@ -426,7 +426,7 @@ them, spend your hold to ask their player questions, 1 for 1:
 		
 	#read a sitch
 	elif message.content.startswith(".readasitch"):
-		msg - """```
+		msg = """```
 		READ A SITCH
 When you read a charged situation, roll+sharp. On a hit, you
 can ask the MC questions. Whenever you act on one of the MC’s
@@ -443,7 +443,7 @@ answers, take +1. On a 10+, ask 3. On a 7–9, ask 1:
 		
 	#seize by force
 	elif message.content.startswith(".seizebyforce"):
-		msg - """```SEIZE BY FORCE
+		msg = """```SEIZE BY FORCE
 When you try to seize something by force, or to secure your
 hold on something, roll+hard. On a hit, choose options. On a
 10+, choose 3. On a 7–9, choose 2:
@@ -456,7 +456,7 @@ hold on something, roll+hard. On a hit, choose options. On a
 		
 	#go aggro
 	elif message.content.startswith(".goaggro"):
-		msg - """```GO AGGRO
+		msg = """```GO AGGRO
 When you go aggro on someone, roll+hard. On a 10+, they have
 to choose: force your hand and suck it up, or cave and do what
 you want. On a 7–9, they can instead choose 1:
@@ -471,7 +471,7 @@ you want. On a 7–9, they can instead choose 1:
 		
 	#dosomethignunderfire
 	elif message.content.startswith(".dosomethingunderfire"):
-		msg - """```DO SOMETHING UNDER FIRE
+		msg = """```DO SOMETHING UNDER FIRE
 When you do something under fire, or dig in to endure fire, roll+cool. 
 On a 10+, you do it.
  On a 7–9, you flinch, hesitate, or stall: the MC can offer you a worse outcome, a hard bargain, or
@@ -481,7 +481,7 @@ an ugly choice
 		
 	#added apoc books
 	elif message.content.startswith(".apocbooks"):
-		msg - """```Angel
+		msg = """```Angel
 					Battlebabe
 					Brainer
 					Chopper

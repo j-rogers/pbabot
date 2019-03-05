@@ -22,7 +22,6 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-g', '--game', type=str, required=True, choices=['sprawl', 'apoc'])
 args = parser.parse_args()
 game = vars(args)['game']
-print(game)
 
 # API Token
 TOKEN = open("token.txt", 'r').read()
@@ -655,7 +654,7 @@ Swarf Gander: Swarf killed himself with flashbangs to try avoid hearing Mercer's
 		
 	# Sends the map
 	elif message.content.startswith(".map"):
-		await client.send_file(message.channel, "Map_Sprawl.jpg")
+		await client.send_file(message.channel, "map_bigger.jpg")
 
 	###############################################################################################################################################
 	###############################################################################################################################################
