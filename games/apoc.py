@@ -4,16 +4,19 @@
 	###############################################################################################################################################
 	###############################################################################################################################################
 	
+def handle(message):
+	msg = ''
+
 	##			 ##
 	##Angel Moves##
 	##			 ##
 	#Sixth Sense
-	elif message.content.startswith(".sixthsense"):
+	if message.content.startswith(".sixthsense"):
 		msg - """``` Sixth sense: when you open your brain to the world’s psychic maelstrom,
 		roll+sharp instead of roll+weird.
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#infirmary	
 	elif message.content.startswith(".infrimary"):
 		msg - """```Infirmary:
@@ -22,20 +25,20 @@ a drug lab and a crew of 2 (Shigusa & Mox, maybe). Get patients
 into it and you can work on them like a savvyhead on tech (cf ). 
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#Professional compassion
-	elif message.content.startswith(".yeeeeeeeeeeeeeet"):
+	elif message.content.startswith(".professionalcompassion"):
 		msg - """``` 
 		Professional compassion: 
 		you can choose to roll+sharp instead of roll+Hx when you help someone who’s rolling.
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#Battlefield grace
 	elif message.content.startswith(".battlefieldgrace"):
 		msg - """``` Battlefield grace: while you are caring for people, not fighting, you get +1armor.```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#Healing touch	
 	elif message.content.startswith(".healingtouch"):
 		msg - """```Healing touch: 
@@ -51,7 +54,7 @@ a fellow player’s character, treat it as though you’ve made that
 move and missed the roll. For patients belonging to the MC,
 their experience and fate are up to the MC.```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#Touched by death
 	elif message.content.startswith(".touchedbydeath"):
 		msg - """```
@@ -59,7 +62,7 @@ their experience and fate are up to the MC.```"""
 		+1weird (max +3). 	
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	##			 ##
 	##Battlebabe Moves##
 	##			 ##
@@ -75,20 +78,20 @@ On a miss, your enemies identify you immediately as their foremost threat.
 		
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#Ice Cold
 	elif message.content.startswith(".icecold"):
 		msg - """```Ice cold: when you go aggro on an NPC, roll+cool instead of roll+hard.
 		 When you go aggro on another player’s character, roll+Hx instead of roll+hard.
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#Merciless
 	elif message.content.startswith(".merciless"):
 		msg - """```Merciless: when you inflict harm, inflict +1harm. 
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#Visions of death.
 	elif message.content.startswith(".visionsofdeath"):
 		msg - """```Visions of death: 
@@ -99,14 +102,14 @@ On a miss, your enemies identify you immediately as their foremost threat.
 		 On a miss, you foresee your own death, and accordingly take -1 throughout the battle. 
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#Perfect Insticts
 	elif message.content.startswith(".perfectinstincts"):
 		msg - """```Perfect instincts: 
 		when you’ve read a charged situation and you’re acting on the MC’s answers, take +2 instead of +1.		
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#Impossible Reflexes.
 	elif message.content.startswith(".impossiblereflexes"):
 		msg - """```Impossible reflexes: 
@@ -115,7 +118,7 @@ naked or nearly naked, 2-armor; if you’re wearing non-armor fashion, 1-armor. 
 wearing armor, use it instead. 
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 
 	##			 ##
 	##Brainer Moves##
@@ -126,7 +129,7 @@ wearing armor, use it instead.
 		when you try to seduce someone, roll+weird instead of roll+hot. 
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#Casual brain receptivity
 	elif message.content.startswith(".casualbrainreceptivity"):
 		msg - """```Casual brain receptivity: 
@@ -134,7 +137,7 @@ wearing armor, use it instead.
 Your victim has to be able to see you, but you don’t have to interact. 		
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#preternatural at will brain atturnment
 	elif message.content.startswith(".pretnernatual"):
 		msg - """``` 
@@ -142,7 +145,7 @@ Your victim has to be able to see you, but you don’t have to interact.
 		you get +1weird (weird+3).
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#Deep brain scan
 	elif message.content.startswith(".deepbrainscan"):
 		msg - """``` Deep brain scan: 
@@ -162,7 +165,7 @@ Your victim has to be able to see you, but you don’t have to interact.
 		benefit.
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#Direct brain whisper projection
 	elif message.content.startswith(".directbrainwhisperprojection"):
 		msg - """```Direct-brain whisper projection: 
@@ -172,7 +175,7 @@ forces your hand, your mind counts as a weapon (1-harm ap
 close loud-optional).	
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#in brain puppet string
 	elif message.content.startswith(".inbrainpupperstrings"):
 		msg - """```In-brain puppet strings: 
@@ -190,7 +193,7 @@ close loud-optional).
 		benefit. 
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 
 	##			 ##
 	##Chopper moves##
@@ -209,7 +212,7 @@ close loud-optional).
 		replace you for alpha.
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#fuckingthieves
 	elif message.content.startswith(".fuckingthieves"):
 		msg - """```
@@ -222,7 +225,7 @@ close loud-optional).
 		thing, but it turns out that some asswipe stole it from you.
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 
 	##			 ##
 	##Driver moves##
@@ -245,14 +248,14 @@ close loud-optional).
 		their roll.
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#Good in the clinch
 	elif message.content.startswith(".goodintheclinch"):
 		msg - """```Good in the clinch:
 		 when you do something under fire, roll+sharp instead of roll+cool.
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#weather eye
 	elif message.content.startswith(".weathereye"):
 		msg - """```
@@ -260,7 +263,7 @@ close loud-optional).
 maelstrom, roll+sharp instead of roll+weird.
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))	
+			
 	#daredevil
 	elif message.content.startswith(".daredevil"):
 		msg - """``` Daredevil: if you go straight into danger without hedging your
@@ -269,7 +272,7 @@ convoy, it gets +1armor too.
 		
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#my other car is a tank
 	elif message.content.startswith(".myothercarisatank"):
 		msg - """``` My other car is a tank: 
@@ -278,7 +281,7 @@ convoy, it gets +1armor too.
 		grenade launchers (4-harm close area messy) and +1armor.
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 
 	##			 ##
 	##Gunslinger moves##
@@ -289,7 +292,7 @@ convoy, it gets +1armor too.
 		when you act under fire, roll+hard instead of roll+cool. 
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#fuck this shit
 	elif message.content.startswith(".fuckthisshit"):
 		msg - """```Fuck this shit:
@@ -300,7 +303,7 @@ convoy, it gets +1armor too.
 		 half in and half out.
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#battlefieldinstincts
 	elif message.content.startswith(".battlefieldinstints"):
 		msg - """```Battlefield instincts:
@@ -309,20 +312,20 @@ convoy, it gets +1armor too.
 		battle.
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#blood craze
 	elif message.content.startswith(".bloodcrazed"):
 		msg - """```Bloodcrazed: whenever you inflict harm, inflict +1harm.
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#not to be fucked with
 	elif message.content.startswith(".nottobefuckedwith"):
 		msg - """```NOT TO BE FUCKED WITH: in battle, you count as a gang
 (3-harm gang small), with armor according to the circumstances. 
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))	
+			
 	##			 ##
 	##Apoc basic Moves##
 	##			 ##
@@ -341,7 +344,7 @@ convoy, it gets +1armor too.
 		
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#follwothermove
 	elif message.content.startswith(".followothermove"):
 		msg - """```When you follow through on someone else’s move, roll+Hx.
@@ -359,7 +362,7 @@ character of her own.
 		
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#stay the fuck down
 	elif message.content.startswith(".staythefuckdown"):
 		msg - """```When you stay the fuck down, roll+sharp. On a hit, you’re in
@@ -370,7 +373,7 @@ concentrated fire.
 		
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#maintainposition
 	elif message.content.startswith(".maintainposition"):
 		msg - """```
@@ -383,7 +386,7 @@ fire. On a miss, abandon it now or suffer concentrated fire. (If it’s
 before 9:00, now it’s 9:00.)		
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#coverfire	
 	elif message.content.startswith(".coverfire"):
 		msg - """```When you provide covering fire for someone, roll+cool. On a
@@ -393,7 +396,7 @@ they proceed accordingly. On a miss, they suffer concentrated
 fire now. (If it’s before 9:00, now it’s 9:00.)
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#open your brain
 	elif message.content.startswith(".openyourbrain"):
 		msg - """```OPEN YOUR BRAIN
@@ -406,7 +409,7 @@ already know all there is to know, the MC will tell you that.
 		
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#read a person
 	elif message.content.startswith(".readaperson"):
 		msg - """```READ A PERSON
@@ -420,7 +423,7 @@ them, spend your hold to ask their player questions, 1 for 1:
 • how could I get your character to __?		
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#read a sitch
 	elif message.content.startswith(".readasitch"):
 		msg - """```
@@ -437,7 +440,7 @@ answers, take +1. On a 10+, ask 3. On a 7–9, ask 1:
 		
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#seize by force
 	elif message.content.startswith(".seizebyforce"):
 		msg - """```SEIZE BY FORCE
@@ -450,7 +453,7 @@ hold on something, roll+hard. On a hit, choose options. On a
 • you impress, dismay or frighten your enemy
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#go aggro
 	elif message.content.startswith(".goaggro"):
 		msg - """```GO AGGRO
@@ -465,7 +468,7 @@ you want. On a 7–9, they can instead choose 1:
 		
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#dosomethignunderfire
 	elif message.content.startswith(".dosomethingunderfire"):
 		msg - """```DO SOMETHING UNDER FIRE
@@ -475,7 +478,7 @@ On a 10+, you do it.
 an ugly choice
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+		
 	#added apoc books
 	elif message.content.startswith(".apocbooks"):
 		msg - """```Angel
@@ -486,4 +489,6 @@ an ugly choice
 					Gunslinger 
 		```"""
 		#Send the message
-		await client.send_message(message.channel, msg.format(message))
+	
+
+	return msg
