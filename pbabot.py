@@ -4,6 +4,8 @@ import pickle
 import argparse
 from games import *
 
+# requires python 3.6.8
+
 # Updates and refreshes data file
 def updateAndRefreshData(index, newData):
 	global data

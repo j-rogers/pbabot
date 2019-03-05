@@ -7,6 +7,8 @@
 def handle(message):
 	msg = ''
 
+
+
 	##			 ##
 	##Angel Moves##
 	##			 ##
@@ -16,6 +18,9 @@ def handle(message):
 		roll+sharp instead of roll+weird.
 		```"""
 		#Send the message
+
+	elif message.content.startswith(".drive"):
+		msg = '```https://drive.google.com/drive/u/0/folders/1gg46pQcSpK61jZLJnVh6SZ4wnNMQFdbY```'
 		
 	#infirmary	
 	elif message.content.startswith(".infrimary"):
@@ -330,7 +335,7 @@ convoy, it gets +1armor too.
 	##Apoc basic Moves##
 	##			 ##
 	#battle-hardened
-	elif message.content.startswith(".apocbasic"):
+	elif message.content.startswith(".moves"):
 		msg = """```Do something under fire (.dosomethingunderfire)
 					Go Aggro (.goaggro)
 					Seize by force (.seizebyforce)
