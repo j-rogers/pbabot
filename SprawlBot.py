@@ -49,6 +49,8 @@ client = discord.Client()
 # MESSAGE COMMANDS
 @client.event
 async def on_message(message):
+	msg = ""
+
 	# Prevents bot replying to itself
 	if message.author == client.user:
 		return
@@ -57,10 +59,9 @@ async def on_message(message):
 	if not message.content.startswith("."):
 		return
 
-
 	if game == 'sprawl':
-		response = sprawl.handle(message)
-		await client.send_message(message.channel, response.format(message))
+		msg = sprawl.handle(message)
+		
 
 	###############################################################################################################################################
 	###############################################################################################################################################
@@ -76,7 +77,7 @@ async def on_message(message):
 .roll: Rolls 2d6 dice.
 .moves: Displays a list of basic moves.
 .playbooks: Displays a list of playbooks.
-.matrix: Displays a list of matrix-specific moves.
+.matrix: Displays a list of matrix-specific moves. [SPRAWL ONLY]
 .custom: Displays a list of custom moves.
 .clocks: Displays the current list of clocks.
 .weapons: Displays a list of weapons and their profiles.
@@ -94,15 +95,6 @@ async def on_message(message):
 .remember: Displays a message of a memorable moment.
 .refresh: Reloads the clock and contact data.
 .log <message>: Saves a message to the log file.```"""
-
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
-
-
-	
-
-
-
 
 	# Displays the current list of clocks
 	elif message.content.startswith(".clocks"):
@@ -125,9 +117,6 @@ async def on_message(message):
 
 		msg += "```"
 
-		# Send message
-		await client.send_message(message.channel, msg.format(message))
-
 	# Displays the current list of contacts
 	elif message.content.startswith(".contacts"):
 		msg = "```"
@@ -141,9 +130,6 @@ async def on_message(message):
 			msg += "No contacts have been added."
 
 		msg += "```"
-
-		# Send message
-		await client.send_message(message.channel, msg.format(message))
 
 	# Displays a list of characters who've died, and how they died
 	elif message.content.startswith(".rip") or message.content == ".f":
@@ -165,18 +151,6 @@ The Donald: The Donald died to the Valencia gang, if only he didn't shoot Velvet
 Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take their shot, Daiki had his car blow everyone up, not just taking his on life but 8 of the Valencia gang.\n
 ```"""
 
-		# Send message
-		await client.send_message(message.channel, msg.format(message))
-
-
-
-
-
-	
-
-	
-
-
 	###############################################################################################################################################
 	###############################################################################################################################################
 	############################################################ MISCELLANEOUS COMMANDS ###########################################################
@@ -190,7 +164,7 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 		dice2 = random.randint(1, 6)
 		roll = dice1 + dice2
 		msg = ""
-		
+
 		# Unique response based on roll
 		if roll == 1:
 			msg = "```Throwbacks to when Martin's bot could roll a 1 from 2d6. Good times, not for you though, you rolled a 1.```"
@@ -216,10 +190,7 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 			msg = "```You could fuck up someones day with this. You rolled an 11.```"
 		elif roll == 12:
 			msg = "```Okay, now THIS is epic. You rolled a 12.```"
-
-		# Send the message
-		await client.send_message(message.channel, msg.format(message))
-
+		
 	# Adds a new clock
 	elif message.content.startswith(".addclock"):
 		# Get the clock name and assign it default value of 1200
@@ -234,7 +205,7 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 
 			if name == inName:
 				msg = "```Clock already exists.```"
-				await client.send_message(message.channel, msg.format(message))
+				
 				return
 
 		# Append to clocks list
@@ -246,8 +217,7 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 
 		# Form message and send
 		msg = "```Clock added: " + tokens[1] + " at 1200.```"
-		await client.send_message(message.channel, msg.format(message))
-
+		
 	# Deletes a clock
 	elif message.content.startswith(".deleteclock"):
 		# Get the clock name
@@ -269,8 +239,7 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 
 		# Form message and send
 		msg = "```Deleted clock " + name + ".```"
-		await client.send_message(message.channel, msg.format(message))
-
+		
 	# Increases a clock by one segment
 	elif message.content.startswith(".increaseclock"):
 		# Get the clock name
@@ -301,7 +270,7 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 				elif value == "2300": value = "0000"
 				elif value == "0000":
 					msg = "```Clock is already at midnight.```"
-					await client.send_message(message.channel, msg.format(message))
+					
 					return
 
 				# Create new tuple and replace previous one
@@ -312,7 +281,7 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 		# Check if the clock was found
 		if not found:
 			msg = "```Clock \"" + name + "\" not found.```"
-			await client.send_message(message.channel, msg.format(message))
+			
 			return
 
 		# Update and refresh file
@@ -321,8 +290,7 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 
 		# Form message and send
 		msg = "```" + updatedClock[0] + " clock increased to " + updatedClock[1] + ".```"
-		await client.send_message(message.channel, msg.format(message))
-
+		
 	# Decreases a clock by one segment
 	elif message.content.startswith(".decreaseclock"):
 		# Get the clock name
@@ -353,7 +321,7 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 				elif value == "1500": value = "1200"
 				elif value == "1200":
 					msg = "```Clock is already at 1200.```"
-					await client.send_message(message.channel, msg.format(message))
+					
 					return
 
 				# Create new tuple and replace previous one
@@ -365,7 +333,7 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 		# Check if the clock was found
 		if not found:
 			msg = "```Clock \"" + name + "\" not found.```"
-			await client.send_message(message.channel, msg.format(message))
+			
 			return
 
 		# Update and refresh file
@@ -374,8 +342,7 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 
 		# Form message and send
 		msg = "```" + updatedClock[0] + " clock decreased to " + updatedClock[1] + ".```"
-		await client.send_message(message.channel, msg.format(message))
-
+		
 	# Adds a new contact
 	elif message.content.startswith(".addcontact"):
 		# Get the contact name and description
@@ -393,7 +360,7 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 
 			if name == inName:
 				msg = "```Contact already exists.```"
-				await client.send_message(message.channel, msg.format(message))
+				
 				return
 
 		# Append to contacts list
@@ -405,8 +372,7 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 
 		# Form message and send
 		msg = "```Contact added: " + tokens[1] + ".```"
-		await client.send_message(message.channel, msg.format(message))
-
+		
 	# Deletes a contact
 	elif message.content.startswith(".deletecontact"):
 		# Get the clock name
@@ -428,12 +394,10 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 
 		# Form message and send
 		msg = "```Deleted contact " + name + ".```"
-		await client.send_message(message.channel, msg.format(message))
-
+		
 	elif message.content.startswith(".remember"):
 
 		#Generates random number to get remember message from  events that have happened in sprawl. Feel free to add more.
-
 		member = random.randint(1,116)
 		msg = ""
 		
@@ -681,9 +645,7 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 			msg == "```Remember that time the Valencia gang said dont move and the Donald shot Velvet thunder resulting in the Valencia gang killing The Donald. Daiki then blew up everyone else, themself included.```"
 		elif member == 116:
 			msg == "```That time Daiki started driving his car remotely freaking Velvet Thunder out```"	
-		#Sends the message. 
-		await client.send_message(message.channel, msg.format(message))
-
+		
 	# Sends the map
 	elif message.content.startswith(".map"):
 		await client.send_file(message.channel, "Map_Sprawl.jpg")
@@ -711,8 +673,8 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 
 		msg += "```"
 
-		# Send message
-		await client.send_message(message.channel, msg.format(message))
+		
+		
 
 	elif message.content.startswith(".log"):
 		# Get log message from message
@@ -727,11 +689,14 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 
 		# Form and send message
 		msg = "```Log saved.```"
-		await client.send_message(message.channel, msg.format(message))
+		
 
 	else:
-		msg = "```Invalid command. Type '.help' for a list of commands.```"
-		await client.send_message(message.channel, msg.format(message))
+		if not msg:
+			msg = "```Invalid command. Type '.help' for a list of commands.```"
+
+	await client.send_message(message.channel, msg.format(message))
+		
 
 # CONSOLE LOGGING
 @client.event

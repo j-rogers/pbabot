@@ -811,17 +811,5 @@ Withdrawal:
 	-2 Meat
 	-2 Edge
 	-long```"""
-		
-		
-		
-
-
-
-
-
-
-
-
-
 
 	return response
