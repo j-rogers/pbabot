@@ -465,6 +465,352 @@ You may spend 1 hold to activate routines on that sub-system.```"""
 		Ђ The owners of the target system trace you to your current location
 	6-: you take the established consequences... and you’re still connected```"""
 		
+			###############################################################################################################################################
+	###############################################################################################################################################
+	############################################################# PLAYBOOK MOVE COMMANDS ##########################################################
+	###############################################################################################################################################
+	###############################################################################################################################################
+
+	# Hot shit driver
+	elif messageString == ".hotshitdriver":
+		response = """```When you’re driving a cyber-linked vehicle in a high-pressure situation, roll Edge.\n
+	10+: gain 3 hold
+	7-9: gain 1 hold\n
+You may spend 1 hold to do one of the following:
+	• Avoid one external danger (a rocket, a burst of gunfire, a collision, etc)
+	• Escape one pursuing vehicle
+	• Maintain control of the vehicle
+	• Impress, dismay or frighten someone```"""
+		
+	# Hustling
+	elif messageString == ".hustling":
+		response = """```You have people who work for you in various ways. You start with 2-crew and two jobs from the list below. Between missions, choose a number of those jobs equal to or less than your current crew, describe what each job is, and roll Edge.\n
+	10+: you profit from each of your jobs
+	7-9: one of them is a Disaster and you Profit from the rest
+	6-: everything’s FUBAR. The MC will make a move based on the Disaster for each job\n
+Choose two:
+	Ђ Surveillance: You have a small network of informants who report on events; you then sell that information
+		• Profit: gain [intel]
+		• Disaster: someone acts on bad info
+	Ђ Debt collection: You have a few burly looking fuckers who collect outstanding debts
+		• Profit: gain [gear]
+		• Disaster: someone’s out of pocket
+	Ђ Petty theft: You have a small crew who perform minor local robberies
+		• Profit: gain [gear]
+		• Disaster: they robbed the wrong guy
+	Ђ Deliveries: People hire you to transport things and you have a driver who takes care of that
+		• Profit: gain 1 Cred
+		• Disaster: the delivery never arrives
+	Ђ Brokering deals: You arrange for the right people to meet each other
+		• Profit: gain 1 Cred
+		• Disaster: the deal that you arranged goes wrong
+	Ђ Technical work: You have a couple of techs whom you supply with work
+		• Profit: gain [gear]
+		• Disaster: something bad happens to someone else’s property
+	Ђ Pimping: You manage a small stable of physical or virtual sex workers
+		• Profit: gain [intel]
+		• Disaster: something goes wrong with a customer
+	Ђ Addictive substances: You manage a small lab producing either drugs or simstim chips
+		• Profit: gain [intel]
+		• Disaster: something goes wrong for a user or for the lab itself```"""
+		
+	# iknowpeople
+	elif messageString == ".iknowpeople":
+		response = """```Once per mission you may introduce a new Contact. Name the contact, say what they do, then roll Style.\n
+	10+: you’ve worked with the contact before; they have talent. Write them down as a Contact
+	7-9: you’ve never met them before, they’re an unknown quantity
+	6-: you know them all right. Tell the MC why they dislike you\n
+After you’ve rolled, describe how you contact them; the MC will ask some questions.```"""
+		
+	# Reputation
+	elif messageString == ".reputation":
+		response = """```When you meet someone of consequence who might have
+heard of you, roll Edge. On a hit, say what they know about you. On a 10+,
+take +1 forward with them. On a miss, the MC will decide what they’ve heard
+about you, if anything. Either you or the MC can say whether someone is
+“of consequence”, but once you’ve made the reputation move on someone,
+they’re “of consequence” and will be a recurring part of the story.```"""
+		
+	# Console Cowboy
+	elif messageString == ".consolecowboy":
+		response = """```Console cowboy: When you connect to a secure system, roll Mind.\n
+	10+: gain 3 hold
+	7-9: gain 1 hold\n
+While in that system, you may spend 1 hold for any of the following effects:
+	• Prevent a construct from triggering an alert
+	• Avoid an ICE routine executed against you, your deck, or your programs
+	• Increase your hold over compromised security or manipulated systems by 1```"""
+		
+	# It all fits together!
+	elif messageString == ".itallfits":
+		response = """```You’re a master of making connections between seemingly unrelated events. At the start of a mission, roll Edge.\n
+	10+: gain 3 hold
+	7-9: gain 1 hold\n
+As you put everything together during the mission, spend 1 hold at any time to ask a question from the research list.```"""
+	
+	# Big game hunter
+	elif messageString == ".biggamehunter":
+		response = """```When you spring a trap for a target you have investigated, roll Edge.\n
+	7+: you have them trapped, the only way out is through you
+	10+: they are at your mercy; if the target attempts to escape, roll Edge instead of Meat to mix it up```"""
+		
+	# Sniper
+	elif messageString == ".sniper":
+		response = """```When you set up a covered and concealed place to hide, roll Cool.\n
+	10+: choose 3
+	7-9: choose 2
+		• Your site is well hidden
+		• Your site has excellent cover
+		• Your site has an excellent field of view
+		• You have a similarly covered and concealed backup location
+		• Your spot is well secured\n
+Then describe your hide site.```"""
+		
+	# Covert entry
+	elif messageString == ".covertentry":
+		response = """```When you attempt to infiltrate a secure area alone, roll Cool.\n
+	10+: gain 3 hold
+	7-9: gain 1 hold\n
+As the MC describes the infiltration and the security measures you must overcome, you may spend 1 hold to describe how you overcome the obstacle and:
+	• Bypass a security system or guard.
+	• Disable a security system you have bypassed.
+	• Disable a guard.
+	• Escape notice```"""
+		
+	# Case the joint
+	elif messageString == ".casethejoint":
+		response = """```When you take time to examine a location for security weaknesses you can exploit, roll Edge.\n
+	10+: gain three [intel]
+	7-9: gain [intel]\n
+You may spend this [intel] in the normal way, or you can spend one point of this [intel] to ask questions from the assess or research lists.```"""
+		
+	# Plan B
+	elif messageString == ".planb":
+		response = """```When shit hits the fan and you have to get out, name your escape route and roll Cool.\n
+	10+: sweet, you’re gone
+	7–9: you can go or stay, but if you go it costs you: leave something behind, or take something with you; in either case, the MC will tell you what
+	6-: you’re caught in a vulnerable position, half in and half out. The MC will make a move```"""
+		
+	# Psychological warfare
+	elif messageString == ".psychwarfare":
+		response = """```When you attempt to influence the morale of your enemies by leaving evidence of violence while remaining undetected, roll Edge.\n
+	7+: your enemies are impressed and overly cautious, scared and demoralised, or angry and careless (MC’s choice)
+	10+: you choose```"""
+		
+	# Serious badass
+	elif messageString == ".seriousbadass":
+		response = """```When you enter a charged situation, roll Style.\n
+	10+: gain 2 hold
+	7–9: gain 1 hold
+	6-: your enemies identify you immediately as their foremost threat\n
+Spend 1 hold to make eye contact with an NPC present, who freezes or flinches and can’t act until you break it off.```"""
+		
+	# Trained eye
+	elif messageString == ".trainedeye":
+		response = """```When you evaluate a person, vehicle, drone or gang, roll Cool.\n
+	7+: ask the target “How are you vulnerable to me?” Take +1 forward when acting on the answer
+	10+: gain +1 ongoing when acting against that target```"""
+		
+	# Driven
+	elif messageString == ".driven":
+		response = """```When you begin a mission that furthers your vision, roll Edge.\n
+	10+: gain 3 hold
+	7-9: gain 1 hold\n
+You may spend 1 hold before rolling any other move to take +1 or -2 forward to the move.```"""
+		
+	# Vision thing
+	elif messageString == ".visionthing":
+		response = """```When you have time and space for an emotional connection with someone and you passionately advocate for your vision, roll Style.\n
+	10+: gain 2 hold
+	7-9: gain 1 hold\n
+Spend 1 hold to have the targeted NPCs:
+	• give you something you want
+	• do something you ask
+	• fight to protect you or your cause
+	• disobey an order given by someone with authority or leverage over them\n
+When you use this move on a PC, spend your hold to help or interfere as if you had rolled a 10+ (i.e. give them +1 or -2). If you miss against a PC, they gain 2 hold against you which they can use in the same way.```"""
+		
+	# Live and on the air
+	elif messageString == ".live":
+		response = """```When you go live from the scene and broadcast a stream to avoid harm and expose your target, roll Edge.\n
+	7+: you get the shot you want and are “escorted” to a position of safety
+	7-9: choose one:
+		• Your story irritates your target (The MC will advance a relevant Threat Clock)
+		• Someone on your team gets hurt off camera
+		• Your story angers your employer
+		• Your rushed narrative is misinterpreted by the public with unintended consequences```"""
+		
+	# Nose for a story
+	elif messageString == ".nose":
+		response = """```At the start of a mission, roll Edge.\n
+	10+: gain 3 hold
+	7-9: gain 1 hold\n
+During the mission, spend 1 hold to invoke one of the following effects:
+	• Ask one question from the research list
+	• Take +1 forward when monstering
+	• Find a piece of evidence that links this mission to a current story; start a Story Clock and a linked Noise Clock or roll to gather evidence```"""
+		
+	# Gather evidence
+	elif messageString == ".gatherevidence":
+		response = """```When you gather evidence to break a story, roll Mind.\n
+	10+: you get the evidence you need, advance that Story Clock
+	7-9: you get the evidence, but tip your hand to someone implicated in your story; tell the MC which clock to advance: a relevant Corporate Clock, the linked Noise Clock or the relevant Mission Clock (Legwork or Action, depending on which phase of the current mission you’re in)
+	6-: the MC will advance the Noise Clock and make a move\n
+If the Story Clock reaches 0000 before the Noise Clock, the Reporter has broken the story before the implicated parties could cover up the evidence, or stop the investigation. The exact implications of this for the game will vary based on the story, but it should have a major impact on the implicated parties and will affect at least one Corporate Clock.\n
+If the Noise Clock reaches 0000 before the Story Clock, the implicated parties have tied up all the loose ends and the story is dead. Now that damage control is complete, they can deal with the Reporter permanently. Advance any relevant Corporate or Threat Clocks.```"""
+		
+	# Monstering
+	elif messageString == ".monstering":
+		response = """```When you corner someone and hound them with questions to get to the bottom of a story, roll Edge.\n
+	10+: they tell you the truth, regardless of the consequences
+	7-9: they give you enough to get you off their back, then when they’re safe, they choose one:
+		• they respond with fear
+		• they respond with anger
+		• they respond with clinical calm```"""
+		
+	# I love it when a plan comes together
+	elif messageString == ".plan":
+		response = """```At the start of a mission, roll Edge.\n
+	10+: gain 3 hold
+	7-9: gain 1 hold
+	6-: gain 1 hold anyway, but your opponent has predicted your every move; the MC will advance the Legwork Clock\n
+During the mission, spend 1 hold for one of the following effects:
+	• You have that piece of gear that you need, right now
+	• You appear in a scene where you are needed, right now```"""
+		
+	# Exit strategy
+	elif messageString == ".exitstrategy":
+		response = """```You always have an escape plan prepared. When shit hits the fan and you decide to bail out, roll Mind.\n
+	7+: You escape the situation
+	10+: choose one thing to leave behind
+	7-9: choose two things
+		• Your team
+		• A mission objective
+		• Identifiable evidence
+		• Your staked Cred```"""
+		
+	# Recruiter
+	elif messageString == ".recruiter":
+		response = """```When you attempt to recruit a specialist or a team of specialists to directly assist with your mission, roll Edge.\n
+	10+: choose 2
+	7-9: choose 1
+		• Reliable professional(s)
+		• A small team (up to 5)
+		• As competent as required```"""
+		
+	# Slippery
+	elif messageString == ".slippery":
+		response = """```At the end of a mission during which you planted or hid evidence to shift blame away from you and your team, name who you threw under the corporate bus and roll Edge.\n
+	7+: the MC will not increase Corporate Clocks in the retaliation phase
+	10+: the MC will reduce a Corporate Clock by one
+	6-: create or increase the Threat Clock of whoever you threw under the bus```"""
+		
+	# Storage
+	elif messageString == ".storage":
+		response = """```After receiving a job you may look through your accumulated parts and supplies for equipment that might help with the current mission. Roll Mind.\n
+	10+: gain 3 [gear] relevant to your chosen area(s) of expertise.
+	7-9: gain 1 [gear] relevant to your chosen area(s) of expertise.```"""
+		
+	# Blend in
+	elif messageString == ".blendin":
+		response = """```When you’re about to be caught somewhere you shouldn’t be, but look and act like you belong there, roll Cool.\n
+10+: no one thinks twice about your presence until you do something to attract attention
+7-9: you’ll be fine as long as you leave right now, but if you do anything else, your presence will arouse suspicion```"""
+		
+	# Bypass
+	elif messageString == ".bypass":
+		response = """```When you attempt to subvert security measures (bypassing a locked door, disabling an alarm, camera or motion detector, etc), roll Cool.\n
+	7+: you successfully bypass the system without leaving a trace
+	10+: you gain some valuable insight into the facility’s security, gain [intel]```"""
+
+	###############################################################################################################################################
+	###############################################################################################################################################
+	############################################################## CUSTOM MOVE COMMANDS ###########################################################
+	###############################################################################################################################################
+	###############################################################################################################################################
+
+	# Git along little dogie
+	elif messageString == ".dogie":
+		response = """```When you want to use Waleed to antagonise, roll Style (or +1 Synth if you both have Neural Interface).\n
+	7+ you antagonise one character, giving you +1 Ongoing to act against that character
+	7-9 Choose One:
+	10+ Choose Two:
+ 		- Waleed antagonises one additional character, but will struggle to escape harm
+ 		- Waleed will escape harm, but will not antagonise for long
+ 		- Waleed will allow you to escape harm, but will struggle to escape harm
+ 		- Waleed will apply lethal force, but take his sweet time
+ 		- Waleed will chase down a lead over great distance, but you will struggle to maintain contact```"""
+		
+	# Nose for trouble
+	elif messageString == ".trouble":
+		response = """```When you want to use Waleed to Assess a person, place or thing, justify why dog senses are better than yours and roll Cool (or +1 Synth if you both have Neural Interface). On a hit, gain +1 additional hold.```"""
+
+	# He's good, but I'm better
+	elif messageString == ".goodbetter":
+		response = """```When you attempt to outwit a sentient opponent in The Matrix, roll Edge.\n
+	7+ you temporarily evade/escape/overcome your opponent
+	10+ gain 1 hold. Spend this to temporarily evade/escape/overcome your opponent at any other time in this run. 
+	6- your opponent gets the better of you.```"""
+		
+	###############################################################################################################################################
+	###############################################################################################################################################
+	################################################################# DRUG COMMANDS ###############################################################
+	###############################################################################################################################################
+	###############################################################################################################################################
+
+	# Spank
+	elif messageString == ".spank":
+		response = """```While Active:
+	+1 Meat
+	-1 Synth
+	+unreliable on cyber gear
+	+1 Harm on Melee Attacks
+	+short\n
+Withdrawal:
+	-2 Style
+	-1 Meat
+	-long```"""	
+
+	# Motherfuck
+	elif messageString == ".motherfuck":
+		response = """```While Active:
+	+2 Edge
+	-2 Cool
+	-long\n
+Withdrawal:
+	-1 Cool
+	-day```"""
+		
+	# Domo
+	elif messageString == ".domo":
+		response = """```While Active:
+	+2 Synth
+	-1 Everything else
+	Take 1 Harm (increases per use per day)
+	-instant\n
+Withdrawal:
+	-1 Synth
+	+Harmful on cybergear
+	-short```"""
+
+	# Clutch
+	elif messageString == ".clutch":
+		response = """```While Active:
+	-1 to Take Harm move
+	-1 Mind
+	-short\n
+Withdrawal:
+	Cardiac arrest if taken more than twice a day```"""
+
+	# Meatloaf
+	elif messageString == ".meatloaf":
+		response = """```While Active:
+	+fast reflexes
+	-short\n
+Withdrawal:
+	-2 Meat
+	-2 Edge
+	-long```"""
 		
 		
 		
