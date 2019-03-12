@@ -296,10 +296,18 @@ def handle(message):
 		On a miss, they hold 2 over you, on the exact same terms.\n
 		```"""
 	#Hocus Moves List
-	elif message.content.startswith("hocus"):
+	elif message.content.startswith(".hocus"):
 		msg = """```.breathtaking\n.lost\n.artfulandgracious\n.anarrestingskinner\n.hypnotic```"""
-			
-		
+
+	#####################
+	##Apoc Custom Moves##
+	#####################
+	#List custom move
+	#elif message.content.startswith(".apoccustom"):
+	#	msg ="""```.radiatedblood\n```"""
+	#elif message.content.startswith(".radiatedblood"):
+	#	msg ="""``````"""
+
 	####################
 	##Apoc Basic Moves##
 	####################
