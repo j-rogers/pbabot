@@ -136,25 +136,23 @@ async def on_message(message):
 		msg += "```"
 
 	# Displays a list of characters who've died, and how they died
-	elif message.content.startswith(".rip") or message.content == ".f":
+	elif message.content.startswith(".rip") or message.content.startswith(".f"):
 		# Form the message
 		msg = """```
 Christof Romuald: Died to Syntax Terror's Bear Drones while being pounded on by Police. F in chat please.\n
 Noor 'Shareef' Jerkof: Noor's death was on their own account, they ended up shooting themself in the head when they realized they couldn't talk to people and were on their way to jail.\n
-Martin Monis Jr: That time MartinJr took the entire team on in bar shoot up, manged to walk out mostly fine then was shot in the head by a sniper.\n
+Martin Monis Jr: MartinJr took the entire team on in bar shoot up, manged to walk out mostly fine then was shot in the head by a sniper.\n
 Azrael: Azrael was a shit sniper and wouldn't follow the plan, resulting in complications for Laramy and Syntax Terror. Bad mistake Azrael as we framed him resulting in a brutal death.\n
 H4KKK3R: H4KKK3R was in the car with Seraph, trying to guide Laramy to where Syntax Terror was so we could take our revenge. While Jacked into police cameras, Seraph shot them in the head. \n
 Laramy Fisk: Was murdered by Seraph. After Laramy blammed Syntax Terror on why the van blew up, Seraph didn't take kindly, resulting in Seraph running Laramy over and shotting him after he manged to live.\n
 Seraph: Seraph thought they were safe, thought Syntax Terror would be happy, were on their way to Byntax Berror, when a secret chip Syntax had implanted alerted a sniper from The business to shot Seraph dead.\n
 Syntax Terror: Syntax Terror managed to live out his days, always being paranoid and on edge.\n
-<<<<<<< HEAD
-Swarf Gander: Swarf killed himself with flashbangs to try avoid hearing Mercer's music.\n
-Mercer De'am: Mercer died by the hands of Tony when an orbital strike was set upon his location.\n
-Desperato: Desperato also died to the hands of Tony when an orbital strike was set upon their location.\n
+Swarf Gander: Killed himself with flashbangs to try avoid hearing Mercer's music.\n
+Mercer De'am: Died by the hands of Tony when an orbital strike was set upon his location.\n 
+Desperato: Also died to the hands of Tony when an orbital strike was set upon their location.\n
 Velvet Thunder: Died to The Donald, bashed by the wall, and then shot in the head.\n
-The Donald: The Donald died to the Valencia gang, if only he didn't shoot Velvet Thunder, but that's not how the art of the deal.\n
+The Donald: Died to the Valencia gang, if only he didn't shoot Velvet Thunder, but that's not how the art of the deal.\n
 Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take their shot, Daiki had his car blow everyone up, not just taking his on life but 8 of the Valencia gang.\n
-Swarf Gander: Swarf killed himself with flashbangs to try avoid hearing Mercer's music.\n 
 ```"""
 
 
