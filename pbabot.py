@@ -403,8 +403,7 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 	elif message.content.startswith(".remember"):
 
 		#Generates random number to get remember message from  events that have happened in sprawl. Feel free to add more.
-		member = random.randint(1,116)
-		member = random.randint(1,96)
+		member = random.randint(1,129)
 		msg = ""
 		
 		#Christof
@@ -636,21 +635,50 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 			msg ="```That time The Donald ate a taco from the latino(Desperato) and everything was fine.```"
 		#What a clusterfuck final session. Spoilers we all died.
 		elif member == 109:
-			msg == "```That time Daiki tried getting Velvet thunder to go deaf?```"
+			msg = "```That time Daiki tried getting Velvet thunder to go deaf?```"
 		elif member == 110:
-			msg == "```Remember when Daiki was driving a destroyed car like in simpsons hit and run```"
+			msg = "```Remember when Daiki was driving a destroyed car like in simpsons hit and run```"
 		elif member == 111:
-			msg == "```Remember that time Velvet Thunder tazzed Daiki, and the Donald then smashed Velvet with his wall.```"
+			msg = "```Remember that time Velvet Thunder tazzed Daiki, and the Donald then smashed Velvet with his wall.```"
 		elif member == 112:
-			msg == "```That time Velvet Thunder used his synth ears to listen to stuff```"
+			msg = "```That time Velvet Thunder used his synth ears to listen to stuff```"
 		elif member == 113:
-			msg == "```That time Daiki wanted a fist bump from Velvet Thunder```"
+			msg = "```That time Daiki wanted a fist bump from Velvet Thunder```"
 		elif member == 114:
-			msg == "```When Velvet Thunder broke his phone so The Donald no longer had his number```"
+			msg = "```When Velvet Thunder broke his phone so The Donald no longer had his number```"
 		elif member == 115:
-			msg == "```Remember that time the Valencia gang said dont move and the Donald shot Velvet thunder resulting in the Valencia gang killing The Donald. Daiki then blew up everyone else, themself included.```"
+			msg = "```Remember that time the Valencia gang said dont move and the Donald shot Velvet thunder resulting in the Valencia gang killing The Donald. Daiki then blew up everyone else, themself included.```"
 		elif member == 116:
-			msg == "```That time Daiki started driving his car remotely freaking Velvet Thunder out```"	
+			msg = "```That time Daiki started driving his car remotely freaking Velvet Thunder out```"	
+		#First apoc sessions was bad.
+		elif member == 117:
+			msg = "That time Korea slashed at the bicep of the first npc they saw."
+		elif member == 118:
+			msg = "That time Ligma hypnotized an intruding criminal and got them to slit their own throat."
+		elif member == 119:
+			msg =  "That time True Saviour just sat around town selling things."
+		elif member == 120:
+			msg = "That time Korea was chained in an arena and lashed out and caused lots of canibals to run rampert in the town *blood is in the air*"
+		elif member ==121:
+			msg = "That time the MC(Martin) vagually descriped something causing confusion for all."
+		#Finding a caravan
+		elif member == 122:
+			msg ="That time Ligma tried to hypnotize Number 8 and faied."
+		elif member == 123:
+			msg ="That time Ligma tried again to hypnotize Number 8 into giving his guitar resulting in Ligma cutting himself on razor sharp strings."
+		elif member == 124:
+			msg ="That time Korea tried patching up a 3 arm(was 4 armed) mutant, but instead cut his head of and drank the mutants blood, cause the mutant wouldn't take their help."
+		elif member ==125:
+			msg = "that time Ligma threw a bottle of water at Korea, but Korea didn't catch it due to vomiting acid."
+		elif member ==126:
+			msg ="That time Korea drank toxic blood and started radiating heat."
+		elif member ==127:
+			msg = "that time Ligma jsut accepted that Korea was a complete whackjob."
+		elif member ==128:
+			msg = "That time Ligma cut their hand on razor sharp guitar strings and Korea lept at them in an attempt 'fix them up' but Ligma jumped out the way in fear."
+		elif member == 129:
+			msg ="That time the MC vagually described a well and changed measurment and distance often."
+
 		
 	# Sends the map
 	elif message.content.startswith(".map"):

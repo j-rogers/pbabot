@@ -14,7 +14,7 @@ def handle(message):
 	if message.content.startswith(".sixthsense"):
 		msg = """``` Sixth sense:\n When you open your brain to the world’s psychic maelstrom, roll+sharp instead of roll+weird.```"""		
 	#infirmary	
-	elif message.content.startswith(".infrimary"):
+	elif message.content.startswith(".infirmary"):
 		msg = """```Infirmary:\n you get an infirmary, a workspace with life support, a drug lab and a crew of 2 (Shigusa & Mox, maybe). Get patients into it and you can work on them like a savvyhead on tech (cf ). ```"""	
 	#Professional compassion
 	elif message.content.startswith(".professionalcompassion"):
@@ -318,6 +318,13 @@ def handle(message):
 					Ψ-harm (.psyharm)\n
 					barter (.barter)\n
 					harm (.harm)\n
+					attack someone (.attacksomeone)\n
+					Do something Under fire (.dosomethingunderfire)
+					Seduce or Manipulate (.seduce)\n
+					single combat (.singlecombat)\n
+					Free for all comabt (.freeforall)\n
+					firefight/shoot out (.gunfight)
+
 		
 		```"""
 	#Barter
@@ -479,6 +486,82 @@ def handle(message):
 		• You miss noticing something important.\n
 		On a miss, the MC can nevertheless choose something from the 7–9 list above. If she does, though, it’s instead of some of the harm you’re suffering, so you take -1harm. the suffering harm move adds a wrinkle, a little
 		```"""	
+	#Do something under fire
+	elif message.content.startswith(".dosomethingunderfire"):
+		msg = """```When you do something under fire, or dig in to endure fire, roll+cool.\n
+		On a 10+, you do it.\n
+		On a 7–9, you flinch, hesitate, or stall:\n
+		the MC can offer you a worse outcome, a hard bargain, or an ugly choice.\n
+		On a miss, be prepared for the worst.
+		```"""
+	#Attack someone
+	elif message.content.startswith(".attacksomeone"):
+		msg = """```When you attack someone unprepared, unsuspecting, or helpless, roll+hard.\n
+		On a 10+, inflict full harm as established.\n
+		On a 7–9, they’re able somehow to dodge, block, or duck, or else you just don’t quite strike home; inflict little harm.\n
+		In either case, if they can and do choose to fight back, now you’re doing battle them.\n
+		On a miss, be prepared for the worst.```"""
+	#seduce or manipulate
+	elif message.content.startswith(".seduce"):
+		msg = """```When you try to seduce or manipulate someone, tell them what you want and roll+hot.\n
+		For NPCs: on a hit, they ask you to promise something first, and do it if you promise.\n 
+		On a 10+, whether you keep your promise is up to you, later.\n
+		On a 7–9, they need some concrete assurance right now.\n
+		For PCs: on a 10+, both.\n
+		On a 7–9, choose 1:\n
+		• if they do it, they mark experience\n
+		• if they refuse, erase one of their stat highlights for the remainder of the session\n
+		What they do then is up to them.\n
+		On a miss, for either NPCs or PCs, be prepared for the worst.```"""
+	
+	#single combat
+	elif message.content.startswith(".singlecombat"):
+		msg = """```When you do single combat with someone, both you and your enemy inflict and suffer harm as established. Roll+hard.\n
+		On a 10+, spend 3.\n
+		On a 7–9, spend 2.\n 
+		On a miss, spend 1. Spend them blind, on the following:\n
+		• Strike hard. Inflict +1harm.\n
+		• Defend yourself. Gain +1armor\n
+		• Seize the victory. Whichever of you spends more on this, wins the round.\n
+		If your enemy is an NPC, the MC gets to spend 2 for her as well. The MC may
+		choose to spend 1 or 3 instead, but must declare that she’s doing so.\n
+		1 is for an NPC weak, afraid, or lacking will; 3 is for an NPC distinguished by her bloodlust.\n
+		Whichever of you wins, if the loser is still alive, the loser chooses:\n
+		• You have me at your mercy. What do you do to me?\n
+		• You drive me into terrified flight. Do you pursue me?\n
+		• this is a fight to the death. We continue to another round.\n
+		If it’s a tie, then if both of you want to end the fight, it ends, but if either of you want to fight on, it continues to another round
+		```"""
+	#Free for all comabt
+	elif message.content.startswith(".freeforall"):
+		msg = """```When you’re involved in a chaotic free-for-all, the mass of combatants as a whole takes harm as established, as a single gang inflicting harm on itself. Roll+hard.\n
+		On 10+, spend 3. On 7-9, spend 2.\n On a miss, spend 1. Spend them blind, on the following:\n
+		• Add to the chaos. the combatants as a whole suffer +1harm.\n
+		• Defend yourself. Gain +1armor.\n
+		• Defend someone else. they gain +1armor.\n
+		• Take a single, short, personal action.\n
+		For each named NPC in the fight, the MC gets to spend 1 as well. the MC can choose to spend 0 or 2 instead, but must declare that she’s doing so.\n
+		0 is for unarmed or otherwise semi-incapacitated NPCs;\n
+		3 is for NPCs distinguished by their violent competence and calm in chaos.\n
+		If the number of named NPCs is large, be patient while the MC lists her spends.\n
+		After the exchange of harm, the fight ends, unless or until someone reignites it.
+		```"""
+	#Gun fight
+	elif message.content.startswith(".gunfight"):
+		msg ="""Both sides inflict and suffer harm as established. Roll+hard.\n
+		 On 10+, spend 3.\n 
+		 On 7-9, spend 2.\n
+		 On a miss, spend 1.\n
+		 Spend them blind, on the following:\n
+		 • Provide supporting fire. Add +1harm to the harm your side inflicts\n
+		 • Provide covering fire. Add +1armor to your side.\n
+		 • Cover ground. Whichever side spends more on this, wins the round.\n
+		 • Take a single, short, personal action.\n
+		```"""
+
+		#Need to add road war moves such as boarding a moving car or tacking v-harm.
+	
+	
 	#added apoc books
 	elif message.content.startswith(".apocbooks"):
 		msg = """```Angel\n
