@@ -1,6 +1,6 @@
 log.txt
 token.txt
-data.pickle
+*.pickle
 insert.py
 *.jpg
 **/__pycache__
