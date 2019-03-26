@@ -94,8 +94,10 @@ async def on_message(message):
 .deletecontact <contact name>: Deletes a contact.
 .drugs: Displays a list of drugs
 .map: Displays a current map
-.rip: Displays a list of dead characters and how they died.
-.f: Same as '.rip'
+.ripsprawl1: Detailed deaths from the Sprawl1
+.ripsprawl2: Detailed deaths from Sprawl2 
+.ripapoc: Detailed deaths from Apoc World
+.f: List all dead characters.
 .remember: Displays a message of a memorable moment.
 .refresh: Reloads the clock and contact data.
 .log <message>: Saves a message to the log file.```"""
@@ -136,24 +138,46 @@ async def on_message(message):
 		msg += "```"
 
 	# Displays a list of characters who've died, and how they died
-	elif message.content.startswith(".rip") or message.content.startswith(".f"):
+	elif message.content.startswith(".f"):
 		# Form the message
 		msg = """```
-Christof Romuald: Died to Syntax Terror's Bear Drones while being pounded on by Police. F in chat please.\n
-Noor 'Shareef' Jerkof: Noor's death was on their own account, they ended up shooting themself in the head when they realized they couldn't talk to people and were on their way to jail.\n
-Martin Monis Jr: MartinJr took the entire team on in bar shoot up, manged to walk out mostly fine then was shot in the head by a sniper.\n
-Azrael: Azrael was a shit sniper and wouldn't follow the plan, resulting in complications for Laramy and Syntax Terror. Bad mistake Azrael as we framed him resulting in a brutal death.\n
-H4KKK3R: H4KKK3R was in the car with Seraph, trying to guide Laramy to where Syntax Terror was so we could take our revenge. While Jacked into police cameras, Seraph shot them in the head. \n
-Laramy Fisk: Was murdered by Seraph. After Laramy blammed Syntax Terror on why the van blew up, Seraph didn't take kindly, resulting in Seraph running Laramy over and shotting him after he manged to live.\n
-Seraph: Seraph thought they were safe, thought Syntax Terror would be happy, were on their way to Byntax Berror, when a secret chip Syntax had implanted alerted a sniper from The business to shot Seraph dead.\n
-Syntax Terror: Syntax Terror managed to live out his days, always being paranoid and on edge.\n
-Swarf Gander: Killed himself with flashbangs to try avoid hearing Mercer's music.\n
-Mercer De'am: Died by the hands of Tony when an orbital strike was set upon his location.\n 
-Desperato: Also died to the hands of Tony when an orbital strike was set upon their location.\n
-Velvet Thunder: Died to The Donald, bashed by the wall, and then shot in the head.\n
-The Donald: Died to the Valencia gang, if only he didn't shoot Velvet Thunder, but that's not how the art of the deal.\n
-Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take their shot, Daiki had his car blow everyone up, not just taking his on life but 8 of the Valencia gang.\n
-```"""
+		Christof Romulad, Laramy Fisk, Mercer De'am, Velvet Thunder\n
+		Noor 'Shareef' Jerkof, Martin Monis Jr, Azrael\n
+		H4KKKE3R\n
+		Seraph, Daiki, Ligma\n
+		Syntax Terror, Swarf Gander\n
+		Desperato\n
+		The Donald\n
+		Korea\n
+		```"""
+	#RIP sprawl 1. 
+	elif message.content.startswith(".ripsprawl1"):
+		msg = """```
+		Christof Romuald: Died to Syntax Terror's Bear Drones while being pounded on by Police. F in chat please.\n
+		Noor 'Shareef' Jerkof: Noor's death was on their own account, they ended up shooting themself in the head when they realized they couldn't talk to people and were on their way to jail.\n
+		Martin Monis Jr: MartinJr took the entire team on in bar shoot up, manged to walk out mostly fine then was shot in the head by a sniper.\n
+		Azrael: Azrael was a shit sniper and wouldn't follow the plan, resulting in complications for Laramy and Syntax Terror. Bad mistake Azrael as we framed him resulting in a brutal death.\n
+		H4KKK3R: H4KKK3R was in the car with Seraph, trying to guide Laramy to where Syntax Terror was so we could take our revenge. While Jacked into police cameras, Seraph shot them in the head. \n
+		Laramy Fisk: Was murdered by Seraph. After Laramy blammed Syntax Terror on why the van blew up, Seraph didn't take kindly, resulting in Seraph running Laramy over and shotting him after he manged to live.\n
+		Seraph: Seraph thought they were safe, thought Syntax Terror would be happy, were on their way to Byntax Berror, when a secret chip Syntax had implanted alerted a sniper from The business to shot Seraph dead.\n
+		Syntax Terror: Syntax Terror managed to live out his days, always being paranoid and on edge.\n
+		```"""
+	#Rip Sprawl 2.
+	elif message.content.startswith(".ripsprawl2"):
+		msg = """```
+		Swarf Gander: Killed himself with flashbangs to try avoid hearing Mercer's music.\n
+		Mercer De'am: Died by the hands of Tony when an orbital strike was set upon his location.\n 
+		Desperato: Also died to the hands of Tony when an orbital strike was set upon their location.\n
+		Velvet Thunder: Died to The Donald, bashed by the wall, and then shot in the head.\n
+		The Donald: Died to the Valencia gang, if only he didn't shoot Velvet Thunder, but that's not how the art of the deal.\n
+		Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take their shot, Daiki had his car blow everyone up, not just taking his on life but 8 of the Valencia gang.\n
+		```"""
+	#RIP Apoc 
+	elif message.content.stastswith(".ripapoc"):	
+		msg = """```
+		Korea: Korea lived as a cannibal and died as a cannibal. Especially when True Surveyor shot them in the head when they tried eating Ligma.\n
+		Ligma: Ligma came out of hinding and did a hypnotic strip dance for Korea. Korea than proceeded to try and eat Ligma instead of patching Ligma up, resulting in Ligmas death.\n
+		```"""
 
 
 	###############################################################################################################################################
@@ -403,7 +427,7 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 	elif message.content.startswith(".remember"):
 
 		#Generates random number to get remember message from  events that have happened.
-		member = random.randint(1,129)
+		member = random.randint(1,136)
 		
 		msg = ""
 		
@@ -679,7 +703,22 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 			msg = "```That time Ligma cut their hand on razor sharp guitar strings and Korea lept at them in an attempt 'fix them up' but Ligma jumped out the way in fear.```"
 		elif member == 129:
 			msg ="```That time the MC vagually described a well and changed measurment and distance often.```"
-
+		#That time Ligma and Korea died.
+		elif member == 130:
+			msg = "```That time True Surveyor climbed a ladder and instantly began opening fire on the first person they saw.```"
+		elif member == 131:
+			msg = "```That time Ligma emerged from hiding and started slowly stripping off```"
+		elif member ==132:
+			msg = "```That time Korea was hypnotised by Ligma's dancing ```"
+		elif member == 133:
+			msg = "```That time Ligma hypnotised Korea into dealing with the random Columbian, and Korea patched them up.```"
+		elif member ==134:
+			msg = "```Remember when Ligma tried to get Korea to patch them up, but Korea lost control and started trying to eat them. Ligma was stabbed to death with a cannibal on them. F in chat please.```"
+		elif member == 135: 
+			msg = "```That time True Surveyor took control of the situation by beaking the Columbian mans hand with a solid kick, and catching his gun, arming himself wit ha shotgun and small revolver. He killed Korea with thses for being a cannibal. F is chat if you miss cannibals.``` "
+		elif member == 136:
+			msg = "```Despite Korea and Ligma dying, True Surveryor came out with some good loot, including Ligmas molerat from Kim possible.``"
+		
 		
 	# Sends the map
 	elif message.content.startswith(".map"):
