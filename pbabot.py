@@ -153,6 +153,8 @@ Desperato: Also died to the hands of Tony when an orbital strike was set upon th
 Velvet Thunder: Died to The Donald, bashed by the wall, and then shot in the head.\n
 The Donald: Died to the Valencia gang, if only he didn't shoot Velvet Thunder, but that's not how the art of the deal.\n
 Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take their shot, Daiki had his car blow everyone up, not just taking his on life but 8 of the Valencia gang.\n
+Korea:Korea lived as a cannibal and died as a cannibal. Especially when True Surveyor shot them in the head when they tried eating Ligma.\n
+Ligma: Ligma came out of hinding and did a hypnotic strip dance for Korea. Korea than proceeded to try and eat Ligma instead of patching Ligma up, resulting in Ligmas death.\n
 ```"""
 
 
@@ -679,7 +681,19 @@ Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take 
 			msg = "```That time Ligma cut their hand on razor sharp guitar strings and Korea lept at them in an attempt 'fix them up' but Ligma jumped out the way in fear.```"
 		elif member == 129:
 			msg ="```That time the MC vagually described a well and changed measurment and distance often.```"
-
+		#That time Ligma and Korea died.
+		elif member == 130:
+			msg = "```That time True Surveyor climbed a ladder and instantly began opening fire on the first person they saw.```"
+		elif member == 131:
+			msg = "```That time Ligma emerged from hiding and started slowly stripping off```"
+		elif member ==132:
+			msg = "```That time Korea was hypnotised by Ligma's dancing ```"
+		elif member == 133:
+			msg "```That time Ligma hypnotised Korea into dealing with the random Columbian, and Korea patched them up.```"
+		elif member == 134:
+			msg = "```Remember when Ligma tried to get Korea to patch them up, but Korea lost control and started trying to eat them. Ligma was stabbed to death with a cannibal on them. F in chat please."
+		elif member == 135: 
+		
 		
 	# Sends the map
 	elif message.content.startswith(".map"):

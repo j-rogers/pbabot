@@ -4,3 +4,4 @@ data.pickle
 insert.py
 *.jpg
 **/__pycache__
+.vscode/settings.json

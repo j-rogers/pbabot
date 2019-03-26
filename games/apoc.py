@@ -207,8 +207,47 @@ def handle(message):
 	elif message.content.startswith(".gunslinger"):
 		msg = """```.battlefieldinstincts\n.bloodcrazed\n.nottobefuckedwith\n.insanolikedrano\n.preparedfortheinevitable```"""
 
+	####################
+	##Quarantine moves##
+	####################
+	#Quarantine moves:
+	elif message.content.startswith(".quarantine"):
+		msg = 
+		"""```
+		.combatveteran\n
+		.disciplinedengagement\n
+		.leavenoonebehind\n
+		.eagertoknow\n
+		.inspiring\n
+		```"""
+	#Comabt Veteran
+	elif message.content.startswith(".combatveteran"):
+		msg = """```Combat Veteran:\nYou get +1cool (cool+3).```"""
+	#disciplined engagement:
+	elif message.content.startswith(".disciplinedengagement"):
+		msg = """```Disiclined Engagement:\n 
+		 when you inflict harm, you can choose to inflict an amount of harm you like, less than or up to your harm as established, including s-harm.\n
+		 Decide at the moment you inflict the harm; you need not tell anyone in advance how much harm you intend to inflict
+		```"""
+	#Leave no one behind:
+	elif message.content.startswith(".leavenoonebehind"):
+		msg = """```Leave no one behind:\n
+		in battle, when you help someone who’s rolling, don’t roll+Hx. You help them as though you’d hit the roll with a 10+.
+		```"""
+	#Eager to know 
+	elif message.content.startswith(".eagertoknow"):
+		msg = """```Eager to know:\n 
+		When you go to someone for advice, they must tell you honestly what they think the best course is.\n
+		If you pursue that course, take +1 to any rolls you make in the pursuit. If you pursue that course but don’t accomplish your ends, you mark experience
+	    ```"""
+	#inspiring:
+	elif message.content.startswith(".inspiring"):
+		msg = """```Inspiring:\n
+		when another player’s character rolls+Hx to help you, they mark experience
+		```"""
 
-	
+
+
 	###############
 	##Hocus moves##
 	###############
@@ -303,10 +342,76 @@ def handle(message):
 	##Apoc Custom Moves##
 	#####################
 	#List custom move
-	#elif message.content.startswith(".apoccustom"):
-	#	msg ="""```.radiatedblood\n```"""
-	#elif message.content.startswith(".radiatedblood"):
-	#	msg ="""``````"""
+	elif message.content.startswith(".apoccustom"):
+		msg ="""```
+		.doitquick - when you want to do something quickly\n
+		.cannibalsenses - When you want use cannibal sense to get information\n	
+		.innercannibal - When your cannibal senses take over\n
+		.(#^.^#) - When you have time and are able to do your weeb shit\n
+			
+		```"""
+	#Cannibal senses
+	elif message.content.startswith(".cannibalsenses"):
+		msg = """```Cannibal Senses:\n
+		When you want to  use your cannibal senses to gather information,  describe how you use your sense and what you're trying to know and roll+sharp:\n\
+		On a 10+: The MC will vagualy describe what you detect in relation to what you want to know. Pick 3.\n
+		On a 7-9: The MC will vagualy describe what you detect in relation to what you want to know. Pick 2\n
+		• You're senses work really well, the MC will give you more detail. Take +1 forward when using this information.\n
+		• You manage to maintain control, and don't let your inner cannibal out.\n
+		• You manage to use your cannibal senses without drawing attention.\n
+		On a miss, pick 2:\n
+		• You lose control trying to use your cannibal senses, roll .innercannibal.\n
+		• You draw lots of attention  using your cannibal senses.\n
+		• The toxic/harsh enviroment takes a toll on your senses. -1 forward while your senses are impaired.\n
+		``"""
+	#Inner Cannibal
+	elif message.content.startswith(".inntercannibal"):
+		msg = """```Inner Cannibal:\n when you're inner cannibal comes out roll-weird\n
+		On a 10+: pick 1.\n
+		On a 7-9: pick 2.\n
+		6-: Pick 3.\n
+		• You attack the nearest person or go after the nearst body in attempt to fill your cannibal urges.\n
+		• You've lost your mind and struggle doing anything but think of blood and flesh, You take -3 on going.\n
+		• You try to eat yourself, suffer 2 harm and roll the harm move.\n
+		• Cannibalism is ruining your mind, take -1 sharp.
+		```"""
+	#(#^.^#) What a weeb
+	elif message.content.startswith(".(#^.^#)"):
+		msg = """```(#^.^#) You weeb (#^.^#):\n
+		When you have time and are able to do your weeb shit, roll+weird:\n
+		10+: In this shitty apocalpyse, you manage to find solace from your waifu or weeb collection. Take +1 forward, you fucking weeb.\n 
+		7-9: Pick 1 from the list\n
+		• You manage to be a both a weeb and a target at the same time. +1 weird (temporarily) and the MC will make a move.\n
+		• You annoy everyone around you with your weeb shit, but you feel at ease. Take +1 forward, while those around you take -1 forward.\n 
+		• Word spreads that you're a weeb. Take -1 (pick 1: cool, hard, hot) and +1 weird, (temporarily).\n	
+		On a miss: 1 from the list.\n
+		• Someone made fun of your waifu. Take -2 on going until you avenge your waifu or some time has passed.\n 
+		• Being a weeb has tarnished your reputation. -1 Hard, -1 Hot, -1 Cool. (Temporarily)\n
+		• You've embarrassd your associates. Everyone (including yourself) takes -1  while acting in social situations.\n
+		• Word spreads that you're a weeb. Nothing obvious has happened...	
+		```"""
+	
+	#Do something quickly
+	elif message.content.startswith(".doitquick"):
+		msg = """```Make it quick:\nWhen you want to try and do quickly, declare what you want to do roll + cool\n
+			10+ You're fucking quick and do it with no problem, Take +1 forward in this situation for your next move.\n
+			7-9: You mange to do it quickly, but chose 2:\n
+			• You make a lot of noise in the process.\n
+			• You fumble a little in the process, take -1 on your next move.\n
+			• You're a bit reckless in the process, and something is damaged or lost, you however  manage to notice it (MC decides on what).\n
+			• You distract a team member in the process, they take -1 forward.(If fiction allows)\n
+			On a miss:\n
+			You slow fuck, you're able to do something but not quickly, take -1 on your next move and pick 2:\n
+			• You're very clumsy in the process, and trip/fumble as a result, take an additional -2 on your next move.\n
+			• You're also loud, noisey, and draw lots of attention from the situation and potentially external factors.\n
+			• You distract your team in the process, your team take -1 forward while acting in this situation. (Only if ficion allows) \n
+			• You're simply just not that fast, and out of action, the MC will also make a move. (Counts as 2.)\n
+			• You're reckless in the process, as a result something is subtly lost or damaged. The MC determines what and when it's relevent to reveal.\n
+			```"""
+
+
+
+
 
 	####################
 	##Apoc Basic Moves##
@@ -556,7 +661,7 @@ def handle(message):
 		```"""
 	#Gun fight
 	elif message.content.startswith(".gunfight"):
-		msg ="""Both sides inflict and suffer harm as established. Roll+hard.\n
+		msg ="""```Both sides inflict and suffer harm as established. Roll+hard.\n
 		 On 10+, spend 3.\n 
 		 On 7-9, spend 2.\n
 		 On a miss, spend 1.\n
@@ -578,7 +683,8 @@ def handle(message):
 		Chopper\n
 		Driver\n
 		Gunslinger\n 
-		Hocus\n				
+		Hocus\n	
+		Quarantine\n			
 		```"""
 		
 	
