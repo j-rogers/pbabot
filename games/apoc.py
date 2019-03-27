@@ -5,37 +5,39 @@
 	###############################################################################################################################################
 	
 def handle(message):
+	messageString = message.content
+	messageString = messageString.replace (" ", "")
 	msg = ''
 
 	###############
 	##Angel Moves##
 	###############
 	#Sixth Sense
-	if message.content.startswith(".sixthsense"):
+	if messageString == ".sixthsense":
 		msg = """``` Sixth sense:\n When you open your brain to the world’s psychic maelstrom, roll+sharp instead of roll+weird.```"""		
 	#infirmary	
-	elif message.content.startswith(".infirmary"):
+	elif messageString == ".infirmary":
 		msg = """```Infirmary:\n you get an infirmary, a workspace with life support, a drug lab and a crew of 2 (Shigusa & Mox, maybe). Get patients into it and you can work on them like a savvyhead on tech (cf ). ```"""	
 	#Professional compassion
-	elif message.content.startswith(".professionalcompassion"):
+	elif messageString == ".professionalcompassion":
 		msg = """```Professonal compassion:\n 
 		you can choose to roll+sharp instead of roll+Hx when you help someone who’s rolling.```"""
 	#Battlefield grace
-	elif message.content.startswith(".battlefieldgrace"):
+	elif messageString == ".battlefieldgrace":
 		msg = """``` Battlefield grace\n while you are caring for people, not fighting, you get +1 armor.```"""
 	#Healing touch	
-	elif message.content.startswith(".healingtouch"):
+	elif messageString == ".healingtouch":
 		msg = """```Healing touch:\n when you put your hands skin-to-skin on a wounded person and open your brain to them, roll+weird.\n On a 10+, heal 1 segment \n
 					On a 7–9, heal 1 segment, but you’re acting under fire from your patient’s brain.\n
 					On a miss: first,\n
 					you don’t heal them. Second, you’ve opened both your brain and theirs to the world’s psychic maelstrom, without protection or preparation. 
 					For you, and for your patient if your patient’sa fellow player’s character, treat it as though you’ve made that move and missed the roll. For patients belonging to the MC, their experience and fate are up to the MC.```"""	
 	#Touched by death
-	elif message.content.startswith(".touchedbydeath"):
+	elif messageString == ".touchedbydeath":
 		msg = """```Touched by death:\n whenever someone in your care dies, you get +1weird (max +3). ```"""
  	
 	#Àngel Move Lists
-	elif message.content.startswith(".angel"):
+	elif messageString == ".angel":
 		msg = """```.sixthsense\n.infirmary\n.professionalcompassion\n.battlefieldgrace\n.healingtouch\n.touchedbydeath```"""
 		 
 		
@@ -43,46 +45,46 @@ def handle(message):
 	##Battlebabe Moves##
 	####################
 	#Dangerous and Sexy
-	elif message.content.startswith(".dangerousandsexy"):
+	elif messageString == ".dangerousandsexy":
 		msg = """```Dangerous & sexy:\n
 		when you enter into a charged situation, roll+hot.\n
 		On a 10+, hold 2.\n
 		On a 7–9, hold 1.\n 
 		Spend your hold 1 for 1 to make eye contact with an NPC present, who freezes or flinches and can’t take action until you break it off.  On a miss, your enemies identify you immediately as their foremost threat. ```"""
 	#Ice Cold
-	elif message.content.startswith(".icecold"):
+	elif messageString == ".icecold":
 		msg = """```Ice cold:\n when you go aggro on an NPC, roll+cool instead of roll+hard.\n When you go aggro on another player’s character, roll+Hx instead of roll+hard.```"""
 	#Merciless
-	elif message.content.startswith(".merciless"):
+	elif messageString == ".merciless":
 		msg = """```Merciless:\n when you inflict harm, inflict +1harm.```"""
 	#Viions of death.
-	elif message.content.startswith(".visionsofdeath"):
+	elif messageString == ".visionsofdeath":
 		msg = """```Visions of death:\n when you go into battle, roll+weird.\n
 		On a 10+, name one person who’ll die and one who’ll live.\n 
 		On a 7–9, name one person who’ll die OR one person who’ll live.\n
 		Don’t name a player’s character; name NPCs only. The MC will make your vision come true, if it’s even remotely possible.\n
 		On a miss, you foresee your own death, and accordingly take -1 throughout the battle.```"""	
 	#Perfect Insticts
-	elif message.content.startswith(".perfectinstincts"):
+	elif messageString == ".perfectinstincts":
 		msg = """```Perfect instincts:\nwhen you’ve read a charged situation and you’re acting on the MC’s answers, take +2 instead of +1.```"""		
 	#Impossible Reflexes.
-	elif message.content.startswith(".impossiblereflexes"):
+	elif messageString == ".impossiblereflexes":
 		msg = """```Impossible reflexes:\n the way you move unencumbered counts as armor.\n If you’re naked or nearly naked, 2-armor; if you’re wearing non-armor fashion, 1-armor. If you’re wearing armor, use it instead.```"""
 	
 	#################
 	##Brainer Moves##
 	#################
 	#Unnatural lust transfixion
-	elif message.content.startswith(".unnaturallusttransfixion"):
+	elif messageString == ".unnaturallusttransfixion":
 		msg = """```Unnatural lust transiixion:\n when you try to seduce someone, roll+weird instead of roll+hot.```"""
 	#Casual brain receptivity
-	elif message.content.startswith(".casualbrainreceptivity"):
+	elif messageString == ".casualbrainreceptivity":
 		msg = """```Casual brain receptivity:\nwhen you read someone, roll+weird instead of roll+sharp.\nYour victim has to be able to see you, but you don’t have to interact. 		```"""	
 	#preternatural at will brain atturnment
-	elif message.content.startswith(".pretnernatual"):
+	elif messageString == ".pretnernatual":
 		msg = """```Preternatural at-will brain attunement:\nyou get +1weird (weird+3).```"""
 	#Deep brain scan
-	elif message.content.startswith(".deepbrainscan"):
+	elif messageString == ".deepbrainscan":
 		msg = """```Deep brain scan:\n when you have time and physical intimacy with someone — mutual intimacy like holding them in your arms, or 1-sided intimacy like they’re restrained to a table — you can read them more deeply than normal. Roll+weird.\n
 		On a 10+,hold 3.\n
 		On a 7–9, hold 1.\n
@@ -93,12 +95,12 @@ def handle(message):
 		• in what ways are your character’s mind and soul vulnerable?\n
 		On a miss, you inflict 1-harm (ap) upon your subject, to no benefit.```"""	
 	#Direct brain whisper projection
-	elif message.content.startswith(".directbrainwhisperprojection"):
+	elif messageString == ".directbrainwhisperprojection":
 		msg = """```Direct-brain whisper projection:\nyou can roll+weird to get the effects of going aggro, without going aggro.\n
 		Your victim has to be able to see you, but you don’t have to interact.\n
 		If your victim forces your hand, your mind counts as a weapon (1-harm apclose loud-optional).```"""	
 	#in brain puppet string
-	elif message.content.startswith(".inbrainpupperstrings"):
+	elif messageString == ".inbrainpupperstrings":
 		msg = """```In-brain puppet strings:\nwhen you have time and physical intimacy with someone — again, mutual or 1-sided — you can plant a command inside their mind. Roll+weird.\n
 		On a 10+, hold 3.\n 
 		On a 7–9, hold 1.\n 
@@ -109,14 +111,14 @@ def handle(message):
 		hold.\n 
 		On a miss, you inflict 1-harm (ap) upon your subject, to no benefit.```"""
 	#Brainer Move list
-	elif message.content.startswith(".brainer"):
+	elif messageString == ".brainer":
 		msg = """```..unnaturallusttransfixion\n.casualbrainreceptivity\n.pretnernatual\n.deepbrainscan\n.directbrainwhisperprojection\n.inbrainpupperstrings```"""
 		
 	#################
 	##Chopper moves##
 	#################
 	#pack alpha
-	elif message.content.startswith(".packalpha"):
+	elif messageString == ".packalpha":
 		msg = """```Pack alpha:\nWhen you try to impose your will on your gang, roll+hard.\n
 		On a 10+, all 3.\n 
 		On a 7–9, choose 1:\n
@@ -125,7 +127,7 @@ def handle(message):
 		• you don’t have to make an example of one of them\n
 		On a miss, someone in your gang makes a dedicated bid to replace you for alpha.```"""	
 	#fuckingthieves
-	elif message.content.startswith(".fuckingthieves"):
+	elif messageString == ".fuckingthieves":
 		msg = """```
 		Fucking thieves: when you have your gang search their pockets and saddlebags for something, roll+hard. 
 		It has to be something small enough to fit. 
@@ -136,7 +138,7 @@ def handle(message):
 		thing, but it turns out that some asswipe stole it from you.
 		```"""
 	#Chopper Moves List
-	elif message.content.startswith(".chopper"):
+	elif messageString == ".chopper":
 		msg = """```.packalpha\n.fuckingthieves```"""
 
 		
@@ -146,7 +148,7 @@ def handle(message):
 	##Driver moves##
 	#################
 	#a no shit driver
-	elif message.content.startswith(".noshitdriver"):
+	elif messageString == ".noshitdriver":
 		msg = """``` A no shit driver: \n when behind the wheel…\n
 		…if you do something under fire, add your car’s power to your roll.\n
 		…if you try to seize something by force, add your car’s power to your roll.\n
@@ -158,19 +160,19 @@ def handle(message):
 		their roll.\n
 		```"""
 	#Good in the clinch
-	elif message.content.startswith(".goodintheclinch"):
+	elif messageString == ".goodintheclinch":
 		msg = """```Good in the clinch:\nwhen you do something under fire, roll+sharp instead of roll+cool.```"""
 	#weather eye
-	elif message.content.startswith(".weathereye"):
+	elif messageString == ".weathereye":
 		msg = """```Weather eye:\n when you open your brain to the world’s psychicmaelstrom, roll+sharp instead of roll+weird.```"""			
 	#daredevil
-	elif message.content.startswith(".daredevil"):
+	elif messageString == ".daredevil":
 		msg = """``` Daredevil:\nif you go straight into danger without hedging your bets, you get +1armor. If you happen to be leading a gang or convoy, it gets +1armor too.```"""
 	#my other car is a tank
-	elif message.content.startswith(".myothercarisatank"):
+	elif messageString == ".myothercarisatank":
 		msg = """```My other car is a tank:\nyou get an additional car. Give it mounted machine guns (3-harm close/far area messy) or grenade launchers (4-harm close area messy) and +1armor.```"""
 	#Driver Moves List
-	elif message.content.startswith("driver"):
+	elif messageString == "driver":
 		msg = """```.noshitdriver\n.goodintheclinch\n.weathereye\n.daredevil\n.myothercarisatank```"""
 		
 
@@ -178,10 +180,10 @@ def handle(message):
 	##Gunslinger moves##
 	####################
 	#battle-hardened
-	elif message.content.startswith(".battlehardended"):
+	elif messageString == ".battlehardended":
 		msg = """```Battle-hardened:\nwhen you act under fire, roll+hard instead of roll+cool. ```"""
 	#fuck this shit
-	elif message.content.startswith(".fuckthisshit"):
+	elif messageString == ".fuckthisshit":
 		msg = """```Fuck this shit:\n
 		 name your escape route and roll+hard.\n
 		 On a 10+,sweet, you’re gone.\n
@@ -189,29 +191,29 @@ def handle(message):
 		 On a miss, you’re caught vulnerable, half in and half out.\n
 		```"""
 	#battlefieldinstincts
-	elif message.content.startswith(".battlefieldinstincts"):
+	elif messageString == ".battlefieldinstincts":
 		msg = """```Battlefield instincts:\nwhen you open your brain to the world’s psychic maelstrom, roll+hard instead of roll+weird, but only in battle.```"""
 	#blood craze
-	elif message.content.startswith(".bloodcrazed"):
+	elif messageString == ".bloodcrazed":
 		msg = """```Bloodcrazed:\n whenever you inflict harm, inflict +1harm.```"""
 	#not to be fucked with
-	elif message.content.startswith(".nottobefuckedwith"):
+	elif messageString == ".nottobefuckedwith":
 		msg = """```NOT TO BE FUCKED WITH:\n in battle, you count as a gang (3-harm gang small), with armor according to the circumstances. ```"""
 	#in sano like drano
-	elif message.content.startswith(".insanolikedrano"):
+	elif messageString == ".insanolikedrano":
 		msg = """```Insano like Drano:\n you get +1hard (hard+3).```"""
 	#prepared for the inevitable
-	elif message.content.startswith(".preparedfortheinevitable"):
+	elif messageString == ".preparedfortheinevitable":
 		msg = """```Prepared for the inevitable:\nyou have a well-stocked and highquality first aid kit. It counts as an angel kit (cf ) with a capacity of 2-stock.```"""
 	#Gunslinger Moves List
-	elif message.content.startswith(".gunslinger"):
+	elif messageString == ".gunslinger":
 		msg = """```.battlefieldinstincts\n.bloodcrazed\n.nottobefuckedwith\n.insanolikedrano\n.preparedfortheinevitable```"""
 
 	####################
 	##Quarantine moves##
 	####################
 	#Quarantine moves:
-	elif message.content.startswith(".quarantine"):
+	elif messageString == ".quarantine":
 		msg = """```
 		.combatveteran\n
 		.disciplinedengagement\n
@@ -220,27 +222,27 @@ def handle(message):
 		.inspiring\n
 		```"""
 	#Comabt Veteran
-	elif message.content.startswith(".combatveteran"):
+	elif messageString == ".combatveteran":
 		msg = """```Combat Veteran:\nYou get +1cool (cool+3).```"""
 	#disciplined engagement:
-	elif message.content.startswith(".disciplinedengagement"):
+	elif messageString == ".disciplinedengagement":
 		msg = """```Disiclined Engagement:\n 
 		 when you inflict harm, you can choose to inflict an amount of harm you like, less than or up to your harm as established, including s-harm.\n
 		 Decide at the moment you inflict the harm; you need not tell anyone in advance how much harm you intend to inflict
 		```"""
 	#Leave no one behind:
-	elif message.content.startswith(".leavenoonebehind"):
+	elif messageString == ".leavenoonebehind":
 		msg = """```Leave no one behind:\n
 		in battle, when you help someone who’s rolling, don’t roll+Hx. You help them as though you’d hit the roll with a 10+.
 		```"""
 	#Eager to know 
-	elif message.content.startswith(".eagertoknow"):
+	elif messageString == ".eagertoknow":
 		msg = """```Eager to know:\n 
 		When you go to someone for advice, they must tell you honestly what they think the best course is.\n
 		If you pursue that course, take +1 to any rolls you make in the pursuit. If you pursue that course but don’t accomplish your ends, you mark experience
 	    ```"""
 	#inspiring:
-	elif message.content.startswith(".inspiring"):
+	elif messageString == ".inspiring":
 		msg = """```Inspiring:\n
 		when another player’s character rolls+Hx to help you, they mark experience
 		```"""
@@ -251,12 +253,12 @@ def handle(message):
 	##Hocus moves##
 	###############
 	#Fortunes
-	elif message.content.startswith(".fortunes"):
+	elif messageString == ".fortunes":
 		msg = """```Fortunes:\nfortune, surplus and want all depend on your followers. At the beginning of the session, roll+fortune.\n
 		On a 10+, your followers have surplus.\nOn a 7–9, they have surplus, but choose 1 want.\n
 		On a miss, they are in want. If their surplus lists barter, like 1-barter or 2-barter, that’s your personal share.```"""
 	#Frenzy
-	elif message.content.startswith(".frenzy"):
+	elif messageString == ".frenzy":
 		msg = """```Frenzy:\n
 		When you speak the truth to a mob, roll+weird.\n On a 10+, hold 3.\n
 		On a 7–9, hold 1.\n
@@ -269,36 +271,36 @@ def handle(message):
 		On a miss, the mob turns on you.\n
 	```"""
 	#Charismatic
-	elif message.content.startswith(".charismatic"):
+	elif messageString == ".charismatic":
 		msg = """```Charismatic:\n when you try to manipulate someone, roll+weird instead of roll+hot.```"""
 	#fucking wacknut
-	elif message.content.startswith(".fuckingwacknut"):
+	elif messageString == ".fuckingwacknut":
 		msg = """```Fucking wacknut:\n you get +1weird (weird+3).```"""
 	#seeing souls
-	elif message.content.startswith(".seeingsouls"):
+	elif messageString == ".seeingsouls":
 		msg = """```Seeing souls:\n when you help or interfere with someone, roll+weird instead of roll+Hx.```"""
 	#Divine Protection
-	elif message.content.startswith(".divineprotection"):
+	elif messageString == ".divineprotection":
 		msg = """```Divine protection:\n your gods give you 1-armor. If you wear armor, use that instead, they don’t add.```"""
 	#Hocus Moves List
-	elif message.content.startswith("hocus"):
+	elif messageString == "hocus":
 		msg = """```.fortunes\n.frenzy\n.charismatic\n.fuckingwacknut\n.seeingsouls\n.divineprotection```"""
 		
 	###########
 	##Skinner##
 	###########
 	#Breathtaking
-	elif message.content.startswith(".breathtaking"):
+	elif messageString == ".breathtaking":
 		msg = """```Breathtaking:\n you get +1hot (hot+3).```"""
 	#lost
-	elif message.content.startswith(".lost"):
+	elif messageString == ".lost":
 		msg = """``` Lost:\n when you whisper someone’s name to the world’s psychic maelstrom, roll+weird.\n
 		On a hit, they come to you, with or without any clear explanation why.\n 
 		On a 10+, take +1forward against them.\n
 		On a miss, the MC will ask you 3 questions; answer them truthfully.
 		```"""
 	#artful and gracious
-	elif message.content.startswith(".artfulandgracious"):
+	elif messageString == ".artfulandgracious":
 		msg = """```Artful & gracious:\n
 		when you perform your chosen art — any act of expression or culture — or when you put its product before an audience, roll+hot.\n
 		On a 10+, spend 3.\n
@@ -312,13 +314,13 @@ def handle(message):
 		On a miss, you gain no benefit, but suffer no harm or lost opportunity. You simply perform very well.\n
 		```"""
 	#an arresting skinner
-	elif message.content.startswith(".anarrestingskinner"):
+	elif messageString == ".anarrestingskinner":
 		msg = """``` An arresting skinner:\n when you remove a piece of clothing, your own or someone else’s, no one who can see you can do anything but watch.\n
 		You command their absolute attention\n
 		If you choose, you can exempt individual people, by name.
 		```"""
  	#Hypnotic
-	elif message.content.startswith(".hypnotic"):
+	elif messageString == ".hypnotic":
 		msg = """``` Hypnotic:\n
 		when you have time and solitude with someone, they become fixated upon you. Roll+hot.\nOn
 		On a 10+, hold 3.\n 
@@ -334,14 +336,22 @@ def handle(message):
 		On a miss, they hold 2 over you, on the exact same terms.\n
 		```"""
 	#Hocus Moves List
-	elif message.content.startswith(".hocus"):
+	elif messageString == ".hocus":
 		msg = """```.breathtaking\n.lost\n.artfulandgracious\n.anarrestingskinner\n.hypnotic```"""
+
+
+    ##################
+	## The Faceless ##
+    ##################
+	#faceless moves
+	elif messageString == ".faceless":
+		msg = """```Faceless moves:\n```"""
 
 	#####################
 	##Apoc Custom Moves##
 	#####################
 	#List custom move
-	elif message.content.startswith(".apoccustom"):
+	elif messageString == ".apoccustom":
 		msg ="""```
 		.doitquick - when you want to do something quickly\n
 		.cannibalsenses - When you want use cannibal sense to get information\n	
@@ -350,7 +360,7 @@ def handle(message):
 			
 		```"""
 	#Cannibal senses
-	elif message.content.startswith(".cannibalsenses"):
+	elif messageString == ".cannibalsenses":
 		msg = """```Cannibal Senses:\n
 		When you want to  use your cannibal senses to gather information,  describe how you use your sense and what you're trying to know and roll+sharp:\n\
 		On a 10+: The MC will vagualy describe what you detect in relation to what you want to know. Pick 3.\n
@@ -364,7 +374,7 @@ def handle(message):
 		• The toxic/harsh enviroment takes a toll on your senses. -1 forward while your senses are impaired.\n
 		``"""
 	#Inner Cannibal
-	elif message.content.startswith(".inntercannibal"):
+	elif messageString == ".inntercannibal":
 		msg = """```Inner Cannibal:\n when you're inner cannibal comes out roll-weird\n
 		On a 10+: pick 1.\n
 		On a 7-9: pick 2.\n
@@ -375,8 +385,8 @@ def handle(message):
 		• Cannibalism is ruining your mind, take -1 sharp.
 		```"""
 	#(#^.^#) What a weeb
-	elif message.content.startswith(".(#^.^#)"):
-		msg = """```(#^.^#) You weeb (#^.^#):\n
+	elif messageString == ".(#^.^#)":
+		msg = """```(#^.^#) You weeb (#^.^#:\n
 		When you have time and are able to do your weeb shit, roll+weird:\n
 		10+: In this shitty apocalpyse, you manage to find solace from your waifu or weeb collection. Take +1 forward, you fucking weeb.\n 
 		7-9: Pick 1 from the list\n
@@ -391,7 +401,7 @@ def handle(message):
 		```"""
 	
 	#Do something quickly
-	elif message.content.startswith(".doitquick"):
+	elif messageString == ".doitquick":
 		msg = """```Make it quick:\nWhen you want to try and do quickly, declare what you want to do roll + cool\n
 			10+ You're fucking quick and do it with no problem, Take +1 forward in this situation for your next move.\n
 			7-9: You mange to do it quickly, but chose 2:\n
@@ -416,7 +426,7 @@ def handle(message):
 	##Apoc Basic Moves##
 	####################
 	#Basic moves List
-	elif message.content.startswith(".apocmoves"):
+	elif messageString == ".apocmoves":
 		msg = """
 		```.combatmoves\n.staythefuckdown\n.maintainposition\n.coverfire\n.laydownfire\n.standoverwatch\n.keepaneyeout\n.singlecombat\n.freeforall\n.gunfight\n.dosomethingunderfire\n.attacksomeone\n.goaggro\n.seizebyforce```
 		```.harmandhealing\n.psyharm\n.harm\n```
@@ -424,11 +434,16 @@ def handle(message):
 		```.subterfugemoves\n.yourethebait\n.yourethecat\n.yourethemouse\n.catormouse```
 		```.othermoves\n.followothermove\n.seduce\n.apocbooks```
 		"""
+		#Temp for now while looking at better way.
+		#Makes output look a tad nicer with the individual blocks.
+		msg = msg.replace("""
+		""", "")
+
 	######################
 	## Peripheral Moves ##
 	######################
 	#List peripheral Moves. 
-	elif message.content.startswith(".peripheralmoves"):
+	elif messageString == ".peripheralmoves":
 		msg = """```Peripheral Moves:\n
 		.barter roll+sharp\n
 		.dropajingle roll+barter (max 3)\n
@@ -439,7 +454,7 @@ def handle(message):
 		```"""
 
 	#Barter
-	elif message.content.startswith(".barter"):
+	elif messageString == ".barter":
 		msg = """```When you go into a holding’s bustling market, looking for some particular thing to buy, and it’s not obvious whether you should be able to just like go buy one like that, roll+sharp.\n
 	On a 10+, yes, you can just go can buy it like that.\n
 	On a 7–9, the MC chooses one of the following:\n
@@ -449,7 +464,7 @@ def handle(message):
 	• sorry, I don’t have that, but maybe this will do instead?```"""
 	
 	#drop a jingle:
-	elif message.content.startswith(".dropajingle"):
+	elif messageString == ".dropajingle":
 		msg = """```Drop a jingle:\n
 			When you make known that you want a thing and drop jingle to
 			speed it on its way, roll+barter spent (max roll+3).\n
@@ -460,7 +475,7 @@ def handle(message):
 		```"""
 
 	#Augury
-	elif message.content.startswith(".augury"):
+	elif messageString == ".augury":
 		msg = """``` When you use your followers or your workspace for augury, roll+weird.\n
 		On a hit, you can choose 1:\n
 		• Reach through the world’s psychic maelstrom to something or someone connected to it.\n
@@ -478,7 +493,7 @@ def handle(message):
 		On a miss, whatever\n
 		```"""
 	#open your brain
-	elif message.content.startswith(".openyourbrain"):
+	elif messageString == ".openyourbrain":
 		msg = """```OPEN YOUR BRAIN:\n
 		When you open your brain to the world’s psychic maelstrom,
 		roll+weird.\n
@@ -488,7 +503,7 @@ def handle(message):
 		If you already know all there is to know, the MC will tell you that.
 		```"""
 	#read a person
-	elif message.content.startswith(".readaperson"):
+	elif messageString == ".readaperson":
 		msg = """```READ A PERSON\n
 		When you read a person in a charged interaction, roll+sharp.\n
 		On a 10+, hold 3.\n
@@ -501,7 +516,7 @@ def handle(message):
 		• how could I get your character to __?\n	
 		```"""	
 	#read a sitch
-	elif message.content.startswith(".readasitch"):
+	elif messageString == ".readasitch":
 		msg = """```READ A SITCH\n
 		When you read a charged situation, roll+sharp.\n
 		On a hit, you can ask the MC questions. Whenever you act on one of the MC’s answers, take +1.\n
@@ -517,13 +532,13 @@ def handle(message):
 	#################
 	## Other moves ##
 	#################
-	elif message.content.startswith(".othermoves"):
+	elif messageString == ".othermoves":
 		msg = """```Other moves:\n
 			.folowothermove - roll+Hx\n
 			.seduce
 			```"""
 	#follwothermove
-	elif message.content.startswith(".followothermove"):
+	elif messageString == ".followothermove":
 		msg = """```Follow other Move:\nWhen you follow through on someone else’s move, roll+Hx.\n
 		If it’s one of the MC’s characters’, roll+sharp.\n On a 10+, the MC chooses one of the following for you, as appropriate:\n
 		• you inflict +1harm\n
@@ -536,7 +551,7 @@ def handle(message):
 		On a miss, the MC chooses one of the above for an appropriate character of her own.
 		```"""	
 	#seduce or manipulate
-	elif message.content.startswith(".seduce"):
+	elif messageString == ".seduce":
 		msg = """```When you try to seduce or manipulate someone, tell them what you want and roll+hot.\n
 		For NPCs: on a hit, they ask you to promise something first, and do it if you promise.\n 
 		On a 10+, whether you keep your promise is up to you, later.\n
@@ -549,7 +564,7 @@ def handle(message):
 		On a miss, for either NPCs or PCs, be prepared for the worst.```"""
 	
 	#added apoc books
-	elif message.content.startswith(".apocbooks"):
+	elif messageString == ".apocbooks":
 		msg = """```Angel\n
 		Battlebabe\n
 		Brainer\n
@@ -563,14 +578,14 @@ def handle(message):
 	## Harm and healing ##
 	######################
 	#harm and healing list
-	elif message.content.startswith(".harmandhealing"):
+	elif messageString == ".harmandhealing":
 		msg = """```Harm and healing:\n
 		.psyharm - roll + Ψ-harm\n
 		.harm - roll + harm\n 
 		```"""
 	
 	#Ψ-harm
-	elif message.content.startswith(".psyharm"):
+	elif messageString == ".psyharm":
 		msg = """```When you suffer Ψ-harm, roll+Ψ-harm suffered (typically, roll+1).\n
 		On a 10+, the MC can choose 1:\n
 		• You’re out of action: unconscious, trapped, incoherent or panicked.\n
@@ -587,7 +602,7 @@ def handle(message):
 	
 
 	#harm
-	elif message.content.startswith(".harm"):
+	elif messageString == ".harm":
 		msg = """```When you suffer harm, roll+harm suffered (after armor, if you’re wearing any).\n 
 		On a 10+, the MC can choose 1:\n
 		• You’re out of action: unconscious, trapped, incoherent or panicked.\n
@@ -606,7 +621,7 @@ def handle(message):
 	## Combat Moves ##
 	##################
 	#Combat moves List
-	elif message.content.startswith(".combatmoves"):
+	elif messageString == ".combatmoves":
 		msg = """```Combat List:\n
 			.staythefuckdown - roll+sharp\n
 			.maintainposition - roll+hard\n
@@ -624,7 +639,7 @@ def handle(message):
 			```"""
 
 	#stay the fuck down
-	elif message.content.startswith(".staythefuckdown"):
+	elif messageString == ".staythefuckdown":
 		msg = """```When you stay the fuck down, roll+sharp\n.
 		On a hit, you’re in a relatively safe spot for the rest of the battle.\n 
 		On a 10+, you come under no fire.\n
@@ -632,7 +647,7 @@ def handle(message):
 		On a miss, you have to break position now or come under concentrated fire.
 		```"""
 	#maintainposition
-	elif message.content.startswith(".maintainposition"):
+	elif messageString == ".maintainposition":
 		msg = """```When you maintain an untenable position or course, roll+hard.\n
 		On a 10+, you can hold it, and for 3 ticks you’ll come under only incidental fire, even past 9:00.\n
 		On a 7–9, you can hold it, and for a tick you’ll come under only incidental fire.\nOn
@@ -640,14 +655,14 @@ def handle(message):
 		On a miss, abandon it now or suffer concentrated fire. (If it’s before 9:00, now it’s 9:00.)		
 		```"""
 	#coverfire	
-	elif message.content.startswith(".coverfire"):
+	elif messageString == ".coverfire":
 		msg = """```When you provide covering fire for someone, roll+cool.\n
 		On a 10+, you keep them from coming under concentrated fire, even past 9:00.\n
 		On a 7–9, their position or course is untenable, and they proceed accordingly.\n
 		On a miss, they suffer concentrated fire now. (If it’s before 9:00, now it’s 9:00.)
 		```"""
 	#lay down fire:
-	elif message.content.startswith(".laydownfire"):
+	elif messageString == ".laydownfire":
 		msg = """```Lay down fire:\n
 		When you lay down fire, roll +hard.\n
 		On 10+, Choose 3. On a 7-9, choose 2. On a miss choose 1.\n
@@ -657,7 +672,7 @@ def handle(message):
 		• You take an opportune shot, inflicting harm (but -1harm) on an enemy within your reach.
 		```"""
 	#Stand overwatch
-	elif message.content.startswith(".standoverwatch"):
+	elif messageString == ".standoverwatch":
 		msg = """```Stand over watch:\n
 		When you stand overwatch for an ally, roll+cool\n On a hit, if anyone attacks or interferes with your ally. You attack them and inflict harm as establsihed and warn your ally\n
 		On a 1-+ Choose 1:
@@ -666,7 +681,7 @@ def handle(message):
 		On a miss, you are able to warn your ally but not attack your enemy.
 		```"""
 	#keep an eye out.
-	elif message.content.startswith(".keepaneyeout"):
+	elif messageString == ".keepaneyeout":
 		msg= """```Keep an eye out:\n
 		When you keep an eye out for whats coming, roll + sharp\n
 		On a 10+ gain 3 hold.\n
@@ -679,14 +694,14 @@ def handle(message):
 		•Direct an ally's attention to a danger. They take -1harm from that danger.\n
 		```"""
 	#dosomethignunderfire
-	elif message.content.startswith(".dosomethingunderfire"):
+	elif messageString == ".dosomethingunderfire":
 		msg = """```DO SOMETHING UNDER FIRE\n
 		When you do something under fire, or dig in to endure fire, roll+cool.\n
 		On a 10+, you do it.\n
 		On a 7–9, you flinch, hesitate, or stall: the MC can offer you a worse outcome, a hard bargain, or an ugly choice
 		```"""
 	#single combat
-	elif message.content.startswith(".singlecombat"):
+	elif messageString == ".singlecombat":
 		msg = """```When you do single combat with someone, both you and your enemy inflict and suffer harm as established. Roll+hard.\n
 		On a 10+, spend 3.\n
 		On a 7–9, spend 2.\n 
@@ -704,7 +719,7 @@ def handle(message):
 		If it’s a tie, then if both of you want to end the fight, it ends, but if either of you want to fight on, it continues to another round
 		```"""
 	#Attack someone
-	elif message.content.startswith(".attacksomeone"):
+	elif messageString == ".attacksomeone":
 		msg = """```When you attack someone unprepared, unsuspecting, or helpless, roll+hard.\n
 		On a 10+, inflict full harm as established.\n
 		On a 7–9, they’re able somehow to dodge, block, or duck, or else you just don’t quite strike home; inflict little harm.\n
@@ -712,7 +727,7 @@ def handle(message):
 		On a miss, be prepared for the worst.```"""
 
 	#Free for all comabt
-	elif message.content.startswith(".freeforall"):
+	elif messageString == ".freeforall":
 		msg = """```When you’re involved in a chaotic free-for-all, the mass of combatants as a whole takes harm as established, as a single gang inflicting harm on itself. Roll+hard.\n
 		On 10+, spend 3. On 7-9, spend 2.\n On a miss, spend 1. Spend them blind, on the following:\n
 		• Add to the chaos. the combatants as a whole suffer +1harm.\n
@@ -726,7 +741,7 @@ def handle(message):
 		After the exchange of harm, the fight ends, unless or until someone reignites it.
 		```"""
 	#Gun fight
-	elif message.content.startswith(".gunfight"):
+	elif messageString == ".gunfight":
 		msg ="""```Both sides inflict and suffer harm as established. Roll+hard.\n
 		 On 10+, spend 3.\n 
 		 On 7-9, spend 2.\n
@@ -738,7 +753,7 @@ def handle(message):
 		 • Take a single, short, personal action.\n
 		```"""
 	#seize by force
-	elif message.content.startswith(".seizebyforce"):
+	elif messageString == ".seizebyforce":
 		msg = """```SEIZE BY FORCE\n
 		When you try to seize something by force, or to secure you hold on something, roll+hard.\n
 		On a hit, choose options.\n
@@ -750,8 +765,8 @@ def handle(message):
 		• you impress, dismay or frighten your enemy\n
 		```"""	
 	#go aggro
-	elif message.content.startswith(".goaggro"):
-		msg = """```GO AGGRO\nWhen you go aggro on someone, roll+hard.\nO
+	elif messageString == ".goaggro":
+		msg = """```GO AGGRO\nWhen you go aggro on someone, roll+hard.\n
 		On a 10+, they have to choose: force your hand and suck it up, or cave and do what you want.\n
 		On a 7–9, they can instead choose 1:\n
 		• get the hell out of your way\n
@@ -765,7 +780,7 @@ def handle(message):
 	## Subterfuge Moves ##
 	######################
 	#Subterfuge Moves List
-	elif message.content.startswith(".subterfugemoves"):
+	elif messageString == ".subterfugemoves":
 		msg = """```
 		.yourethebait - roll+cool\n
 		.yourethecat - roll+cool\n
@@ -773,7 +788,7 @@ def handle(message):
 		.catormouse - roll+sharp\n
 		```"""
 	#Youre the bait
-	elif message.content.startswith(".yourethebait"):
+	elif messageString == ".yourethebait":
 		msg = """```You're the bait:\n
 			When you're the bait, roll+cool.\nOn a 10+ choose 2.\nOn a 1-9 choose 1\n
 			• You draw your prey all the way into the trap. Otherwise, they only approach.\n
@@ -782,7 +797,7 @@ def handle(message):
 			On a Miss, the MC chooses 1 for you.
 			```"""
 	#You're the cat:
-	elif message.content.startswith(".yourethecat"):
+	elif messageString == ".yourethecat":
 		msg = """```Youre the cat:\n
 			When you're the cat, roll +cool\nOn a hit, you catch your prey out.\n
 			On a 10+ you're driven them first to a place of your choosing; way where.\n
@@ -790,14 +805,14 @@ def handle(message):
 			On a miss, your prey escapes you.
 			```"""
 	#youre the mouse
-	elif message.content.startswith(".yourethemouse"):
+	elif messageString == ".yourethemouse":
 		msg ="""```You're the mouse:\n
 			when you're the mouse, roll+cool.\nOn a 10+, you escape clean and leave your hunter hunting.\n
 			On a 7-9, your hunter catchesyou out, but only after you've led them to a place of your choosing;say where.\n
 			On a miss, your hunter catches you out and the MC says where.
 			```"""
 	#Not sure:
-	elif message.content.startswith(".catormouse"):
+	elif messageString == ".catormouse":
 		msg ="""```Cat or mouse?\n
 		When it's not certain whether you're the cat or the mouse, roll+sharp\n
 		On a hit, you decide which you are.\nOn a 10+, you take +1 forward as well.\nOn a miss, you're the mouse.```"""
@@ -805,6 +820,5 @@ def handle(message):
 	
 	
 		
-	
-
+	msg = msg.replace("\t", "")
 	return msg
