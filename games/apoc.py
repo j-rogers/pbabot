@@ -7,11 +7,12 @@
 def handle(message):
 	messageString = message.content
 	messageString = messageString.replace (" ", "")
+	messageString = messageString.lower()
 	msg = ''
 
-	###############
-	##Angel Moves##
-	###############
+	#################
+	## Angel Moves ##
+	#################
 	#Sixth Sense
 	if messageString == ".sixthsense":
 		msg = """``` Sixth sense:\n When you open your brain to the world’s psychic maelstrom, roll+sharp instead of roll+weird.```"""		
@@ -41,9 +42,9 @@ def handle(message):
 		msg = """```.sixthsense\n.infirmary\n.professionalcompassion\n.battlefieldgrace\n.healingtouch\n.touchedbydeath```"""
 		 
 		
-	####################
-	##Battlebabe Moves##
-	####################
+	######################
+	## Battlebabe Moves ##
+	######################
 	#Dangerous and Sexy
 	elif messageString == ".dangerousandsexy":
 		msg = """```Dangerous & sexy:\n
@@ -71,9 +72,9 @@ def handle(message):
 	elif messageString == ".impossiblereflexes":
 		msg = """```Impossible reflexes:\n the way you move unencumbered counts as armor.\n If you’re naked or nearly naked, 2-armor; if you’re wearing non-armor fashion, 1-armor. If you’re wearing armor, use it instead.```"""
 	
-	#################
-	##Brainer Moves##
-	#################
+	###################
+	## Brainer Moves ##
+	###################
 	#Unnatural lust transfixion
 	elif messageString == ".unnaturallusttransfixion":
 		msg = """```Unnatural lust transiixion:\n when you try to seduce someone, roll+weird instead of roll+hot.```"""
@@ -114,9 +115,9 @@ def handle(message):
 	elif messageString == ".brainer":
 		msg = """```..unnaturallusttransfixion\n.casualbrainreceptivity\n.pretnernatual\n.deepbrainscan\n.directbrainwhisperprojection\n.inbrainpupperstrings```"""
 		
-	#################
-	##Chopper moves##
-	#################
+	###################
+	## Chopper moves ##
+	###################
 	#pack alpha
 	elif messageString == ".packalpha":
 		msg = """```Pack alpha:\nWhen you try to impose your will on your gang, roll+hard.\n
@@ -144,9 +145,9 @@ def handle(message):
 		
 		
 
-	#################
-	##Driver moves##
-	#################
+	##################
+	## Driver moves ##
+	##################
 	#a no shit driver
 	elif messageString == ".noshitdriver":
 		msg = """``` A no shit driver: \n when behind the wheel…\n
@@ -176,9 +177,9 @@ def handle(message):
 		msg = """```.noshitdriver\n.goodintheclinch\n.weathereye\n.daredevil\n.myothercarisatank```"""
 		
 
-	####################
-	##Gunslinger moves##
-	####################
+	######################
+	## Gunslinger moves ##
+	######################
 	#battle-hardened
 	elif messageString == ".battlehardended":
 		msg = """```Battle-hardened:\nwhen you act under fire, roll+hard instead of roll+cool. ```"""
@@ -209,9 +210,9 @@ def handle(message):
 	elif messageString == ".gunslinger":
 		msg = """```.battlefieldinstincts\n.bloodcrazed\n.nottobefuckedwith\n.insanolikedrano\n.preparedfortheinevitable```"""
 
-	####################
-	##Quarantine moves##
-	####################
+	######################
+	## Quarantine moves ##
+	######################
 	#Quarantine moves:
 	elif messageString == ".quarantine":
 		msg = """```
@@ -249,9 +250,9 @@ def handle(message):
 
 
 
-	###############
-	##Hocus moves##
-	###############
+	#################
+	## Hocus moves ##
+	#################
 	#Fortunes
 	elif messageString == ".fortunes":
 		msg = """```Fortunes:\nfortune, surplus and want all depend on your followers. At the beginning of the session, roll+fortune.\n
@@ -286,9 +287,9 @@ def handle(message):
 	elif messageString == "hocus":
 		msg = """```.fortunes\n.frenzy\n.charismatic\n.fuckingwacknut\n.seeingsouls\n.divineprotection```"""
 		
-	###########
-	##Skinner##
-	###########
+	#############
+	## Skinner ##
+	#############
 	#Breathtaking
 	elif messageString == ".breathtaking":
 		msg = """```Breathtaking:\n you get +1hot (hot+3).```"""
@@ -345,11 +346,74 @@ def handle(message):
     ##################
 	#faceless moves
 	elif messageString == ".faceless":
-		msg = """```Faceless moves:\n```"""
+		msg = """```Faceless moves:\n
+			.pitbull\n
+			.rasputin\n
+			.juggernaut\n
+			.ohyeah\n
+			.scentofblood\n
+			.norman\n
+			.asone\n
+			.beastly\n
+			```"""
+	#pitball
+	elif messageString == ".pitbull":
+		msg = """```Pitbull:\nwhenever your life becomes untenable, name the person you hold most responsible.\n
+		Take +1 ongoing to all rolls versus them, forever.\n
+		(All rolls with them directly as a target count, of course.\n
+		Rolls against their family and friends, minions, or property may count, in the MC’s judgment. \n
+		MCs, remember your job is to make Apocalypse World seem real and keep the characters’ lives interesting, not deny the PCs bonuses.)
+		```"""
+	#rasputin
+	elif messageString == ".rasputin":
+		msg = """```Rasputin:\nshot, stabbed, and poisoned, you just keep coming.\n
+		When you are being scary as fuck and coming at someone, you get +1armor.\n
+		You still get shot and stabbed, bleeding just doesn’t bother you that much anymore.
+		```"""
+	#juggernaut
+	elif messageString == ".juggernaut":
+		msg = """```Juggernaut:\n
+		take -2 on all “when you suffer harm” rolls
+		```"""
+	#oh yeah
+	elif messageString == ".ohyeah":
+		msg = """```Oh yeah!:\n
+		roll+hard to smash your way through scenery to get to or away from something.\n
+		On a 10+, the scenery is moved or smashed and you get what you want.\n
+		On a 7–9 you get what you want and smash or move the scenery,but you take 1-harm (ap),\n
+ 		and are disoriented and under fire in follow-up actions, leave something behind, or take something with you. Think smashing through walls or pushing through burned out husks of cars.\n
+		On a miss, your foot gets pinned under something mid-smash.
+		```"""
+	#scent of blood
+	elif messageString == ".scentofblood":
+		msg = """```Scent of blood:\nAt the beginning of the session, roll+weird.\n
+		On a 10+ hold 1+1.\n
+		On a 7–9 hold 1.\n
+		At any time, you or the MC can spend your hold to have you at the scene of a battle (a real battle, not intimate violence between a couple people).\n
+		If your hold was 1+1, take +1forward now.\n
+		On a miss, the MC holds 1, and can spend it to have you there and pinned down.
+		```"""
+	#norman
+	elif messageString == ".norman":
+		msg ="""```Norman:\nYou seek the advice of your mask. Roll+weird to see what it directs you to do.\n
+		On a 10+ mark experience and take +1forward if you do as your mask wishes.\n
+		On a 7–9, take a +1 if you do what it wants and act under fire if you don’t.\n
+		On a miss, it has its own agenda. Act under fire if you don’t follow it.
+		```"""
+	#as one
+	elif messageString == ".asone":
+		msg ="""```As one:\nAttempts by other PCs to seize your mask by force, or to get you to remove or give away your mask by going aggro or seduction/manipulation, are at -2.\n
+		NPCs will never succeed at unmasking you against your will, even if you are completely at their mercy.
+		```"""
+	#beastly
+	elif messageString == ".beastly":
+		msg = """```Beastly:\n
+			You get +1hard (hard+3).
+			```"""
 
-	#####################
-	##Apoc Custom Moves##
-	#####################
+	#######################
+	## Apoc Custom Moves ##
+	#######################
 	#List custom move
 	elif messageString == ".apoccustom":
 		msg ="""```
@@ -422,9 +486,9 @@ def handle(message):
 
 
 
-	####################
-	##Apoc Basic Moves##
-	####################
+	######################
+	## Apoc Basic Moves ##
+	######################
 	#Basic moves List
 	elif messageString == ".apocmoves":
 		msg = """
@@ -565,14 +629,15 @@ def handle(message):
 	
 	#added apoc books
 	elif messageString == ".apocbooks":
-		msg = """```Angel\n
-		Battlebabe\n
-		Brainer\n
-		Chopper\n
-		Driver\n
-		Gunslinger\n 
-		Hocus\n	
-		Quarantine\n			
+		msg = """```.angel\n
+		.battlebabe\n
+		.brainer\n
+		.chopper\n
+		.driver\n
+		.gunslinger\n 
+		.hocus\n	
+		.quarantine\n
+		.faceless\n	
 		```"""
 	######################
 	## Harm and healing ##
