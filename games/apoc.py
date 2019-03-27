@@ -212,8 +212,7 @@ def handle(message):
 	####################
 	#Quarantine moves:
 	elif message.content.startswith(".quarantine"):
-		msg = 
-		"""```
+		msg = """```
 		.combatveteran\n
 		.disciplinedengagement\n
 		.leavenoonebehind\n
@@ -417,31 +416,30 @@ def handle(message):
 	##Apoc Basic Moves##
 	####################
 	#Basic moves List
-	elif message.content.startswith(".apocbasic"):
-		msg = """```Do something under fire (.dosomethingunderfire)\n
-					Go Aggro (.goaggro)\n
-					Seize by force (.seizebyforce)\n
-					Read a sitch (.readasitch)\n
-					Read a person (.readaperson)\n
-					Open your brain (.openyourbrain)\n
-					Cover fire (.coverfire)\n
-					Maintin Position (.maintainposition)\n
-					Stay teh fuck down (.staythefuckdown)\n
-					Follow other move (.followothermove)\n
-					Ψ-harm (.psyharm)\n
-					barter (.barter)\n
-					harm (.harm)\n
-					attack someone (.attacksomeone)\n
-					Do something Under fire (.dosomethingunderfire)
-					Seduce or Manipulate (.seduce)\n
-					single combat (.singlecombat)\n
-					Free for all comabt (.freeforall)\n
-					firefight/shoot out (.gunfight)
-
-		
+	elif message.content.startswith(".apocmoves"):
+		msg = """
+		```.combatmoves\n.staythefuckdown\n.maintainposition\n.coverfire\n.laydownfire\n.standoverwatch\n.keepaneyeout\n.singlecombat\n.freeforall\n.gunfight\n.dosomethingunderfire\n.attacksomeone\n.goaggro\n.seizebyforce```
+		```.harmandhealing\n.psyharm\n.harm\n```
+		```.peripheralmoves\n.barter\n.dropajingle\n.augury\n.readasitch\n.readaperson\n.openyourbrain```
+		```.subterfugemoves\n.yourethebait\n.yourethecat\n.yourethemouse\n.catormouse```
+		```.othermoves\n.followothermove\n.seduce\n.apocbooks```
+		"""
+	######################
+	## Peripheral Moves ##
+	######################
+	#List peripheral Moves. 
+	elif message.content.startswith(".peripheralmoves"):
+		msg = """```Peripheral Moves:\n
+		.barter roll+sharp\n
+		.dropajingle roll+barter (max 3)\n
+		.augury roll+weird\n
+		.openyourbrain - roll+weird\n
+		.readaperson - roll+sharp\n
+		.readasitch - roll+sharp\n
 		```"""
+
 	#Barter
-	elif message.content.startswith("barter"):
+	elif message.content.startswith(".barter"):
 		msg = """```When you go into a holding’s bustling market, looking for some particular thing to buy, and it’s not obvious whether you should be able to just like go buy one like that, roll+sharp.\n
 	On a 10+, yes, you can just go can buy it like that.\n
 	On a 7–9, the MC chooses one of the following:\n
@@ -450,41 +448,34 @@ def handle(message):
 	• damn, I had one, I just sold it to this guy named Rolfball, maybeyou can go get it off him?\n
 	• sorry, I don’t have that, but maybe this will do instead?```"""
 	
-	#follwothermove
-	elif message.content.startswith(".followothermove"):
-		msg = """```Follow other Move:\nWhen you follow through on someone else’s move, roll+Hx.\n
-		If it’s one of the MC’s characters’, roll+sharp.\n On a 10+, the MC chooses one of the following for you, as appropriate:\n
-		• you inflict +1harm\n
-		• you dominate someone’s position\n
-		• you make an untenable position or course securen\n
-		• you avoid all fire\n
-		• you create an opportunity and follow through to full effect\n
-		On a 7–9, you create an opportunity, but you haven’t seized it
-		or followed through on it yet. the MC will tell you what it is.\n
-		On a miss, the MC chooses one of the above for an appropriate character of her own.
-		```"""	
-	#stay the fuck down
-	elif message.content.startswith(".staythefuckdown"):
-		msg = """```When you stay the fuck down, roll+sharp\n.
-		On a hit, you’re in a relatively safe spot for the rest of the battle.\n 
-		On a 10+, you come under no fire.\n
-		On a 7–9, you come under only incidental fire.\n
-		On a miss, you have to break position now or come under concentrated fire.
+	#drop a jingle:
+	elif message.content.startswith(".dropajingle"):
+		msg = """```Drop a jingle:\n
+			When you make known that you want a thing and drop jingle to
+			speed it on its way, roll+barter spent (max roll+3).\n
+			It has to be a thing you could legitimately get this way.\n
+			On a 10+ it comes to you, no strings attached.\n
+			On a 7–9 it comes to you, or something pretty close.\n
+	 		On a miss, it comes to you, but with strings very much attached.
 		```"""
-	#maintainposition
-	elif message.content.startswith(".maintainposition"):
-		msg = """```When you maintain an untenable position or course, roll+hard.\n
-		On a 10+, you can hold it, and for 3 ticks you’ll come under only incidental fire, even past 9:00.\n
-		On a 7–9, you can hold it, and for a tick you’ll come under only incidental fire.\nOn
-		Either way you can abandon it before your time is up to avoid concentrated fire.\n
-		On a miss, abandon it now or suffer concentrated fire. (If it’s before 9:00, now it’s 9:00.)		
-		```"""
-	#coverfire	
-	elif message.content.startswith(".coverfire"):
-		msg = """```When you provide covering fire for someone, roll+cool.\n
-		On a 10+, you keep them from coming under concentrated fire, even past 9:00.\n
-		On a 7–9, their position or course is untenable, and they proceed accordingly.\n
-		On a miss, they suffer concentrated fire now. (If it’s before 9:00, now it’s 9:00.)
+
+	#Augury
+	elif message.content.startswith(".augury"):
+		msg = """``` When you use your followers or your workspace for augury, roll+weird.\n
+		On a hit, you can choose 1:\n
+		• Reach through the world’s psychic maelstrom to something or someone connected to it.\n
+		• Isolate and protect a person or thing from the world’s psychic maelstrom.\n
+		• Isolate and contain a fragment of the world’s psychic maelstrom itself.\n
+		• Insert information into the world’s psychic maelstrom.\n
+		• Open a window into the world’s psychic maelstrom.\n
+		By default, the effect will last only as long as you maintain it, will reach only shallowly into the world’s psychic maelstrom as it is local to you, and will bleed instability.\n
+		On a 10+, choose 2;\n
+		on a 7–9, choose 1:\n
+		• It’ll persist (for a while) without your actively maintaining it.\n
+		• It reaches deep into the world’s psychic maelstrom.\n
+		• It reaches broadly throughout the world’s psychic maelstrom.\n
+		• It’s stable and contained, no bleeding.\n
+		On a miss, whatever\n
 		```"""
 	#open your brain
 	elif message.content.startswith(".openyourbrain"):
@@ -523,36 +514,61 @@ def handle(message):
 		• what’s my enemy’s true position?\n
 		• who’s in control here?\n
 		```"""
-	#seize by force
-	elif message.content.startswith(".seizebyforce"):
-		msg = """```SEIZE BY FORCE\n
-		When you try to seize something by force, or to secure you hold on something, roll+hard.\n
-		On a hit, choose options.\n
-		On a 10+, choose 3.\n
-		On a 7–9, choose 2:\n
-		• you take definite hold of it\n
-		• you suffer little harm\n
-		• you inflict terrible harm\n
-		• you impress, dismay or frighten your enemy\n
+	#################
+	## Other moves ##
+	#################
+	elif message.content.startswith(".othermoves"):
+		msg = """```Other moves:\n
+			.folowothermove - roll+Hx\n
+			.seduce
+			```"""
+	#follwothermove
+	elif message.content.startswith(".followothermove"):
+		msg = """```Follow other Move:\nWhen you follow through on someone else’s move, roll+Hx.\n
+		If it’s one of the MC’s characters’, roll+sharp.\n On a 10+, the MC chooses one of the following for you, as appropriate:\n
+		• you inflict +1harm\n
+		• you dominate someone’s position\n
+		• you make an untenable position or course securen\n
+		• you avoid all fire\n
+		• you create an opportunity and follow through to full effect\n
+		On a 7–9, you create an opportunity, but you haven’t seized it
+		or followed through on it yet. the MC will tell you what it is.\n
+		On a miss, the MC chooses one of the above for an appropriate character of her own.
 		```"""	
-	#go aggro
-	elif message.content.startswith(".goaggro"):
-		msg = """```GO AGGRO\nWhen you go aggro on someone, roll+hard.\nO
-		On a 10+, they have to choose: force your hand and suck it up, or cave and do what you want.\n
-		On a 7–9, they can instead choose 1:\n
-		• get the hell out of your way\n
-		• barricade themselves securely in\n
-		• give you something they think you want\n
-		• back off calmly, hands where you can see\n
-		• tell you what you want to know (or what you want to hear)\n
+	#seduce or manipulate
+	elif message.content.startswith(".seduce"):
+		msg = """```When you try to seduce or manipulate someone, tell them what you want and roll+hot.\n
+		For NPCs: on a hit, they ask you to promise something first, and do it if you promise.\n 
+		On a 10+, whether you keep your promise is up to you, later.\n
+		On a 7–9, they need some concrete assurance right now.\n
+		For PCs: on a 10+, both.\n
+		On a 7–9, choose 1:\n
+		• if they do it, they mark experience\n
+		• if they refuse, erase one of their stat highlights for the remainder of the session\n
+		What they do then is up to them.\n
+		On a miss, for either NPCs or PCs, be prepared for the worst.```"""
+	
+	#added apoc books
+	elif message.content.startswith(".apocbooks"):
+		msg = """```Angel\n
+		Battlebabe\n
+		Brainer\n
+		Chopper\n
+		Driver\n
+		Gunslinger\n 
+		Hocus\n	
+		Quarantine\n			
 		```"""
-	#dosomethignunderfire
-	elif message.content.startswith(".dosomethingunderfire"):
-		msg = """```DO SOMETHING UNDER FIRE\n
-		When you do something under fire, or dig in to endure fire, roll+cool.\n
-		On a 10+, you do it.\n
-		On a 7–9, you flinch, hesitate, or stall: the MC can offer you a worse outcome, a hard bargain, or an ugly choice
+	######################
+	## Harm and healing ##
+	######################
+	#harm and healing list
+	elif message.content.startswith(".harmandhealing"):
+		msg = """```Harm and healing:\n
+		.psyharm - roll + Ψ-harm\n
+		.harm - roll + harm\n 
 		```"""
+	
 	#Ψ-harm
 	elif message.content.startswith(".psyharm"):
 		msg = """```When you suffer Ψ-harm, roll+Ψ-harm suffered (typically, roll+1).\n
@@ -567,25 +583,9 @@ def handle(message):
 		• You miss noticing something important.\n
 		• You take a single concrete action of the MC’s choosing.\n
 		On a miss, you keep it together and overcome the -harm with no effect.\n```"""
-		
-	#Augury
-	elif message.content.startswith("augury"):
-		msg = """``` When you use your followers or your workspace for augury, roll+weird.\n
-		On a hit, you can choose 1:\n
-		• Reach through the world’s psychic maelstrom to something or someone connected to it.\n
-		• Isolate and protect a person or thing from the world’s psychic maelstrom.\n
-		• Isolate and contain a fragment of the world’s psychic maelstrom itself.\n
-		• Insert information into the world’s psychic maelstrom.\n
-		• Open a window into the world’s psychic maelstrom.\n
-		By default, the effect will last only as long as you maintain it, will reach only shallowly into the world’s psychic maelstrom as it is local to you, and will bleed instability.\n
-		On a 10+, choose 2;\n
-		on a 7–9, choose 1:\n
-		• It’ll persist (for a while) without your actively maintaining it.\n
-		• It reaches deep into the world’s psychic maelstrom.\n
-		• It reaches broadly throughout the world’s psychic maelstrom.\n
-		• It’s stable and contained, no bleeding.\n
-		On a miss, whatever\n
-		```"""
+	
+	
+
 	#harm
 	elif message.content.startswith(".harm"):
 		msg = """```When you suffer harm, roll+harm suffered (after armor, if you’re wearing any).\n 
@@ -599,34 +599,92 @@ def handle(message):
 		• You miss noticing something important.\n
 		On a miss, the MC can nevertheless choose something from the 7–9 list above. If she does, though, it’s instead of some of the harm you’re suffering, so you take -1harm. the suffering harm move adds a wrinkle, a little
 		```"""	
-	#Do something under fire
-	elif message.content.startswith(".dosomethingunderfire"):
-		msg = """```When you do something under fire, or dig in to endure fire, roll+cool.\n
-		On a 10+, you do it.\n
-		On a 7–9, you flinch, hesitate, or stall:\n
-		the MC can offer you a worse outcome, a hard bargain, or an ugly choice.\n
-		On a miss, be prepared for the worst.
-		```"""
-	#Attack someone
-	elif message.content.startswith(".attacksomeone"):
-		msg = """```When you attack someone unprepared, unsuspecting, or helpless, roll+hard.\n
-		On a 10+, inflict full harm as established.\n
-		On a 7–9, they’re able somehow to dodge, block, or duck, or else you just don’t quite strike home; inflict little harm.\n
-		In either case, if they can and do choose to fight back, now you’re doing battle them.\n
-		On a miss, be prepared for the worst.```"""
-	#seduce or manipulate
-	elif message.content.startswith(".seduce"):
-		msg = """```When you try to seduce or manipulate someone, tell them what you want and roll+hot.\n
-		For NPCs: on a hit, they ask you to promise something first, and do it if you promise.\n 
-		On a 10+, whether you keep your promise is up to you, later.\n
-		On a 7–9, they need some concrete assurance right now.\n
-		For PCs: on a 10+, both.\n
-		On a 7–9, choose 1:\n
-		• if they do it, they mark experience\n
-		• if they refuse, erase one of their stat highlights for the remainder of the session\n
-		What they do then is up to them.\n
-		On a miss, for either NPCs or PCs, be prepared for the worst.```"""
 	
+
+	#Need to add road war moves such as boarding a moving car or tacking v-harm.
+	##################
+	## Combat Moves ##
+	##################
+	#Combat moves List
+	elif message.content.startswith(".combatmoves"):
+		msg = """```Combat List:\n
+			.staythefuckdown - roll+sharp\n
+			.maintainposition - roll+hard\n
+			.coverfire - roll+cool\n
+			.laydownfire - roll+hard\n
+			.standoverwatch - roll+cool\n
+			.keepaneyeout - roll+sharp\n
+			.dosomethingunderfire - roll+cool\n
+			.dosinglecombat - roll+help\n
+			.attacksomeone - roll+hard\n
+			.freeforall - roll+hard\n
+			.gunfight - roll+hard\n
+			.goaggro - roll+hard\n
+			.seizebyforce - roll+hard\n
+			```"""
+
+	#stay the fuck down
+	elif message.content.startswith(".staythefuckdown"):
+		msg = """```When you stay the fuck down, roll+sharp\n.
+		On a hit, you’re in a relatively safe spot for the rest of the battle.\n 
+		On a 10+, you come under no fire.\n
+		On a 7–9, you come under only incidental fire.\n
+		On a miss, you have to break position now or come under concentrated fire.
+		```"""
+	#maintainposition
+	elif message.content.startswith(".maintainposition"):
+		msg = """```When you maintain an untenable position or course, roll+hard.\n
+		On a 10+, you can hold it, and for 3 ticks you’ll come under only incidental fire, even past 9:00.\n
+		On a 7–9, you can hold it, and for a tick you’ll come under only incidental fire.\nOn
+		Either way you can abandon it before your time is up to avoid concentrated fire.\n
+		On a miss, abandon it now or suffer concentrated fire. (If it’s before 9:00, now it’s 9:00.)		
+		```"""
+	#coverfire	
+	elif message.content.startswith(".coverfire"):
+		msg = """```When you provide covering fire for someone, roll+cool.\n
+		On a 10+, you keep them from coming under concentrated fire, even past 9:00.\n
+		On a 7–9, their position or course is untenable, and they proceed accordingly.\n
+		On a miss, they suffer concentrated fire now. (If it’s before 9:00, now it’s 9:00.)
+		```"""
+	#lay down fire:
+	elif message.content.startswith(".laydownfire"):
+		msg = """```Lay down fire:\n
+		When you lay down fire, roll +hard.\n
+		On 10+, Choose 3. On a 7-9, choose 2. On a miss choose 1.\n
+		• You provide covering fire, allowing another character to move or act freely.\n
+		• You provide supporting fire, giving another PC +1choice on their battle move.\n
+		• You provide suppressing fire, denying another character to move or act freely (if a PC they may still act under fire)\n
+		• You take an opportune shot, inflicting harm (but -1harm) on an enemy within your reach.
+		```"""
+	#Stand overwatch
+	elif message.content.startswith(".standoverwatch"):
+		msg = """```Stand over watch:\n
+		When you stand overwatch for an ally, roll+cool\n On a hit, if anyone attacks or interferes with your ally. You attack them and inflict harm as establsihed and warn your ally\n
+		On a 1-+ Choose 1:
+		• And you inflict your harm before they can carry out their attack or interference\n
+		• And your inflict terrible harm (+1 harm)\n
+		On a miss, you are able to warn your ally but not attack your enemy.
+		```"""
+	#keep an eye out.
+	elif message.content.startswith(".keepaneyeout"):
+		msg= """```Keep an eye out:\n
+		When you keep an eye out for whats coming, roll + sharp\n
+		On a 10+ gain 3 hold.\n
+		On a 7-9 gain 2 hold.\n
+		On a miss gain 1 hold.\n
+		During the battle, spend your hold 1 for 1, to ask the MC whats coming and chose 1:\n
+		• Direct a PC ally's attention to an enemy. If they make a battle move against that enemy, they +1 choice to their move\n
+		•Give a PC ally an order, instruction, or suggestion. If they do they get +1 to any rolls they make in the effort.\n
+		• Direct an ally's attention to an enemy. If they attack that enemy they inflict +1 harm.\n
+		•Direct an ally's attention to a danger. They take -1harm from that danger.\n
+		```"""
+	#dosomethignunderfire
+	elif message.content.startswith(".dosomethingunderfire"):
+		msg = """```DO SOMETHING UNDER FIRE\n
+		When you do something under fire, or dig in to endure fire, roll+cool.\n
+		On a 10+, you do it.\n
+		On a 7–9, you flinch, hesitate, or stall: the MC can offer you a worse outcome, a hard bargain, or an ugly choice
+		```"""
 	#single combat
 	elif message.content.startswith(".singlecombat"):
 		msg = """```When you do single combat with someone, both you and your enemy inflict and suffer harm as established. Roll+hard.\n
@@ -645,6 +703,14 @@ def handle(message):
 		• this is a fight to the death. We continue to another round.\n
 		If it’s a tie, then if both of you want to end the fight, it ends, but if either of you want to fight on, it continues to another round
 		```"""
+	#Attack someone
+	elif message.content.startswith(".attacksomeone"):
+		msg = """```When you attack someone unprepared, unsuspecting, or helpless, roll+hard.\n
+		On a 10+, inflict full harm as established.\n
+		On a 7–9, they’re able somehow to dodge, block, or duck, or else you just don’t quite strike home; inflict little harm.\n
+		In either case, if they can and do choose to fight back, now you’re doing battle them.\n
+		On a miss, be prepared for the worst.```"""
+
 	#Free for all comabt
 	elif message.content.startswith(".freeforall"):
 		msg = """```When you’re involved in a chaotic free-for-all, the mass of combatants as a whole takes harm as established, as a single gang inflicting harm on itself. Roll+hard.\n
@@ -671,21 +737,73 @@ def handle(message):
 		 • Cover ground. Whichever side spends more on this, wins the round.\n
 		 • Take a single, short, personal action.\n
 		```"""
-
-		#Need to add road war moves such as boarding a moving car or tacking v-harm.
-	
-	
-	#added apoc books
-	elif message.content.startswith(".apocbooks"):
-		msg = """```Angel\n
-		Battlebabe\n
-		Brainer\n
-		Chopper\n
-		Driver\n
-		Gunslinger\n 
-		Hocus\n	
-		Quarantine\n			
+	#seize by force
+	elif message.content.startswith(".seizebyforce"):
+		msg = """```SEIZE BY FORCE\n
+		When you try to seize something by force, or to secure you hold on something, roll+hard.\n
+		On a hit, choose options.\n
+		On a 10+, choose 3.\n
+		On a 7–9, choose 2:\n
+		• you take definite hold of it\n
+		• you suffer little harm\n
+		• you inflict terrible harm\n
+		• you impress, dismay or frighten your enemy\n
+		```"""	
+	#go aggro
+	elif message.content.startswith(".goaggro"):
+		msg = """```GO AGGRO\nWhen you go aggro on someone, roll+hard.\nO
+		On a 10+, they have to choose: force your hand and suck it up, or cave and do what you want.\n
+		On a 7–9, they can instead choose 1:\n
+		• get the hell out of your way\n
+		• barricade themselves securely in\n
+		• give you something they think you want\n
+		• back off calmly, hands where you can see\n
+		• tell you what you want to know (or what you want to hear)\n
 		```"""
+
+	######################
+	## Subterfuge Moves ##
+	######################
+	#Subterfuge Moves List
+	elif message.content.startswith(".subterfugemoves"):
+		msg = """```
+		.yourethebait - roll+cool\n
+		.yourethecat - roll+cool\n
+		.yourethemouse - roll+cool\n
+		.catormouse - roll+sharp\n
+		```"""
+	#Youre the bait
+	elif message.content.startswith(".yourethebait"):
+		msg = """```You're the bait:\n
+			When you're the bait, roll+cool.\nOn a 10+ choose 2.\nOn a 1-9 choose 1\n
+			• You draw your prey all the way into the trap. Otherwise, they only approach.\n
+			• Your prey doesn't suspect you. Otherwise, they're wary and alert.\n
+			• You don't expose yourself to extra risk. Otherwise, any harm, your prey inflicts +1.\n
+			On a Miss, the MC chooses 1 for you.
+			```"""
+	#You're the cat:
+	elif message.content.startswith(".yourethecat"):
+		msg = """```Youre the cat:\n
+			When you're the cat, roll +cool\nOn a hit, you catch your prey out.\n
+			On a 10+ you're driven them first to a place of your choosing; way where.\n
+			On a 7-9, you've had to follow them where they wanted to go; they say where.\n
+			On a miss, your prey escapes you.
+			```"""
+	#youre the mouse
+	elif message.content.startswith(".yourethemouse"):
+		msg ="""```You're the mouse:\n
+			when you're the mouse, roll+cool.\nOn a 10+, you escape clean and leave your hunter hunting.\n
+			On a 7-9, your hunter catchesyou out, but only after you've led them to a place of your choosing;say where.\n
+			On a miss, your hunter catches you out and the MC says where.
+			```"""
+	#Not sure:
+	elif message.content.startswith(".catormouse"):
+		msg ="""```Cat or mouse?\n
+		When it's not certain whether you're the cat or the mouse, roll+sharp\n
+		On a hit, you decide which you are.\nOn a 10+, you take +1 forward as well.\nOn a miss, you're the mouse.```"""
+			
+	
+	
 		
 	
 
