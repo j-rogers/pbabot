@@ -214,11 +214,7 @@ def handle(message):
 	## Quarantine moves ##
 	######################
 	#Quarantine moves:
-<<<<<<< HEAD
-	elif message.content.startswith(".quarantine"):
-=======
 	elif messageString == ".quarantine":
->>>>>>> 732f7ed5206c265fd642134aa1da1bdb0b33bb77
 		msg = """```
 		.combatveteran\n
 		.disciplinedengagement\n
