@@ -173,7 +173,7 @@ async def on_message(message):
 		Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take their shot, Daiki had his car blow everyone up, not just taking his on life but 8 of the Valencia gang.\n
 		```"""
 	#RIP Apoc 
-	elif message.content.stastswith(".ripapoc"):	
+	elif message.content.startswith(".ripapoc"):	
 		msg = """```
 		Korea: Korea lived as a cannibal and died as a cannibal. Especially when True Surveyor shot them in the head when they tried eating Ligma.\n
 		Ligma: Ligma came out of hinding and did a hypnotic strip dance for Korea. Korea than proceeded to try and eat Ligma instead of patching Ligma up, resulting in Ligmas death.\n
