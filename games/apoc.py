@@ -415,7 +415,7 @@ def handle(message):
 	## Apoc Custom Moves ##
 	#######################
 	#List custom move
-	elif messageString == ".apoccustom":
+	elif ((messageString == ".apoccustom")or (messageString ==".custom")):
 		msg ="""```
 		.doitquick - when you want to do something quickly\n
 		.cannibalsenses - When you want use cannibal sense to get information\n	
@@ -490,7 +490,7 @@ def handle(message):
 	## Apoc Basic Moves ##
 	######################
 	#Basic moves List
-	elif messageString == ".apocmoves":
+	elif ((messageString == ".apocmoves") or (messageString == ".moves")): ##Happy now Josh, since you had to make a new file. 
 		msg = """
 		```.combatmoves\n.staythefuckdown\n.maintainposition\n.coverfire\n.laydownfire\n.standoverwatch\n.keepaneyeout\n.singlecombat\n.freeforall\n.gunfight\n.dosomethingunderfire\n.attacksomeone\n.goaggro\n.seizebyforce```
 		```.harmandhealing\n.psyharm\n.harm\n```
@@ -628,7 +628,7 @@ def handle(message):
 		On a miss, for either NPCs or PCs, be prepared for the worst.```"""
 	
 	#added apoc books
-	elif messageString == ".apocbooks":
+	elif ((messageString == ".apocbooks")or (messageString == ".books")):
 		msg = """```.angel\n
 		.battlebabe\n
 		.brainer\n
