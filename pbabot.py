@@ -427,7 +427,7 @@ async def on_message(message):
 	elif message.content.startswith(".remember"):
 
 		#Generates random number to get remember message from  events that have happened.
-		member = random.randint(1,136)
+		member = random.randint(1,157)
 		
 		msg = ""
 		
@@ -718,7 +718,51 @@ async def on_message(message):
 			msg = "```That time True Surveyor took control of the situation by beaking the Columbian mans hand with a solid kick, and catching his gun, arming himself wit ha shotgun and small revolver. He killed Korea with thses for being a cannibal. F is chat if you miss cannibals.``` "
 		elif member == 136:
 			msg = "```Despite Korea and Ligma dying, True Surveryor came out with some good loot, including Ligmas molerat from Kim possible.``"
-		
+		#That time in the vault
+		elif member ==137:
+			msg = "```That time Nora tried to get an extra water from True Saviour. Fun times. ```"
+		elif member == 138:
+			msg = "```Remember when Q jumped back and forth a mind warping reality, causing them to have a seizure```"
+		elif member == 139:
+			msg = "```What does the mask say?```"
+		elif member == 140:
+			msg ="````That time Nora readied turrets to try and get more water from True Saviour```"
+		elif member == 141:
+			msg = "```That time True Saviour was brutally beaten by Q as Q decided to side with Nora```"
+		elif member ==142:
+			msg = "```That time True Saviour was mowed down with fire from Nora's turrets. MC probably should have let someone die.```"
+		elif member == 143:
+			msg = "```That time Q saw this glowing magical fox dissapear under some rubble or man hole and jumped down it. Somebody nearly died from the fall alone that day```"
+		elif member == 144:
+			msg = "```Remember that time a certain MC made a programming error in the bot nearly breaking it? you should it happens often."
+		elif member ==145:
+			msg = "```That time when all hell broke lose in the Nora's vault.```"
+		elif member == 146:
+			msg = "```That time you tried to use a move to get a better understanding or gain knowledge on something, and the MC provided something very vauge, and probably made your understanding worse```"
+		#FIREFOX? 
+		elif member ==147:
+			msg = "```That time Q and Nora got sidetracked looking around the Metro tunnels  because Q was convinced that there was a glowing fox``` "
+		elif member == 148:
+			msg = "```That time Q saw some glowing bushes, shrubberies, and other stuff (I forget what exactly). Q started squatting behind one, and Nora just saw Q squatting.```"
+		elif member == 149:
+			msg = "```That time Q found a group of old people and tried to scare them into talking about the fox```"
+		elif member == 150:
+			msg = "```Remember when Q jumped on a made up glowing fox, and it formed a Torus (a doughnut) around them and then exploded as Q hit them with an axe```"
+		elif member == 151:
+			msg = "```That time Q got a fox skull from an immaginary fox. Good job Q.```"
+		elif member == 152:
+			msg = "```That time Q ran into a wall. Good times. ```"
+		elif member == 153:
+			msg = "``` That time Nora actually talked to people and defuse the situation instead of probably just killing them. Good job Nora```"
+		elif member == 154:
+			msg = "```That time Nora made a bridge while Q kind of tripped out looking at a made up bridge.```"
+		elif member == 155: 
+			msg = "```That time Q saw through the eyes of a fox and found lizard people.```"
+		elif member == 156:
+			msg = "```That time Q and Nora reported back to Number 8, and got them excited for Lizard people ```"
+		elif member == 157:
+			msg = "```That time Nora shot Q and the bullets just rolled off as if nothing happened. Q is a literal tank now.```"
+
 		
 	# Sends the map
 	elif message.content.startswith(".map"):
