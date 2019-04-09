@@ -72,9 +72,12 @@ async def on_message(message):
 	################################################################ LISTING COMMANDS #############################################################
 	###############################################################################################################################################
 	###############################################################################################################################################
-
+	messageString = message.content
+	messageString = messageString.replace (" ", "")
+	messageString = messageString.lower()
+	
 	# Lists all commands
-	if message.content.startswith(".help"):
+	if messageString==".help":
 		# Form the message
 		msg = """```Use \".command\" when using this bot.\n
 .help: Displays this help message.
@@ -103,7 +106,7 @@ async def on_message(message):
 .log <message>: Saves a message to the log file.```"""
 
 	# Displays the current list of clocks
-	elif message.content.startswith(".clocks"):
+	elif messageString==".clocks":
 		msg = "```"
 		global clocks
 		for clock in clocks:
@@ -124,7 +127,7 @@ async def on_message(message):
 		msg += "```"
 
 	# Displays the current list of contacts
-	elif message.content.startswith(".contacts"):
+	elif messageString==".contacts":
 		msg = "```"
 		global contacts
 		for contact in contacts:
@@ -138,7 +141,7 @@ async def on_message(message):
 		msg += "```"
 
 	# Displays a list of characters who've died, and how they died
-	elif message.content.startswith(".f"):
+	elif messageString==".f":
 		# Form the message
 		msg = """```
 		Christof Romulad, Laramy Fisk, Mercer De'am, Velvet Thunder\n
@@ -151,7 +154,7 @@ async def on_message(message):
 		Korea\n
 		```"""
 	#RIP sprawl 1. 
-	elif message.content.startswith(".ripsprawl1"):
+	elif messageString==".ripsprawl1":
 		msg = """```
 		Christof Romuald: Died to Syntax Terror's Bear Drones while being pounded on by Police. F in chat please.\n
 		Noor 'Shareef' Jerkof: Noor's death was on their own account, they ended up shooting themself in the head when they realized they couldn't talk to people and were on their way to jail.\n
@@ -163,7 +166,7 @@ async def on_message(message):
 		Syntax Terror: Syntax Terror managed to live out his days, always being paranoid and on edge.\n
 		```"""
 	#Rip Sprawl 2.
-	elif message.content.startswith(".ripsprawl2"):
+	elif messageString==".ripsprawl2":
 		msg = """```
 		Swarf Gander: Killed himself with flashbangs to try avoid hearing Mercer's music.\n
 		Mercer De'am: Died by the hands of Tony when an orbital strike was set upon his location.\n 
@@ -173,7 +176,7 @@ async def on_message(message):
 		Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take their shot, Daiki had his car blow everyone up, not just taking his on life but 8 of the Valencia gang.\n
 		```"""
 	#RIP Apoc 
-	elif message.content.startswith(".ripapoc"):	
+	elif messageString==".ripapoc":	
 		msg = """```
 		Korea: Korea lived as a cannibal and died as a cannibal. Especially when True Surveyor shot them in the head when they tried eating Ligma.\n
 		Ligma: Ligma came out of hinding and did a hypnotic strip dance for Korea. Korea than proceeded to try and eat Ligma instead of patching Ligma up, resulting in Ligmas death.\n
@@ -187,7 +190,7 @@ async def on_message(message):
 	###############################################################################################################################################
 
 	# Rolls 2d6 dice
-	elif message.content.startswith(".roll") or message.content.startswith(".dice"):
+	elif messageString==".roll" or messageString==".dice":
 		# Generate the roll
 		dice1 = random.randint(1, 6)
 		dice2 = random.randint(1, 6)
@@ -221,7 +224,7 @@ async def on_message(message):
 			msg = "```Okay, now THIS is epic. You rolled a 12.```"
 		
 	# Adds a new clock
-	elif message.content.startswith(".addclock"):
+	elif messageString==".addclock":
 		# Get the clock name and assign it default value of 1200
 		tokens = message.content.split(".addclock ")
 		clock = (tokens[1], "1200")
@@ -248,7 +251,7 @@ async def on_message(message):
 		msg = "```Clock added: " + tokens[1] + " at 1200.```"
 		
 	# Deletes a clock
-	elif message.content.startswith(".deleteclock"):
+	elif messageString==".deleteclock":
 		# Get the clock name
 		tokens = message.content.split(".deleteclock ")
 		name = tokens[1]
@@ -270,7 +273,7 @@ async def on_message(message):
 		msg = "```Deleted clock " + name + ".```"
 		
 	# Increases a clock by one segment
-	elif message.content.startswith(".increaseclock"):
+	elif messageString==".increaseclock":
 		# Get the clock name
 		tokens = message.content.split(".increaseclock ")
 		name = tokens[1]
@@ -321,7 +324,7 @@ async def on_message(message):
 		msg = "```" + updatedClock[0] + " clock increased to " + updatedClock[1] + ".```"
 		
 	# Decreases a clock by one segment
-	elif message.content.startswith(".decreaseclock"):
+	elif messageString==".decreaseclock":
 		# Get the clock name
 		tokens = message.content.split(".decreaseclock ")
 		name = tokens[1]
@@ -373,7 +376,7 @@ async def on_message(message):
 		msg = "```" + updatedClock[0] + " clock decreased to " + updatedClock[1] + ".```"
 		
 	# Adds a new contact
-	elif message.content.startswith(".addcontact"):
+	elif messageString==".addcontact":
 		# Get the contact name and description
 		tokens = message.content.split()
 		description = ""
@@ -403,7 +406,7 @@ async def on_message(message):
 		msg = "```Contact added: " + tokens[1] + ".```"
 		
 	# Deletes a contact
-	elif message.content.startswith(".deletecontact"):
+	elif messageString==".deletecontact":
 		# Get the clock name
 		tokens = message.content.split()
 		name = tokens[1]
@@ -424,10 +427,10 @@ async def on_message(message):
 		# Form message and send
 		msg = "```Deleted contact " + name + ".```"
 		
-	elif message.content.startswith(".remember"):
+	elif messageString==".remember":
 
 		#Generates random number to get remember message from  events that have happened.
-		member = random.randint(1,157)
+		member = random.randint(1,167)
 		
 		msg = ""
 		
@@ -762,10 +765,31 @@ async def on_message(message):
 			msg = "```That time Q and Nora reported back to Number 8, and got them excited for Lizard people ```"
 		elif member == 157:
 			msg = "```That time Nora shot Q and the bullets just rolled off as if nothing happened. Q is a literal tank now.```"
+		#OFFICE THEME PLAYS
+		elif member == 158:
+			msg = "```That time Nora told 'The funny man' the orange you glad I didn't say banana joke.```"
+		elif member ==159:
+			msg ="```That time Q told 'The funny man' a knock knock joke, and 'The funny man' responded with the KGB knock knock joke.``` "
+		elif member == 160:
+			msg ="```That time Q killed Beets. F in chat please.```"
+		elif member ==161:
+			msg = "```That time Q spoke to H. HR.```"
+		elif member ==162:
+			msg ="```That time Nora ate a bean from an unmarked can, and the MC gave them -1 to all stats for a second.```"
+		elif member ==163:
+			msg ="```That time Q found a bell.```"
+		elif member ==164:
+			msg = "```That time Nora got trapped by one of Beets beartraps.```"
+		elif member == 165:
+			msg = "```That time Q tried saving Beets, and ended up with Nora's fun through their arm```"
+		elif member ==166:
+			msg ="```OFFICE THEME PLAYS AND DEAFENS LLOYD```"
+		elif member == 167:
+			msg = "```that time Nora stoped 'the funny man' from jumping.```"
 
 		
 	# Sends the map
-	elif message.content.startswith(".map"):
+	elif messageString==".map":
 		await client.send_file(message.channel, "map_bigger.jpg")
 
 	###############################################################################################################################################
@@ -775,7 +799,7 @@ async def on_message(message):
 	###############################################################################################################################################
 
 	# Refreshes the clocks and contacts file
-	elif message.content.startswith(".refresh"):
+	elif messageString==".refresh":
 		msg = "```"
 
 		try:
@@ -794,7 +818,7 @@ async def on_message(message):
 		
 		
 
-	elif message.content.startswith(".log"):
+	elif messageString==".log":
 		# Get log message from message
 		tokens = message.content.split(".log ")
 		log = tokens[1]
@@ -813,7 +837,9 @@ async def on_message(message):
 		if not msg:
 			msg = "```Invalid command. Type '.help' for a list of commands.```"
 
-	await client.send_message(message.channel, msg.format(message))
+	if messageString != ".map":
+		await client.send_message(message.channel, msg.format(message))
+
 		
 
 # CONSOLE LOGGING
