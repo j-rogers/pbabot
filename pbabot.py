@@ -1,4 +1,4 @@
-import discord
+import discord #version 0.16.12
 import random
 import pickle
 import argparse
@@ -45,6 +45,37 @@ except FileNotFoundError:
 
 client = discord.Client()
 
+# Functions
+def help():
+	return """```Use \".command\" when using this bot.\n
+.help: Displays this help message.
+.roll: Rolls 2d6 dice.
+.moves: Displays a list of basic moves.
+.playbooks: Displays a list of playbooks.
+.matrix: Displays a list of matrix-specific moves. [SPRAWL ONLY]
+.custom: Displays a list of custom moves.
+.clocks: Displays the current list of clocks.
+.weapons: Displays a list of weapons and their profiles.
+.addclock <clock name>: Adds a clock with a value of 1500.
+.increaseclock <clock name>: Increases a clock by one segment.
+.decreaseclock <clock name>: Decreases a clock by one segment.
+.deleteclock <clock name>: Deletes the specified clock.
+.contacts: Displays the current list of contacts.
+.addcontact <contact name> <description>: Adds a new contact.
+.deletecontact <contact name>: Deletes a contact.
+.drugs: Displays a list of drugs
+.map: Displays a current map
+.ripsprawl1: Detailed deaths from the Sprawl1
+.ripsprawl2: Detailed deaths from Sprawl2 
+.ripapoc: Detailed deaths from Apoc World
+.f: List all dead characters.
+.remember: Displays a message of a memorable moment.
+.refresh: Reloads the clock and contact data.
+.log <message>: Saves a message to the log file.```"""
+
+def invalid():
+	return "```Invalid command. Type '.help' for a list of commands.```"
+
 
 
 # MESSAGE COMMANDS
@@ -75,38 +106,16 @@ async def on_message(message):
 	messageString = message.content
 	messageString = messageString.replace (" ", "")
 	messageString = messageString.lower()
+
+	switch = {
+		'.help': help,
+	}
+
+	msg = switch.get(messageString, invalid)()
 	
-	# Lists all commands
-	if messageString==".help":
-		# Form the message
-		msg = """```Use \".command\" when using this bot.\n
-.help: Displays this help message.
-.roll: Rolls 2d6 dice.
-.moves: Displays a list of basic moves.
-.playbooks: Displays a list of playbooks.
-.matrix: Displays a list of matrix-specific moves. [SPRAWL ONLY]
-.custom: Displays a list of custom moves.
-.clocks: Displays the current list of clocks.
-.weapons: Displays a list of weapons and their profiles.
-.addclock <clock name>: Adds a clock with a value of 1500.
-.increaseclock <clock name>: Increases a clock by one segment.
-.decreaseclock <clock name>: Decreases a clock by one segment.
-.deleteclock <clock name>: Deletes the specified clock.
-.contacts: Displays the current list of contacts.
-.addcontact <contact name> <description>: Adds a new contact.
-.deletecontact <contact name>: Deletes a contact.
-.drugs: Displays a list of drugs
-.map: Displays a current map
-.ripsprawl1: Detailed deaths from the Sprawl1
-.ripsprawl2: Detailed deaths from Sprawl2 
-.ripapoc: Detailed deaths from Apoc World
-.f: List all dead characters.
-.remember: Displays a message of a memorable moment.
-.refresh: Reloads the clock and contact data.
-.log <message>: Saves a message to the log file.```"""
 
 	# Displays the current list of clocks
-	elif messageString==".clocks":
+	if messageString==".clocks":
 		msg = "```"
 		global clocks
 		for clock in clocks:
@@ -831,11 +840,6 @@ async def on_message(message):
 
 		# Form and send message
 		msg = "```Log saved.```"
-		
-
-	else:
-		if not msg:
-			msg = "```Invalid command. Type '.help' for a list of commands.```"
 
 	if messageString != ".map":
 		await client.send_message(message.channel, msg.format(message))
