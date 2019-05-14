@@ -42,7 +42,7 @@ def help(message):
 .ripsprawl1: Detailed deaths from the Sprawl1
 .ripsprawl2: Detailed deaths from Sprawl2 
 .ripapoc: Detailed deaths from Apoc World
-.f: List all dead characters.
+.rip: List all dead characters.
 .remember: Displays a message of a memorable moment.
 .refresh: Reloads the clock and contact data.
 .log <message>: Saves a message to the log file.
@@ -161,7 +161,7 @@ def roll(message):
 
 def remember(message):
 	#Generates random number to get remember message from  events that have happened.
-	member = random.randint(1,167)
+	member = random.randint(1,183)
 
 	switch = {
 		1: "```Remember that time Christof tackled a Robot Synth thing to save Seraph?```",
@@ -326,7 +326,27 @@ def remember(message):
 		161: "```That time Nora got trapped by one of Beets beartraps.```",
 		162: "```That time Q tried saving Beets, and ended up with Nora's fun through their arm```",
 		163: "```OFFICE THEME PLAYS AND DEAFENS LLOYD```",
-		164: "```that time Nora stoped 'the funny man' from jumping.```"
+		164: "```that time Nora stoped 'the funny man' from jumping.```",
+		165: "```That time Q fell into a wall and was at the bottom of a void.```",
+		166: "```That time Nora touched a wall and decicded it was safe to avoid the illusion wall. Good job.```",
+		167: "```That Nora used Number 8 as bait, and ambused some of lizard people.```",
+		168: "```That time Q ran along the wall and jumped up to the roof and sliced a bunch of lizard people mid air.```",
+		169: "```That time Nora lead an army to take over the town.```",
+		170: "```That time Q embedded their axe into Number 7.```",
+		171: "```That time Q cut number 7's head off and their body fell on Nora, crusing them a little.```",
+		172: "```*Plays the triangle* No that wasn't Mercer, it was Q.```",
+		173: "```That time Number 8 got thrown to the ground and screamed launching them into the air and slowly fell down? What was the MC on..```",
+		174: "```That time the MC made lots of things random illusions in peoples head..```",
+		175: "```That time Nora and Q took over the town```",
+		176: "```When Q and Nora found Number 6, and were suprised they weren't hostile, despite trying to take over the town.```",
+		177: "```That time Nora commanded their army to strategically fire upon Varmos.```",
+		178: "```When Q cut off Varmos's arm then proceed to split the other in half instead of dodgeing. Took the acid blood that fell on them like a champ.```",
+		179: "```That time Carth threw some random trashcan to test if drones were gonan auto fire on location.```",
+		180: "```That time In[Spectre] Gadget met Syntax Terrror and almost died.```",
+		181: "```That time In[Spectre] Gadget met Syntax Terror again, and also almost died.```",
+		182: "```That time Carth saved In[Spectre] Gadget from being killed by Syntax Terror's drone.```",
+		183: "```That time In[Spectre] Gadget lost two fingers, their pants, and was also shot in the leg by Syntax Terror```"
+
 	}
 
 	return switch[member]
@@ -615,7 +635,7 @@ async def on_message(message):
 		'.addcontact': addcontact,
 		'.deletecontact': deletecontact,
 		# Miscellaneous commands
-		'.f': f,
+		'.rip': f,
 		'.ripsprawl1': ripsprawl1,
 		'.ripsprawl2': ripsprawl2,
 		'.ripapoc': ripapoc,
@@ -627,7 +647,7 @@ async def on_message(message):
 
 	for case in switch:
 		
-		if messageString in case: msg = switch[case](messageString)
+		if case in messageString: msg = switch[case](messageString)
 
 	if not msg: msg = invalid(messageString)
 
