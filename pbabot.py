@@ -598,6 +598,7 @@ async def on_message(message):
 		
 	messageString = message.content
 	messageString = messageString.lower()
+	
 
 	switch = {
 		# Listing commands
@@ -625,7 +626,8 @@ async def on_message(message):
 	}
 
 	for case in switch:
-		if case in messageString: msg = switch[case](messageString)
+		
+		if messageString in case: msg = switch[case](messageString)
 
 	if not msg: msg = invalid(messageString)
 
