@@ -646,8 +646,10 @@ async def on_message(message):
 	}
 
 	for case in switch:
-		
-		if case in messageString: msg = switch[case](messageString)
+		#Checks first for if case == messagestring
+		if case == messageString: msg = switch[case](messageString)
+		#Works for strings with parameters like clocks, contacts. 
+		elif case in messageString: msg = switch[case](messageString)
 
 	if not msg: msg = invalid(messageString)
 
