@@ -92,7 +92,7 @@ def f(message):
 	return """```Christof Romulad, Laramy Fisk, Mercer De'am, Velvet Thunder\n
 Noor 'Shareef' Jerkof, Martin Monis Jr, Azrael\n
 H4KKKE3R\n
-Seraph, Daiki, Ligma\n
+Seraph, Daiki, Ligma, In[Spectre] Gadget\n
 Syntax Terror, Swarf Gander\n
 Desperato\n
 The Donald\n
@@ -161,7 +161,18 @@ def roll(message):
 
 def remember(message):
 	#Generates random number to get remember message from  events that have happened.
-	member = random.randint(1,183)
+	min = 1
+	max = 196
+	member = random.randint(min,max)
+	notRandom = message.split() #puts message into a string array seperated by " "
+	
+	if len(notRandom)>1: #If more values other than .remember
+		number = int(notRandom[1]) #converts stringArray  (['.remember' 'num']) to int 
+		if number >=min and number<=max: #Ensures it will exist within the range of .remember
+			member = number #sets member to the number. 
+	print ("Remember val = ")
+	print(member)
+		
 
 	switch = {
 		1: "```Remember that time Christof tackled a Robot Synth thing to save Seraph?```",
@@ -345,7 +356,21 @@ def remember(message):
 		180: "```That time In[Spectre] Gadget met Syntax Terrror and almost died.```",
 		181: "```That time In[Spectre] Gadget met Syntax Terror again, and also almost died.```",
 		182: "```That time Carth saved In[Spectre] Gadget from being killed by Syntax Terror's drone.```",
-		183: "```That time In[Spectre] Gadget lost two fingers, their pants, and was also shot in the leg by Syntax Terror```"
+		183: "```That time In[Spectre] Gadget lost two fingers, their pants, and was also shot in the leg by Syntax Terror```",
+		184:"```I'm Inspectre gadget. who? ```",
+		185:"```When the MC (Lloyd) does the nerd voice```",
+		186:"```Goes into a magnetic room with infinite knives. As if that wasn't going to be a problem```",
+		187:"```That time Carth had to wear a giant Hazard label on them due to the giant sword.```",
+		188:"```That time Spectre went to jail , and then arrested a nerd in the same cell, causing the nerd to cry, alerting the guards.```",
+		189:"```That time Carth responded as a guard, and smashed Spectres head into the wall, very very forcefully with their cyberarm.```",
+		190:"```That time Carth tried using a dead guard as a puppet to ensure everything was fine. Didn't work but the nail grenade did!```",
+		191: "```That time Spectre was tied up in a mental harness, and then used infinite knives, cutting themself to escape, instead of asking the other nerds to help..```",
+		192: "```Spectre's skull got smashed in. f in chat please. ```",
+		193: "```That time Carth used a giant sword to try place baseball with charging synth attack dogs.```",
+		194: "```That time Spectre got a nerd army, only for them to shit themselves and die pretty quickly.```",
+		195: "```That time Spectre nearly made a vector field using infinite knives.```",
+		196: """**```css
+[FAILS SYNTAX TERROR]```**\n```Syntax Terror clock increased to 1500``` ```Syntax Terror clock increased to 1800``` ```Syntax Terror clock increased to 2100``` ```Syntax Terror clock increased to 2200``` ```Syntax Terror clock increased to 2300``` ```Syntax Terror clock increased to 0000```"""
 
 	}
 

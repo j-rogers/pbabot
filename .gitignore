@@ -5,3 +5,5 @@ insert.py
 *.jpg
 **/__pycache__
 .vscode/settings.json
+runApoc.bat
+runSprawl.bat
