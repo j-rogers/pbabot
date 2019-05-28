@@ -89,40 +89,74 @@ def showcontacts(message):
 	return msg
 
 def f(message):
-	return """```Christof Romulad, Laramy Fisk, Mercer De'am, Velvet Thunder\n
-Noor 'Shareef' Jerkof, Martin Monis Jr, Azrael\n
-H4KKKE3R\n
-Seraph, Daiki, Ligma, In[Spectre] Gadget\n
-Syntax Terror, Swarf Gander\n
-Desperato\n
-The Donald\n
-Korea\n
-```"""
+	msg = ""
+	ripMsg = message.split()
+	if len(ripMsg)>1:
+		ripMsg = ripMsg[1] #will look up specific player or character. If not in switch, will return not found msg. 
+	else:
+		ripMsg = "list" #.rip will list all deaths simply.
 
-def ripsprawl1(message):
-	return """```Christof Romuald: Died to Syntax Terror's Bear Drones while being pounded on by Police. F in chat please.\n
-Noor 'Shareef' Jerkof: Noor's death was on their own account, they ended up shooting themself in the head when they realized they couldn't talk to people and were on their way to jail.\n
-Martin Monis Jr: MartinJr took the entire team on in bar shoot up, manged to walk out mostly fine then was shot in the head by a sniper.\n
-Azrael: Azrael was a shit sniper and wouldn't follow the plan, resulting in complications for Laramy and Syntax Terror. Bad mistake Azrael as we framed him resulting in a brutal death.\n
-H4KKK3R: H4KKK3R was in the car with Seraph, trying to guide Laramy to where Syntax Terror was so we could take our revenge. While Jacked into police cameras, Seraph shot them in the head. \n
-Laramy Fisk: Was murdered by Seraph. After Laramy blammed Syntax Terror on why the van blew up, Seraph didn't take kindly, resulting in Seraph running Laramy over and shotting him after he manged to live.\n
-Seraph: Seraph thought they were safe, thought Syntax Terror would be happy, were on their way to Byntax Berror, when a secret chip Syntax had implanted alerted a sniper from The business to shot Seraph dead.\n
-Syntax Terror: Syntax Terror managed to live out his days, always being paranoid and on edge.\n
-```"""
+	switch = {
+		'list': """```
+					  Martin: Christof Romulad, Laramy Fisk, Mercer De'am, Velvet Thunder\n
+					  Waleed: Noor 'Shareef' Jerkof, Martin Monis Jr, Azrael\n
+					  Josh F: H4KKKE3R\n
+					  Josh R: Seraph, Daiki, Ligma, In[Spectre] Gadget\n
+					  Jayden: Syntax Terror, Swarf Gander\n
+					  Cayden: Desperato\n
+					  Matt: The Donald, True Saviour\n
+					  Lloyd: Korea\n```""",
+		'martin': """```
+					  Christof Romuald: Died to Syntax Terror's Bear Drones while being pounded on by Police. F in chat please.\n
+					  Laramy Fisk: Was murdered by Seraph. After Laramy blammed Syntax Terror on why the van blew up, Seraph didn't take kindly, resulting in Seraph running Laramy over and shotting him after he manged to live.\n
+					  Mercer De'am: Died by the hands of Tony when an orbital strike was set upon his location.\n
+					  Velvet Thunder: Died to The Donald, bashed by the wall, and then shot in the head.\n```""",
+		'josh': """```
+					  Seraph: Seraph thought they were safe, thought Syntax Terror would be happy, were on their way to Byntax Berror, when a secret chip Syntax had implanted alerted a sniper from The business to shot Seraph dead.\n
+					  Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take their shot, Daiki had his car blow everyone up, not just taking his on life but 8 of the Valencia gang.\n
+					  Ligma: Ligma came out of hinding and did a hypnotic strip dance for Korea. Korea than proceeded to try and eat Ligma instead of patching Ligma up, resulting in Ligmas death.\n
+					  In[Spectre] Gadget: After being sent to prison, Carth bashed Spectre around a lot to blend in with the guards, and when it came to escape, Spectre obtained too many injuries and easily had their skull smashed in by actual gaurds.\n```""",
+		'joshf': "```H4KKK3R: H4KKK3R was in the car with Seraph, trying to guide Laramy to where Syntax Terror was so we could take our revenge. While Jacked into police cameras, Seraph shot them in the head. \n```",
+		'jayden': """```
+					  Syntax Terror: Syntax Terror managed to live out his days, always being paranoid and on edge.\n
+					  Swarf Gander: Killed himself with flashbangs to try avoid hearing Mercer's music.\n```""",
+		'waleed': """```
+					  Noor 'Shareef' Jerkof: Noor's death was on their own account, they ended up shooting themself in the head when they realized they couldn't talk to people and were on their way to jail.\n
+					  Martin Monis Jr: MartinJr took the entire team on in bar shoot up, manged to walk out mostly fine then was shot in the head by a sniper.\n
+					  Azrael: Azrael was a shit sniper and wouldn't follow the plan, resulting in complications for Laramy and Syntax Terror. Bad mistake Azrael as we framed him resulting in a brutal death.\n```""",	
+		'lloyd': "```Korea: Korea lived as a cannibal and died as a cannibal. Especially when True Surveyor shot them in the head when they tried eating Ligma.\n```",
+		'cayden':"```Desperato: Also died to the hands of Tony when an orbital strike was set upon their location.\n```",
+		'matt': """```
+					  The Donald: Died to the Valencia gang, if only he didn't shoot Velvet Thunder, but that's not how the art of the deal.\n
+					  True Saviour: After being lead into Nora's vault and then shot down by their turrets, True Saviour managed to make it back to town before bleading out.\n```""",
+		'sprawl1': """```
+					  Christof Romuald: Died to Syntax Terror's Bear Drones while being pounded on by Police. F in chat please.\n
+					  Noor 'Shareef' Jerkof: Noor's death was on their own account, they ended up shooting themself in the head when they realized they couldn't talk to people and were on their way to jail.\n
+					  Martin Monis Jr: MartinJr took the entire team on in bar shoot up, manged to walk out mostly fine then was shot in the head by a sniper.\n
+					  Azrael: Azrael was a shit sniper and wouldn't follow the plan, resulting in complications for Laramy and Syntax Terror. Bad mistake Azrael as we framed him resulting in a brutal death.\n
+					  H4KKK3R: H4KKK3R was in the car with Seraph, trying to guide Laramy to where Syntax Terror was so we could take our revenge. While Jacked into police cameras, Seraph shot them in the head. \n
+					  Laramy Fisk: Was murdered by Seraph. After Laramy blammed Syntax Terror on why the van blew up, Seraph didn't take kindly, resulting in Seraph running Laramy over and shotting him after he manged to live.\n
+					  Seraph: Seraph thought they were safe, thought Syntax Terror would be happy, were on their way to Byntax Berror, when a secret chip Syntax had implanted alerted a sniper from The business to shot Seraph dead.\n
+					  Syntax Terror: Syntax Terror managed to live out his days, always being paranoid and on edge.\n```""",
+		'sprawl2':"""```
+					  Swarf Gander: Killed himself with flashbangs to try avoid hearing Mercer's music.\n
+					  Mercer De'am: Died by the hands of Tony when an orbital strike was set upon his location.\n 
+					  Desperato: Also died to the hands of Tony when an orbital strike was set upon their location.\n
+					  Velvet Thunder: Died to The Donald, bashed by the wall, and then shot in the head.\n
+					  The Donald: Died to the Valencia gang, if only he didn't shoot Velvet Thunder, but that's not how the art of the deal.\n
+					  Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take their shot, Daiki had his car blow everyone up, not just taking his on life but 8 of the Valencia gang.\n```""",
+		'sprawl3': "```In[Spectre] Gadget: After being sent to prison, Carth bashed Spectre around a lot to blend in with the guards, and when it came to escape, Spectre obtained too many injuries and easily had their skull smashed in by actual gaurds.\n```""",
+		'apoc1':"""```
+					  Korea: Korea lived as a cannibal and died as a cannibal. Especially when True Surveyor shot them in the head when they tried eating Ligma.\n
+					  Ligma: Ligma came out of hinding and did a hypnotic strip dance for Korea. Korea than proceeded to try and eat Ligma instead of patching Ligma up, resulting in Ligmas death.\n
+					  True Saviour: After being lead into Nora's vault and then shot down by their turrets, True Saviour managed to make it back to town before bleading out.\n```""",
+	}
+	msg = switch.get(ripMsg, switch["list"])
+	print(msg)
+	msg = msg.replace("\t", "")
+	msg = msg.replace ("					  ", "")
+	return msg
 
-def ripsprawl2(message):
-	return """```Swarf Gander: Killed himself with flashbangs to try avoid hearing Mercer's music.\n
-Mercer De'am: Died by the hands of Tony when an orbital strike was set upon his location.\n 
-Desperato: Also died to the hands of Tony when an orbital strike was set upon their location.\n
-Velvet Thunder: Died to The Donald, bashed by the wall, and then shot in the head.\n
-The Donald: Died to the Valencia gang, if only he didn't shoot Velvet Thunder, but that's not how the art of the deal.\n
-Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take their shot, Daiki had his car blow everyone up, not just taking his on life but 8 of the Valencia gang.\n
-```"""
-
-def ripapoc(message):
-	return """```Korea: Korea lived as a cannibal and died as a cannibal. Especially when True Surveyor shot them in the head when they tried eating Ligma.\n
-Ligma: Ligma came out of hinding and did a hypnotic strip dance for Korea. Korea than proceeded to try and eat Ligma instead of patching Ligma up, resulting in Ligmas death.\n
-```"""
 
 def roll(message):
 	# Generate the roll
@@ -661,9 +695,6 @@ async def on_message(message):
 		'.deletecontact': deletecontact,
 		# Miscellaneous commands
 		'.rip': f,
-		'.ripsprawl1': ripsprawl1,
-		'.ripsprawl2': ripsprawl2,
-		'.ripapoc': ripapoc,
 		'.remember': remember,
 		# Dev commands
 		'.refresh': refresh,
