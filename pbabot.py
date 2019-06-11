@@ -712,8 +712,11 @@ async def on_message(message):
 	# Sends the map
 	if messageString==".map":
 		await client.send_file(message.channel, "map_bigger.jpg")
+	
+	elif messageString ==".fuckmendle":
+		await client.send_file(message.channel, "mendle.png")
 
-	if messageString != ".map":
+	elif  messageString != ".map" and messageString != "fuckmendle":
 		await client.send_message(message.channel, msg.format(message))
 	else:
 		pass
