@@ -440,7 +440,26 @@ def handle(message):
 		On a 7-9: Well, your people make an effort and everybody wants to please you, and close is close, right? 
 		On a miss, it shows in your establishment for you with strings wicked attached.
 		```"""
-		
+	elif messageString == ".everybodyeats":
+		msg = """```Everybody eats, even that guy:
+		When you want to know something about someone important (your call), roll + hot.
+		10+ Ask 3 questions.
+		7-9: Ask 1.
+		On a miss, ask one anyway,but they hear about your interest in them.
+
+		•How are they doing? what's up with them?
+		•Who do they know,like and/or trust?
+		•How could I get to to them, physically or emotionally?
+		• What or who do they love the best?
+		•When next should I expect to see them?
+		```"""	
+	elif messageString == ".justgivemeamotive":
+		msg = """```Just give me a motive:
+		Name somebody who might conceivably eat, drink or otherwise ingest something you've touched. If its an NPC roll+hard or roll+HX for PC.
+		10+ They do, and suffer 4-harm (ap) in the next 24 hours.
+		7-9: They do, and suffer 2-harm (ap).
+		On a miss, some several people of the MC's choice, maybe including your guy, maybe not, get it, and all suffer 3-harm (ap).
+		```"""
 		
 
 	#######################
