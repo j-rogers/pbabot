@@ -410,6 +410,38 @@ def handle(message):
 		msg = """```Beastly:\n
 			You get +1hard (hard+3).
 			```"""
+	
+    ####################
+	## The Maestro D' ##
+    ####################
+	elif messageString == ".maestro":
+		msg = """```The Maestro D' moves
+		.youcallthishot
+		.devilwithablade
+		.fingersineverypie
+		.everybodyeats
+		.justgivemeamotive`
+		```"""
+	#You call this hot? 
+	elif messageString == ".youcallthishot":
+		msg = """```You call this hot?
+		when you do something under fire, roll+hot instead of roll + cool.
+		```"""
+	#A devil with a blade 
+	elif messageString == ".devilwithablade":
+		msg = """```A devil with a blade: 
+		When you use a blade to go aggro, roll+hot instead of roll+hard.
+		```"""
+	#Fingers in every pie
+	elif messageString == ".fingersineverypie":
+		msg = """```Fingers in every pie:
+		Put out the word that you want a thing - could be a person, could be somethin somethin, could even just be a thing - and roll+hot.
+		On a 10+ it shows up in your establishment for you, like magic.
+		On a 7-9: Well, your people make an effort and everybody wants to please you, and close is close, right? 
+		On a miss, it shows in your establishment for you with strings wicked attached.
+		```"""
+		
+		
 
 	#######################
 	## Apoc Custom Moves ##
@@ -637,7 +669,8 @@ def handle(message):
 		.gunslinger\n 
 		.hocus\n	
 		.quarantine\n
-		.faceless\n	
+		.faceless\n
+		.maestro\n
 		```"""
 	######################
 	## Harm and healing ##
