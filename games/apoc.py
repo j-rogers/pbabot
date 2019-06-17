@@ -37,6 +37,7 @@ def handle(message):
         '.openyourbrain': openyourbrain,
         'seizebyforce': seizebyforce,
         '.social': social,
+        '.augury': augury,
         #Angel
         '.sixthsense': sixthsense,
         '.infirmary': infirmary,
@@ -999,7 +1000,8 @@ def actunderpressure(messageString):
 def weirdapocstuff(messateString):
     msg ="""```
     .openyourbrain - When you open your brain to the world’s psychic maelstrom
-    .psyharm - when you take psychic harm
+    .psyharm - When you take psychic harm
+    .augury - When you use your followers or your workspace for augury, roll+weird.\n
     ```"""
     return msg
 
@@ -1029,6 +1031,27 @@ def psyharm (messageString):
     • You miss noticing something important.
     • You take a single concrete action of the MC’s choosing.
     On a miss, you keep it together and overcome the -harm with no effect.```"""
+    return msg
+
+
+def augury (messageString):
+    msg = """```
+    When you use your followers or your workspace for augury, roll+weird.\n
+    On a hit, you can choose 1:\n
+    • Reach through the world’s psychic maelstrom to something or someone connected to it.\n
+    • Isolate and protect a person or thing from the world’s psychic maelstrom.\n
+    • Isolate and contain a fragment of the world’s psychic maelstrom itself.\n
+    • Insert information into the world’s psychic maelstrom.\n
+    • Open a window into the world’s psychic maelstrom.\n
+    By default, the effect will last only as long as you maintain it, will reach only shallowly into the world’s psychic maelstrom as it is local to you, and will bleed instability.\n
+    On a 10+, choose 2;\n
+    on a 7–9, choose 1:\n
+    • It’ll persist (for a while) without your actively maintaining it.\n
+    • It reaches deep into the world’s psychic maelstrom.\n
+    • It reaches broadly throughout the world’s psychic maelstrom.\n
+    • It’s stable and contained, no bleeding.\n
+    On a miss, whatever\n
+    ```"""
     return msg
 
 
