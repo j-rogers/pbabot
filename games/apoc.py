@@ -13,6 +13,7 @@ def handle(message):
 		# Help.
         '.list': apoclist,
 		'.books': book, 
+        '.basic':basic,
         #basic moves
         '.combat': combat,
         '.psyharm': psyharm,
@@ -138,9 +139,41 @@ def apoclist(messageString):
     .social - Lists all social moves (like fasttalk)
     .situtation - Lists all situtaional moves (like acting under pressure)
     .weirdapocstuff - Lists weird apoc moves (like open your brain.)
+    .basic - lists all basic moves 
     ```"""
     return msg
 
+def basic (messageString):
+    msg = """```
+    Weird apoc stuff: 
+    .openyourbrain - When you open your brain to the world’s psychic maelstrom
+    .psyharm - When you take psychic harm
+    .augury - When you use your followers or your workspace for augury, roll+weird.
+
+    Situational
+    .actunderpressure - When you race against the clock, act while in danger or act to avoid danger, roll+Cool.
+    .investigate -  When you closely study a place, or situation, roll + Sharp.
+    .doiknowthings - When you race against the clock, act while in danger or act to avoid danger, roll+Cool.
+
+    Social
+    .fasttalk - When you try to convince someone to do what you want with promises, lies or bluster, roll+Hot.
+    .barter - When you're looking to buy something roll + sharp.
+    .gounderknife - When you  want to and are able to have a new implant installed, roll + barter spent,
+    .playhardball - When you get in someone’s face threatening violence and you intend to carry through, roll+hard.
+    .workajob - When you negotiate the terms of a job, roll + hot.
+
+    Comabt
+    .harm  - When you suffer harm, roll+harm suffered (after armor, if you’re wearing any). 
+    .readasitch - When you read a charged situation, roll+cool.
+    .firstaid - When you treat someone’s wounds using appropriate medical equipment, roll +sharp,
+    .seizebtforce -  When you try to seize something by force, or to secure your hold on something, roll+hard.
+    .surpriseattack - When you attack someone unprepared, unsuspecting, or helpless, roll+hard.
+    .coverfire - When you want to lay down lots fire or provide cover fire roll+cool 
+    .shootsomeone - When you want to shoot someone roll + hard:
+    .hitsomeone - When you want to hit someone roll + hard:
+    .setanambush - When you want to set an ambush for someone, Describe your ambush, and assign allies as fiction dictates. roll + sharp.
+    ```"""
+    return msg
 ################
 ## Play Books ##
 ################
@@ -957,7 +990,7 @@ def workajob(messageString):
 def situation(messageString):
     msg ="""```
     .actunderpressure - When you race against the clock, act while in danger or act to avoid danger, roll+Cool.
-    .investigate -  When you closely study a place, situation or person, roll + Sharp.
+    .investigate -  When you closely study a place, or situation, roll + Sharp.
     .doiknowthings - When you race against the clock, act while in danger or act to avoid danger, roll+Cool.
 
     ```"""
@@ -965,7 +998,7 @@ def situation(messageString):
 
 def investigate(messageString):
     msg = """```
-    When you closely study a place, situation or person, roll + Sharp. 
+    When you closely study a place, situation, roll + Sharp. 
     10+ ask the MC three questions from the list below.    
     7–9 ask only one. 
     Take +1 forward when acting on the answers.
@@ -1001,7 +1034,7 @@ def weirdapocstuff(messateString):
     msg ="""```
     .openyourbrain - When you open your brain to the world’s psychic maelstrom
     .psyharm - When you take psychic harm
-    .augury - When you use your followers or your workspace for augury, roll+weird.\n
+    .augury - When you use your followers or your workspace for augury, roll+weird.
     ```"""
     return msg
 

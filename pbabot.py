@@ -43,6 +43,7 @@ def help(message):
 .ripsprawl2: Detailed deaths from Sprawl2 
 .ripapoc: Detailed deaths from Apoc World
 .rip: List all dead characters.
+.rememberlist: Displays rough numbers for specific moments. 
 .remember: Displays a message of a memorable moment.
 .refresh: Reloads the clock and contact data.
 .log <message>: Saves a message to the log file.
@@ -98,10 +99,10 @@ def f(message):
 
 	switch = {
 		'list': """```
-					  Martin: Christof Romulad, Laramy Fisk, Mercer De'am, Velvet Thunder\n
+					  Martin: Christof Romulad, Laramy Fisk, Mercer De'am, Velvet Thunder, Carth\n
 					  Waleed: Noor 'Shareef' Jerkof, Martin Monis Jr, Azrael\n
 					  Josh F: H4KKKE3R\n
-					  Josh R: Seraph, Daiki, Ligma, In[Spectre] Gadget\n
+					  Josh R: Seraph, Daiki, Ligma, In[Spectre] Gadget, Jerry\n
 					  Jayden: Syntax Terror, Swarf Gander\n
 					  Cayden: Desperato\n
 					  Matt: The Donald, True Saviour\n
@@ -110,12 +111,14 @@ def f(message):
 					  Christof Romuald: Died to Syntax Terror's Bear Drones while being pounded on by Police. F in chat please.\n
 					  Laramy Fisk: Was murdered by Seraph. After Laramy blammed Syntax Terror on why the van blew up, Seraph didn't take kindly, resulting in Seraph running Laramy over and shotting him after he manged to live.\n
 					  Mercer De'am: Died by the hands of Tony when an orbital strike was set upon his location.\n
-					  Velvet Thunder: Died to The Donald, bashed by the wall, and then shot in the head.\n```""",
+					  Velvet Thunder: Died to The Donald, bashed by the wall, and then shot in the head.\n
+ 					  Carth: Nearly died from a bomb in Syntax Terror's place, only to run away in a firetruck, get in an accident and be gunned down crawling out of teh window.\n```""",
 		'josh': """```
 					  Seraph: Seraph thought they were safe, thought Syntax Terror would be happy, were on their way to Byntax Berror, when a secret chip Syntax had implanted alerted a sniper from The business to shot Seraph dead.\n
 					  Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take their shot, Daiki had his car blow everyone up, not just taking his on life but 8 of the Valencia gang.\n
 					  Ligma: Ligma came out of hinding and did a hypnotic strip dance for Korea. Korea than proceeded to try and eat Ligma instead of patching Ligma up, resulting in Ligmas death.\n
-					  In[Spectre] Gadget: After being sent to prison, Carth bashed Spectre around a lot to blend in with the guards, and when it came to escape, Spectre obtained too many injuries and easily had their skull smashed in by actual gaurds.\n```""",
+					  In[Spectre] Gadget: After being sent to prison, Carth bashed Spectre around a lot to blend in with the guards, and when it came to escape, Spectre obtained too many injuries and easily had their skull smashed in by actual gaurds.\n
+					  Jerry: Jerry was really a nobody, like an NPC, but aren't we all in a dystopian future ran by mega corps? Jerry managed to show promise as he helped Carth with escape Sandstone, only to be blown up by Syntax Terror, F in chat please.\n ```""",
 		'joshf': "```H4KKK3R: H4KKK3R was in the car with Seraph, trying to guide Laramy to where Syntax Terror was so we could take our revenge. While Jacked into police cameras, Seraph shot them in the head. \n```",
 		'jayden': """```
 					  Syntax Terror: Syntax Terror managed to live out his days, always being paranoid and on edge.\n
@@ -145,14 +148,18 @@ def f(message):
 					  Velvet Thunder: Died to The Donald, bashed by the wall, and then shot in the head.\n
 					  The Donald: Died to the Valencia gang, if only he didn't shoot Velvet Thunder, but that's not how the art of the deal.\n
 					  Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take their shot, Daiki had his car blow everyone up, not just taking his on life but 8 of the Valencia gang.\n```""",
-		'sprawl3': "```In[Spectre] Gadget: After being sent to prison, Carth bashed Spectre around a lot to blend in with the guards, and when it came to escape, Spectre obtained too many injuries and easily had their skull smashed in by actual gaurds.\n```""",
+		'sprawl3': """```
+					 In[Spectre] Gadget: After being sent to prison, Carth bashed Spectre around a lot to blend in with the guards, and when it came to escape, Spectre obtained too many injuries and easily had their skull smashed in by actual gaurds.\n
+					 Beep. Beep BOOOOOOM! another death caused by Syntax Terror. No one knew who Jerry was, or why they helped Carth with his rescue, despite, not really being anyone, Jerry did pretty well. Good job Jerry. F in chat please.\n
+					 After nearly dieing to Syntax Terrors bomb, Carth stole a firetruck, and tried driving to safety online for a tank or something to crash into him, and gun him down as he crawled out the window in a final ditch attempt```""",
 		'apoc1':"""```
 					  Korea: Korea lived as a cannibal and died as a cannibal. Especially when True Surveyor shot them in the head when they tried eating Ligma.\n
 					  Ligma: Ligma came out of hinding and did a hypnotic strip dance for Korea. Korea than proceeded to try and eat Ligma instead of patching Ligma up, resulting in Ligmas death.\n
 					  True Saviour: After being lead into Nora's vault and then shot down by their turrets, True Saviour managed to make it back to town before bleading out.\n```""",
+										
 	}
 	msg = switch.get(ripMsg, switch["list"])
-	print(msg)
+	#print(msg)
 	msg = msg.replace("\t", "")
 	msg = msg.replace ("					  ", "")
 	return msg
@@ -196,7 +203,7 @@ def roll(message):
 def remember(message):
 	#Generates random number to get remember message from  events that have happened.
 	min = 1
-	max = 196
+	max = 206
 	member = random.randint(min,max)
 	notRandom = message.split() #puts message into a string array seperated by " "
 	
@@ -204,11 +211,12 @@ def remember(message):
 		number = int(notRandom[1]) #converts stringArray  (['.remember' 'num']) to int 
 		if number >=min and number<=max: #Ensures it will exist within the range of .remember
 			member = number #sets member to the number. 
-	print ("Remember val = ")
-	print(member)
+#	print ("Remember val = ")
+#	print(member)
 		
 
 	switch = {
+		#Christof focused
 		1: "```Remember that time Christof tackled a Robot Synth thing to save Seraph?```",
 		2: "```Remember that time Christof said he wasn't going to bring Waleed but did but never used him?```",
 		3: "```Remember that time Christof forgot Waleed in a drug den and Waleed got picked up the Police and Medtech?```",
@@ -218,28 +226,34 @@ def remember(message):
 		7: "```Ever been to a Vet for serious medical attention? because Christoff has.```",
 		8: "```Christof threw H4KKK3R out of the way of a building falling down, fun times for everyone.```",
 		9: "```Christof charged into heavily armed police and took a shotgun to the face before finally dying to Syntax Terrors drones. F is chat please...```",
+		#Laramy focused
 		10: "```That Laramy stabbed Noor with with some drugs and Noor then ran out infront of a truck. Good times. ```",
 		11: "```That time Laramy didn't show up cause he was super high at home. Hope that mission went well.```",
 		12: "```Keep the drugs away from Laramy cause he's been known to take some Meatloaf followed by other drugs and go on a killing spree both friend and foe```",
 		13: "```That time Laramy had Meatloaf and  rocket launcher thing and proceeded to shot the building to get the mission done!```",
+		#Seraph focused
 		14: "```That time Seraph parkoured up a convayor belt, jumped into the air and dabbed their way onto the next floor up!```",
 		15: "```How long did Seraph drag Christoff's body around when he died?```",
 		16: "```*Looks in window* shots a goon in the face, gets a van. Good job Seraph.```",
 		17: "``` Seraph somehow snuck a grendade into a pot plant while being watched by gaurds and managed to get Noor to take the full on it.```",
 		18: "```Remember when Seraph tried killing Tony and had their arm broken and sent to jail?```",
 		19: "```Who's got a cyber arm thanks to the Thing? Thats right Seraph does.```",
+		#Syntax Terror focused.
 		21: "```I used my  bear drones (thats right more than one) to win the slaughterfest, -syntax terror```",
 		22: "```With enough cred Syntax terror managed to buy Seraph. Good job Syntax Terror!```",
 		23: "```Getting bear drones to blow up police to help us escapse, no problem for Syntax Terror```",
+		#HKKK3R focused
 		24: "```H4KKK3R can hack a aircon, and make the room a little cold. Nice hacking right there!```",
 		25: "```H4KKK3R just jackin into the Matrix while standing in a bar, it happens more than you think. ```",
 		26: "```When H4KKK3R tried fleeing the scene only to be shot and lose some memory```",
 		27: "```That time H4KKK3R took some braind damage from failing to get past some black ice```",
+		#Noor focused.
 		28: "```Whats for lunch?```",
 		29: "```That time Noor said they were responsible for putting a grenade in the pot plant only to then shoot themself. F in chat if you really want to but probs dont bother...```",
 		30: "```Noors good at talking and seducing people. Just kidding probably being thrown out by gaurds or getting attacked or something instead.```",
 		31: "```That time Noor was useful by having a gun out that Laramy stole and shot gaurds with.```",
 		32: "```Remember when Noor got shot because Laramy tried to steal Seraphs gun?```",
+		#Other random stuff from Sprawl Campaign 1.
 		33: "```When we all tried to kill Martin JR and that manged to tank and seriously harm the entire group.```",
 		34: "```Martin JR gets injured at a bar from a gun fight, walks out of said bar into a sniper bullet, some how still managing to live and get taken to a hospital, only to then die. F in chat if you think Martin JR deserves it.```",
 		35: "```Who hides in a dumpster and 'provides'sniper cover? Azrael (to the tune of Spongebob)```",
@@ -268,6 +282,7 @@ def remember(message):
 		58: "```When Seraph told Syntax Terror that Laramy and H4KKK3R were dead and then Syntax Terror triggered a tracking becon resuling in Seraph being snipped dead. F in chat please or Seraph will add you to a hitlist.```",
 		59: "```When Seraph was dying and their last words to Syntax Terror were 'Im pregnant with H4KKK3R'```",
 		60: "```They say Syntax Terror managed to escape the buisness after he betrayed everyone. People he failed (occasionly finished) missions with, the infiltrator be paid lots of Cred for, and even one of his own drones. They also say Syntax Terror spent the rest of his days being more and more paranoid, keeping an eye behind him.  ```",
+		#Start of Sprawl campaign 2. 
 		61: "```That time Daiki did some sick driving```",
 		62: "```Can they see my car? Good I aim my missiles at them - Daiki```",
 		63: "```That time Daiki and Swarf put Numberphille on suicide watch```",
@@ -281,6 +296,7 @@ def remember(message):
 		71: "```All those times Swarf threw a flash grenade and blinded everyone.```",
 		72: "```That time Daiki got into a chase to try to impress Elina ```",
 		73: "```Swarf flashbanged himself to death to avoid hearing Mercers music. F in chat please.```",
+		#Just after Swarf Gander left and The Donlad joined in. 
 		74: "```That time Daiki became a stalker```",
 		75: "```MC: You're a rapist. Daiki: NOOO!```",
 		76: "```That time Daiki stalked numberphille so he could get a chicks number```",
@@ -314,6 +330,7 @@ def remember(message):
 		104: "```Tony = A bad fucking time. ```",
 		105: "```That time Martin got salty at the MC becuase Mercer got blasted by an orbital strike, if only Martin had remembered what Tony was capable of in the first campaign, and how Tony played a role in how Christoff died.```",
 		106: "```Fuck Tony, except that time he let Laramy use prototype rocket launcher```",
+		#Just after Martin got really salty at the MC for blowing him up with an orbital strike. Introducing Velvet thunder breifly.
 		107: "```That time The Donald ate a taco from the latino(Desperato) and everything was fine.```",
 		108: "```That time Daiki tried getting Velvet thunder to go deaf?```",
 		109: "```Remember when Daiki was driving a destroyed car like in simpsons hit and run```",
@@ -322,6 +339,7 @@ def remember(message):
 		112: "```That time Daiki wanted a fist bump from Velvet Thunder```",
 		113: "```When Velvet Thunder broke his phone so The Donald no longer had his number```",
 		114: "```Remember that time the Valencia gang said dont move and the Donald shot Velvet thunder resulting in the Valencia gang killing The Donald. Daiki then blew up everyone else, themself included.```",
+		#Trying Apoc world for the first time, what a mess and a lot of pvp.
 		115: "```That time Daiki started driving his car remotely freaking Velvet Thunder out```",
 		116: "```That time Korea slashed at the bicep of the first npc they saw.```",
 		117: "```That time Ligma hypnotized an intruding criminal and got them to slit their own throat.```",
@@ -342,6 +360,7 @@ def remember(message):
 		132: "```That time Ligma hypnotised Korea into dealing with the random Columbian, and Korea patched them up.```",
 		133: "```Remember when Ligma tried to get Korea to patch them up, but Korea lost control and started trying to eat them. Ligma was stabbed to death with a cannibal on them. F in chat please.```",
 		134: "```That time True Surveyor took control of the situation by beaking the Columbian mans hand with a solid kick, and catching his gun, arming himself wit ha shotgun and small revolver. He killed Korea with thses for being a cannibal. F is chat if you miss cannibals.```",
+		#Ligma and Korea are gone, say hello to Q and Nora.
 		135: "```That time Nora tried to get an extra water from True Saviour. Fun times. ```",
 		136: "```Remember when Q jumped back and forth a mind warping reality, causing them to have a seizure```",
 		137: "```What does the mask say?```",
@@ -386,6 +405,7 @@ def remember(message):
 		176: "```When Q and Nora found Number 6, and were suprised they weren't hostile, despite trying to take over the town.```",
 		177: "```That time Nora commanded their army to strategically fire upon Varmos.```",
 		178: "```When Q cut off Varmos's arm then proceed to split the other in half instead of dodgeing. Took the acid blood that fell on them like a champ.```",
+		#Back to the Sprawl, oh how we missed how well the Sprawl was written compared to Apoc. A short oneshot over a few sessions.
 		179: "```That time Carth threw some random trashcan to test if drones were gonan auto fire on location.```",
 		180: "```That time In[Spectre] Gadget met Syntax Terrror and almost died.```",
 		181: "```That time In[Spectre] Gadget met Syntax Terror again, and also almost died.```",
@@ -404,11 +424,38 @@ def remember(message):
 		194: "```That time Spectre got a nerd army, only for them to shit themselves and die pretty quickly.```",
 		195: "```That time Spectre nearly made a vector field using infinite knives.```",
 		196: """**```css
-[FAILS SYNTAX TERROR]```**\n```Syntax Terror clock increased to 1500``` ```Syntax Terror clock increased to 1800``` ```Syntax Terror clock increased to 2100``` ```Syntax Terror clock increased to 2200``` ```Syntax Terror clock increased to 2300``` ```Syntax Terror clock increased to 0000```"""
-
+[FAILS SYNTAX TERROR]```**\n```Syntax Terror clock increased to 1500``` ```Syntax Terror clock increased to 1800``` ```Syntax Terror clock increased to 2100``` ```Syntax Terror clock increased to 2200``` ```Syntax Terror clock increased to 2300``` ```Syntax Terror clock increased to 0000```""",
+		197: "```That time  Carth just happened to find a nobody named Jerry to escape Sandstone, good driving Jerry!```",
+		198: "```What do we do Jerry? Keep on livin' and save lives```",
+		199: "```TIPS THE FIRETRUCK FROM BEING RAMMED climb out hte window and gets shot to death. Thats right Carth did```",
+		200: "```That time Carth stole a firetruck after nearly being blown up at Syntax Terror's place```",
+		202: "```That time Carth made Jerry eat a battery to pretend it was a tracking chip```",
+		203: "```That time when everyone was blown up by Syntax Terror, no the other time with Carth and Jerry.```",
+		204: "```That time Carth threw his bag of useless junk at a drone, to try and lose it```",
+		205: "```That time Jerry managed to keep on livin' till they died.```",
+		206: "```we keep on livin Jerry```",
 	}
 
 	return switch[member]
+def rememberlist(message):
+	msg = """```
+	1-9: Christoff focused
+	10-13: Laramy focused
+	14-19: Seraph focused
+	20: I missed a number..
+	21-23:  Syntax Terror focused
+	24-27: H4KKK3R focused
+	28-32: Noor focused
+	33-60: Reat of Sprawl campaign 1 (in order things happened after I stopped grouping by character.)
+	61-73: Sprawl campaign 2, while Jayden(swarf) was still playing
+	74-106: Sprawl 2 while Mercer was still alive.
+	107-114: The last of Sprawl 2.
+	115-134: First time playing Apoc world, what a mess that was, also lots of pvp.
+	135-178: The last of Apoc world campaign 1, lots of weird stuff and overtrowing.
+	179-206: Back to the Sprawl, oh how we missed the Sprawls writing. A one shot spanned over a couple of sessions.
+	```"""
+	msg = msg.replace("\t","")
+	return msg
 
 def addclock(message):
 	# Get the clock name and assign it default value of 1200
@@ -684,6 +731,7 @@ async def on_message(message):
 		'.help': help,
 		'.clocks': showclocks,
 		'.contacts': showcontacts,
+		'.rememberlist':rememberlist,
 		# Functional commands
 		'.roll': roll,
 		'.dice': roll,
@@ -695,23 +743,29 @@ async def on_message(message):
 		'.deletecontact': deletecontact,
 		# Miscellaneous commands
 		'.rip': f,
+		'.f': f,
 		'.remember': remember,
 		# Dev commands
 		'.refresh': refresh,
 		'.log': log,
 	}
-
-	for case in switch:
-		#Checks first for if case == messagestring
-		if case == messageString: msg = switch[case](messageString)
-		#Works for strings with parameters like clocks, contacts. 
-		elif case in messageString: msg = switch[case](messageString)
+	check = False
+	if msg !="":
+		check = True
+	#print (msg)
+	if messageString in switch:
+		msg = switch[messageString](messageString)
+		check = True
+	elif check == False:
+		for case in switch:
+			if case in messageString:
+				msg = switch[case](messageString)
 
 	if not msg: msg = invalid(messageString)
 
 	# Sends the map
 	if messageString==".map":
-		await client.send_file(message.channel, "map_bigger.jpg")
+		await client.send_file(message.channel, "map.jpg")
 	
 	elif messageString ==".fuckmendle":
 		await client.send_file(message.channel, "mendle.png")
