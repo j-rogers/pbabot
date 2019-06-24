@@ -47,6 +47,7 @@ def help(message):
 .remember: Displays a message of a memorable moment.
 .refresh: Reloads the clock and contact data.
 .log <message>: Saves a message to the log file.
+.links: Displays a link to all the PBA games. 
 ```"""
 
 def invalid(message):
@@ -457,6 +458,19 @@ def rememberlist(message):
 	msg = msg.replace("\t","")
 	return msg
 
+def links(message):
+	msg = """
+	**Apocalpyse World:** https://www.dropbox.com/sh/fmsh9kyaiplqhom/AACw1iLMQ7f53Q40FUnMjlz4a?dl=0
+	**The Sprawl:** https://www.dropbox.com/sh/9fr35ivzbvfh06p/AACarsYBpNXxBpEUk_-fz_PXa?dl=0
+	**Tremulas:** https://www.dropbox.com/sh/tbhk0w0zgihrf2h/AACtvyv9l5ruLBE6UG3XeGfba?dl=0
+	**Dungeon World:** https://www.dropbox.com/sh/p61lutt9m6dfpa3/AACTvHhbJa7K1RIHFYVvJqIza?dl=0
+	"""
+	msg = msg.replace("\t","")
+	return msg
+
+
+
+
 def addclock(message):
 	# Get the clock name and assign it default value of 1200
 	tokens = message.split(".addclock ")
@@ -729,6 +743,7 @@ async def on_message(message):
 	switch = {
 		# Listing commands
 		'.help': help,
+		'.links': links,
 		'.clocks': showclocks,
 		'.contacts': showcontacts,
 		'.rememberlist':rememberlist,
