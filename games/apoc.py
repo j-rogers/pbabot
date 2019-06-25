@@ -39,6 +39,7 @@ def handle(message):
         'seizebyforce': seizebyforce,
         '.social': social,
         '.augury': augury,
+        '.costofliving':costofliving,
         #Angel
         '.sixthsense': sixthsense,
         '.infirmary': infirmary,
@@ -1088,3 +1089,29 @@ def augury (messageString):
     return msg
 
 
+def costofliving(messageString):
+    msg = """```
+    When you are unable or refuse to get/use rations and resources to maintain a your lifestyle (ie living),
+    roll + nothing (Starvation doesn't care if you're hard or sharp, or anything really).
+    
+    10+ Pick 1.
+        • You've managed to fight of dehydration and stavation, but not for much longer, if you don't find both food and water very soon, This becomes a miss with 3 failure options instead of 2.
+        • You've managed to fight of starvation for now, however you are dying of first, take 2 harm(internal).
+        • You've somehow managed to not die of dehydration,  but you are starving, take -2 on forward till you get some food.
+        • Somebody has offered you basic supplies to survive this time, but it will require you to do something for them. [Only if fiction allows.]
+    7-9: Pick 1.
+        • You've partially managed to fight of hunger and thirst, [take 1 harm, and -1] on going, and if you don't find something soon, this becomes a miss with 3 options instead of 2.
+        • Your thirst has overcome your need to eat, take -3 harm, and -1 ongoig till you find food.
+        • Your hunger has overcome your need to drink, take -3 forward and -1 harm.
+        • Someone has offered you basic supplies to survive in exchange for something or service right now (if fiction allows)
+    On a miss pick 2:
+        • Your stomach is trying to eat itself take -2 harm and -2 forward.
+        • Lack of water in your system, is giving your organs a hard time, -4 harm, but its not serious damage.
+        • Your body has no energy, take -4 on going
+        • You're in a weakend state, and going a little delusional, you gain +2 to weird, but all other stats have -1 till you get food and water.
+        • You've done some serious damage to yourself from lack of water and food, -1 harm, but requires serious medical attention to fix.
+        • This has taken a toll on your body, pick a stat and take -1 permanently or until you can find a good vailid reason to restore the damage.
+        • You lose all senses and try to cannibalise the closest person to you(or yourself if no one around). 
+        • Your body is kind of shutting down, weak hits are are now 10 (11, or 12 if already 10.) until you find food and water. 
+    ```"""
+    return msg
