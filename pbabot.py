@@ -204,7 +204,7 @@ def roll(message):
 def remember(message):
 	#Generates random number to get remember message from  events that have happened.
 	min = 1
-	max = 206
+	max = 212
 	member = random.randint(min,max)
 	notRandom = message.split() #puts message into a string array seperated by " "
 	
@@ -435,6 +435,13 @@ def remember(message):
 		204: "```That time Carth threw his bag of useless junk at a drone, to try and lose it```",
 		205: "```That time Jerry managed to keep on livin' till they died.```",
 		206: "```we keep on livin Jerry```",
+		#Welcome back to Apoc Campaign 2.
+		207: "```That time Tat screamed static to lure a giant worm over```",
+		208: "```That time Cowboy kicked Tat and Tat just vanished.```",
+		209: "```That time Tat managed to speak and understand static```",
+		210: "```That time a giant worm thing came out of nowhere.```",
+		211: "```That time Tat ate sunglasses. Cowboys Sunglasses.```",
+		212: "```'You will need to find some food for us'\n'How about those lightbulbs mister.'```",
 	}
 
 	return switch[member]
@@ -454,6 +461,7 @@ def rememberlist(message):
 	115-134: First time playing Apoc world, what a mess that was, also lots of pvp.
 	135-178: The last of Apoc world campaign 1, lots of weird stuff and overtrowing.
 	179-206: Back to the Sprawl, oh how we missed the Sprawls writing. A one shot spanned over a couple of sessions.
+	207+ Apoc world, Tat and Cowboy.
 	```"""
 	msg = msg.replace("\t","")
 	return msg

@@ -1,3 +1,5 @@
+import random
+
     ###############################################################################################################################################
 	###############################################################################################################################################
 	############################################################ Apocalpyse world #################################################################
@@ -30,6 +32,7 @@ def handle(message):
         '.gounderknife': gounderknife,
         '.playhardball': playhardball,
         '.workajob': workajob,
+        '.workagig':workajob,
         '.situation': situation,
         '.actunderpressure': actunderpressure,
         '.investigate': investigate,
@@ -40,6 +43,7 @@ def handle(message):
         '.social': social,
         '.augury': augury,
         '.costofliving':costofliving,
+        '.didntgetfood': didntgetfood,
         #Angel
         '.sixthsense': sixthsense,
         '.infirmary': infirmary,
@@ -71,7 +75,10 @@ def handle(message):
         '.weathereye': 	weathereye,
         '.daredevil': 	daredevil,
         '.myothercarisatank': myothercarisatank,
-        'driver': driver,
+        '.combatdriver':combatdriver,
+        '.eyeonthedoor':eyeonthedoor,
+        '.reputation':reputation,
+        '.driver': driver,
         #gunslinger
         '.battlehardended': battlehardended,
         '.fuckthisshit':  fuckthisshit,
@@ -119,6 +126,15 @@ def handle(message):
         '.fingersineverypie': fingersineverypie,
         '.everybodyeats': 	everybodyeats,
         '.justgivemeamotive': 	justgivemeamotive,
+        #child thing
+        '.childthing': childthing,
+        '.':,
+        '.mercurial':mercurial,
+        '.sniffingtheair':sniffingtheair,
+        '.mothersheartbeat':mothersheartbeat,
+        '.feral':feral,
+        '.ferocious':ferocious,
+
 	}
     for case in switch:
 		#Checks first for if case == messagestring
@@ -154,7 +170,7 @@ def basic (messageString):
     Situational
     .actunderpressure - When you race against the clock, act while in danger or act to avoid danger, roll+Cool.
     .investigate -  When you closely study a place, or situation, roll + Sharp.
-    .doiknowthings - When you race against the clock, act while in danger or act to avoid danger, roll+Cool.
+    .doiknowthings - When you consult your accumulated knowledge about something, roll + sharp.
 
     Social
     .fasttalk - When you try to convince someone to do what you want with promises, lies or bluster, roll+Hot.
@@ -163,7 +179,7 @@ def basic (messageString):
     .playhardball - When you get in someone’s face threatening violence and you intend to carry through, roll+hard.
     .workajob - When you negotiate the terms of a job, roll + hot.
 
-    Comabt
+    Combat
     .harm  - When you suffer harm, roll+harm suffered (after armor, if you’re wearing any). 
     .readasitch - When you read a charged situation, roll+cool.
     .firstaid - When you treat someone’s wounds using appropriate medical equipment, roll +sharp,
@@ -400,9 +416,34 @@ def daredevil(messageString):
 def myothercarisatank(messageString):
     msg = """```My other car is a tank:\nyou get an additional car. Give it mounted machine guns (3-harm close/far area messy) or grenade launchers (4-harm close area messy) and +1armor.```"""
     return msg
+def combatdriver(messageString):
+    msg = """``` When you use your vehicle as a weapon, inflict +1harm. When you inflict v-harm, add +1 to your targets roll. When you suffer v-harm, take -1 to your roll.```"""
+    return msg
+def eyeonthedoor(messageString):
+    msg ="""```Name your escape route and roll+cool.
+    10+ You're gone.
+    7-9: You can go or stay, but if you go it costs you. leave something of take something with you, the MC will tell you what.
+    On a miss, you're caught, vulenerable, half in and half out.```"""
+    return msg
+
+def reputation(messageString):
+    msg ="""```When you meet somoene important (your call) roll +cool.
+    On a hit, they've heard of you, and say what they've heard; The MC has them respond accordingly.
+    On a 10+ take +1forward for dealing with them as well.
+    On a miss, they've heard of you, but the MC decides what the've heard.```"""
+    return msg
+
 #Driver Moves List
 def driver(messageString):
-    msg = """```.noshitdriver\n.goodintheclinch\n.weathereye\n.daredevil\n.myothercarisatank```"""
+    msg = """```
+    .noshitdriver
+    .goodintheclinch
+    .weathereye
+    .daredevil
+    .myothercarisatank
+    .combatdriver
+    .eyeonthedoor
+    .reputation```"""
     return msg
     
 
@@ -460,7 +501,7 @@ def quarantine(messageString):
     .inspiring\n
     ```"""
     return msg
-#Comabt Veteran
+#Combat Veteran
 def combatveteran(messageString):
     msg = """```Combat Veteran:\nYou get +1cool (cool+3).```"""
     return msg
@@ -731,6 +772,53 @@ def justgivemeamotive(messageString):
     On a miss some several people of the MC's choice maybe including your guy maybe not get it and all suffer 3-harm (ap).
     ```"""
     return msg
+
+def childthing(messageString):
+    msg="""```
+    .mercurial
+    .sniffingtheair
+    .mothersheartbeat
+    .feral
+    .ferocious
+    ```"""
+
+def mercurial (messageString):
+    msg = """```
+    Mercurial: whenever you want, change any or all of your looks. Those who know you can still recognize you, but only if they look closely.
+    ```"""
+    return msg
+def sniffingtheair(messageString):
+    msg = """```
+    Sniffing the air: when you read a situation, ask 1 of these questions, in addition to the other questions you ask:
+    • Who here is most afraid?
+    • Who here is keeping secrets from the rest?
+    • How close are the wolves?
+    • What or who is the source of the most pain or fear here?
+    • Who here would do what I ask?
+    ```"""
+    return msg
+def mothersheartbeat(messageString):
+    msg = """```
+    The mother’s heartbeat: when you withdraw into the world’s psychic maelstrom, roll+weird. On a 10+, choose 2. On a 7–9, choose 1. You emerge again, about an hour later, and…
+    • …Meanwhile, you can still watch and hear what’s happening where you were.
+    • …You can re-emerge in a different place altogether.
+    • …You are healed of all harm.
+    • …You can bring someone in and out with you.
+
+    On a miss, you are in the dark and warm, listening to the mother’s heartbeat, and many hours pass.
+    ```"""
+    return msg
+def feral(messageString):
+    msg = """```
+    Feral: at the beginning of the session, you can choose to spend 0-barter for the equivalent of a 1-barter lifestyle. You can survive happily on whatever you can find.
+    ```"""
+    return msg
+def ferocious(messageString):
+    msg = """```
+    Ferocious, snarling, shrieking, biting, and quite possibly rabid: when you go aggro on someone, roll+weird instead of roll+hard.
+    ```"""
+    return msg
+
 
 ##################
 ## Combat Moves ##
@@ -1090,21 +1178,35 @@ def augury (messageString):
 
 
 def costofliving(messageString):
-    msg = """```
-    When you are unable or refuse to get/use rations and resources to maintain a your lifestyle (ie living),
-    roll + nothing (Starvation doesn't care if you're hard or sharp, or anything really).
+
     
-    10+ Pick 1.
-        • You've managed to fight of dehydration and stavation, but not for much longer, if you don't find both food and water very soon, This becomes a miss with 3 failure options instead of 2.
+    dice1 = random.randint(1, 6)
+    dice2 = random.randint(1, 6)
+    total = dice1+dice2
+    msg = """```When you are unable or refuse to get/use rations and resources to maintain a your lifestyle (ie living),\nroll + nothing (Starvation doesn't care if you're hard or sharp, or anything really).
+    """ 
+    if total >=10:
+        msg +="\nlucky this time, you rolled a " +str(total)+"""
+
+        Pick 1.
+        • You've managed to fight of dehydration and stavation, but not for much longer, if you don't find both food and water very soon, This becomes a miss with 3 failure options instead of 2. (.didntgetfood)
         • You've managed to fight of starvation for now, however you are dying of first, take 2 harm(internal).
         • You've somehow managed to not die of dehydration,  but you are starving, take -2 on forward till you get some food.
         • Somebody has offered you basic supplies to survive this time, but it will require you to do something for them. [Only if fiction allows.]
-    7-9: Pick 1.
+        ```"""
+    elif total >=7 and total <10:
+        msg+= "\nEh, it'll do, you rolled a "+str(total)
+        msg+="""
+        
+        Pick 1.
         • You've partially managed to fight of hunger and thirst, [take 1 harm, and -1] on going, and if you don't find something soon, this becomes a miss with 3 options instead of 2.
         • Your thirst has overcome your need to eat, take -3 harm, and -1 ongoig till you find food.
         • Your hunger has overcome your need to drink, take -3 forward and -1 harm.
         • Someone has offered you basic supplies to survive in exchange for something or service right now (if fiction allows)
-    On a miss pick 2:
+        ```"""
+    else:
+        msg += "\nFuck, only a " +str(total)+"""
+        Pick 2:
         • Your stomach is trying to eat itself take -2 harm and -2 forward.
         • Lack of water in your system, is giving your organs a hard time, -4 harm, but its not serious damage.
         • Your body has no energy, take -4 on going
@@ -1114,4 +1216,24 @@ def costofliving(messageString):
         • You lose all senses and try to cannibalise the closest person to you(or yourself if no one around). 
         • Your body is kind of shutting down, weak hits are are now 10 (11, or 12 if already 10.) until you find food and water. 
     ```"""
+    msg = msg.replace("\t","")
+    msg = msg.replace("\t","")
+    msg = msg.replace("        ","")
+
+    return msg
+
+def didntgetfood(messageString):
+    msg = """```
+    Looks like you failed to get food and/or water, and now it seems like you're really fucked. Pick 3.
+
+    • Your stomach is trying to eat itself take -2 harm and -2 forward.
+    • Lack of water in your system, is giving your organs a hard time, -4 harm, but its not serious damage.
+    • Your body has no energy, take -4 on going
+    • You're in a weakend state, and going a little delusional, you gain +2 to weird, but all other stats have -1 till you get food and water.
+    • You've done some serious damage to yourself from lack of water and food, -1 harm, but requires serious medical attention to fix.
+    • This has taken a toll on your body, pick a stat and take -1 permanently or until you can find a good vailid reason to restore the damage.
+    • You lose all senses and try to cannibalise the closest person to you(or yourself if no one around). 
+    • Your body is kind of shutting down, weak hits are are now 10 (11, or 12 if already 10.) until you find food and water. 
+    ```"""
+    msg = msg.replace("\t", "")
     return msg
