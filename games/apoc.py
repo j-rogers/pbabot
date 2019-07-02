@@ -128,7 +128,6 @@ def handle(message):
         '.justgivemeamotive': 	justgivemeamotive,
         #child thing
         '.childthing': childthing,
-        '.':,
         '.mercurial':mercurial,
         '.sniffingtheair':sniffingtheair,
         '.mothersheartbeat':mothersheartbeat,
