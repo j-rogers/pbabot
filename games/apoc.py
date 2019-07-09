@@ -39,11 +39,12 @@ def handle(message):
         '.doiknowthings': doiknowthings,
         '.weirdapocstuff': weirdapocstuff,
         '.openyourbrain': openyourbrain,
-        'seizebyforce': seizebyforce,
+        '.seizebyforce': seizebyforce,
         '.social': social,
         '.augury': augury,
         '.costofliving':costofliving,
         '.didntgetfood': didntgetfood,
+        '.static':static,
         #Angel
         '.sixthsense': sixthsense,
         '.infirmary': infirmary,
@@ -182,7 +183,7 @@ def basic (messageString):
     .harm  - When you suffer harm, roll+harm suffered (after armor, if you’re wearing any). 
     .readasitch - When you read a charged situation, roll+cool.
     .firstaid - When you treat someone’s wounds using appropriate medical equipment, roll +sharp,
-    .seizebtforce -  When you try to seize something by force, or to secure your hold on something, roll+hard.
+    .seizebyforce -  When you try to seize something by force, or to secure your hold on something, roll+hard.
     .surpriseattack - When you attack someone unprepared, unsuspecting, or helpless, roll+hard.
     .coverfire - When you want to lay down lots fire or provide cover fire roll+cool 
     .shootsomeone - When you want to shoot someone roll + hard:
@@ -780,6 +781,7 @@ def childthing(messageString):
     .feral
     .ferocious
     ```"""
+    return msg
 
 def mercurial (messageString):
     msg = """```
@@ -828,7 +830,7 @@ def combat(messageString):
     .harm  - When you suffer harm, roll+harm suffered (after armor, if you’re wearing any). 
     .readasitch - When you read a charged situation, roll+cool.
     .firstaid - When you treat someone’s wounds using appropriate medical equipment, roll +sharp,
-    .seizebtforce -  When you try to seize something by force, or to secure your hold on something, roll+hard.
+    .seizebyforce -  When you try to seize something by force, or to secure your hold on something, roll+hard.
     .surpriseattack - When you attack someone unprepared, unsuspecting, or helpless, roll+hard.
     .coverfire - When you want to lay down lots fire or provide cover fire roll+cool 
     .shootsomeone - When you want to shoot someone roll + hard:
@@ -1123,6 +1125,32 @@ def weirdapocstuff(messateString):
     .openyourbrain - When you open your brain to the world’s psychic maelstrom
     .psyharm - When you take psychic harm
     .augury - When you use your followers or your workspace for augury, roll+weird.
+    .static - when you want to speak static, roll +weird.
+    ```"""
+    return msg
+
+def static(messageString):
+    msg ="""```
+    When you want to speak static roll+weird.
+    10+ You manage to speak static, pick 3.
+    7-9: You manage to speak static, pick 1.
+    •You manage to project static further.
+    •Your static defeans anyone nearby.
+    •People who hear it take notice either by annoyance or feaking them out, either way you've got their attention.
+    •You don't kill your throat whilest screaming static.
+    •You can project static out of a radio source instead.
+    •You don't defean yourself while speaking static
+    •Your static hurts people who hear it (including yourself)
+    •Your static is really focused, narrowed down to a single target and yourself.
+
+    On a miss pick 1.
+    •You manage to speak static uncrollabley, causing harm to those close, and even more harm to yourself. 
+    •You speak static, (as a weak hit) but seriously hurt your ears and throat (can't be prevented).
+    •You speak static to the Psycic malestorm, the MC will chose when and how it's heard. 
+    •You speak static (as a weak hit) and aleart the wolves.
+    •The psychic malestorm speaks the static for you, the MC will make a move.
+    •You move your lips but nothing happens, for better or worse.
+    •You manage to speak static and it distracts everyone including yourself.
     ```"""
     return msg
 
