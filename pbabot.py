@@ -204,7 +204,7 @@ def roll(message):
 def remember(message):
 	#Generates random number to get remember message from  events that have happened.
 	min = 1
-	max = 212
+	max = 219
 	member = random.randint(min,max)
 	notRandom = message.split() #puts message into a string array seperated by " "
 	
@@ -442,6 +442,14 @@ def remember(message):
 		210: "```That time a giant worm thing came out of nowhere.```",
 		211: "```That time Tat ate sunglasses. Cowboys Sunglasses.```",
 		212: "```'You will need to find some food for us'\n'How about those lightbulbs mister.'```",
+		213: "```That time Cowboy stole everything from a mutant doctor while Tat just screemed static and nearly died...```",
+		214: "```That time Tat went through a mail slot and pretended to be dead to ambush a mutant doctor. ```",
+		215: "```That time Tat and a Super mutant doctor appeared infront of Cowboy as they drove```",
+		216: "```That time Cowboy put a leash on Tat and then put him on the handle bars of a rusted bike```",
+		216: "```Things going down? Better hide with my mothers heartbeat```",
+		217: "```That time Cowboy kept trying to fix things and bring peice, but Tat had other ideas.```",
+		218:"```That time Tat cannibalised a doctor, nearly killed a sherif, and then proceeded to try killing another doctor right after..```",
+		219: "```Who needs a doctor? Hopefully not you after Tat killed or attacked the doctors nearby.```",
 	}
 
 	return switch[member]
