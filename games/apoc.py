@@ -134,6 +134,10 @@ def handle(message):
         '.mothersheartbeat':mothersheartbeat,
         '.feral':feral,
         '.ferocious':ferocious,
+        #hardholder
+        '.hardholder':hardholder,
+        '.wealth':wealth,
+        '.leadership':leadership,
 
 	}
     for case in switch:
@@ -205,7 +209,8 @@ def book (messageString):
     .hocus
     .quarantine
     .faceless
-    .maestro```"""
+    .maestro
+    .hardholder```"""
     return msg
 
 #Sixthsense
@@ -819,6 +824,39 @@ def ferocious(messageString):
     Ferocious, snarling, shrieking, biting, and quite possibly rabid: when you go aggro on someone, roll+weird instead of roll+hard.
     ```"""
     return msg
+################
+## Hardholder ##
+################
+
+def hardholder(messageString):
+    msg = """```
+    .leadership
+    .wealth
+    ```"""
+    return msg 
+def leadership(messageString):
+    msg = """```
+    When you have to order your gang to advance, regroup, hold position, hold discipline, or put their damn backs into it, roll+hard.
+    On a hit they do it. 
+    10+ They snap to it, take +1 forward. 
+    On a miss they do it, but you'll hear about it later.
+    ```"""
+    return msg
+def wealth(messageString):
+    msg = """```
+    If your hold is secure and your rule unchallenged, at teh beginning of the session roll+hard.
+    10+ you have a surplus at hand and available for the needs of the session. 
+    On a 7-9, you have surplus but choose 1 want.
+    On a miss, of your your hold is compromised or your rule contested, your hold is in want. The precise values of your surplus and want depend on your holding, as follows.
+    
+    ```"""
+    return msg
+
+
+    
+    
+    
+    
 
 
 ##################
