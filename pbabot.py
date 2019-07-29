@@ -103,7 +103,7 @@ def f(message):
 					  Martin: Christof Romulad, Laramy Fisk, Mercer De'am, Velvet Thunder, Carth\n
 					  Waleed: Noor 'Shareef' Jerkof, Martin Monis Jr, Azrael\n
 					  Josh F: H4KKKE3R\n
-					  Josh R: Seraph, Daiki, Ligma, In[Spectre] Gadget, Jerry\n
+					  Josh R: Seraph, Daiki, Ligma, In[Spectre] Gadget, Jerry, Tat\n
 					  Jayden: Syntax Terror, Swarf Gander\n
 					  Cayden: Desperato\n
 					  Matt: The Donald, True Saviour\n
@@ -119,8 +119,9 @@ def f(message):
 					  Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take their shot, Daiki had his car blow everyone up, not just taking his on life but 8 of the Valencia gang.\n
 					  Ligma: Ligma came out of hinding and did a hypnotic strip dance for Korea. Korea than proceeded to try and eat Ligma instead of patching Ligma up, resulting in Ligmas death.\n
 					  In[Spectre] Gadget: After being sent to prison, Carth bashed Spectre around a lot to blend in with the guards, and when it came to escape, Spectre obtained too many injuries and easily had their skull smashed in by actual gaurds.\n
-					  Jerry: Jerry was really a nobody, like an NPC, but aren't we all in a dystopian future ran by mega corps? Jerry managed to show promise as he helped Carth with escape Sandstone, only to be blown up by Syntax Terror, F in chat please.\n ```""",
-		'joshf': "```H4KKK3R: H4KKK3R was in the car with Seraph, trying to guide Laramy to where Syntax Terror was so we could take our revenge. While Jacked into police cameras, Seraph shot them in the head. \n```",
+					  Jerry: Jerry was really a nobody, like an NPC, but aren't we all in a dystopian future ran by mega corps? Jerry managed to show promise as he helped Carth with escape Sandstone, only to be blown up by Syntax Terror, F in chat please.\n
+					  Tat: Tat kept popping in and out of his Mothers Heartbeat. It was only a matter of time untill he pulled a Nazi with him, resulting in a bloodbath, an army of more chilidren appearing, and wolves. Wolves proceeded to maul his face off this time, in one final ditch for the safety within Mothers heartbeat.\n```""",
+		'joshf': "```H4KKK3R: H4KKK3R was in the car with Seraph, trying to guide Laramy to where Syntax Terror was so we could take our revenge. While Jacked into police cameras, Seraph shot them in the head.\n```",
 		'jayden': """```
 					  Syntax Terror: Syntax Terror managed to live out his days, always being paranoid and on edge.\n
 					  Swarf Gander: Killed himself with flashbangs to try avoid hearing Mercer's music.\n```""",
@@ -204,7 +205,7 @@ def roll(message):
 def remember(message):
 	#Generates random number to get remember message from  events that have happened.
 	min = 1
-	max = 219
+	max = 225
 	member = random.randint(min,max)
 	notRandom = message.split() #puts message into a string array seperated by " "
 	
@@ -450,6 +451,13 @@ def remember(message):
 		217: "```That time Cowboy kept trying to fix things and bring peice, but Tat had other ideas.```",
 		218:"```That time Tat cannibalised a doctor, nearly killed a sherif, and then proceeded to try killing another doctor right after..```",
 		219: "```Who needs a doctor? Hopefully not you after Tat killed or attacked the doctors nearby.```",
+		#Welcome back Jayden and hello Fluffy.
+		220: "```That time Tat was mauled  to death by the wolves in the malestorm.```",
+		221: "```That time Der showed up and tried to kidnap Cowboy cause he thought he was a doctor.```",
+		222: "```That time Tat followed someone other than Cowboy. Then died.```",
+		223: "```That time when Fluffy and Cowboy had drinks together.```",
+		224: "```That time someone got into trouble, when the MC asked how far Fluffy and Cowboy planned on going...```",
+		225: "That time Der Fuhrer took random chilidren to start inducting them into his gang. ```",
 	}
 
 	return switch[member]
@@ -469,7 +477,8 @@ def rememberlist(message):
 	115-134: First time playing Apoc world, what a mess that was, also lots of pvp.
 	135-178: The last of Apoc world campaign 1, lots of weird stuff and overtrowing.
 	179-206: Back to the Sprawl, oh how we missed the Sprawls writing. A one shot spanned over a couple of sessions.
-	207+ Apoc world, Tat and Cowboy.
+	207-219: Apoc world, Tat and Cowboy.
+	220+ Jayden comes back and Tat dies.
 	```"""
 	msg = msg.replace("\t","")
 	return msg
