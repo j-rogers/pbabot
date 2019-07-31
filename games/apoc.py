@@ -42,7 +42,7 @@ def handle(message):
         '.seizebyforce': seizebyforce,
         '.social': social,
         '.augury': augury,
-        '.costofliving':costofliving,
+        '.doistarve':doistarve,
         '.didntgetfood': didntgetfood,
         '.static':static,
         #Angel
@@ -175,6 +175,7 @@ def basic (messageString):
     .actunderpressure - When you race against the clock, act while in danger or act to avoid danger, roll+Cool.
     .investigate -  When you closely study a place, or situation, roll + Sharp.
     .doiknowthings - When you consult your accumulated knowledge about something, roll + sharp.
+    .doistrave - when you are unable (or refuse) to pay/use barter for living, roll + nothing.
 
     Social
     .fasttalk - When you try to convince someone to do what you want with promises, lies or bluster, roll+Hot.
@@ -1242,7 +1243,7 @@ def augury (messageString):
     return msg
 
 
-def costofliving(messageString):
+def doistarve(messageString):
 
     
     dice1 = random.randint(1, 6)
@@ -1302,3 +1303,43 @@ def didntgetfood(messageString):
     ```"""
     msg = msg.replace("\t", "")
     return msg
+
+
+def livingwell(messageString):
+    dice1 = random.randint(1, 6)
+    dice2 = random.randint(1, 6)
+    total = dice1+dice2
+    msg = """```When you're living well off (by paying at least 2 barter at the start of the session) roll +nothing,
+    """ 
+    if total >=10:
+        msg +="\"Living heaps well tonight, with a roll of +"str(total)+"""
+
+        Pick 1.
+        • Take +1 forward for the session unless something really takes a toll on you.
+        • 
+        ```"""
+    elif total >=7 and total <10:
+        msg+= "\nEh, it'll do, you rolled a "+str(total)
+        msg+="""
+        
+        Pick 1.
+        • You've partially managed to fight of hunger and thirst, [take 1 harm, and -1] on going, and if you don't find something soon, this becomes a miss with 3 options instead of 2.
+        • Your thirst has overcome your need to eat, take -3 harm, and -1 ongoig till you find food.
+        • Your hunger has overcome your need to drink, take -3 forward and -1 harm.
+        • Someone has offered you basic supplies to survive in exchange for something or service right now (if fiction allows)
+        ```"""
+    else:
+        msg += "\nFuck, only a " +str(total)+"""
+        Pick 2:
+        • Your stomach is trying to eat itself take -2 harm and -2 forward.
+        • Lack of water in your system, is giving your organs a hard time, -4 harm, but its not serious damage.
+        • Your body has no energy, take -4 on going
+        • You're in a weakend state, and going a little delusional, you gain +2 to weird, but all other stats have -1 till you get food and water.
+        • You've done some serious damage to yourself from lack of water and food, -1 harm, but requires serious medical attention to fix.
+        • This has taken a toll on your body, pick a stat and take -1 permanently or until you can find a good vailid reason to restore the damage.
+        • You lose all senses and try to cannibalise the closest person to you(or yourself if no one around). 
+        • Your body is kind of shutting down, weak hits are are now 10 (11, or 12 if already 10.) until you find food and water. 
+    ```"""
+    msg = msg.replace("\t","")
+    msg = msg.replace("\t","")
+    msg = msg.replace("        ","")
