@@ -46,6 +46,7 @@ def handle(message):
         '.didntgetfood': didntgetfood,
         '.livingwell': livingwell,
         '.static':static,
+        '.guesstheirname':guesstheirname,
         #Angel
         '.sixthsense': sixthsense,
         '.infirmary': infirmary,
@@ -185,6 +186,7 @@ def basic (messageString):
     .gounderknife - When you  want to and are able to have a new implant installed, roll + barter spent,
     .playhardball - When you get in someone’s face threatening violence and you intend to carry through, roll+hard.
     .workajob - When you negotiate the terms of a job, roll + hot.
+    .guesstheirname
 
     Combat
     .harm  - When you suffer harm, roll+harm suffered (after armor, if you’re wearing any). 
@@ -1338,7 +1340,16 @@ def livingwell(messageString):
     msg = msg.replace("\t","")
     msg = msg.replace("        ","")
     return msg
-
-
-    def guesstheirname(messageString):
-        msg= """When you try to guess somebodies name, """
+def guesstheirname(messageString):
+    msg = """```When you try to guess or change somebodies name roll +weird.
+    On a hit, you manage to change or guess their name, and pick 1.
+    10+ pick 3.
+    On a miss, you think their name is correct, pick 1 and the MC will make a move.
+    • They don't get freaked out by their name changing (or guessed at first)
+    • Other people are unfazed by the name change.
+    • Other people aren't aware of the name change.
+    • Other people are fazed by their name change
+    • The psychic malestorm stops somebody changing your name. 
+    ```"""
+    msg = msg.replace("\t","")
+    return msg
