@@ -77,20 +77,20 @@ Word on the Street: Meatspace research bonus.```"""
 
 	# Hacker
 	elif messageString == '.hacker':
-		response = """```Roll moves:
-.consolecowboy: Bonus within current system. (Roll)\n
-    Other moves:
-.jackin: You can access the matrix.
-.consolecowboy: Bonus within current system. (Roll)
-.blackicevet: Bonus against black ICE.
+		response = """```
+.jackin: You can access the matrix moves.
+.antivirus: Legwork roll+cred for chrome chips.
 .chromed: Choose another piece of cyberware at character creation or in downtime. 
-.icebreaker: Bonus against all ICE.
-.neuralscars: Bonus against black ICE.
-.programmingonthefly: Bonus to matrix moves.
+.insidejob: When you login through a comprimised site +1 matrix moves.
+.ivehadworse: +1 armor against ice
+.humansareeasyprey: Go on the offensive against Sysop roll synth.
 .rep: Fast talk and Play hard ball replacements while in the matrix.
 .searchoptimisation: Matrix research bonus.
+.rigenthusiast: extra deck tag.
+.sneakdoorbeta: create a backdoor in for future use.
 .techsupport: Bonus when helping or interfering while in the matrix.
-.zeroed: Cyberdeck bonus.```"""
+.diabolusexmchina When Ice is activated against you roll + synth.
+```"""
 
 	# Hunter
 	elif messageString == '.hunter':
@@ -425,14 +425,15 @@ take +1-harm
 
 	# Login
 	elif messageString == ".login":
-		response = """```When you attempt to gain access to a system, roll Synth.\n
-	10+: you’re in clean
-	7-9: you’re in, but choose one:
-		Ђ Passive trace (+1 trace)
-		Ђ ICE is activated
-		Ђ An alert is triggered (advance the active Mission Clock)
-		Ђ Your access is restricted – take -1 ongoing to matrix moves in this system while your access is restricted
-		6-: you’re in, but the MC chooses two```"""
+		response = """```
+		Login :When you attempt to gain access to a system, roll Synth.
+		10+: you’re in clean
+		7-9: you’re in, but choose one:
+		Sysops are alerted
+		ICE is activated
+		They’re onto you, +1 trace
+		Your access is restricted – take -1 ongoing to matrix moves in this system while your access is restricted
+		6-: you’re in, but the MC chooses two, and a relevant clock is advanced```"""
 
 	# Melt Ice
 	elif messageString == ".melt" or messageString == ".meltice":
@@ -457,13 +458,15 @@ You may spend 1 hold to activate routines on that sub-system.```"""
 
 	# Jack Out
 	elif messageString == ".jackout":
-		response = """```When you, your programs, or your deck are about to be damaged by ICE, you can try to jack out. Roll Cool.\n
-	10+: you disconnect yourself from the system before any serious harm occurs
-	7-9: you jack out, but choose one:
-		Ђ You lose some data
-		Ђ You take some of the established consequences
-		Ђ The owners of the target system trace you to your current location
-	6-: you take the established consequences... and you’re still connected```"""
+		response = """```
+		Jackout: When you, your programs, or your deck are about to be damaged by ICE, you can try to jack out. Roll Cool.
+		10+: you disconnect yourself from the system before any serious harm occurs
+		7-9: you jack out, but choose one:
+			You lose some data
+			You take some of the established consequences
+			The owners of the target system trace you to your current location
+		6-: you take the established consequences... and you’re still connected
+```"""
 		
 			###############################################################################################################################################
 	###############################################################################################################################################
@@ -751,6 +754,98 @@ During the mission, spend 1 hold for one of the following effects:
 	7+ you temporarily evade/escape/overcome your opponent
 	10+ gain 1 hold. Spend this to temporarily evade/escape/overcome your opponent at any other time in this run. 
 	6- your opponent gets the better of you.```"""
+
+	elif messageString == ".jackin":
+		response = """```
+		Jack in: When you’re jacked into the matrix, you have access to the matrix moves .
+		```"""
+	elif messageString == ".antivirus":
+		response = """```
+		Antivirus Subscription: During legwork, you may request a delivery of 2 Single Use Chrome Chips Roll + Cred Spent:
+		7+: Mark 2 gear to spend in the matrix.
+		10+: Next day delivery.
+		```"""
+	elif messageString == ".insidejob":
+		response = """```
+		Inside Job: When you login through a compromised, on-site location, take +1 on all Matrix Moves. 
+		```"""
+	elif messageString == ".ivehadworse":
+		response = """```
+		I’ve had worse: Gain 1 Armour against ICE subroutines
+		```"""
+	elif messageString == ".humansareeasyprey":
+		response = """```
+		Humans are such easy prey: When you go on the offensive against a Sysop, roll Synth:
+		10+: Choose two, or one twice: 
+		7-9: Choose one:
+		You shake them off your trail, for now.
+		You damage their rig, slowing them down.
+		You overload their system, zapping their brain
+		```"""
+	elif messageString == ".rep":
+		response = """```
+		Rep: When you appear in the Matrix with a recognisable avatar, 
+		roll Synth instead of Style for fast talk and instead of Edge for play hardball. 
+		When your reputation gets you into trouble, mark experience
+		```"""
+	elif messageString == ".sneakdoorbeta":
+		response = """```
+		Sneakdoor Beta: When you have successfully infiltrated a system, you may create a backdoor for quick re-entry. Roll Mind:
+		10+: It’s set up, it’s clean, you’re the only one that knows about it.
+		7-9: It’s set up, but choose one:
+			Sysops will find it sooner rather than later
+			It’s not silent entry, using it may raise alarms
+			It’s not a clean backdoor, may still have to attempt to login 
+		```"""
+	elif messageString == ".searchoptimisation":
+		response = """```
+		Search optimisation: When you research a topic in the Matrix, 
+		you may always ask a follow up question. On a 10+, take an additional [intel].
+		```"""
+	elif messageString == ".diabolusexmachina":
+		response = """```
+		Diabolus Ex Machina: When ICE is activated against you in the Matrix, roll +Synth: 
+		10+: The ICE is under your control.
+		7-9: Choose one temporary effect: 
+			The ICE is deactivated, this server is open season. 
+			The ICE is retargeted, you’re not its priority anymore. 
+			You slip past it, it’s the next guy’s problem.
+		```"""
+
+	elif messageString == ".bypasscountermeasures":
+		response = """```
+		Bypass Countermeasures: When you attempt to outmaneuver or evade system countermeasures, roll Edge
+		10+: You’re straight through, no worries
+		7-9: You’re through, but they’re still on you. Choose one:
+			Advance Mission Clock
+			ICE is activated
+			+1 trace
+			Take established consequences 
+		6-: You’re caught, and the MC chooses one
+
+			```"""
+	elif messageString == ".hijack":
+		response = """```
+		Hijack System: When you attempt to gain control over a system, roll Mind. 
+		7+: You’re in control. You may search, destroy, or wreak whatever chaos you want.
+		7-9:  Choose one:
+			Time is limited, you can only do so much before they cut you off.
+			Access is limited, you can’t get into everything you want.
+			+1 trace.
+			```"""
+	elif messageString == ".":
+		response = """```
+			```"""
+	elif messageString == ".":
+		response = """```
+			```"""
+	elif messageString == ".":
+		response = """```
+			```"""
+	elif messageString == ".":
+		response = """```
+			```"""
+
 		
 	###############################################################################################################################################
 	###############################################################################################################################################
@@ -813,3 +908,7 @@ Withdrawal:
 	-long```"""
 
 	return response
+
+
+
+	
