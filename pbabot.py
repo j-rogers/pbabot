@@ -103,33 +103,37 @@ def f(message):
 					  Martin: Christof Romulad, Laramy Fisk, Mercer De'am, Velvet Thunder, Carth\n
 					  Waleed: Noor 'Shareef' Jerkof, Martin Monis Jr, Azrael\n
 					  Josh F: H4KKKE3R\n
-					  Josh R: Seraph, Daiki, Ligma, In[Spectre] Gadget, Jerry, Tat\n
-					  Jayden: Syntax Terror, Swarf Gander\n
+					  Josh R: Seraph, Daiki, Ligma, In[Spectre] Gadget, Jerry, Tat, Fluffy\n
+					  Jayden: Syntax Terror, Swarf Gander, Der/Dur Fuhrer\n
 					  Cayden: Desperato\n
 					  Matt: The Donald, True Saviour\n
-					  Lloyd: Korea\n```""",
+					  Lloyd: Korea, Cowboy/Cow-boy\n```""",
 		'martin': """```
 					  Christof Romuald: Died to Syntax Terror's Bear Drones while being pounded on by Police. F in chat please.\n
 					  Laramy Fisk: Was murdered by Seraph. After Laramy blammed Syntax Terror on why the van blew up, Seraph didn't take kindly, resulting in Seraph running Laramy over and shotting him after he manged to live.\n
 					  Mercer De'am: Died by the hands of Tony when an orbital strike was set upon his location.\n
 					  Velvet Thunder: Died to The Donald, bashed by the wall, and then shot in the head.\n
- 					  Carth: Nearly died from a bomb in Syntax Terror's place, only to run away in a firetruck, get in an accident and be gunned down crawling out of teh window.\n```""",
+ 					  Carth: Nearly died from a bomb in Syntax Terror's place, only to run away in a firetruck, get in an accident and be gunned down crawling out of the window.\n```""",
 		'josh': """```
 					  Seraph: Seraph thought they were safe, thought Syntax Terror would be happy, were on their way to Byntax Berror, when a secret chip Syntax had implanted alerted a sniper from The business to shot Seraph dead.\n
 					  Daiki: Upon being tazzed by Velvet Thunder, and the Valencia gang going to take their shot, Daiki had his car blow everyone up, not just taking his on life but 8 of the Valencia gang.\n
 					  Ligma: Ligma came out of hinding and did a hypnotic strip dance for Korea. Korea than proceeded to try and eat Ligma instead of patching Ligma up, resulting in Ligmas death.\n
 					  In[Spectre] Gadget: After being sent to prison, Carth bashed Spectre around a lot to blend in with the guards, and when it came to escape, Spectre obtained too many injuries and easily had their skull smashed in by actual gaurds.\n
 					  Jerry: Jerry was really a nobody, like an NPC, but aren't we all in a dystopian future ran by mega corps? Jerry managed to show promise as he helped Carth with escape Sandstone, only to be blown up by Syntax Terror, F in chat please.\n
-					  Tat: Tat kept popping in and out of his Mothers Heartbeat. It was only a matter of time untill he pulled a Nazi with him, resulting in a bloodbath, an army of more chilidren appearing, and wolves. Wolves proceeded to maul his face off this time, in one final ditch for the safety within Mothers heartbeat.\n```""",
+					  Tat: Tat kept popping in and out of his Mothers Heartbeat. It was only a matter of time untill he pulled a Nazi with him, resulting in a bloodbath, an army of more chilidren appearing, and wolves. Wolves proceeded to maul his face off this time, in one final ditch for the safety within Mothers heartbeat.\n
+					  Fluffy: Fluffy picked up a nuke in a pokeball after using an online map to navigate the Maze. Later playing hot potato with the nuke, Coqboy blew up, and everyone nearby also blew up.\n```""",
 		'joshf': "```H4KKK3R: H4KKK3R was in the car with Seraph, trying to guide Laramy to where Syntax Terror was so we could take our revenge. While Jacked into police cameras, Seraph shot them in the head.\n```",
 		'jayden': """```
 					  Syntax Terror: Syntax Terror managed to live out his days, always being paranoid and on edge.\n
-					  Swarf Gander: Killed himself with flashbangs to try avoid hearing Mercer's music.\n```""",
+					  Swarf Gander: Killed himself with flashbangs to try avoid hearing Mercer's music.\n
+					  Der Fuhrer: Dur Fuhrer died pretty much the same time as Cowboy did, when Cowbow blew up while holding a nuke Fluffy picked up, in a game of hot potato. Der Fuhrers hands and leg grew back a long time after.\n```""",
 		'waleed': """```
 					  Noor 'Shareef' Jerkof: Noor's death was on their own account, they ended up shooting themself in the head when they realized they couldn't talk to people and were on their way to jail.\n
 					  Martin Monis Jr: MartinJr took the entire team on in bar shoot up, manged to walk out mostly fine then was shot in the head by a sniper.\n
 					  Azrael: Azrael was a shit sniper and wouldn't follow the plan, resulting in complications for Laramy and Syntax Terror. Bad mistake Azrael as we framed him resulting in a brutal death.\n```""",	
-		'lloyd': "```Korea: Korea lived as a cannibal and died as a cannibal. Especially when True Surveyor shot them in the head when they tried eating Ligma.\n```",
+		'lloyd': """```
+		              Korea: Korea lived as a cannibal and died as a cannibal. Especially when True Surveyor shot them in the head when they tried eating Ligma.\n
+		              Cow-boy: Cowboy had enough medical supplies and fuel to last a life time, upon playing hot potato with a nuke contained in ball that Fluffy picked up.\n```""",
 		'cayden':"```Desperato: Also died to the hands of Tony when an orbital strike was set upon their location.\n```",
 		'matt': """```
 					  The Donald: Died to the Valencia gang, if only he didn't shoot Velvet Thunder, but that's not how the art of the deal.\n
@@ -158,6 +162,12 @@ def f(message):
 					  Korea: Korea lived as a cannibal and died as a cannibal. Especially when True Surveyor shot them in the head when they tried eating Ligma.\n
 					  Ligma: Ligma came out of hinding and did a hypnotic strip dance for Korea. Korea than proceeded to try and eat Ligma instead of patching Ligma up, resulting in Ligmas death.\n
 					  True Saviour: After being lead into Nora's vault and then shot down by their turrets, True Saviour managed to make it back to town before bleading out.\n```""",
+		'apoc2':"""```
+					  Tat: Tat kept popping in and out of his Mothers Heartbeat. It was only a matter of time untill he pulled a Nazi with him, resulting in a bloodbath, an army of more chilidren appearing, and wolves. Wolves proceeded to maul his face off this time, in one final ditch for the safety within Mothers heartbeat\n
+					  Cow-boy: Cowboy had enough medical supplies and fuel to last a life time, upon playing hot potato with a nuke contained in ball that Fluffy picked up.\n
+					  Der Fuhrer: Dur Fuhrer died pretty much the same time as Cowboy did, when Cowbow blew up while holding a nuke Fluffy picked up, in a game of hot potato. Der Fuhrers hands and leg grew back a long time after.\n
+					  Fluffy: Fluffy picked up a nuke in a pokeball after using an online map to navigate the Maze. Later playing hot potato with the nuke, Coqboy blew up, and everyone nearby also blew up.\n```""",
+										
 										
 	}
 	msg = switch.get(ripMsg, switch["list"])
@@ -205,7 +215,7 @@ def roll(message):
 def remember(message):
 	#Generates random number to get remember message from  events that have happened.
 	min = 1
-	max = 225
+	max = 244
 	member = random.randint(min,max)
 	notRandom = message.split() #puts message into a string array seperated by " "
 	
@@ -457,7 +467,28 @@ def remember(message):
 		222: "```That time Tat followed someone other than Cowboy. Then died.```",
 		223: "```That time when Fluffy and Cowboy had drinks together.```",
 		224: "```That time someone got into trouble, when the MC asked how far Fluffy and Cowboy planned on going...```",
-		225: "That time Der Fuhrer took random chilidren to start inducting them into his gang. ```",
+		225: "```That time Der Fuhrer took random chilidren to start inducting them into his gang. ```",
+		226: "```Remember that time Lloyd Identified the map before we even started, Free exp that time.```",
+		227: "```Remember when Der Fuhrer just chucked down a bunch of explosive collars blowing up the professors rooms.```",
+		228: "```That time Cowboy gave Fluffy oxygen while swimming underwater```",
+		229: "```That Der Fuhrer passed out while picking up the soap.```",
+		230: "```That time Der Fuhrer recruited blue Zoidberg to be his doctor.```",
+		231:  "``` That time Cowboy and Der Fuhrer saw avoid while Fluffy saw the room properly.```",
+		232: "```Let me roll to see how well I keep my cool while talking to...```",
+		233: "```Why are you gree? Gets kicked out the the town..```",
+		234: "```That time Dur Fuhrer made freinds with a cactus with sombrero ```",
+		235: "```Is this from pokemon```",
+		236: "```That time Der Fuhrer had their name changed to Dur Fuhrer.```",
+		237: "```That time Cowboys name changed to Cow-boy```",
+		238: "```That time Der Fuhrer lost their leg to a random explosion.```",
+		239: "```That time Der Fuhrer got given a ghoul leg that was smaller than his other leg.```",
+		240: "```That time Cowboy leveled up 4 levels just from spinning. Spinnings a cool trick```",
+		241:"```That time Der Fuhrer played hot potatoe with ghould and lost his arms.```",
+		242: "```That time Fluffy  looked up a map the MC used, and got a free item out of it.```",
+		243:"```That time everyone just played Hot potato with ghouls.```",
+		244: "```That time we decided to have enough of Apoc World, and instead of ending with retiring characters, the MC blew everyone up with a nuke Fluffy picked up in a final game of Hot Potato.```",
+		#AYYY SPRAWL TIME!
+
 	}
 
 	return switch[member]
@@ -478,7 +509,7 @@ def rememberlist(message):
 	135-178: The last of Apoc world campaign 1, lots of weird stuff and overtrowing.
 	179-206: Back to the Sprawl, oh how we missed the Sprawls writing. A one shot spanned over a couple of sessions.
 	207-219: Apoc world, Tat and Cowboy.
-	220+ Jayden comes back and Tat dies.
+	220-244 Jayden comes back and Tat dies.
 	```"""
 	msg = msg.replace("\t","")
 	return msg
@@ -809,8 +840,10 @@ async def on_message(message):
 	
 	elif messageString ==".fuckmendle":
 		await client.send_file(message.channel, "mendle.png")
+	elif messageString ==".factorymap":
+		await client.send_file(message.channel, "factorymap.png")
 
-	elif  messageString != ".map" and messageString != "fuckmendle":
+	elif  messageString != ".map" and messageString != ".fuckmendle" and messageString != ".factorymap":
 		await client.send_message(message.channel, msg.format(message))
 	else:
 		pass

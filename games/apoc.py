@@ -168,36 +168,35 @@ def apoclist(messageString):
 
 def basic (messageString):
     msg = """```
-    Weird apoc stuff: 
-    .openyourbrain - When you open your brain to the world’s psychic maelstrom
-    .psyharm - When you take psychic harm
-    .augury - When you use your followers or your workspace for augury, roll+weird.
-
-    Situational
-    .actunderpressure - When you race against the clock, act while in danger or act to avoid danger, roll+Cool.
-    .investigate -  When you closely study a place, or situation, roll + Sharp.
-    .doiknowthings - When you consult your accumulated knowledge about something, roll + sharp.
-    .doistrave - when you are unable (or refuse) to pay/use barter for living, roll + nothing. (.didntgetfood)
-    .livingwell -When you are living well, roll +nothing.
-
-    Social
-    .fasttalk - When you try to convince someone to do what you want with promises, lies or bluster, roll+Hot.
-    .barter - When you're looking to buy something roll + sharp.
-    .gounderknife - When you  want to and are able to have a new implant installed, roll + barter spent,
-    .playhardball - When you get in someone’s face threatening violence and you intend to carry through, roll+hard.
-    .workajob - When you negotiate the terms of a job, roll + hot.
-    .guesstheirname
-
-    Combat
-    .harm  - When you suffer harm, roll+harm suffered (after armor, if you’re wearing any). 
-    .readasitch - When you read a charged situation, roll+cool.
-    .firstaid - When you treat someone’s wounds using appropriate medical equipment, roll +sharp,
-    .seizebyforce -  When you try to seize something by force, or to secure your hold on something, roll+hard.
-    .surpriseattack - When you attack someone unprepared, unsuspecting, or helpless, roll+hard.
-    .coverfire - When you want to lay down lots fire or provide cover fire roll+cool 
-    .shootsomeone - When you want to shoot someone roll + hard:
-    .hitsomeone - When you want to hit someone roll + hard:
-    .setanambush - When you want to set an ambush for someone, Describe your ambush, and assign allies as fiction dictates. roll + sharp.
+    +Cool:
+        .actunderpressure - When you race against the clock, act while in danger or act to avoid danger.
+        .readasitch - When you read a charged situation.
+        .coverfire - When you want to lay down lots fire or provide cover fire.
+    +Hard:
+        .playhardball - When you get in someone’s face threatening violence and you intend to carry through.
+        .shootsomeone - When you want to shoot someone.
+        .hitsomeone - When you want to hit someone.
+        .seizebyforce -  When you try to seize something by force, or to secure your hold on something.
+        .surpriseattack - When you attack someone unprepared, unsuspecting, or helpless.
+    +Hot:
+        .fasttalk - When you try to convince someone to do what you want with promises, lies or bluster.
+        .workajob - When you negotiate the terms of a job.
+    +Sharp:
+        .investigate -  When you closely study a place, or situation.
+        .doiknowthings - When you consult your accumulated knowledge about something.
+        .barter - When you're looking to buy something.
+        .setanambush - When you want to set an ambush for someone, Describe your ambush, and assign allies as fiction dictates.
+        .firstaid - When you treat someone’s wounds using appropriate medical equipment.
+    +Weird:
+        .openyourbrain - When you open your brain to the world’s psychic maelstrom
+        .psyharm - When you take psychic harm
+        .augury - When you use your followers or your workspace for augury
+        .guesstheirname - When you try to guess or change somebodies name
+    +Other:
+        .doistrave - when you are unable (or refuse) to pay/use barter for living, + nothing (.didntgetfood)
+        .livingwell -When you are living well,+nothing.
+        .gounderknife - When you  want to and are able to have a new implant installed, roll + barter spent.
+        .harm - When you suffer harm, roll+harm suffered (after armor, if you’re wearing any). 
     ```"""
     return msg
 ################
@@ -1335,7 +1334,7 @@ def livingwell(messageString):
         • Nothing noticable, but something cool might happen from psychic malestorm. 
         ```"""
     else:
-        msg += "\nMight have well have just paid 1 barter, you don't notice any difference, with a roll of " +str(total)+"```"
+        msg += "\nMay as well have just paid 1 barter, you don't notice any difference, with a roll of " +str(total)+"```"
     msg = msg.replace("\t","")
     msg = msg.replace("\t","")
     msg = msg.replace("        ","")
