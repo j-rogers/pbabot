@@ -840,8 +840,8 @@ async def on_message(message):
 	
 	elif messageString ==".fuckmendle":
 		await client.send_file(message.channel, "mendle.png")
-	elif messageString ==".factorymap":
-		await client.send_file(message.channel, "factorymap.png")
+	elif messageString ==".fridge":
+		await client.send_file(message.channel, "FRIDGE.jpg")
 
 	elif  messageString != ".map" and messageString != ".fuckmendle" and messageString != ".factorymap":
 		await client.send_message(message.channel, msg.format(message))
