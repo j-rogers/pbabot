@@ -7,6 +7,8 @@ def handle(message):
 	'''
 	Listing
 	'''
+	print (messageString)
+
 
 	# Basic moves
 	if messageString == ".moves":
@@ -373,11 +375,18 @@ In the ensuing action, you may spend 1 hold at any time to ask the MC a question
 When you have new cyberware installed in accordance with a corporate contract, ignore all of that bad stuff. You’re +owned. Your cyberware works exactly the way they intend it.```"""
 		
 	# Harm
-	elif messageString == ".fuckmeup":
+	elif ".fuckmeup" in messageString: 
 		# Get the harm roll
+		harmMod = 0
+		harmParam= messageString.split() #puts message into a string array seperated by " "
+	
+		if len(harmParam)>1: #If more values other than .remember
+			harmMod = int(harmParam[1]) #converts stringArray  (['.remember' 'num']) to int 
+
 		dice1 = random.randint(1, 6)
 		dice2 = random.randint(1, 6)
 		roll = dice1 + dice2
+		roll= roll+harmMod 
 		response = ""
 
 		# Message based on harm roll

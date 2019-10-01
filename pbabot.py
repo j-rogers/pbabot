@@ -215,7 +215,7 @@ def roll(message):
 def remember(message):
 	#Generates random number to get remember message from  events that have happened.
 	min = 1
-	max = 244
+	max = 260
 	member = random.randint(min,max)
 	notRandom = message.split() #puts message into a string array seperated by " "
 	
@@ -488,6 +488,23 @@ def remember(message):
 		243:"```That time everyone just played Hot potato with ghouls.```",
 		244: "```That time we decided to have enough of Apoc World, and instead of ending with retiring characters, the MC blew everyone up with a nuke Fluffy picked up in a final game of Hot Potato.```",
 		#AYYY SPRAWL TIME!
+		245: "```That time The Techsorcist got Angle to pee on an air con.```",
+		246: "```That time endtheworld420666 shat himself when the techsorcist tazed him. Multiple times, multiple shits.```",
+		247: "```That time Angle tried to blend in to the the cult, and stabebd their neck and took 2 harm, then proceded to stab themself again.```",
+		248: "```That time the Techsorcist took everyones body after tazing them```",
+		249: "```Gets out the truck  'oi cricky' - Angle```",
+		250: "```That time The data raven fried a sysops brain. Twice without hesitation```",
+		251: "```That time Angle and Damon Stone tried to pass of a ambulance responce unit```",
+		252: "```When Damon stone lost his arm from a drugged up cult,  then used his other arm to fire the gun that was being held in the arm that fell off```",
+		253: "```That time Angle put Damon Stones arm on ice so he could use it again in future. Thanks Angle```",
+		254: "```WOW THATS A SMALL COMPUTER! Mine takes an entire room```",
+		255: "```That time Angle chatted to cops while The Data Raven hacked a building and the techsorcist crawled in vents taking terrorist out```",
+		256: "```That time nothing really happened while staking out some corp factory...```",
+		257: "```That time Angle nearly became a stalker, just like Daiki```",
+		258: "```Hello, welcome to the Wii Fit helpline```",
+		259: "```That time Angle started taking night classes to become an actual doctor.```",
+		260: "```That time The data raven hacked it the old fashioned way```",
+
 
 	}
 
@@ -509,7 +526,8 @@ def rememberlist(message):
 	135-178: The last of Apoc world campaign 1, lots of weird stuff and overtrowing.
 	179-206: Back to the Sprawl, oh how we missed the Sprawls writing. A one shot spanned over a couple of sessions.
 	207-219: Apoc world, Tat and Cowboy.
-	220-244 Jayden comes back and Tat dies.
+	220-244: Jayden comes back and Tat dies.
+	245: The sprawl and pissing on machines... 
 	```"""
 	msg = msg.replace("\t","")
 	return msg
