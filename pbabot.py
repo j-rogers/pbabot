@@ -501,7 +501,8 @@ def remember(message):
 		255: "```That time Angle chatted to cops while The Data Raven hacked a building and the techsorcist crawled in vents taking terrorist out```",
 		256: "```That time nothing really happened while staking out some corp factory...```",
 		257: "```That time Angle nearly became a stalker, just like Daiki```",
-		258: "```Hello, welcome to the Wii Fit helpline```",
+		258: """```css
+Welcome to the Wii Fit helpline how can I help you?```""",
 		259: "```That time Angle started taking night classes to become an actual doctor.```",
 		260: "```That time The data raven hacked it the old fashioned way```",
 
@@ -542,6 +543,26 @@ def links(message):
 	msg = msg.replace("\t","")
 	return msg
 
+def answerphone (message):
+	min = 1
+	max = 1
+	member = random.randint(min,max)
+	notRandom = message.split() #puts message into a string array seperated by " "
+	
+	if len(notRandom)>1: #If more values other than .remember
+		number = int(notRandom[1]) #converts stringArray  (['.remember' 'num']) to int 
+		if number >=min and number<=max: #Ensures it will exist within the range of .remember
+			member = number #sets member to the number. 
+	
+	switch = {
+		1:"""```css
+Welcome to the Wii Fit helpline how can I help you?```""",
+	}
+
+	return switch[member]
+
+
+	
 
 
 
@@ -821,6 +842,7 @@ async def on_message(message):
 		'.clocks': showclocks,
 		'.contacts': showcontacts,
 		'.rememberlist':rememberlist,
+		'.answerphone': answerphone,
 		# Functional commands
 		'.roll': roll,
 		'.dice': roll,
@@ -860,6 +882,8 @@ async def on_message(message):
 		await client.send_file(message.channel, "mendle.png")
 	elif messageString ==".fridge":
 		await client.send_file(message.channel, "FRIDGE.jpg")
+	elif messageString ==".clones":
+		await client.send_file(message.channel, "clones.png")
 
 	elif  messageString != ".map" and messageString != ".fuckmendle" and messageString != ".factorymap":
 		await client.send_message(message.channel, msg.format(message))
