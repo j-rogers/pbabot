@@ -568,14 +568,14 @@ async def on_message(message):
 
     # Sends the map
     if messageString == ".map":
-        await client.send_file(message.channel, "map.jpg")
+        await client.send_file(message.channel, "images/map.jpg")
 
     elif messageString == ".fuckmendle":
-        await client.send_file(message.channel, "mendle.png")
+        await client.send_file(message.channel, "images/mendle.png")
     elif messageString == ".fridge":
-        await client.send_file(message.channel, "FRIDGE.jpg")
+        await client.send_file(message.channel, "images/FRIDGE.jpg")
     elif messageString == ".clones":
-        await client.send_file(message.channel, "clones.png")
+        await client.send_file(message.channel, "images/clones.png")
 
     elif messageString != ".map" and messageString != ".fuckmendle" and messageString != ".factorymap":
         await client.send_message(message.channel, msg.format(message))
