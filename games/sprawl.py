@@ -670,7 +670,9 @@ During the mission, spend 1 hold to invoke one of the following effects:
 	6-: the MC will advance the Noise Clock and make a move\n
 If the Story Clock reaches 0000 before the Noise Clock, the Reporter has broken the story before the implicated parties could cover up the evidence, or stop the investigation. The exact implications of this for the game will vary based on the story, but it should have a major impact on the implicated parties and will affect at least one Corporate Clock.\n
 If the Noise Clock reaches 0000 before the Story Clock, the implicated parties have tied up all the loose ends and the story is dead. Now that damage control is complete, they can deal with the Reporter permanently. Advance any relevant Corporate or Threat Clocks.```"""
-		
+
+	elif messageString == ".press":
+		response = """```Press pass: If you reveal your public persona to fast talk your way in,do not roll the dice, you count as rolling a 10+.\nTake [intel] and advance the Legwork Clock.```"""	
 	# Monstering
 	elif messageString == ".monstering":
 		response = """```When you corner someone and hound them with questions to get to the bottom of a story, roll Edge.\n

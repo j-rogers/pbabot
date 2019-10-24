@@ -210,6 +210,10 @@ def rememberlist(message):
     msg = msg.replace("\t", "")
     return msg
 
+def chess(message):
+    msg = "**```THE\t  TECHSORCIST\n\tIS    THE\nCHESS\t\tMASTER!```**"
+    return msg
+
 
 def links(message):
     msg = """
@@ -551,6 +555,7 @@ async def on_message(message):
         # Dev commands
         '.refresh': refresh,
         '.log': log,
+        '.chess':chess,
     }
     check = False
     if msg != "":
