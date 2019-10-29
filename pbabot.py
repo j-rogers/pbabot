@@ -166,7 +166,7 @@ def roll(message):
 def remember(message):
     # Generates random number to get remember message from  events that have happened.
     min = 1
-    max = 260
+    max = 271
     member = random.randint(min, max)
     notRandom = message.split()  # puts message into a string array seperated by " "
 
