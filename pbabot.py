@@ -113,9 +113,12 @@ def f(message):
     ripMsg = message.split()
     if len(ripMsg) > 1: #specific message
         player = rip.find(ripMsg[1])
+        print (player)
         if player:
             for character in list(player):
                 msg += f"{character.get('name')}: {character.get('cause')}\n\n"
+                
+           
     else: #short list
         for player in list(rip):
             msg += f'{player.tag}: '
