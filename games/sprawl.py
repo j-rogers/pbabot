@@ -793,6 +793,28 @@ During the mission, spend 1 hold for one of the following effects:
 		You damage their rig, slowing them down.
 		You overload their system, zapping their brain
 		```"""
+	elif messageString == ".cred":
+		response = """```
+		Spending 1 Cred will get you:
+			>useful information from a contact
+			>basic restricted gear from a fixer (sidearms, hunting weapons, ammo)
+			>replacement parts for a cyberdeck
+			>unreliable gang members for muscle
+			>a chauffeur
+		Spending 2 Cred will get you:
+			>a getaway driver for a mission
+			>a hacker for a matrix run (but at this price he’ll be poking around for pay-data on the side)
+			>professional muscle (a dangerous individual or a competent gang)
+			>a street doctor for gunshot wounds
+			>more complex, restricted gear from a fixer (grenades, assault weapons, legal drones, basic hacking programs)
+		Spending 4 Cred will get you:
+			>a hacker with a sense of professional integrity
+			>discreet medical services for life-threatening wounds
+			>expensive or illegal gear from a fixer (vehicles, security drones, heavy
+			>weapons, cutting edge Russian attack software, basic cheap cyberware)
+			Spending 8 cred will get you:
+			>cutting-edge, military or extortionately expensive gear from a fixer (cyberdecks, military vehicles, most cyberware)
+			```"""
 	elif messageString == ".rep":
 		response = """```
 		Rep: When you appear in the Matrix with a recognisable avatar, 
