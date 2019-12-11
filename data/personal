@@ -28,8 +28,10 @@
             <character name="Fluffy"
                        cause="Fluffy picked up a nuke in a pokeball after using an online map to navigate the Maze. Later playing hot potato with the nuke, Coqboy blew up, and everyone nearby also blew up."/>
             <character name="Angle"
-                       cause="Angle was beaten to death via Sahasrara thugs, ordered by Elizabeth Mills after being sold out by The Data Raven."/>           
-        </josh>
+                       cause="Angle was beaten to death via Sahasrara thugs, ordered by Elizabeth Mills after being sold out by The Data Raven."/>
+            <character name = "Lucifer Morningstar"
+                       cause = "Lucifer stood for punishing the bad people, which lead to a life of chaos and anarchy. Lucifer was always ALMOST DYING as a result of living this lifestyle, after not dying everytime they put themself in danger, Lucifer took their own life. Lucifer took their own life 29 times, before finally dying."/>
+       </josh>
         <joshf>
             <character name="H4KKK3R"
                        cause="H4KKK3R was in the car with Seraph, trying to guide Laramy to where Syntax Terror was so we could take our revenge. While Jacked into police cameras, Seraph shot them in the head."/>
@@ -630,6 +632,15 @@
         <memory index = "268">That time Aei Dj'arcy published some super vauge story about cyberware and clones.</memory>
         <memory index = "269">Angle pretended to be Damon Stone and then stabbed Lukas Litzinger "The Info Crow" </memory>
         <memory index ="270">The time Angle and the Data Raven went to jail because of drugs and being a disturbance, like stabbing someone nad crashing a truck into a police car.</memory>
-        <memory index = "271"> That time the Data Raven hacked a Mc Donalds terminal and got a bunch of things for free burgers</memory>
+        <memory index = "271">That time the Data Raven hacked a Mc Donalds terminal and got a bunch of things for free burgers</memory>
+        <memory index = "272">I no longer need to look up the members of the backstreet boys, I have them written down.</memory>
+        <memory index = "273">Losing an arm once, doesn't build up an immunity to losing an arm again. Damon Stone learnt this the hard way.</memory>
+        <memory index = "274">That time Lucifer sold out the Backstreet boys to the Hilltop Hoods. No one really came out a winner that night except Lucifer. Hilltop Hoods lost their data, BackStreet boys were destroyed, Nobody was paid. Lucifer got their jacket back though. </memory>
+        <memory index = "275">That time Lucifer brang a bum back to their club then lost a surgeon after the bumbs head blew up from an neural bomb.</memory>
+        <memory index = "276">That time The Data Raven and Techsoricst were contimplating killing or selling some Hilltop Hills Hostage, and Aei just kept reassuring the hostage they would be fine</memory>
+        <memory index = "277">That time we all had mini vans...</memory>
+        <memory index = "278">That time Lucifer and the Techsorcist started a robot uprising at Oogal.</memory>
+        <memory index = "279">Using goose goose stop to search for things.</memory>
+        <memory index = "280">That time Lucifer played around with a random terminal till it blew up on him.</memory>
     </remember>
 </personal>
