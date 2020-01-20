@@ -55,282 +55,6 @@ class Contact:
         self.description = description
 
 
-# requires python 3.6.8
-
-# Updates and refreshes data file
-
-
-
-# Functions
-
-
-
-
-
-
-
-
-
-
-
-def f(message):
-    msg = "```"
-
-    tree = et.parse('data/personal')
-    rip = tree.getroot().find('rip')
-
-    ripMsg = message.split()
-    if len(ripMsg) > 1: #specific message
-        player = rip.find(ripMsg[1])
-        print (player)
-        if player:
-            for character in list(player):
-                msg += f"{character.get('name')}: {character.get('cause')}\n\n"
-                
-           
-    else: #short list
-        for player in list(rip):
-            msg += f'{player.tag}: '
-            for character in list(player):
-                msg += f"{character.get('name')}, "
-            msg += '\n'
-
-    msg += "```"
-    msg = msg.strip()
-    return msg
-
-
-
-
-def remember(message):
-    # Generates random number to get remember message from  events that have happened.
-    min = 1
-    max = 280
-    member = random.randint(min, max)
-    notRandom = message.split()  # puts message into a string array seperated by " "
-
-    if len(notRandom) > 1:  # If more values other than .remember
-        number = int(notRandom[1])  # converts stringArray  (['.remember' 'num']) to int
-        if number >= min and number <= max:  # Ensures it will exist within the range of .remember
-            member = number  # sets member to the number.
-
-    tree = et.parse('data/personal')
-    remember = tree.find('remember')
-
-    memories = {}
-    for memory in list(remember):
-        memories[memory.get('index')] = memory.text
-
-    msg = f"```{memories[str(member)]}```"
-
-    return msg
-
-
-
-
-def chess(message):
-    msg = "**```THE\t  TECHSORCIST\n\tIS    THE\nCHESS\t\tMASTER!```**"
-    return msg
-
-
-
-
-
-def answerphone(message):
-    min = 1
-    max = 1
-    member = random.randint(min, max)
-    notRandom = message.split()  # puts message into a string array seperated by " "
-
-    if len(notRandom) > 1:  # If more values other than .remember
-        number = int(notRandom[1])  # converts stringArray  (['.remember' 'num']) to int
-        if number >= min and number <= max:  # Ensures it will exist within the range of .remember
-            member = number  # sets member to the number.
-
-    switch = {
-        1: """```css
-Welcome to the Wii Fit helpline how can I help you?```""",
-    }
-
-    return switch[member]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def addcontact(message):
-    # Get the contact name and description
-    tokens = message.split()
-    description = ""
-    for i in range(2, len(tokens)):
-        description += tokens[i] + " "
-    contact = (tokens[1], description)
-
-    # Checks if clock has already been added
-    for c in contacts:
-        # Case insensitive
-        name = c[0].lower()
-        inName = tokens[1].lower()
-
-        if name == inName:
-            return "```Contact already exists.```"
-
-    # Append to contacts list
-    contacts.append(contact)
-
-    # Update and refresh file
-    updateAndRefreshData("contacts", contacts)
-    print("Contact added to file: {" + tokens[1] + ", " + description + "}")
-
-    # Form message and send
-    return "```Contact added: " + tokens[1] + ".```"
-
-
-def deletecontact(message):
-    # Get the clock name
-    tokens = message.split()
-    name = tokens[1]
-
-    # Find the clock to be deleted
-    for c in contacts:
-        # Case insensitive
-        cName = c[0].lower()
-        inName = name.lower()
-
-        if cName == inName:
-            contacts.remove(c)
-
-    # Update and refresh file
-    updateAndRefreshData("contacts", contacts)
-    print("Contact deleted from file: " + tokens[1])
-
-    # Form message and send
-    return "```Deleted contact " + name + ".```"
-
-
-def refresh(message):
-    msg = "```"
-
-    try:
-        data = pickle.loads(open(filename, "rb").read())
-        clocks = data["clocks"]
-        contacts = data["contacts"]
-        msg += "Data has been refreshed."
-        print("Data extracted")
-    except EOFError:
-        print("No data in file.")
-    except FileNotFoundError:
-        print("No data file found.")
-
-    msg += "```"
-
-    return msg
-
-
-def log(message):
-    # Get log message from message
-    tokens = message.split(".log ")
-    log = tokens[1]
-
-    # Write to the file
-    file = open("log.txt", "a")
-    file.write(log + "\n")
-    file.close()
-    print("Log saved: \"" + log + "\"")
-
-    # Form and send message
-    return "```Log saved.```"
-
-
-
-# Discord client functions
-@client.event
-async def on_message(message):
-    msg = ""
-
-    # Prevents bot replying to itself
-    if message.author == client.user:
-        return
-
-    # Prevents bot responding to regular messages
-    if not message.content.startswith("."):
-        return
-
-    # determine which game is being played
-    if game == 'sprawl':
-        msg = sprawl.handle(message)
-    elif game == 'apoc':
-        msg = apoc.handle(message)
-
-    messageString = message.content
-    messageString = messageString.lower()
-
-    switch = {
-        # Listing commands
-        '.help': help,
-        '.links': links,
-        '.clocks': showclocks,
-        '.contacts': showcontacts,
-        '.rememberlist': rememberlist,
-        '.answerphone': answerphone,
-        # Functional commands
-        '.roll': roll,
-        '.dice': roll,
-        '.addclock': addclock,
-        '.deleteclock': deleteclock,
-        '.increaseclock': increaseclock,
-        '.decreaseclock': decreaseclock,
-        '.addcontact': addcontact,
-        '.deletecontact': deletecontact,
-        # Miscellaneous commands
-        '.rip': f,
-        '.f': f,
-        '.remember': remember,
-        # Dev commands
-        '.refresh': refresh,
-        '.log': log,
-        '.chess':chess,
-    }
-    check = False
-    if msg != "":
-        check = True
-    # print (msg)
-    if messageString in switch:
-        msg = switch[messageString](messageString)
-        check = True
-    elif check == False:
-        for case in switch:
-            if case in messageString:
-                msg = switch[case](messageString)
-
-    if not msg: msg = invalid(messageString)
-
-    # Sends the map
-    if messageString == ".map":
-        await client.send_file(message.channel, "images/map.jpg")
-
-    elif messageString == ".fuckmendle":
-        await client.send_file(message.channel, "images/mendle.png")
-    elif messageString == ".fridge":
-        await client.send_file(message.channel, "images/FRIDGE.jpg")
-    elif messageString == ".clones":
-        await client.send_file(message.channel, "images/clones.png")
-
-    elif messageString != ".map" and messageString != ".fuckmendle" and messageString != ".factorymap":
-        await client.send_message(message.channel, msg.format(message))
-    else:
-        pass
-
-
 class PBABot(discord.Client):
     def __init__(self):
         super().__init__()
@@ -350,9 +74,6 @@ class PBABot(discord.Client):
             print("No data file found.")
 
     async def on_message(self, message):
-        response = ''
-        images = None
-
         # Prevents bot replying to itself
         if message.author == self.user:
             return
@@ -362,45 +83,55 @@ class PBABot(discord.Client):
             return
 
         # Parse message
-        content = message.content
-        content = message.lower().split(' ', 1)
+        content = message.content.lower().split(' ', 1)
         command = content[0]
-        args = content[1]
+        args = content[1] if len(content) > 1 else ''
 
-        switch = {
+        text_switch = {
             # Listing commands
-            '.help': self._help,
-            '.links': self._links,
-            '.clocks': self._clocks,
-            '.contacts': self._contacts,
-            '.rememberlist': self._rememberlist,
+            '.help': self.help,
+            '.links': self.links,
+            '.clocks': self.clocks,
+            '.contacts': self.contacts,
+            '.rememberlist': self.rememberlist,
             # Functional commands
-            '.roll': self._roll,
-            '.dice': self._roll,
-            '.addclock': self._addclock,
-            '.deleteclock': self._deleteclock,
-            '.increaseclock': self._increaseclock,
-            '.decreaseclock': self._decreaseclock,
-            '.addcontact': addcontact,
-            '.deletecontact': deletecontact,
+            '.roll': self.roll,
+            '.dice': self.roll,
+            '.addclock': self.addclock,
+            '.deleteclock': self.deleteclock,
+            '.increaseclock': self.increaseclock,
+            '.decreaseclock': self.decreaseclock,
+            '.addcontact': self.addcontact,
+            '.deletecontact': self.deletecontact,
             # Miscellaneous commands
-            '.rip': f,
-            '.f': f,
-            '.remember': remember,
-            '.chess': chess,
-            '.answerphone': answerphone,
+            '.rip': self.rip,
+            '.f': self.rip,
+            '.remember': self.remember,
+            '.chess': self.chess,
+            '.answerphone': self.answerphone,
             # Dev commands
-            '.refresh': refresh,
-            '.log': log,
+            '.refresh': self.refresh,
+            '.log': self.log,
 
         }
 
-        response = switch.get(command, None)(args)
+        response = text_switch.get(command, None)(args)
 
-        if not response:
-            response = '```Invalid command. Type ".help" for a list of commands.```'
+        image_switch = {
+            '.map': discord.File('../images/map.jpg', 'map.jpg'),
+            '.fuckmendle': discord.File('../images/mendle.png', 'mendle.png'),
+            '.fridge': discord.File('../images/FRIDGE.jpg', 'fridge.jpg'),
+            '.clones': discord.File('../images/clones.png', 'clones.png')
+        }
 
-        await message.channel.send(response, files=images)
+        image = image_switch.get(command, None)
+
+        if not response and not image:
+            response = 'Invalid command. Type ".help" for a list of commands.'
+        elif response:
+            response = f'```{response}```'
+
+        await message.channel.send(response, files=image)
 
     async def on_ready(self):
         print("Logged in as")
@@ -408,8 +139,8 @@ class PBABot(discord.Client):
         print(self.user.id)
         print("------")
 
-    def _help(self, message):
-        return """```Use \".command\" when using this bot.\n
+    def help(self, message):
+        return """Use \".command\" when using this bot.\n
     .help: Displays this help message.
     .roll: Rolls 2d6 dice.
     .moves: Displays a list of basic moves.
@@ -436,9 +167,9 @@ class PBABot(discord.Client):
     .refresh: Reloads the clock and contact data.
     .log <message>: Saves a message to the log file.
     .links: Displays a link to all the PBA games. 
-    ```"""
+    """
 
-    def _links(self, message):
+    def links(self, message):
         msg = """
         **Apocalpyse World:** https://www.dropbox.com/sh/fmsh9kyaiplqhom/AACw1iLMQ7f53Q40FUnMjlz4a?dl=0
         **The Sprawl:** https://www.dropbox.com/sh/9fr35ivzbvfh06p/AACarsYBpNXxBpEUk_-fz_PXa?dl=0
@@ -448,8 +179,9 @@ class PBABot(discord.Client):
         msg = msg.replace("\t", "")
         return msg
 
-    def _clocks(self, message):
-        msg = '```'
+    def clocks(self, message):
+        if not self.clocks:
+            return 'No clocks have been added.'
 
         switch = {
             '1200': '□□□□ □□□□ □□□□ □ □ □',
@@ -461,32 +193,25 @@ class PBABot(discord.Client):
             '0000': '■■■■ ■■■■ ■■■■ ■ ■ ■'
         }
 
+        clocks = ''
         for clock in self.clocks:
-            msg += f'{clock.name}: {switch[clock.value]}\n'
+            clocks += f'{clock.name}: {switch[clock.value]}\n'
 
-        if not self.clocks:
-            msg += 'No clocks have been added.'
+        return clocks
 
-        msg += '```'
+    def contacts(self, message):
+        if not self.contacts:
+            return 'No contacts have been added.'
 
-        return msg
-
-    def _contacts(self, message):
-        msg = "```"
+        contacts = ''
         for contact in self.contacts:
-            name = contact[0]
-            desc = contact[1]
-            msg += name + ": " + desc + "\n"
+            contacts += f'{contact.name}: {contact.description}\n'
 
-        if msg == "```":
-            msg += "No contacts have been added."
 
-        msg += "```"
+        return contacts
 
-        return msg
-
-    def _rememberlist(self, message):
-        msg = """```
+    def rememberlist(self, message):
+        rememberindexes = """
         1-9: Christoff focused
         10-13: Laramy focused
         14-19: Seraph focused
@@ -504,109 +229,232 @@ class PBABot(discord.Client):
         207-219: Apoc world, Tat and Cowboy.
         220-244: Jayden comes back and Tat dies.
         245: The sprawl and pissing on machines... 
-        ```"""
-        msg = msg.replace("\t", "")
-        return msg
+        """
+        rememberindexes = rememberindexes.replace("\t", "")
+        return rememberindexes
 
-    def _roll(self, message):
+    def roll(self, message):
         # Generate the roll
         dice1 = random.randint(1, 6)
         dice2 = random.randint(1, 6)
         roll = dice1 + dice2
-        msg = ""
+        result = ''
 
         # Unique response based on roll
         if roll == 1:
-            msg = "```Throwbacks to when Martin's bot could roll a 1 from 2d6. Good times, not for you though, you rolled a 1.```"
+            result = 'Throwbacks to when Martin\'s bot could roll a 1 from 2d6. Good times, not for you though, you rolled a 1.'
         elif roll == 2:
-            msg = "```I hope you have a lot of health cause this is gonna hurt. You rolled a 2.```"
+            result = 'I hope you have a lot of health cause this is gonna hurt. You rolled a 2.'
         elif roll == 3:
-            msg = "```The Thing is going to have fun with this, you rolled a 3.```"
+            result = 'The Thing is going to have fun with this, you rolled a 3.'
         elif roll == 4:
-            msg = "```You rolled the length of your penis, 4 inches.```"
+            result = 'You rolled the length of your penis, 4 inches.'
         elif roll == 5:
-            msg = "```Maybe you should have taken those drugs, you rolled a 5.```"
+            result = 'Maybe you should have taken those drugs, you rolled a 5.'
         elif roll == 6:
-            msg = "```The RNG gods are displeased with you. You rolled a 6.```"
+            result = 'The RNG gods are displeased with you. You rolled a 6.'
         elif roll == 7:
-            msg = "```You know what, it could be worse. You rolled a 7.```"
+            result = 'You know what, it could be worse. You rolled a 7.'
         elif roll == 8:
-            msg = "```Someones going to be sleeping with the fishes, is it going to be you or him with a roll of 8.```"
+            result = 'Someones going to be sleeping with the fishes, is it going to be you or him with a roll of 8.'
         elif roll == 9:
-            msg = "```Almost hit that sweet spot. You rolled a 9.```"
+            result = 'Almost hit that sweet spot. You rolled a 9.'
         elif roll == 10:
-            msg = "```Now we're talking, you rolled a 10.```"
+            result = 'Now we\'re talking, you rolled a 10.'
         elif roll == 11:
-            msg = "```You could fuck up someones day with this. You rolled an 11.```"
+            result = 'You could fuck up someones day with this. You rolled an 11.'
         elif roll == 12:
-            msg = "```Okay, now THIS is epic. You rolled a 12.```"
+            result = 'Okay, now THIS is epic. You rolled a 12.'
 
-        return msg
+        return result
 
-    def _addclock(self, name):
+    def addclock(self, name):
         # Checks if clock has already been added
         clock = self._getclock(name)
 
         if clock:
-            return f'```Clock {name} already exists.```'
-        else:
-            # Append to clocks list
-            self.clocks.append(Clock(name))
+            return f'Clock {name} already exists.'
+
+        # Append to clocks list
+        self.clocks.append(Clock(name))
 
         # Update and refresh file
         self._savedata()
         print(f'Clock added to file: {name} at 1200')
 
         # Form message and send
-        return f'```Clock added to file: {name} at 1200```'
+        return f'Clock added to file: {name} at 1200'
 
-    def _deleteclock(self, name):
+    def deleteclock(self, name):
         # Find the clock to be deleted
         clock = self._getclock(name)
 
         if not clock:
-            return f'```Clock {name} not found.'
-        else:
-            self.clocks.remove(clock)
+            return f'Clock {name} not found.'
+
+        self.clocks.remove(clock)
 
         # Update and refresh file
         self._savedata()
-        print('Clock deleted from file: {name}')
+        print(f'Clock deleted from file: {name}')
 
         # Form message and send
-        return f'```Deleted clock {name}.```'
+        return f'Deleted clock {name}.'
 
-    def _increaseclock(self, name):
+    def increaseclock(self, name):
         # Find the clock to be increased
         clock = self._getclock(name)
 
         # Check if the clock was found
         if not clock:
-            return f'```Clock "{name}" not found.```'
-        else:
-            clock.increase()
+            return f'Clock "{name}" not found.'
+
+        clock.increase()
 
         # Update and refresh file
         self._savedata()
         print(f'Clock update reflected in file (INCREASE): ({clock.name} {clock.value})')
 
         # Form message and send
-        return f'```{clock.name} clock increased to {clock.value}.```'
+        return f'{clock.name} clock increased to {clock.value}.'
 
-    def _decreaseclock(self, name):
+    def decreaseclock(self, name):
         clock = self._getclock(name)
 
-
         if not clock:
-            return f'```Clock "{name}" not found.'
+            return f'Clock "{name}" not found.'
 
         clock.decrease()
 
         self._savedata()
-        return f'```{clock.name} clock decreased to {clock.value}```'
+        return f'{clock.name} clock decreased to {clock.value}'
 
+    def addcontact(self, args):
+        # Get the contact name and description
+        name = None
+        description = None
+        tokens = args.split('"', 1)
+        if len(tokens) > 1:
+            name = tokens[1].strip('"')
+            description = tokens[2]
+        else:
+            tokens = args.split(' ', 1)
+            name = tokens[0]
+            description = tokens[1]
 
+        if self._getcontact(name):
+            return f'Contact "{name}" already added as a contact.'
 
+        self.contacts.append(Contact(name, description))
+        self._savedata()
+
+        return f'Contact added: {name}.'
+
+    def deletecontact(self, name):
+        contact = self._getcontact(name)
+
+        if not contact:
+            return f'Contact {name} not found.'
+
+        self.contacts.remove(contact)
+
+        self._savedata()
+
+        return f'Deleted contact {name}'
+
+    def rip(self, player):
+        tree = et.parse('../data/personal')
+        rip = tree.getroot().find('rip')
+
+        death = ''
+        if player:  # specific message
+            player = rip.find(player)
+            if player:
+                for character in list(player):
+                    death = f"{character.get('name')}: {character.get('cause')}\n\n"
+        else:  # short list
+            for player in list(rip):
+                death += f'{player.tag}: '
+                for character in list(player):
+                    death += f"{character.get('name')}, "
+                death += '\n'
+
+        death = death.strip()
+        return death
+
+    def remember(self, index):
+        # Generates random number to get remember message from  events that have happened.
+        min = 1
+        max = 280
+        member = random.randint(min, max)
+
+        if index:  # If more values other than .remember
+            number = int(index)  # converts stringArray  (['.remember' 'num']) to int
+            if number >= min and number <= max:  # Ensures it will exist within the range of .remember
+                member = number  # sets member to the number.
+
+        tree = et.parse('data/personal')
+        remember = tree.find('remember')
+
+        memories = {}
+        for memory in list(remember):
+            memories[memory.get('index')] = memory.text
+
+        msg = f"{memories[str(member)]}"
+
+        return msg
+
+    def chess(self, message):
+        msg = "**THE\t  TECHSORCIST\n\tIS    THE\nCHESS\t\tMASTER!**"
+        return msg
+
+    def answerphone(self, index):
+        min = 1
+        max = 1
+        member = random.randint(min, max)
+
+        if index:  # If more values other than .remember
+            number = int(index)  # converts stringArray  (['.remember' 'num']) to int
+            if number >= min and number <= max:  # Ensures it will exist within the range of .remember
+                member = number  # sets member to the number.
+
+        switch = {
+            1: 'css\nWelcome to the Wii Fit helpline how can I help you?',
+        }
+
+        return switch[member]
+
+    def refresh(self, message):
+        msg = ''
+        try:
+            data = pickle.loads(open(DATA_FILE, "rb").read())
+            self.clocks = data["clocks"]
+            self.contacts = data["contacts"]
+            msg = 'Data has been refreshed.'
+            print("Data extracted")
+        except EOFError:
+            print("No data in file.")
+        except FileNotFoundError:
+            print("No data file found.")
+
+        return msg
+
+    def log(self, message):
+        # Write to the file
+        file = open("log.txt", "a")
+        file.write(message + "\n")
+        file.close()
+        print(f'Log saved: {message}')
+
+        # Form and send message
+        return 'Log saved.'
+
+    def _getcontact(self, name):
+        for contact in self.contacts:
+            if name.lower() == contact.name.lower():
+                return contact
+
+        return None
 
     def _getclock(self, name):
         for clock in self.clocks:
@@ -625,7 +473,6 @@ class PBABot(discord.Client):
         #clocks = data["clocks"]
         #contacts = data["contacts"]
         #print("File reloaded")
-
 
 
 def main():
