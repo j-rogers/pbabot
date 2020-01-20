@@ -1,0 +1,9 @@
+<moves>
+    <basic>
+        <move name="Act Under Pressure">
+            When you race against the clock, act while in danger, or act to avoid danger, roll Cool.
+                10+: you do it, no problem
+                7-9: you stumble, hesitate, or flinch: the MC will offer you a worse outcome, hard bargain, or ugly choice
+        </move>
+    </basic>
+</moves>
