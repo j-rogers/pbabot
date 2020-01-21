@@ -3,7 +3,7 @@ import random
 import pickle
 import argparse
 import xml.etree.ElementTree as et
-from games.sprawl import Sprawl
+from pbabot.games import sprawl
 from collections import namedtuple
 
 # API Token
@@ -62,7 +62,7 @@ class PBABot(discord.Client):
         super().__init__()
 
         game_switch = {
-            'sprawl': Sprawl(),
+            'sprawl': sprawl.Sprawl(),
         }
         self.game = game_switch.get(game, None)
 
@@ -76,7 +76,7 @@ class PBABot(discord.Client):
         self.personaldata = personaldata
         self.datafile = datafile
         try:
-            with open(self.datafile, 'rb') as file:
+            with open(self.datafile, 'r') as file:
                 data = pickle.loads(file.read())
             self.clocks = data["clocks"]
             self.contacts = data["contacts"]
@@ -86,7 +86,7 @@ class PBABot(discord.Client):
         except FileNotFoundError:
             print("No data file found.")
 
-    async def on_message(self, message):
+    def on_message(self, message):
         # Prevents bot replying to itself
         if message.author == self.user:
             return
@@ -148,7 +148,9 @@ class PBABot(discord.Client):
         if response and not image:
             response = f'```{response}```'
 
-        await message.channel.send(response, files=image)
+        return response
+
+        #await message.channel.send(response, files=image)
 
     async def on_ready(self):
         print("Logged in as")
@@ -449,7 +451,7 @@ Game-specific Commands:
     def refresh(self, message):
         msg = ''
         try:
-            data = pickle.loads(open(self.datafile, "rb").read())
+            data = pickle.loads(open(self.datafile, 'r').read())
             self.clocks = data["clocks"]
             self.contacts = data["contacts"]
             msg = 'Data has been refreshed.'
@@ -487,7 +489,7 @@ Game-specific Commands:
 
     def _savedata(self):
         data = {'clocks': self.clocks, 'contacts': self.contacts}
-        with open(self.datafile, 'wb') as file:
+        with open(self.datafile, 'w') as file:
             file.write(pickle.dumps(data))
 
         #data = pickle.loads(open(filename, "rb").read())
@@ -504,7 +506,11 @@ def main():
     game = vars(args)['game']
 
     client = PBABot(game)
-    client.run(TOKEN)
+    content = input()
+    Message = namedtuple('Message', 'content author')
+    m = Message(content, 'jeff')
+    print(client.on_message(m))
+    #client.run(TOKEN)
 
 
 if __name__ == '__main__':
