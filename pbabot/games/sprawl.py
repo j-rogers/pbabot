@@ -1,5 +1,27 @@
 import random
 
+from . import Game
+
+
+class Sprawl(Game):
+	def __init__(self):
+		super().__init__()
+		self.commands = {
+			'.matrix': 'Displays a list of matrix-specific moves.',
+			'.custom': 'Displays a list of custom moves.',
+			'.weapons': 'Displays a list of weapons and their profiles.',
+			'.drugs': 'Displays a list of drugs.'
+		}
+
+	def handle(self, message):
+		pass
+
+	def moves(self, message):
+		pass
+
+	def playbooks(self, message):
+		pass
+
 def handle(message):
 	messageString = message.content
 	response = ''

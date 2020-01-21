@@ -10,6 +10,7 @@ from collections import namedtuple
 TOKEN = open('token.txt', 'r').read()
 DATA_FILE = 'data/data.pickle'
 PERSONAL_DATA = 'data/personal'
+IMAGES = 'images'
 
 
 class Clock:
@@ -57,8 +58,16 @@ class Contact:
 
 
 class PBABot(discord.Client):
-    def __init__(self, datafile=DATA_FILE, personaldata = PERSONAL_DATA):
+    def __init__(self, game, datafile=DATA_FILE, personaldata = PERSONAL_DATA):
         super().__init__()
+
+        game_switch = {
+            'sprawl': sprawl.Sprawl(),
+        }
+        self.game = game_switch.get(game, None)
+
+        if not self.game:
+            raise Exception
 
         self.clocks = []
         self.contacts = []
@@ -98,6 +107,8 @@ class PBABot(discord.Client):
             '.clocks': self.printclocks,
             '.contacts': self.printcontacts,
             '.rememberlist': self.rememberlist,
+            '.moves': self.game.moves,
+            '.playbooks': self.game.playbooks,
             # Functional commands
             '.roll': self.roll,
             '.dice': self.roll,
@@ -115,17 +126,16 @@ class PBABot(discord.Client):
             '.answerphone': self.answerphone,
             # Dev commands
             '.refresh': self.refresh,
-            '.log': self.log,
-
+            '.log': self.log
         }
 
         response = text_switch.get(command, None)(args)
 
         image_switch = {
-            '.map': discord.File('../images/map.jpg', 'map.jpg'),
-            '.fuckmendle': discord.File('../images/mendle.png', 'mendle.png'),
-            '.fridge': discord.File('../images/FRIDGE.jpg', 'fridge.jpg'),
-            '.clones': discord.File('../images/clones.png', 'clones.png')
+            '.map': discord.File(f'{IMAGES}/map.jpg', 'map.jpg'),
+            '.fuckmendle': discord.File(f'{IMAGES}/mendle.png', 'mendle.png'),
+            '.fridge': discord.File(f'{IMAGES}/FRIDGE.jpg', 'fridge.jpg'),
+            '.clones': discord.File(f'{IMAGES}/clones.png', 'clones.png')
         }
 
         image = image_switch.get(command, None)
@@ -144,15 +154,12 @@ class PBABot(discord.Client):
         print("------")
 
     def help(self, message):
-        return """Use \".command\" when using this bot.\n
+        commands = """Use \".command\" when using this bot.\n
     .help: Displays this help message.
     .roll: Rolls 2d6 dice.
     .moves: Displays a list of basic moves.
     .playbooks: Displays a list of playbooks.
-    .matrix: Displays a list of matrix-specific moves. [SPRAWL ONLY]
-    .custom: Displays a list of custom moves.
     .clocks: Displays the current list of clocks.
-    .weapons: Displays a list of weapons and their profiles.
     .addclock <clock name>: Adds a clock with a value of 1500.
     .increaseclock <clock name>: Increases a clock by one segment.
     .decreaseclock <clock name>: Decreases a clock by one segment.
@@ -160,7 +167,6 @@ class PBABot(discord.Client):
     .contacts: Displays the current list of contacts.
     .addcontact <contact name> <description>: Adds a new contact.
     .deletecontact <contact name>: Deletes a contact.
-    .drugs: Displays a list of drugs
     .map: Displays a current map
     .ripsprawl1: Detailed deaths from the Sprawl1
     .ripsprawl2: Detailed deaths from Sprawl2 
@@ -170,8 +176,15 @@ class PBABot(discord.Client):
     .remember: Displays a message of a memorable moment.
     .refresh: Reloads the clock and contact data.
     .log <message>: Saves a message to the log file.
-    .links: Displays a link to all the PBA games. 
-    """
+    .links: Displays a link to all the PBA games.
+    
+Game-specific Commands:
+"""
+        for command, description in self.game.commands.items():
+            commands += f'\t{command}: {description}\n'
+
+        commands.strip()
+        return commands
 
     def links(self, message):
         msg = """
@@ -487,7 +500,7 @@ def main():
     args = parser.parse_args()
     game = vars(args)['game']
 
-    client = PBABot()
+    client = PBABot(game)
     client.run(TOKEN)
 
 
