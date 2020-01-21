@@ -5,8 +5,9 @@ from . import apoc
 class Game:
     def __init__(self):
         self.commands = {}
+        self.data = None
 
-    def handle(self, message):
+    def handle(self, command, args):
         raise NotImplementedError
 
     def moves(self, message):

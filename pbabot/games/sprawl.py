@@ -1,4 +1,5 @@
 import random
+import xml.etree.ElementTree as et
 
 from . import Game
 
@@ -6,6 +7,7 @@ from . import Game
 class Sprawl(Game):
 	def __init__(self):
 		super().__init__()
+		self.data = 'data/sprawl'
 		self.commands = {
 			'.matrix': 'Displays a list of matrix-specific moves.',
 			'.custom': 'Displays a list of custom moves.',
@@ -13,14 +15,78 @@ class Sprawl(Game):
 			'.drugs': 'Displays a list of drugs.'
 		}
 
-	def handle(self, message):
-		pass
+	def handle(self, command, args):
+		lookup = {
+			# Basic Moves
+			'.actunderpressure': 'Act Under Pressure',
+			'.applyfirstaid': 'Apply First Aid',
+			'.firstaid': 'Apply First Aid',
+			'.aid': 'Apply First Aid',
+			'.assess': 'Assess',
+			'.playhardball': 'Play Hardball',
+			'.hardball': 'Play Hardball',
+			'.amidead': 'Acquire Agricultural Property',
+			'.mixitup': 'Mix It Up',
+			'.mix': 'Mix It Up',
+			'.research': 'Research',
+			'.fasttalk': 'Fast Talk',
+			'.hitthestreet': 'Hit The Street',
+			'.undertheknife': 'Go Under The Knife',
+			'.under': 'Go Under The Knife',
+			'.knife': 'Go Under The Knife',
+			'.fuckmeup': 'Am I Dead',
+			'.getthejob': 'Get The Job',
+			'.job': 'Get The Job',
+			'.gettingpaid': 'Getting Paid',
+			'.getpaid': 'Getting Paid',
+			'.paid': 'Getting Paid'
+		}
+
+		return self._getmove(lookup.get(lookup, None))
 
 	def moves(self, message):
-		pass
+		return """Use the following commands to find detailed information about each move.\n
+.actunderpressure: Act Under Pressure (Cool)
+.applyfirstaid: Apply First Aid (Cool)
+.assess: Assess (Edge)
+.playhardball: Play Hardball (Edge)
+.amidead: Acquire Agricultural Property (Meat)
+.mixitup: Mix it Up (Meat)
+.research: Research (Mind)
+.fasttalk: Fast Talk (Style)
+.hitthestreet: Hit The Street (Style)
+.undertheknife: Go Under the Knife (Cred)
+.fuckmeup: Harm
+.getthejob: Get the Job (Edge)
+.gettingpaid: Getting Paid (Legwork)
+
+For playbook specific moves see '.playbooks'.
+
+For matrix specific moves see '.matrix'."""
 
 	def playbooks(self, message):
-		pass
+		return """Use the following commands to find each playbook-specific move.\n
+.driver
+.fixer
+.hacker
+.hunter
+.infiltrator
+.killer
+.pusher
+.reporter
+.soldier
+.tech"""
+
+	def _getmove(self, move):
+		if not move:
+			return None
+
+		tree = et.parse(self.data)
+
+		for moves in list(tree):
+			for m in list(moves):
+				if m['name'] == move:
+					return m.text
 
 def handle(message):
 	messageString = message.content

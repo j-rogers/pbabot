@@ -141,8 +141,11 @@ class PBABot(discord.Client):
         image = image_switch.get(command, None)
 
         if not response and not image:
-            response = 'Invalid command. Type ".help" for a list of commands.'
-        elif response:
+            response = self.game.handle(command, args)
+            if not response:
+                response = 'Invalid command. Type ".help" for a list of commands.'
+
+        if response and not image:
             response = f'```{response}```'
 
         await message.channel.send(response, files=image)
