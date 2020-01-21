@@ -42,7 +42,7 @@ class Sprawl(Game):
 			'.paid': 'Getting Paid'
 		}
 
-		return self._getmove(lookup.get(lookup, None))
+		return self._getmove(lookup.get(command, None))
 
 	def moves(self, message):
 		return """Use the following commands to find detailed information about each move.\n
@@ -82,10 +82,11 @@ For matrix specific moves see '.matrix'."""
 			return None
 
 		tree = et.parse(self.data)
+		root = tree.getroot()
 
-		for moves in list(tree):
+		for moves in list(root):
 			for m in list(moves):
-				if m['name'] == move:
+				if m.get('name') == move:
 					return m.text
 
 def handle(message):
