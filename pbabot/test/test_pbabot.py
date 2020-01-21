@@ -1,11 +1,11 @@
 import unittest
 
-from pbabot.pbabot import PBABot, Clock, Contact
+from pbabot.main import PBABot, Clock, Contact
 
 
 class PBABotTest(unittest.TestCase):
     def setUp(self):
-        self.bot = PBABot(datafile='pbabot/test/test_data/test_data.pickle', personaldata='pbabot/test/test_data/personal')
+        self.bot = PBABot('sprawl', datafile='pbabot/test/test_data/test_data.pickle', personaldata='pbabot/test/test_data/personal')
 
         self.bot.clocks = [
             Clock('Kind of good guys', '1200'),

@@ -76,7 +76,7 @@ class PBABot(discord.Client):
         self.personaldata = personaldata
         self.datafile = datafile
         try:
-            with open(self.datafile, 'r') as file:
+            with open(self.datafile, 'rb') as file:
                 data = pickle.loads(file.read())
             self.clocks = data["clocks"]
             self.contacts = data["contacts"]
@@ -451,7 +451,7 @@ Game-specific Commands:
     def refresh(self, message):
         msg = ''
         try:
-            data = pickle.loads(open(self.datafile, 'r').read())
+            data = pickle.loads(open(self.datafile, 'rb').read())
             self.clocks = data["clocks"]
             self.contacts = data["contacts"]
             msg = 'Data has been refreshed.'
@@ -489,7 +489,7 @@ Game-specific Commands:
 
     def _savedata(self):
         data = {'clocks': self.clocks, 'contacts': self.contacts}
-        with open(self.datafile, 'w') as file:
+        with open(self.datafile, 'wb') as file:
             file.write(pickle.dumps(data))
 
         #data = pickle.loads(open(filename, "rb").read())
@@ -506,10 +506,12 @@ def main():
     game = vars(args)['game']
 
     client = PBABot(game)
-    content = input()
-    Message = namedtuple('Message', 'content author')
-    m = Message(content, 'jeff')
-    print(client.on_message(m))
+    content = None
+    while content != 'q':
+        content = input()
+        Message = namedtuple('Message', 'content author')
+        m = Message(content, 'jeff')
+        print(client.on_message(m))
     #client.run(TOKEN)
 
 
