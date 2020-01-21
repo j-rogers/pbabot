@@ -26,7 +26,7 @@ class Sprawl(Game):
         }
 
         if command in playbook_switch:
-            return playbook_switch[command]
+            return playbook_switch[command](args)
 
         move = self._getmove(command)
         return move.description if move else None
@@ -64,9 +64,11 @@ For matrix specific moves see '.matrix'."""
 .soldier
 .tech"""
 
-    def _driver(self, message):
-        return """Roll moves:
-	.hotshitdriver: Bonus while hight-tension driving. (Roll)\n
+    def _driver(self, move):
+        if not move:
+            return """Use .driver <move> to see details about a specific move.
+Roll moves:
+	hotshitdriver: Bonus while hight-tension driving. (Roll)\n
 Other moves:
 	Wheels: You start with a car.
 	Second Skin: When jacked into your vehicle with a neural interface you get bonuses to your rolls.
@@ -76,6 +78,9 @@ Other moves:
 	Iceman: Fast talk replacement.
 	Right Tool for the Job: You have two additional cyber-linked vehicles.
 	Sweet Ride: Replacement and bonus to Hit the street while in your vehicle."""
+
+        m = self._getmove(move, playbook='driver')
+        return m.description if m else None
 
     def _fuckmeup(self, damage):
         dice1 = random.randint(1, 6)
@@ -96,9 +101,15 @@ Other moves:
             else:
                 return f'You rolled {roll}. You\'re gucci flip flops fam *dabs* haha yeet :3'
 
-    def _getmove(self, query, name=False):
+    def _getmove(self, query, name=False, playbook=None):
         with open(self.data, 'rb') as file:
             moves = pickle.loads(file.read())
+
+            if playbook:
+                for move in moves['playbooks'][playbook]:
+                    if query in move.commands:
+                        return move
+
             for move in moves['basic']:
                 if name:
                     if query in move.name:
@@ -106,6 +117,7 @@ Other moves:
                 else:
                     if query in move.commands:
                         return move
+
 
 
 def handle(message):
@@ -373,167 +385,6 @@ Hand weapons:
 	» Hand taser (s-harm hand reload)
 	» Monofilament whip (4-harm hand messy area dangerous)
 	» Shuriken or throwing knives (2-harm close numerous)```"""
-
-    ###
-    # Basic moves
-    ###
-
-    # Act Under Pressure
-    elif messageString == ".actunderpressure":
-        response = """```When you race against the clock, act while in danger or act to avoid danger, roll Cool.\n
-	10+: you do it, no problem
-	7-9: you stumble, hesitate, or flinch: the MC will offer you a worse outcome, hard bargain, or ugly choice```"""
-
-    # Apply First Aid
-    elif messageString == ".applyfirstaid" or messageString == ".firstaid" or messageString == "aid":
-
-        response = """```When you treat someone’s wounds using appropriate medical equipment, roll Cool.\n
-	10+: if their Harm Clock is at 2100 or less, reduce their harm by two segments. If their Harm Clock is at more than 2100, reduce their harm by one segment
-	7-9: reduce their harm by one segment. If their Harm Clock is still at more than 2100, they take -1 ongoing until they receive proper medical attention```"""
-
-    # Assess
-    elif messageString == ".assess":
-
-        response = """```When you closely study a person, place or situation, or when you quickly size up an opponent or a charged situation, roll Edge.\n
-	10+: gain 3 hold
-	7-9: gain 1 hold\n
-In the ensuing action, you may spend 1 hold at any time to ask the MC a question from the list below if your examination could have revealed the answer. The MC may ask you questions to clarify your intent. Take +1 forward when acting on the answers.\n
-	Ђ What potential complication do I need to be wary of?
-	Ђ What do I notice despite an effort to conceal it?
-	Ђ How is ______ vulnerable to me?
-	Ђ How can I avoid trouble or hide here?
-	Ђ What is my best way in/way out/way past?
-	Ђ Where can I gain the most advantage?
-	Ђ Who or what is my biggest threat in this situation?
-	Ђ Who or what is in control here?```"""
-
-    # Play Hardball
-    elif messageString == ".playhardball" or messageString == ".hardball":
-
-        response = """```When you get in someone’s face threatening violence and you intend to carry through, roll Edge.\n
-	10+: NPCs do what you want. PCs choose: do what you want, or suffer the established consequences
-	7–9: For NPCs, the MC chooses 1:
-		Ђ they attempt to remove you as a threat, but not before suffering the established consequences
-		Ђ they do it, but they want payback. Add them as a Threat
-		Ђ they do it, but tell someone all about it. Advance the appropriate Mission Clock
-	PCs choose: do what you want, or suffer the established consequences. They gain +1 forward to act against you.```"""
-
-    # Acquire Agricultural Property
-    elif messageString == ".amidead":
-
-        response = """```When you hit 0000 on your Harm Clock, roll Meat.\n
-	10+: you survive until the medics arrive
-	7-9: you survive at a cost. Pick one: +owned, substandard treatment (-1 to a stat), cyberware damage (give one piece of cyberware a negative tag)
-	6-: you bleed out on the street```"""
-
-    # Mix it Up
-    elif messageString == ".mixitup" or messageString == ".mix":
-
-        response = """```When you use violence against an armed force to seize control of an objective, state that objective and roll Meat.\n
-	7+: you achieve your objective
-	7-9: choose 2:
-		Ђ you make too much noise. Advance the relevant Mission Clock
-		Ђ you take harm as established by the fiction
-		Ђ an ally takes harm as establish```"""
-
-    # Research
-    elif messageString == ".research":
-
-        response = """```When you investigate a person, place, object, or service using a library, dossier or database (or combination of them), ask a question from the list below and roll Mind.\n
-	10+: take [intel]; the MC will answer your question and answer a follow-up question from this list as well:
-		Ђ Where would I find ______?
-		Ђ How secure is ______?
-		Ђ Who or what is related to ______?
-		Ђ Who owned or employed ______?
-		Ђ Who or what is ______ most valuable to?
-		Ђ What is the relationship between ______ and ______?
-	7-9: take [intel]; the MC will answer your question
-	6-: the MC will answer your question... and make a move```"""
-
-    # Fast Talk
-    elif messageString == ".fasttalk":
-
-        response = """```When you try to convince someone to do what you want with promises, lies or bluster, roll Style.\n
-	10+: NPCs do what you want. PCs choose whether to do it or not. If they do, they mark experience. If they don’t, they must act under pressure to go against your stated wishes.
-	7-9: NPCs do it, but someone will find out: the MC will advance the appropriate Countdown Clock. For PCs choose one:
-		Ђ If they do what you want, they mark experience
-		Ђ If they don’t do it, they must act under pressure to go against your stated wishes
-	Then its up to them.```"""
-
-    # Hit the Street
-    elif messageString == ".hitthestreet":
-
-        response = """```When you go to a Contact for help, roll Style.\n
-	7+: You get what you want.
-	10+: You get a little something extra (choose either [intel] or [gear]).
-	7-9: choose 2 from the list below:
-		Ђ Your request is going to cost you extra
-		Ђ Your request is going to take some time to put together
-		Ђ Your request is going to attract unwanted attention, complications or consequences
-		Ђ Your contact needs you to help them out with something. If you turn them down take -1 ongoing to this move till you make it right```"""
-
-    # Go Under the Knife
-    elif messageString == ".undertheknife" or messageString == ".under" or messageString == ".knife":
-
-        response = """```When you have new cyberware installed by a street doctor, roll Cred spent (max +2).\n
-	10+: the operation was a complete success
-	7-9: the cyberware doesn’t work as well as advertised, choose one: +unreliable, +substandard, +hardware decay, +damaging.
-	6-: there have been... complications\n
-When you have new cyberware installed in accordance with a corporate contract, ignore all of that bad stuff. You’re +owned. Your cyberware works exactly the way they intend it.```"""
-
-    # Harm
-    elif ".fuckmeup" in messageString:
-        # Get the harm roll
-        harmMod = 0
-        harmParam = messageString.split()  # puts message into a string array seperated by " "
-
-        if len(harmParam) > 1:  # If more values other than .remember
-            harmMod = int(harmParam[1])  # converts stringArray  (['.remember' 'num']) to int
-
-        dice1 = random.randint(1, 6)
-        dice2 = random.randint(1, 6)
-        roll = dice1 + dice2
-        roll = roll + harmMod
-        response = ""
-
-        # Message based on harm roll
-        if roll >= 10:
-            response = """```Oh you fucked up now, you rolled """ + str(roll) + """. Choose 1:
-	Ђ you’re out of action: unconscious, trapped, incoherent or panicked
-	Ђ take the full harm of the attack, before it was reduced by armour; if you already took the full harm of the attack,
-take +1-harm
-	Ђ lose the use of a piece of cyberware until you can get it repaired
-	Ђ lose a body part (arm, leg, eye)```"""
-        elif roll >= 7 and roll <= 9:
-            response = """```You're going to have to suck off the MC on this one, you rolled """ + str(roll) + """. The MC will choose 1:
-	Ђ you lose your footing
-	Ђ you lose your grip on whatever you’re holding
-	Ђ you lose track of someone or something you’re attending to
-	Ђ someone gets the drop on you```"""
-        else:
-            response = "```You rolled " + str(roll) + ". You're gucci flip flops fam *dabs* haha yeet :3```"
-
-    # Get the Job
-    elif messageString == ".getthejob" or messageString == ".job":
-        response = """```When you negotiate the terms of a job, roll Edge.\n
-	10+: choose 3 from the list below
-	7-9: choose 1 from the list below
-		Ђ the employer provides useful information ([intel])
-		Ђ the employer provides useful assets ([gear])
-		Ђ the job pays well
-		Ђ the meeting doesn’t attract attention
-		Ђ the employer is identifiable```"""
-
-    # Getting Paid
-    elif messageString == ".gettingpaid" or messageString == ".getpaid" or messageString == ".paid":
-        response = """```When you go to a meet to get paid by your employer, roll and add the number of unfilled segments on the Legwork Clock.\n
-	10+: choose 3 from the list below
-	7-9: choose 1 from the list below
-		Ђ It’s not a set-up or an ambush
-		Ђ You are paid in full
-		Ђ The employer is identifiable
-		Ђ The meeting doesn’t attract the attention of outside parties
-		Ђ You learned something from the mission; everyone marks experience```"""
 
     #########################################################
     ################## MATRIX MOVE COMMANDS #################

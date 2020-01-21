@@ -99,7 +99,15 @@ basic = [
     )
 ]
 
-playbooks = {}
+playbooks = {
+    'driver': [
+        Move(
+            'Hot Shit Driver',
+            'When you’re driving a cyber-linked vehicle in a high-pressure situation, roll Edge.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nYou may spend 1 hold to do one of the following:\n\t• Avoid one external danger (a rocket, a burst of gunfire, a collision, etc)\n\t• Escape one pursuing vehicle\n\t• Maintain control of the vehicle\n\t• Impress, dismay or frighten someone',
+            'hotshitdriver'
+        )
+    ]
+}
 matrix = []
 
 data = {
