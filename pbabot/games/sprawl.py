@@ -22,7 +22,8 @@ class Sprawl(Game):
 
         # Listing playbook moves
         playbook_switch = {
-            '.driver': self._driver
+            '.driver': self._driver,
+            '.fixer': self._fixer
         }
 
         if command in playbook_switch:
@@ -82,6 +83,27 @@ Other moves:
         m = self._getmove(move, playbook='driver')
         return m.description if m else None
 
+    def _fixer(self, move):
+        if not move:
+            return """Roll moves:
+hustling: Gives hustling jobs. (Roll)
+iknowpeople: Specialized contact decleration. (Roll)\n
+	Other moves:
+Backup: You have a group of associates. 
+Balls in the Air: +1 crew and choose another job.
+Chromed: Choose another piece of cyberware at character creation or in downtime.
+Deal of a Lifetime: Hit the street bonus when selling something.
+Facetime: Fast talk bonus.
+Hard to Find: Hit the street bonus.
+Reputation: Various social bonuses.
+Sales Engineer: Produce equipment bonus.
+Smooth: Helping or hindering replacement.
+Street King Pin: +1 crew, choose an additional job.
+Word on the Street: Meatspace research bonus."""
+
+        m = self._getmove(move, playbook='fixer')
+        return m.description if m else None
+
     def _fuckmeup(self, damage):
         dice1 = random.randint(1, 6)
         dice2 = random.randint(1, 6)
@@ -101,22 +123,7 @@ Other moves:
             else:
                 return f'You rolled {roll}. You\'re gucci flip flops fam *dabs* haha yeet :3'
 
-    def _getmove(self, query, name=False, playbook=None):
-        with open(self.data, 'rb') as file:
-            moves = pickle.loads(file.read())
 
-            if playbook:
-                for move in moves['playbooks'][playbook]:
-                    if query in move.commands:
-                        return move
-
-            for move in moves['basic']:
-                if name:
-                    if query in move.name:
-                        return move
-                else:
-                    if query in move.commands:
-                        return move
 
 
 
@@ -129,75 +136,8 @@ def handle(message):
 	'''
     print(messageString)
 
-    # Basic moves
-    if messageString == ".moves":
-        response = """```Use the following commands to find detailed information about each move.\n
-.actunderpressure: Act Under Pressure (Cool)
-.applyfirstaid: Apply First Aid (Cool)
-.assess: Assess (Edge)
-.playhardball: Play Hardball (Edge)
-.amidead: Acquire Agricultural Property (Meat)
-.mixitup: Mix it Up (Meat)
-.research: Research (Mind)
-.fasttalk: Fast Talk (Style)
-.hitthestreet: Hit The Street (Style)
-.undertheknife: Go Under the Knife (Cred)
-.fuckmeup: Harm
-.getthejob: Get the Job (Edge)
-.gettingpaid: Getting Paid (Legwork)
-
-For playbook specific moves see '.playbooks'.
-
-For matrix specific moves see '.matrix'.```"""
-
-    # List of playbooks
-    elif messageString == ".playbooks":
-        response = """```Use the following commands to find each playbook-specific move.\n
-.driver
-.fixer
-.hacker
-.hunter
-.infiltrator
-.killer
-.pusher
-.reporter
-.soldier
-.tech```"""
-
-    # Driver
-    elif messageString == ".driver":
-        response = """```Roll moves:
-.hotshitdriver: Bonus while hight-tension driving. (Roll)\n
-    Other moves:
-Wheels: You start with a car.
-Second Skin: When jacked into your vehicle with a neural interface you get bonuses to your rolls.
-Chromed: Choose another piece of cyberware at character creation or in downtime.
-Daredevil: Bonus when you drive straight into danger.
-Drone Jockey: You get with two drones.
-Iceman: Fast talk replacement.
-Right Tool for the Job: You have two additional cyber-linked vehicles.
-Sweet Ride: Replacement and bonus to Hit the street while in your vehicle.```"""
-
-    # Fixer
-    elif messageString == ".fixer":
-        response = """```Roll moves:
-.hustling: Gives hustling jobs. (Roll)
-.iknowpeople: Specialized contact decleration. (Roll)\n
-	Other moves:
-Backup: You have a group of associates. 
-Balls in the Air: +1 crew and choose another job.
-Chromed: Choose another piece of cyberware at character creation or in downtime.
-Deal of a Lifetime: Hit the street bonus when selling something.
-Facetime: Fast talk bonus.
-Hard to Find: Hit the street bonus.
-Reputation: Various social bonuses.
-Sales Engineer: Produce equipment bonus.
-Smooth: Helping or hindering replacement.
-Street King Pin: +1 crew, choose an additional job.
-Word on the Street: Meatspace research bonus.```"""
-
     # Hacker
-    elif messageString == '.hacker':
+    if messageString == '.hacker':
         response = """```
 .jackin: You can access the matrix moves.
 .antivirus: Legwork roll+cred for chrome chips.
@@ -441,48 +381,6 @@ You may spend 1 hold to activate routines on that sub-system.```"""
     ###############################################################################################################################################
     ###############################################################################################################################################
 
-    # Hot shit driver
-    elif messageString == ".hotshitdriver":
-        response = """```When you’re driving a cyber-linked vehicle in a high-pressure situation, roll Edge.\n
-	10+: gain 3 hold
-	7-9: gain 1 hold\n
-You may spend 1 hold to do one of the following:
-	• Avoid one external danger (a rocket, a burst of gunfire, a collision, etc)
-	• Escape one pursuing vehicle
-	• Maintain control of the vehicle
-	• Impress, dismay or frighten someone```"""
-
-    # Hustling
-    elif messageString == ".hustling":
-        response = """```You have people who work for you in various ways. You start with 2-crew and two jobs from the list below. Between missions, choose a number of those jobs equal to or less than your current crew, describe what each job is, and roll Edge.\n
-	10+: you profit from each of your jobs
-	7-9: one of them is a Disaster and you Profit from the rest
-	6-: everything’s FUBAR. The MC will make a move based on the Disaster for each job\n
-Choose two:
-	Ђ Surveillance: You have a small network of informants who report on events; you then sell that information
-		• Profit: gain [intel]
-		• Disaster: someone acts on bad info
-	Ђ Debt collection: You have a few burly looking fuckers who collect outstanding debts
-		• Profit: gain [gear]
-		• Disaster: someone’s out of pocket
-	Ђ Petty theft: You have a small crew who perform minor local robberies
-		• Profit: gain [gear]
-		• Disaster: they robbed the wrong guy
-	Ђ Deliveries: People hire you to transport things and you have a driver who takes care of that
-		• Profit: gain 1 Cred
-		• Disaster: the delivery never arrives
-	Ђ Brokering deals: You arrange for the right people to meet each other
-		• Profit: gain 1 Cred
-		• Disaster: the deal that you arranged goes wrong
-	Ђ Technical work: You have a couple of techs whom you supply with work
-		• Profit: gain [gear]
-		• Disaster: something bad happens to someone else’s property
-	Ђ Pimping: You manage a small stable of physical or virtual sex workers
-		• Profit: gain [intel]
-		• Disaster: something goes wrong with a customer
-	Ђ Addictive substances: You manage a small lab producing either drugs or simstim chips
-		• Profit: gain [intel]
-		• Disaster: something goes wrong for a user or for the lab itself```"""
 
     # iknowpeople
     elif messageString == ".iknowpeople":
