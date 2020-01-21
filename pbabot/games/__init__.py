@@ -1,7 +1,3 @@
-#from . import sprawl
-#from . import apoc
-
-
 class Game:
     def __init__(self):
         self.commands = {}
@@ -15,3 +11,10 @@ class Game:
 
     def playbooks(self, message):
         raise NotImplementedError
+
+
+class Move:
+    def __init__(self, name, description, *commands):
+        self.name = name
+        self.description = description
+        self.commands = commands

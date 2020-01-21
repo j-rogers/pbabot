@@ -3,7 +3,7 @@ import random
 import pickle
 import argparse
 import xml.etree.ElementTree as et
-from pbabot.games import *
+from games.sprawl import Sprawl
 from collections import namedtuple
 
 # API Token
@@ -62,7 +62,7 @@ class PBABot(discord.Client):
         super().__init__()
 
         game_switch = {
-            'sprawl': sprawl.Sprawl(),
+            'sprawl': Sprawl(),
         }
         self.game = game_switch.get(game, None)
 
