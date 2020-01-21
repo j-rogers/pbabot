@@ -16,6 +16,9 @@ class Sprawl(Game):
 		}
 
 	def handle(self, command, args):
+		if command == '.fuckmeup':
+			return self._fuckmeup(args)
+
 		lookup = {
 			# Basic Moves
 			'.actunderpressure': 'Act Under Pressure',
@@ -76,6 +79,32 @@ For matrix specific moves see '.matrix'."""
 .reporter
 .soldier
 .tech"""
+
+	def _fuckmeup(self, damage):
+		dice1 = random.randint(1, 6)
+		dice2 = random.randint(1, 6)
+		modifier = 0
+		if damage:
+			modifier = int(damage)
+		roll = dice1 + dice2 + modifier
+
+		tree = et.parse(self.data)
+		basic = tree.find('basic')
+		harm = None
+		for move in list(basic):
+			if move.get('name') == 'Harm':
+				harm = move
+
+		if roll >= 10:
+			for option in list(harm):
+				if option.get('index') == '1':
+					return f'Oh you fucked up now, you rolled a {roll}. {option.text}'
+		elif 7 <= roll <= 9:
+			for option in list(harm):
+				if option.get('index') == '2':
+					return f'You\'re going to have to suck off the MC on this one, you rolled a {roll}. {option.text}'
+		else:
+			return f'You rolled {roll}. You\'re gucci flip flops fam *dabs* haha yeet :3'
 
 	def _getmove(self, move):
 		if not move:
