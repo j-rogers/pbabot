@@ -8,3 +8,6 @@ runSprawl.bat
 factorymap.psd
 factorymap.png
 map.psd
+**/venv
+**/.idea
+**/test_data.pickle

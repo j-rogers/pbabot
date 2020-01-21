@@ -7,8 +7,9 @@ from pbabot.games import *
 from collections import namedtuple
 
 # API Token
-TOKEN = open("token.txt", 'r').read()
-DATA_FILE = "../data/data.pickle"
+TOKEN = open('token.txt', 'r').read()
+DATA_FILE = 'data/data.pickle'
+PERSONAL_DATA = 'data/personal'
 
 
 class Clock:
@@ -56,15 +57,18 @@ class Contact:
 
 
 class PBABot(discord.Client):
-    def __init__(self):
+    def __init__(self, datafile=DATA_FILE, personaldata = PERSONAL_DATA):
         super().__init__()
-
-        # Extract data from file
 
         self.clocks = []
         self.contacts = []
+
+        # Extract data from file
+        self.personaldata = personaldata
+        self.datafile = datafile
         try:
-            data = pickle.loads(open(DATA_FILE, "rb").read())
+            with open(self.datafile, 'rb') as file:
+                data = pickle.loads(file.read())
             self.clocks = data["clocks"]
             self.contacts = data["contacts"]
             print("Data extracted")
@@ -91,8 +95,8 @@ class PBABot(discord.Client):
             # Listing commands
             '.help': self.help,
             '.links': self.links,
-            '.clocks': self.clocks,
-            '.contacts': self.contacts,
+            '.clocks': self.printclocks,
+            '.contacts': self.printcontacts,
             '.rememberlist': self.rememberlist,
             # Functional commands
             '.roll': self.roll,
@@ -179,7 +183,7 @@ class PBABot(discord.Client):
         msg = msg.replace("\t", "")
         return msg
 
-    def clocks(self, message):
+    def printclocks(self, message):
         if not self.clocks:
             return 'No clocks have been added.'
 
@@ -195,11 +199,11 @@ class PBABot(discord.Client):
 
         clocks = ''
         for clock in self.clocks:
-            clocks += f'{clock.name}: {switch[clock.value]}\n'
+            clocks += f'{clock.name}: {switch[clock.time]}\n'
 
         return clocks
 
-    def contacts(self, message):
+    def printcontacts(self, message):
         if not self.contacts:
             return 'No contacts have been added.'
 
@@ -313,10 +317,10 @@ class PBABot(discord.Client):
 
         # Update and refresh file
         self._savedata()
-        print(f'Clock update reflected in file (INCREASE): ({clock.name} {clock.value})')
+        print(f'Clock update reflected in file (INCREASE): ({clock.name} {clock.time})')
 
         # Form message and send
-        return f'{clock.name} clock increased to {clock.value}.'
+        return f'{clock.name} clock increased to {clock.time}.'
 
     def decreaseclock(self, name):
         clock = self._getclock(name)
@@ -327,16 +331,17 @@ class PBABot(discord.Client):
         clock.decrease()
 
         self._savedata()
-        return f'{clock.name} clock decreased to {clock.value}'
+
+        return f'{clock.name} clock decreased to {clock.time}'
 
     def addcontact(self, args):
         # Get the contact name and description
         name = None
         description = None
-        tokens = args.split('"', 1)
+        tokens = args.split('"', 2)
         if len(tokens) > 1:
-            name = tokens[1].strip('"')
-            description = tokens[2]
+            name = tokens[1]
+            description = tokens[2].strip()
         else:
             tokens = args.split(' ', 1)
             name = tokens[0]
@@ -346,6 +351,7 @@ class PBABot(discord.Client):
             return f'Contact "{name}" already added as a contact.'
 
         self.contacts.append(Contact(name, description))
+
         self._savedata()
 
         return f'Contact added: {name}.'
@@ -363,7 +369,7 @@ class PBABot(discord.Client):
         return f'Deleted contact {name}'
 
     def rip(self, player):
-        tree = et.parse('../data/personal')
+        tree = et.parse(self.personaldata)
         rip = tree.getroot().find('rip')
 
         death = ''
@@ -371,12 +377,12 @@ class PBABot(discord.Client):
             player = rip.find(player)
             if player:
                 for character in list(player):
-                    death = f"{character.get('name')}: {character.get('cause')}\n\n"
+                    death += f"{character.get('name')}: {character.get('cause')}\n"
         else:  # short list
             for player in list(rip):
                 death += f'{player.tag}: '
                 for character in list(player):
-                    death += f"{character.get('name')}, "
+                    death += f'{character.get("name")}, '
                 death += '\n'
 
         death = death.strip()
@@ -393,7 +399,7 @@ class PBABot(discord.Client):
             if number >= min and number <= max:  # Ensures it will exist within the range of .remember
                 member = number  # sets member to the number.
 
-        tree = et.parse('data/personal')
+        tree = et.parse(self.personaldata)
         remember = tree.find('remember')
 
         memories = {}
@@ -427,7 +433,7 @@ class PBABot(discord.Client):
     def refresh(self, message):
         msg = ''
         try:
-            data = pickle.loads(open(DATA_FILE, "rb").read())
+            data = pickle.loads(open(self.datafile, "rb").read())
             self.clocks = data["clocks"]
             self.contacts = data["contacts"]
             msg = 'Data has been refreshed.'
@@ -465,9 +471,8 @@ class PBABot(discord.Client):
 
     def _savedata(self):
         data = {'clocks': self.clocks, 'contacts': self.contacts}
-        file = open(DATA_FILE, "wb")
-        file.write(pickle.dumps(data))
-        file.close()
+        with open(self.datafile, 'wb') as file:
+            file.write(pickle.dumps(data))
 
         #data = pickle.loads(open(filename, "rb").read())
         #clocks = data["clocks"]

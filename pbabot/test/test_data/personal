@@ -1,0 +1,16 @@
+<personal>
+    <rip>
+        <dave>
+            <character name="Big" cause="Got stabbed" />
+            <character name="Small" cause="Crashed his car" />
+        </dave>
+	<jeff>
+	    <character name="Boss" cause="Death by mechs" />
+	</jeff>
+    </rip>
+    <remember>
+	<memory index="1">Big beat up Boss</memory>
+	<memory index="2">Boss got beat up by Small</memory>
+	<memory index="3">Boss got beat up by everyone</memory>
+    </remember>
+</personal>
