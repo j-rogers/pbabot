@@ -129,7 +129,11 @@ class PBABot(discord.Client):
             '.log': self.log
         }
 
-        response = text_switch.get(command, None)(args)
+        callback = text_switch.get(command, None)
+
+        response = None
+        if callback:
+            response = callback(args)
 
         image_switch = {
             '.map': discord.File(f'{IMAGES}/map.jpg', 'map.jpg'),

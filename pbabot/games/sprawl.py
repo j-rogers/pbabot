@@ -1,6 +1,5 @@
 import random
 import pickle
-import xml.etree.ElementTree as et
 
 from . import Game
 
@@ -29,7 +28,8 @@ class Sprawl(Game):
         if command in playbook_switch:
             return playbook_switch[command]
 
-        return self._getmove(command).description
+        move = self._getmove(command)
+        return move.description if move else None
 
     def moves(self, message):
         return """Use the following commands to find detailed information about each move.\n
