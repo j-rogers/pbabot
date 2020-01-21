@@ -12,14 +12,14 @@
     10+: gain 3 hold
     7-9: gain 1 hold\n
     In the ensuing action, you may spend 1 hold at any time to ask the MC a question from the list below if your examination could have revealed the answer. The MC may ask you questions to clarify your intent. Take +1 forward when acting on the answers.\n
-            Ђ What potential complication do I need to be wary of?
-            Ђ What do I notice despite an effort to conceal it?
-            Ђ How is ______ vulnerable to me?
-            Ђ How can I avoid trouble or hide here?
-            Ђ What is my best way in/way out/way past?
-            Ђ Where can I gain the most advantage?
-            Ђ Who or what is my biggest threat in this situation?
-            Ђ Who or what is in control here?
+        Ђ What potential complication do I need to be wary of?
+        Ђ What do I notice despite an effort to conceal it?
+        Ђ How is ______ vulnerable to me?
+        Ђ How can I avoid trouble or hide here?
+        Ђ What is my best way in/way out/way past?
+        Ђ Where can I gain the most advantage?
+        Ђ Who or what is my biggest threat in this situation?
+        Ђ Who or what is in control here?
         </move>
         <move name="Play Hardball">When you get in someone’s face threatening violence and you intend to carry through, roll Edge.\n
     10+: NPCs do what you want. PCs choose: do what you want, or suffer the established consequences
@@ -108,4 +108,8 @@ take +1-harm
         Ђ You learned something from the mission; everyone marks experience
         </move>
     </basic>
+    <playbooks>
+        <driver>
+        </driver>
+    </playbooks>
 </moves>

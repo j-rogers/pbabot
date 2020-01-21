@@ -7,4 +7,4 @@ class SprawlTest(unittest.TestCase):
         self.sprawl = sprawl.Sprawl()
 
     def test_basicmoves(self):
-        print(self.sprawl.handle('.fuckmeup', ''))
+        print(self.sprawl.handle('.assess', ''))

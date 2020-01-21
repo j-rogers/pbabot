@@ -16,9 +16,19 @@ class Sprawl(Game):
 		}
 
 	def handle(self, command, args):
+		# Harm move
 		if command == '.fuckmeup':
 			return self._fuckmeup(args)
 
+		# Listing playbook moves
+		playbook_switch = {
+			'.driver': self._driver
+		}
+
+		if command in playbook_switch:
+			return playbook_switch[command]
+
+		# Use lookup table when requesting a specific move
 		lookup = {
 			# Basic Moves
 			'.actunderpressure': 'Act Under Pressure',
@@ -43,6 +53,8 @@ class Sprawl(Game):
 			'.gettingpaid': 'Getting Paid',
 			'.getpaid': 'Getting Paid',
 			'.paid': 'Getting Paid'
+			# Playbooks
+
 		}
 
 		return self._getmove(lookup.get(command, None))
@@ -79,6 +91,19 @@ For matrix specific moves see '.matrix'."""
 .reporter
 .soldier
 .tech"""
+
+	def _driver(self, message):
+		return """Roll moves:
+	.hotshitdriver: Bonus while hight-tension driving. (Roll)\n
+Other moves:
+	Wheels: You start with a car.
+	Second Skin: When jacked into your vehicle with a neural interface you get bonuses to your rolls.
+	Chromed: Choose another piece of cyberware at character creation or in downtime.
+	Daredevil: Bonus when you drive straight into danger.
+	Drone Jockey: You get with two drones.
+	Iceman: Fast talk replacement.
+	Right Tool for the Job: You have two additional cyber-linked vehicles.
+	Sweet Ride: Replacement and bonus to Hit the street while in your vehicle."""
 
 	def _fuckmeup(self, damage):
 		dice1 = random.randint(1, 6)
