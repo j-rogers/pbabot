@@ -88,6 +88,7 @@ Other moves:
             return """Roll moves:
 hustling: Gives hustling jobs. (Roll)
 iknowpeople: Specialized contact decleration. (Roll)\n
+reputation: Various social  (Roll).
 	Other moves:
 Backup: You have a group of associates. 
 Balls in the Air: +1 crew and choose another job.
@@ -95,7 +96,6 @@ Chromed: Choose another piece of cyberware at character creation or in downtime.
 Deal of a Lifetime: Hit the street bonus when selling something.
 Facetime: Fast talk bonus.
 Hard to Find: Hit the street bonus.
-Reputation: Various social bonuses.
 Sales Engineer: Produce equipment bonus.
 Smooth: Helping or hindering replacement.
 Street King Pin: +1 crew, choose an additional job.
@@ -380,24 +380,6 @@ You may spend 1 hold to activate routines on that sub-system.```"""
     ############################################################# PLAYBOOK MOVE COMMANDS ##########################################################
     ###############################################################################################################################################
     ###############################################################################################################################################
-
-
-    # iknowpeople
-    elif messageString == ".iknowpeople":
-        response = """```Once per mission you may introduce a new Contact. Name the contact, say what they do, then roll Style.\n
-	10+: you’ve worked with the contact before; they have talent. Write them down as a Contact
-	7-9: you’ve never met them before, they’re an unknown quantity
-	6-: you know them all right. Tell the MC why they dislike you\n
-After you’ve rolled, describe how you contact them; the MC will ask some questions.```"""
-
-    # Reputation
-    elif messageString == ".reputation":
-        response = """```When you meet someone of consequence who might have
-heard of you, roll Edge. On a hit, say what they know about you. On a 10+,
-take +1 forward with them. On a miss, the MC will decide what they’ve heard
-about you, if anything. Either you or the MC can say whether someone is
-“of consequence”, but once you’ve made the reputation move on someone,
-they’re “of consequence” and will be a recurring part of the story.```"""
 
     # Console Cowboy
     elif messageString == ".consolecowboy":
