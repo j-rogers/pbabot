@@ -123,6 +123,13 @@ playbooks = {
             'When you meet someone of consequence who might have heard of you, roll Edge. On a hit, say what they know about you. On a 10+, take +1 forward with them. On a miss, the MC will decide what they’ve heard about you, if anything. Either you or the MC can say whether someone is “of consequence”, but once you’ve made the reputation move on someone, they’re “of consequence” and will be a recurring part of the story.',
             'reputation'
         )
+    ],
+    'hacker': [
+        Move(
+            'Console Cowboy',
+            'Console cowboy: When you connect to a secure system, roll Mind.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nWhile in that system, you may spend 1 hold for any of the following effects:\n\t• Prevent a construct from triggering an alert\n\t• Avoid an ICE routine executed against you, your deck, or your programs\n\t• Increase your hold over compromised security or manipulated systems by 1',
+            'consolecowboy'
+        )
     ]
 }
 matrix = []

@@ -23,7 +23,8 @@ class Sprawl(Game):
         # Listing playbook moves
         playbook_switch = {
             '.driver': self._driver,
-            '.fixer': self._fixer
+            '.fixer': self._fixer,
+            '.hacker': self._hacker
         }
 
         if command in playbook_switch:
@@ -69,16 +70,16 @@ For matrix specific moves see '.matrix'."""
         if not move:
             return """Use .driver <move> to see details about a specific move.
 Roll moves:
-	hotshitdriver: Bonus while hight-tension driving. (Roll)\n
+    hotshitdriver: Bonus while hight-tension driving. (Roll)\n
 Other moves:
-	Wheels: You start with a car.
-	Second Skin: When jacked into your vehicle with a neural interface you get bonuses to your rolls.
-	Chromed: Choose another piece of cyberware at character creation or in downtime.
-	Daredevil: Bonus when you drive straight into danger.
-	Drone Jockey: You get with two drones.
-	Iceman: Fast talk replacement.
-	Right Tool for the Job: You have two additional cyber-linked vehicles.
-	Sweet Ride: Replacement and bonus to Hit the street while in your vehicle."""
+    Wheels: You start with a car.
+    Second Skin: When jacked into your vehicle with a neural interface you get bonuses to your rolls.
+    Chromed: Choose another piece of cyberware at character creation or in downtime.
+    Daredevil: Bonus when you drive straight into danger.
+    Drone Jockey: You get with two drones.
+    Iceman: Fast talk replacement.
+    Right Tool for the Job: You have two additional cyber-linked vehicles.
+    Sweet Ride: Replacement and bonus to Hit the street while in your vehicle."""
 
         m = self._getmove(move, playbook='driver')
         return m.description if m else None
@@ -86,22 +87,43 @@ Other moves:
     def _fixer(self, move):
         if not move:
             return """Roll moves:
-hustling: Gives hustling jobs. (Roll)
-iknowpeople: Specialized contact decleration. (Roll)\n
-reputation: Various social  (Roll).
-	Other moves:
-Backup: You have a group of associates. 
-Balls in the Air: +1 crew and choose another job.
-Chromed: Choose another piece of cyberware at character creation or in downtime.
-Deal of a Lifetime: Hit the street bonus when selling something.
-Facetime: Fast talk bonus.
-Hard to Find: Hit the street bonus.
-Sales Engineer: Produce equipment bonus.
-Smooth: Helping or hindering replacement.
-Street King Pin: +1 crew, choose an additional job.
-Word on the Street: Meatspace research bonus."""
+    hustling: Gives hustling jobs. (Roll)
+    iknowpeople: Specialized contact decleration. (Roll)\n
+    reputation: Various social  (Roll).
+Other moves:
+    Backup: You have a group of associates. 
+    Balls in the Air: +1 crew and choose another job.
+    Chromed: Choose another piece of cyberware at character creation or in downtime.
+    Deal of a Lifetime: Hit the street bonus when selling something.
+    Facetime: Fast talk bonus.
+    Hard to Find: Hit the street bonus.
+    Sales Engineer: Produce equipment bonus.
+    Smooth: Helping or hindering replacement.
+    Street King Pin: +1 crew, choose an additional job.
+    Word on the Street: Meatspace research bonus."""
 
         m = self._getmove(move, playbook='fixer')
+        return m.description if m else None
+
+    def _hacker(self, move):
+        if not move:
+            return """Roll Moves:
+    consolecowboy: Hold over systems (Roll)
+Other moves:
+    .jackin: You can access the matrix moves.
+    .antivirus: Legwork roll+cred for chrome chips.
+    .chromed: Choose another piece of cyberware at character creation or in downtime. 
+    .insidejob: When you login through a comprimised site +1 matrix moves.
+    .ivehadworse: +1 armor against ice
+    .humansareeasyprey: Go on the offensive against Sysop roll synth.
+    .rep: Fast talk and Play hard ball replacements while in the matrix.
+    .searchoptimisation: Matrix research bonus.
+    .rigenthusiast: extra deck tag.
+    .sneakdoorbeta: create a backdoor in for future use.
+    .techsupport: Bonus when helping or interfering while in the matrix.
+    .diabolusexmchina When Ice is activated against you roll + synth."""
+
+        m = self._getmove(move, playbook='hacker')
         return m.description if m else None
 
     def _fuckmeup(self, damage):
