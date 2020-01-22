@@ -171,6 +171,18 @@ playbooks = {
             'psychologicalwarfare',
             'psychwarfare'
         )
+    ],
+    'killer': [
+        Move(
+            'Serious Badass',
+            'When you enter a charged situation, roll Style.\n\n\t10+: gain 2 hold\n\t7–9: gain 1 hold\n\t6-: your enemies identify you immediately as their foremost threat\n\nSpend 1 hold to make eye contact with an NPC present, who freezes or flinches and can’t act until you break it off.',
+            'seriousbadass'
+        ),
+        Move(
+            'Trained Eye',
+            'When you evaluate a person, vehicle, drone or gang, roll Cool.\n\n\t7+: ask the target “How are you vulnerable to me?” Take +1 forward when acting on the answer\n\t10+: gain +1 ongoing when acting against that target',
+            'trainedeye'
+        )
     ]
 }
 matrix = []

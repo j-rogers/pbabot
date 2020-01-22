@@ -26,7 +26,8 @@ class Sprawl(Game):
             '.fixer': self._fixer,
             '.hacker': self._hacker,
             '.hunter': self._hunter,
-            '.infiltrator': self._infiltrator
+            '.infiltrator': self._infiltrator,
+            '.killer': self._killer
         }
 
         if command in playbook_switch:
@@ -167,6 +168,24 @@ Other moves:
         m = self._getmove(move, playbook='infiltrator')
         return m.description if m else None
 
+    def _killer(self, move):
+        if not move:
+            return """Roll moves:
+    .seriousbadass: Bonus when entering a charged situation. (Roll)
+    .trainedeye: Bonus when sizing up a person, vehicle, drone or gang. (Roll)\n
+Other moves:
+    .customweapon: You begin with a custom weapon.
+    .emotionless: Play hard ball replacement.
+    .hard: Harm move bonus.
+    .loadedforbear: Choose another bonus weapon.
+    .moremachinethanmeat: Choose another piece of cyberware at character creation or in downtime.
+    .corporatesecrets: Bonus when researching a corporation.
+    .militarybackground: Bonus when hitting the street.
+    .milspecs: Bonus to mix it up."""
+
+        m = self._getmove(move, playbook='killer')
+        return m.description if m else None
+
     def _fuckmeup(self, damage):
         dice1 = random.randint(1, 6)
         dice2 = random.randint(1, 6)
@@ -214,18 +233,7 @@ def handle(message):
 
     # Killer
     elif messageString == '.killer':
-        response = """```Roll moves:
-.seriousbadass: Bonus when entering a charged situation. (Roll)
-.trainedeye: Bonus when sizing up a person, vehicle, drone or gang. (Roll)\n
-    Other moves:
-.customweapon: You begin with a custom weapon.
-.emotionless: Play hard ball replacement.
-.hard: Harm move bonus.
-.loadedforbear: Choose another bonus weapon.
-.moremachinethanmeat: Choose another piece of cyberware at character creation or in downtime.
-.corporatesecrets: Bonus when researching a corporation.
-.militarybackground: Bonus when hitting the street.
-.milspecs: Bonus to mix it up.```"""
+        response = """``````"""
 
     # Pusher
     elif messageString == '.pusher':
