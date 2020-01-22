@@ -103,171 +103,222 @@ playbooks = {
     'driver': [
         Move(
             'Hot Shit Driver',
-            'When you’re driving a cyber-linked vehicle in a high-pressure situation, roll Edge.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nYou may spend 1 hold to do one of the following:\n\t• Avoid one external danger (a rocket, a burst of gunfire, a collision, etc)\n\t• Escape one pursuing vehicle\n\t• Maintain control of the vehicle\n\t• Impress, dismay or frighten someone',
-            'hotshitdriver'
+            'Bonus while high-tension driving. (Roll)',
+            'hotshitdriver',
+            fulldescription='When you’re driving a cyber-linked vehicle in a high-pressure situation, roll Edge.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nYou may spend 1 hold to do one of the following:\n\t• Avoid one external danger (a rocket, a burst of gunfire, a collision, etc)\n\t• Escape one pursuing vehicle\n\t• Maintain control of the vehicle\n\t• Impress, dismay or frighten someone',
         )
     ],
     'fixer': [
         Move(
             'Hustling',
-            'You have people who work for you in various ways. You start with 2-crew and two jobs from the list below. Between missions, choose a number of those jobs equal to or less than your current crew, describe what each job is, and roll Edge.\n\n\t10+: you profit from each of your jobs\n\t7-9: one of them is a Disaster and you Profit from the rest\n\t6-: everything’s FUBAR. The MC will make a move based on the Disaster for each job\n\nChoose two:\n\tЂ Surveillance: You have a small network of informants who report on events; you then sell that information\n\t\t• Profit: gain [intel]\n\t\t• Disaster: someone acts on bad info\n\tЂ Debt collection: You have a few burly looking fuckers who collect outstanding debts\n\t\t• Profit: gain [gear]\n\t\t• Disaster: someone’s out of pocket\n\tЂ Petty theft: You have a small crew who perform minor local robberies\n\t\t• Profit: gain [gear]\n\t\t• Disaster: they robbed the wrong guy\n\tЂ Deliveries: People hire you to transport things and you have a driver who takes care of that\n\t\t• Profit: gain 1 Cred\n\t\t• Disaster: the delivery never arrives\n\tЂ Brokering deals: You arrange for the right people to meet each other\n\t\t• Profit: gain 1 Cred\n\t\t• Disaster: the deal that you arranged goes wrong\n\tЂ Technical work: You have a couple of techs whom you supply with work\n\t\t• Profit: gain [gear]\n\t\t• Disaster: something bad happens to someone else’s property\n\tЂ Pimping: You manage a small stable of physical or virtual sex workers\n\t\t• Profit: gain [intel]\n\t\t• Disaster: something goes wrong with a customer\n\tЂ Addictive substances: You manage a small lab producing either drugs or simstim chips\n\t\t• Profit: gain [intel]\n\t\t• Disaster: something goes wrong for a user or for the lab itself',
-            'hustling'
+            'Gives hustling jobs. (Roll)'
+            'hustling',
+            fulldescription='You have people who work for you in various ways. You start with 2-crew and two jobs from the list below. Between missions, choose a number of those jobs equal to or less than your current crew, describe what each job is, and roll Edge.\n\n\t10+: you profit from each of your jobs\n\t7-9: one of them is a Disaster and you Profit from the rest\n\t6-: everything’s FUBAR. The MC will make a move based on the Disaster for each job\n\nChoose two:\n\tЂ Surveillance: You have a small network of informants who report on events; you then sell that information\n\t\t• Profit: gain [intel]\n\t\t• Disaster: someone acts on bad info\n\tЂ Debt collection: You have a few burly looking fuckers who collect outstanding debts\n\t\t• Profit: gain [gear]\n\t\t• Disaster: someone’s out of pocket\n\tЂ Petty theft: You have a small crew who perform minor local robberies\n\t\t• Profit: gain [gear]\n\t\t• Disaster: they robbed the wrong guy\n\tЂ Deliveries: People hire you to transport things and you have a driver who takes care of that\n\t\t• Profit: gain 1 Cred\n\t\t• Disaster: the delivery never arrives\n\tЂ Brokering deals: You arrange for the right people to meet each other\n\t\t• Profit: gain 1 Cred\n\t\t• Disaster: the deal that you arranged goes wrong\n\tЂ Technical work: You have a couple of techs whom you supply with work\n\t\t• Profit: gain [gear]\n\t\t• Disaster: something bad happens to someone else’s property\n\tЂ Pimping: You manage a small stable of physical or virtual sex workers\n\t\t• Profit: gain [intel]\n\t\t• Disaster: something goes wrong with a customer\n\tЂ Addictive substances: You manage a small lab producing either drugs or simstim chips\n\t\t• Profit: gain [intel]\n\t\t• Disaster: something goes wrong for a user or for the lab itself',
         ),
         Move(
             'I Know People',
-            'Once per mission you may introduce a new Contact. Name the contact, say what they do, then roll Style.\n\n\t10+: you’ve worked with the contact before; they have talent. Write them down as a Contact\n\t7-9: you’ve never met them before, they’re an unknown quantity\n\t6-: you know them all right. Tell the MC why they dislike you\n\nAfter you’ve rolled, describe how you contact them; the MC will ask some questions.',
-            'iknowpeople'
+            'Specialized contact decleration. (Roll)',
+            'iknowpeople',
+            fulldescription='Once per mission you may introduce a new Contact. Name the contact, say what they do, then roll Style.\n\n\t10+: you’ve worked with the contact before; they have talent. Write them down as a Contact\n\t7-9: you’ve never met them before, they’re an unknown quantity\n\t6-: you know them all right. Tell the MC why they dislike you\n\nAfter you’ve rolled, describe how you contact them; the MC will ask some questions.',
         ),
         Move(
             'Reputation',
-            'When you meet someone of consequence who might have heard of you, roll Edge. On a hit, say what they know about you. On a 10+, take +1 forward with them. On a miss, the MC will decide what they’ve heard about you, if anything. Either you or the MC can say whether someone is “of consequence”, but once you’ve made the reputation move on someone, they’re “of consequence” and will be a recurring part of the story.',
-            'reputation'
+            'Various social (Roll).',
+            'reputation',
+            fulldescription = 'When you meet someone of consequence who might have heard of you, roll Edge. On a hit, say what they know about you. On a 10+, take +1 forward with them. On a miss, the MC will decide what they’ve heard about you, if anything. Either you or the MC can say whether someone is “of consequence”, but once you’ve made the reputation move on someone, they’re “of consequence” and will be a recurring part of the story.',
         )
     ],
     'hacker': [
         Move(
             'Console Cowboy',
-            'Console cowboy: When you connect to a secure system, roll Mind.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nWhile in that system, you may spend 1 hold for any of the following effects:\n\t• Prevent a construct from triggering an alert\n\t• Avoid an ICE routine executed against you, your deck, or your programs\n\t• Increase your hold over compromised security or manipulated systems by 1',
-            'consolecowboy'
+            'Hold over systems (Roll)',
+            'consolecowboy',
+            fulldescription='Console cowboy: When you connect to a secure system, roll Mind.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nWhile in that system, you may spend 1 hold for any of the following effects:\n\t• Prevent a construct from triggering an alert\n\t• Avoid an ICE routine executed against you, your deck, or your programs\n\t• Increase your hold over compromised security or manipulated systems by 1',
         )
     ],
     'hunter': [
         Move(
             'It All Fits Together',
-            'You’re a master of making connections between seemingly unrelated events. At the start of a mission, roll Edge.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nAs you put everything together during the mission, spend 1 hold at any time to ask a question from the research list.',
+            'Research bonus. (Roll)',
             'itallfitstogether',
-            'itallfits'
+            'itallfits',
+            fulldescription='You’re a master of making connections between seemingly unrelated events. At the start of a mission, roll Edge.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nAs you put everything together during the mission, spend 1 hold at any time to ask a question from the research list.',
+
         ),
         Move(
             'Big Game Hunter',
-            'When you spring a trap for a target you have investigated, roll Edge.\n\n\t7+: you have them trapped, the only way out is through you\n\t10+: they are at your mercy; if the target attempts to escape, roll Edge instead of Meat to mix it up',
-            'biggamehunter'
+            'Bonus when springing a trap against a researced target. (Roll)',
+            'biggamehunter',
+            fulldescription='When you spring a trap for a target you have investigated, roll Edge.\n\n\t7+: you have them trapped, the only way out is through you\n\t10+: they are at your mercy; if the target attempts to escape, roll Edge instead of Meat to mix it up',
+
         ),
         Move(
             'Sniper',
-            'When you set up a covered and concealed place to hide, roll Cool.\n\n\t10+: choose 3\n\t7-9: choose 2\n\t\t• Your site is well hidden\n\t\t• Your site has excellent cover\n\t\t• Your site has an excellent field of view\n\t\t• You have a similarly covered and concealed backup location\n\t\t• Your spot is well secured\n\nThen describe your hide site.',
-            'sniper'
+            'Bonus when hiding. (Roll)',
+            'sniper',
+            fulldescription='When you set up a covered and concealed place to hide, roll Cool.\n\n\t10+: choose 3\n\t7-9: choose 2\n\t\t• Your site is well hidden\n\t\t• Your site has excellent cover\n\t\t• Your site has an excellent field of view\n\t\t• You have a similarly covered and concealed backup location\n\t\t• Your spot is well secured\n\nThen describe your hide site.',
+
         )
     ],
     'infiltrator': [
         Move(
             'Covert Entry',
-            'When you attempt to infiltrate a secure area alone, roll Cool.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nAs the MC describes the infiltration and the security measures you must overcome, you may spend 1 hold to describe how you overcome the obstacle and:\n\t• Bypass a security system or guard.\n\t• Disable a security system you have bypassed.\n\t• Disable a guard.\n\t• Escape notice',
-            'covertentry'
+            'Bonus when infilatrating alone. (Roll)',
+            'covertentry',
+            fulldescription='When you attempt to infiltrate a secure area alone, roll Cool.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nAs the MC describes the infiltration and the security measures you must overcome, you may spend 1 hold to describe how you overcome the obstacle and:\n\t• Bypass a security system or guard.\n\t• Disable a security system you have bypassed.\n\t• Disable a guard.\n\t• Escape notice',
+
         ),
         Move(
             'Case the Joint',
-            'When you take time to examine a location for security weaknesses you can exploit, roll Edge.\n\n\t10+: gain three [intel]\n\t7-9: gain [intel]\n\nYou may spend this [intel] in the normal way, or you can spend one point of this [intel] to ask questions from the assess or research lists.',
-            'casethejoint'
+            'Bonus when examining a locations weaknesses. (Roll)',
+            'casethejoint',
+            fulldescription='When you take time to examine a location for security weaknesses you can exploit, roll Edge.\n\n\t10+: gain three [intel]\n\t7-9: gain [intel]\n\nYou may spend this [intel] in the normal way, or you can spend one point of this [intel] to ask questions from the assess or research lists.',
+
         ),
         Move(
             'Plan B',
-            'When shit hits the fan and you have to get out, name your escape route and roll Cool.\n\n\t10+: sweet, you’re gone\n\t7–9: you can go or stay, but if you go it costs you: leave something behind, or take something with you; in either case, the MC will tell you what\n\t6-: you’re caught in a vulnerable position, half in and half out. The MC will make a move',
-            'planb'
+            'When shit hits the fan and you have to get out. (Roll)',
+            'planb',
+            fulldescription='When shit hits the fan and you have to get out, name your escape route and roll Cool.\n\n\t10+: sweet, you’re gone\n\t7–9: you can go or stay, but if you go it costs you: leave something behind, or take something with you; in either case, the MC will tell you what\n\t6-: you’re caught in a vulnerable position, half in and half out. The MC will make a move',
+
         ),
         Move(
             'Psychological Warfare',
-            'When you attempt to influence the morale of your enemies by leaving evidence of violence while remaining undetected, roll Edge.\n\n\t7+: your enemies are impressed and overly cautious, scared and demoralised, or angry and careless (MC’s choice)\n\t10+: you choose',
+            'When you attempt to demoralise the enemy by leaving evidence of violence. (Roll)',
             'psychologicalwarfare',
-            'psychwarfare'
+            'psychwarfare',
+            fulldescription='When you attempt to influence the morale of your enemies by leaving evidence of violence while remaining undetected, roll Edge.\n\n\t7+: your enemies are impressed and overly cautious, scared and demoralised, or angry and careless (MC’s choice)\n\t10+: you choose',
+
         )
     ],
     'killer': [
         Move(
             'Serious Badass',
-            'When you enter a charged situation, roll Style.\n\n\t10+: gain 2 hold\n\t7–9: gain 1 hold\n\t6-: your enemies identify you immediately as their foremost threat\n\nSpend 1 hold to make eye contact with an NPC present, who freezes or flinches and can’t act until you break it off.',
-            'seriousbadass'
+            'Bonus when entering a charged situation. (Roll)',
+            'seriousbadass',
+            fulldescription='When you enter a charged situation, roll Style.\n\n\t10+: gain 2 hold\n\t7–9: gain 1 hold\n\t6-: your enemies identify you immediately as their foremost threat\n\nSpend 1 hold to make eye contact with an NPC present, who freezes or flinches and can’t act until you break it off.',
+
         ),
         Move(
             'Trained Eye',
-            'When you evaluate a person, vehicle, drone or gang, roll Cool.\n\n\t7+: ask the target “How are you vulnerable to me?” Take +1 forward when acting on the answer\n\t10+: gain +1 ongoing when acting against that target',
-            'trainedeye'
+            'Bonus when sizing up a person, vehicle, drone or gang. (Roll)',
+            'trainedeye',
+            fulldescription='When you evaluate a person, vehicle, drone or gang, roll Cool.\n\n\t7+: ask the target “How are you vulnerable to me?” Take +1 forward when acting on the answer\n\t10+: gain +1 ongoing when acting against that target',
+
         )
     ],
     'pusher': [
         Move(
             'Driven',
-            'When you begin a mission that furthers your vision, roll Edge.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nYou may spend 1 hold before rolling any other move to take +1 or -2 forward to the move.',
-            'driven'
+            'Bonus when the mission furthers your vision. (Roll)',
+            'driven',
+            fulldescription='When you begin a mission that furthers your vision, roll Edge.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nYou may spend 1 hold before rolling any other move to take +1 or -2 forward to the move.',
+
         ),
         Move(
             'Vision Thing',
-            'When you have time and space for an emotional connection with someone and you passionately advocate for your vision, roll Style.\n\n\t10+: gain 2 hold\n\t7-9: gain 1 hold\n\nSpend 1 hold to have the targeted NPCs:\n\t• give you something you want\n\t• do something you ask\n\t• fight to protect you or your cause\n\t• disobey an order given by someone with authority or leverage over them\n\nWhen you use this move on a PC, spend your hold to help or interfere as if you had rolled a 10+ (i.e. give them +1 or -2). If you miss against a PC, they gain 2 hold against you which they can use in the same way.',
-            'visionthing'
+            'Bonus when passionately advocating your vision. (Roll)',
+            'visionthing',
+            fulldescription='When you have time and space for an emotional connection with someone and you passionately advocate for your vision, roll Style.\n\n\t10+: gain 2 hold\n\t7-9: gain 1 hold\n\nSpend 1 hold to have the targeted NPCs:\n\t• give you something you want\n\t• do something you ask\n\t• fight to protect you or your cause\n\t• disobey an order given by someone with authority or leverage over them\n\nWhen you use this move on a PC, spend your hold to help or interfere as if you had rolled a 10+ (i.e. give them +1 or -2). If you miss against a PC, they gain 2 hold against you which they can use in the same way.',
+
         )
     ],
     'reporter': [
         Move(
             'Live and on the Air',
-            'When you go live from the scene and broadcast a stream to avoid harm and expose your target, roll Edge.\n\n\t7+: you get the shot you want and are “escorted” to a position of safety\n\t7-9: choose one:\n\t\t• Your story irritates your target (The MC will advance a relevant Threat Clock)\n\t\t• Someone on your team gets hurt off camera\n\t\t• Your story angers your employer\n\t\t• Your rushed narrative is misinterpreted by the public with unintended consequences',
+            'You can broadcast a stream to hurt your target. (Roll)',
             'liveandontheair',
             'live',
-            'liveontheair'
+            'liveontheair',
+            fulldescription='When you go live from the scene and broadcast a stream to avoid harm and expose your target, roll Edge.\n\n\t7+: you get the shot you want and are “escorted” to a position of safety\n\t7-9: choose one:\n\t\t• Your story irritates your target (The MC will advance a relevant Threat Clock)\n\t\t• Someone on your team gets hurt off camera\n\t\t• Your story angers your employer\n\t\t• Your rushed narrative is misinterpreted by the public with unintended consequences',
+
         ),
         Move(
             'Nose for a Story',
-            'At the start of a mission, roll Edge.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nDuring the mission, spend 1 hold to invoke one of the following effects:\n\t• Ask one question from the research list\n\t• Take +1 forward when monstering\n\t• Find a piece of evidence that links this mission to a current story; start a Story Clock and a linked Noise Clock or roll to gather evidence',
+            'Various mission bonuses. (Roll)',
             'noseforastory',
-            'nose'
+            'nose',
+            fulldescription='At the start of a mission, roll Edge.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nDuring the mission, spend 1 hold to invoke one of the following effects:\n\t• Ask one question from the research list\n\t• Take +1 forward when monstering\n\t• Find a piece of evidence that links this mission to a current story; start a Story Clock and a linked Noise Clock or roll to gather evidence',
+
         ),
         Move(
             'Gather Evidence',
-            'When you gather evidence to break a story, roll Mind.\n\n\t10+: you get the evidence you need, advance that Story Clock\n\t7-9: you get the evidence, but tip your hand to someone implicated in your story; tell the MC which clock to advance: a relevant Corporate Clock, the linked Noise Clock or the relevant Mission Clock (Legwork or Action, depending on which phase of the current mission you’re in)\n\t6-: the MC will advance the Noise Clock and make a move\n\nIf the Story Clock reaches 0000 before the Noise Clock, the Reporter has broken the story before the implicated parties could cover up the evidence, or stop the investigation. The exact implications of this for the game will vary based on the story, but it should have a major impact on the implicated parties and will affect at least one Corporate Clock.\n\nIf the Noise Clock reaches 0000 before the Story Clock, the implicated parties have tied up all the loose ends and the story is dead. Now that damage control is complete, they can deal with the Reporter permanently. Advance any relevant Corporate or Threat Clocks.',
+            'Various effects on story and noise clocks. (Roll)',
             'gatherevidence',
-            'gather'
+            'gather',
+            fulldescription='When you gather evidence to break a story, roll Mind.\n\n\t10+: you get the evidence you need, advance that Story Clock\n\t7-9: you get the evidence, but tip your hand to someone implicated in your story; tell the MC which clock to advance: a relevant Corporate Clock, the linked Noise Clock or the relevant Mission Clock (Legwork or Action, depending on which phase of the current mission you’re in)\n\t6-: the MC will advance the Noise Clock and make a move\n\nIf the Story Clock reaches 0000 before the Noise Clock, the Reporter has broken the story before the implicated parties could cover up the evidence, or stop the investigation. The exact implications of this for the game will vary based on the story, but it should have a major impact on the implicated parties and will affect at least one Corporate Clock.\n\nIf the Noise Clock reaches 0000 before the Story Clock, the implicated parties have tied up all the loose ends and the story is dead. Now that damage control is complete, they can deal with the Reporter permanently. Advance any relevant Corporate or Threat Clocks.',
+
         ),
         Move(
             'Press Pass',
-            'If you reveal your public persona to fast talk your way in,do not roll the dice, you count as rolling a 10+.\nTake [intel] and advance the Legwork Clock.',
+            'Bonus when revealing yourself to fast talk your way in.',
             'presspass',
             'press',
-            'pass'
+            'pass',
+            fulldescription='If you reveal your public persona to fast talk your way in,do not roll the dice, you count as rolling a 10+.\nTake [intel] and advance the Legwork Clock.',
+
         ),
         Move(
             'Monstering',
-            'When you corner someone and hound them with questions to get to the bottom of a story, roll Edge.\n\n\t10+: they tell you the truth, regardless of the consequences\n\t7-9: they give you enough to get you off their back, then when they’re safe, they choose one:\n\t\t• they respond with fear\n\t\t• they respond with anger\n\t\t• they respond with clinical calm',
-            'monstering'
+            'You can corner someone and hound them with questions. (Roll)',
+            'monstering',
+            fulldescription='When you corner someone and hound them with questions to get to the bottom of a story, roll Edge.\n\n\t10+: they tell you the truth, regardless of the consequences\n\t7-9: they give you enough to get you off their back, then when they’re safe, they choose one:\n\t\t• they respond with fear\n\t\t• they respond with anger\n\t\t• they respond with clinical calm',
+
         )
     ],
     'soldier': [
         Move(
             'I Love It When A Plan Comes Together',
-            'At the start of a mission, roll Edge.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\t6-: gain 1 hold anyway, but your opponent has predicted your every move; the MC will advance the Legwork Clock\n\nDuring the mission, spend 1 hold for one of the following effects:\n\t• You have that piece of gear that you need, right now\n\t• You appear in a scene where you are needed, right now',
+            'Bonus [gear] and [intel]. (Roll)',
             'iloveitwhenaplancomestogether',
-            'plan'
+            'plan',
+            fulldescription='At the start of a mission, roll Edge.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\t6-: gain 1 hold anyway, but your opponent has predicted your every move; the MC will advance the Legwork Clock\n\nDuring the mission, spend 1 hold for one of the following effects:\n\t• You have that piece of gear that you need, right now\n\t• You appear in a scene where you are needed, right now',
+
         ),
         Move(
             'Exit Strategy',
-            'You always have an escape plan prepared. When shit hits the fan and you decide to bail out, roll Mind.\n\n\t7+: You escape the situation\n\t10+: choose one thing to leave behind\n\t7-9: choose two things\n\t\t• Your team\n\t\t• A mission objective\n\t\t• Identifiable evidence\n\t\t• Your staked Cred',
+            'Bonus to getting the fuck out of there. (Roll)',
             'exitstrategy',
-            'exit'
+            'exit',
+            fulldescription='You always have an escape plan prepared. When shit hits the fan and you decide to bail out, roll Mind.\n\n\t7+: You escape the situation\n\t10+: choose one thing to leave behind\n\t7-9: choose two things\n\t\t• Your team\n\t\t• A mission objective\n\t\t• Identifiable evidence\n\t\t• Your staked Cred',
+
         ),
         Move(
             'Recruiter',
-            'When you attempt to recruit a specialist or a team of specialists to directly assist with your mission, roll Edge.\n\n\t10+: choose 2\n\t7-9: choose 1\n\t\t• Reliable professional(s)\n\t\t• A small team (up to 5)\n\t\t• As competent as required',
-            'recruiter'
+            'Contact / Hit the Street bonus. (Roll)',
+            'recruiter',
+            fulldescription='When you attempt to recruit a specialist or a team of specialists to directly assist with your mission, roll Edge.\n\n\t10+: choose 2\n\t7-9: choose 1\n\t\t• Reliable professional(s)\n\t\t• A small team (up to 5)\n\t\t• As competent as required',
+
         ),
         Move(
             'Slippery',
-            'At the end of a mission during which you planted or hid evidence to shift blame away from you and your team, name who you threw under the corporate bus and roll Edge.\n\n\t7+: the MC will not increase Corporate Clocks in the retaliation phase\n\t10+: the MC will reduce a Corporate Clock by one\n\t6-: create or increase the Threat Clock of whoever you threw under the bus',
-            'slippery'
+            'Prevents Corps from finding the teams involvement. (Roll)',
+            'slippery',
+            fulldescription='At the end of a mission during which you planted or hid evidence to shift blame away from you and your team, name who you threw under the corporate bus and roll Edge.\n\n\t7+: the MC will not increase Corporate Clocks in the retaliation phase\n\t10+: the MC will reduce a Corporate Clock by one\n\t6-: create or increase the Threat Clock of whoever you threw under the bus',
+
         )
     ],
     'tech': [
         Move(
             'Storage',
-            'After receiving a job you may look through your accumulated parts and supplies for equipment that might help with the current mission. Roll Mind.\n\n\t10+: gain 3 [gear] relevant to your chosen area(s) of expertise.\n\t7-9: gain 1 [gear] relevant to your chosen area(s) of expertise.',
-            'storage'
+            'Pre-mission [gear] bonus. (Roll)',
+            'storage',
+            fulldescription='After receiving a job you may look through your accumulated parts and supplies for equipment that might help with the current mission. Roll Mind.\n\n\t10+: gain 3 [gear] relevant to your chosen area(s) of expertise.\n\t7-9: gain 1 [gear] relevant to your chosen area(s) of expertise.',
+
         ),
         Move(
             'Blend In',
-            'When you’re about to be caught somewhere you shouldn’t be, but look and act like you belong there, roll Cool.\n\n\t10+: no one thinks twice about your presence until you do something to attract attention\n\t7-9: you’ll be fine as long as you leave right now, but if you do anything else, your presence will arouse suspicion',
-            'blendin'
+            'You can act like you belong in places you don\'t. (Roll)'
+            'blendin',
+            fulldescription='When you’re about to be caught somewhere you shouldn’t be, but look and act like you belong there, roll Cool.\n\n\t10+: no one thinks twice about your presence until you do something to attract attention\n\t7-9: you’ll be fine as long as you leave right now, but if you do anything else, your presence will arouse suspicion',
+
         ),
         Move(
             'Bypass',
-            'When you attempt to subvert security measures (bypassing a locked door, disabling an alarm, camera or motion detector, etc), roll Cool.\n\n\t7+: you successfully bypass the system without leaving a trace\n\t10+: you gain some valuable insight into the facility’s security, gain [intel]',
-            'bypass'
+            'You can subvert security measures. (Roll)',
+            'bypass',
+            fulldescription='When you attempt to subvert security measures (bypassing a locked door, disabling an alarm, camera or motion detector, etc), roll Cool.\n\n\t7+: you successfully bypass the system without leaving a trace\n\t10+: you gain some valuable insight into the facility’s security, gain [intel]',
+
         )
     ]
 }

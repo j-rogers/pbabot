@@ -177,9 +177,6 @@ class PBABot(discord.Client):
     .addcontact <contact name> <description>: Adds a new contact.
     .deletecontact <contact name>: Deletes a contact.
     .map: Displays a current map
-    .ripsprawl1: Detailed deaths from the Sprawl1
-    .ripsprawl2: Detailed deaths from Sprawl2 
-    .ripapoc: Detailed deaths from Apoc World
     .rip: List all dead characters.
     .rememberlist: Displays rough numbers for specific moments. 
     .remember: Displays a message of a memorable moment.
@@ -495,11 +492,6 @@ Game-specific Commands:
         data = {'clocks': self.clocks, 'contacts': self.contacts}
         with open(self.datafile, 'wb') as file:
             file.write(pickle.dumps(data))
-
-        #data = pickle.loads(open(filename, "rb").read())
-        #clocks = data["clocks"]
-        #contacts = data["contacts"]
-        #print("File reloaded")
 
 
 def main():

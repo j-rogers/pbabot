@@ -16,27 +16,15 @@ class Sprawl(Game):
         }
 
     def handle(self, command, args):
-        # Harm move
+        # Handle custom moves
         if command == '.fuckmeup':
             return self._fuckmeup(args)
 
-        # Listing playbook moves
-        playbook_switch = {
-            '.driver': self._driver,
-            '.fixer': self._fixer,
-            '.hacker': self._hacker,
-            '.hunter': self._hunter,
-            '.infiltrator': self._infiltrator,
-            '.killer': self._killer,
-            '.pusher': self._pusher,
-            '.reporter': self._reporter,
-            '.soldier': self._soldier,
-            '.tech': self._tech
-        }
+        # If not a custom move, check if playbook move
+        if command in ('.driver', '.fixer', '.hacker', '.hunter', '.infiltrator', '.killer', '.pusher', '.reporter', '.soldier', '.tech'):
+            return self._getplaybook(command[1:], args)
 
-        if command in playbook_switch:
-            return playbook_switch[command](args)
-
+        # Finally, check if basic move, otherwise return None
         move = self._getmove(command)
         return move.description if move else None
 
@@ -77,7 +65,7 @@ For matrix specific moves see '.matrix'."""
         if not move:
             return """Use .driver <move> to see details about a specific move.
 Roll moves:
-    hotshitdriver: Bonus while hight-tension driving. (Roll)\n
+    hotshitdriver: Bonus while high-tension driving. (Roll)\n
 Other moves:
     Wheels: You start with a car.
     Second Skin: When jacked into your vehicle with a neural interface you get bonuses to your rolls.

@@ -15,6 +15,22 @@ class Game:
     def playbooks(self, message):
         raise NotImplementedError
 
+    def _getplaybook(self, playbook, move):
+        with open(self.data, 'rb') as file:
+            data = pickle.loads(file.read())
+
+            if playbook not in data['playbooks']:
+                return None
+
+            if not move:
+                moves = ''
+                for move in data['playbooks'][playbook]:
+                    moves += move.print() + '\n'
+                return moves
+
+            m = self._getmove(move, playbook=playbook)
+            return m.fulldescription if m else None
+
     def _getmove(self, query, name=False, playbook=None):
         with open(self.data, 'rb') as file:
             moves = pickle.loads(file.read())
@@ -34,7 +50,11 @@ class Game:
 
 
 class Move:
-    def __init__(self, name, description, *commands):
+    def __init__(self, name, description, *commands, fulldescription=None):
         self.name = name
         self.description = description
+        self.fulldescription = fulldescription if fulldescription else description
         self.commands = set(commands)
+
+    def print(self):
+        return f'{self.name}: {self.description} (Commands: {self.commands}'
