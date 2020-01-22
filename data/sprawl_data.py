@@ -228,6 +228,30 @@ playbooks = {
             'When you corner someone and hound them with questions to get to the bottom of a story, roll Edge.\n\n\t10+: they tell you the truth, regardless of the consequences\n\t7-9: they give you enough to get you off their back, then when they’re safe, they choose one:\n\t\t• they respond with fear\n\t\t• they respond with anger\n\t\t• they respond with clinical calm',
             'monstering'
         )
+    ],
+    'soldier': [
+        Move(
+            'I Love It When A Plan Comes Together',
+            'At the start of a mission, roll Edge.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\t6-: gain 1 hold anyway, but your opponent has predicted your every move; the MC will advance the Legwork Clock\n\nDuring the mission, spend 1 hold for one of the following effects:\n\t• You have that piece of gear that you need, right now\n\t• You appear in a scene where you are needed, right now',
+            'iloveitwhenaplancomestogether',
+            'plan'
+        ),
+        Move(
+            'Exit Strategy',
+            'You always have an escape plan prepared. When shit hits the fan and you decide to bail out, roll Mind.\n\n\t7+: You escape the situation\n\t10+: choose one thing to leave behind\n\t7-9: choose two things\n\t\t• Your team\n\t\t• A mission objective\n\t\t• Identifiable evidence\n\t\t• Your staked Cred',
+            'exitstrategy',
+            'exit'
+        ),
+        Move(
+            'Recruiter',
+            'When you attempt to recruit a specialist or a team of specialists to directly assist with your mission, roll Edge.\n\n\t10+: choose 2\n\t7-9: choose 1\n\t\t• Reliable professional(s)\n\t\t• A small team (up to 5)\n\t\t• As competent as required',
+            'recruiter'
+        ),
+        Move(
+            'Slippery',
+            'At the end of a mission during which you planted or hid evidence to shift blame away from you and your team, name who you threw under the corporate bus and roll Edge.\n\n\t7+: the MC will not increase Corporate Clocks in the retaliation phase\n\t10+: the MC will reduce a Corporate Clock by one\n\t6-: create or increase the Threat Clock of whoever you threw under the bus',
+            'slippery'
+        )
     ]
 }
 matrix = []

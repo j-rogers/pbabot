@@ -28,7 +28,9 @@ class Sprawl(Game):
             '.hunter': self._hunter,
             '.infiltrator': self._infiltrator,
             '.killer': self._killer,
-            '.pusher': self._pusher
+            '.pusher': self._pusher,
+            '.reporter': self._reporter,
+            '.soldier': self._soldier
         }
 
         if command in playbook_switch:
@@ -172,8 +174,8 @@ Other moves:
     def _killer(self, move):
         if not move:
             return """Roll moves:
-    .seriousbadass: Bonus when entering a charged situation. (Roll)
-    .trainedeye: Bonus when sizing up a person, vehicle, drone or gang. (Roll)\n
+    seriousbadass: Bonus when entering a charged situation. (Roll)
+    trainedeye: Bonus when sizing up a person, vehicle, drone or gang. (Roll)\n
 Other moves:
     .customweapon: You begin with a custom weapon.
     .emotionless: Play hard ball replacement.
@@ -190,8 +192,8 @@ Other moves:
     def _pusher(self, move):
         if not move:
             return """Roll moves:
-    .driven: Bonus when the mission furthers your vision. (Roll)
-    .visionthing: Bonus when passionately advocating your vision. (Roll)\n
+    driven: Bonus when the mission furthers your vision. (Roll)
+    visionthing: Bonus when passionately advocating your vision. (Roll)\n
 Other moves:
     .believers: You are a part of a gang, tribe, band, corporation or similar group.
     .bringitonhome: Bonus when using Vision Thing or One Million Points of Light.
@@ -210,10 +212,10 @@ Other moves:
     def _reporter(self, move):
         if not move:
             return """Roll moves:
-    .liveandontheair: You can broadcast a stream to hurt your target. (Roll)
-    .noseforastory: Various mission bonuses. (Roll)
-    .gatherevidence: Various effects on story and noise clocks. (Roll)
-    .monstering: You can corner someone and hound them with questions. (Roll)\n
+    liveandontheair: You can broadcast a stream to hurt your target. (Roll)
+    noseforastory: Various mission bonuses. (Roll)
+    gatherevidence: Various effects on story and noise clocks. (Roll)
+    monstering: You can corner someone and hound them with questions. (Roll)\n
 Other moves:
     .24/7livefeeds: Bonus to researching when scanning live feeds.
     .chromed: Choose another piece of cyberware at character creation or in downtime.
@@ -221,6 +223,25 @@ Other moves:
     .presspass: Bonus when revealing yourself to fast talk your way in.
     .reliablesources: Research bonus.
     .warcorrespondent: Bonus when Acting Under Pressure."""
+
+        m = self._getmove(move, playbook='reporter')
+        return m.description if m else None
+
+    def _soldier(self, move):
+        if not move:
+            return """Roll moves:
+    iloveitwhenaplancomestogether: Bonus [gear] and [intel]. (Roll)
+    exitstrategy: Bonus to getting the fuck out of there. (Roll)
+    recruiter: Contact / Hit the Street bonus. (Roll)
+    slippery: Prevents Corps from finding the teams involvement. (Roll)\n
+Other moves:
+    .herestheplan: Team bonus when you plan the mission and if you get paid.
+    .auraofprofessionalism: Bonus when Getting the Job or Getting Paid.
+    .chromed: Choose another piece of cyberware at character creation or in downtime.
+    .corporateknowledge: Bonus when researching a corporation.
+    .handsonmanagement: Mix it up bonus.
+    .steadypresence: You can give pep-talks.
+    .tacticaloperations: Assess bonus."""
 
         m = self._getmove(move, playbook='reporter')
         return m.description if m else None
@@ -284,19 +305,7 @@ def handle(message):
 
     # Soldier
     elif messageString == '.soldier':
-        response = """```Roll moves:
-.iloveitwhenaplancomestogether: Bonus [gear] and [intel]. (Roll)
-.exitstrategy: Bonus to getting the fuck out of there. (Roll)
-.recruiter: Contact / Hit the Street bonus. (Roll)
-.slippery: Prevents Corps from finding the teams involvement. (Roll)\n
-    Other moves:
-.herestheplan: Team bonus when you plan the mission and if you get paid.
-.auraofprofessionalism: Bonus when Getting the Job or Getting Paid.
-.chromed: Choose another piece of cyberware at character creation or in downtime.
-.corporateknowledge: Bonus when researching a corporation.
-.handsonmanagement: Mix it up bonus.
-.steadypresence: You can give pep-talks.
-.tacticaloperations: Assess bonus.```"""
+        response = """``````"""
 
     # Tech
     elif messageString == '.tech':
@@ -429,43 +438,6 @@ You may spend 1 hold to activate routines on that sub-system.```"""
     ############################################################# PLAYBOOK MOVE COMMANDS ##########################################################
     ###############################################################################################################################################
     ###############################################################################################################################################
-
-    # I love it when a plan comes together
-    elif messageString == ".plan":
-        response = """```At the start of a mission, roll Edge.\n
-	10+: gain 3 hold
-	7-9: gain 1 hold
-	6-: gain 1 hold anyway, but your opponent has predicted your every move; the MC will advance the Legwork Clock\n
-During the mission, spend 1 hold for one of the following effects:
-	• You have that piece of gear that you need, right now
-	• You appear in a scene where you are needed, right now```"""
-
-    # Exit strategy
-    elif messageString == ".exitstrategy":
-        response = """```You always have an escape plan prepared. When shit hits the fan and you decide to bail out, roll Mind.\n
-	7+: You escape the situation
-	10+: choose one thing to leave behind
-	7-9: choose two things
-		• Your team
-		• A mission objective
-		• Identifiable evidence
-		• Your staked Cred```"""
-
-    # Recruiter
-    elif messageString == ".recruiter":
-        response = """```When you attempt to recruit a specialist or a team of specialists to directly assist with your mission, roll Edge.\n
-	10+: choose 2
-	7-9: choose 1
-		• Reliable professional(s)
-		• A small team (up to 5)
-		• As competent as required```"""
-
-    # Slippery
-    elif messageString == ".slippery":
-        response = """```At the end of a mission during which you planted or hid evidence to shift blame away from you and your team, name who you threw under the corporate bus and roll Edge.\n
-	7+: the MC will not increase Corporate Clocks in the retaliation phase
-	10+: the MC will reduce a Corporate Clock by one
-	6-: create or increase the Threat Clock of whoever you threw under the bus```"""
 
     # Storage
     elif messageString == ".storage":
