@@ -106,6 +106,38 @@ playbooks = {
             'Bonus while high-tension driving. (Roll)',
             'hotshitdriver',
             fulldescription='When you’re driving a cyber-linked vehicle in a high-pressure situation, roll Edge.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nYou may spend 1 hold to do one of the following:\n\t• Avoid one external danger (a rocket, a burst of gunfire, a collision, etc)\n\t• Escape one pursuing vehicle\n\t• Maintain control of the vehicle\n\t• Impress, dismay or frighten someone',
+        ),
+        Move(
+            'Wheels',
+            'You start with a car.'
+        ),
+        Move(
+            'Second Skin',
+            'When jacked into your cehicle with a neural interface you get bonuses to your rolls.'
+        ),
+        Move(
+            'Chromed',
+            'Choose another piece of cyberware at character creation or in downtime.'
+        ),
+        Move(
+            'Daredevil',
+            'Bonus when you drive straight into danger.'
+        ),
+        Move(
+            'Drone Jockey',
+            'You get two drones.'
+        ),
+        Move(
+            'Iceman',
+            'Fast talk replacement.'
+        ),
+        Move(
+            'Right Tool for the Job',
+            'You have two additional cyber-linked vehicles.'
+        ),
+        Move(
+            'Sweet Ride',
+            'Replacement and bonus to Hit the Street while in your vehicle.'
         )
     ],
     'fixer': [
@@ -126,6 +158,46 @@ playbooks = {
             'Various social (Roll).',
             'reputation',
             fulldescription = 'When you meet someone of consequence who might have heard of you, roll Edge. On a hit, say what they know about you. On a 10+, take +1 forward with them. On a miss, the MC will decide what they’ve heard about you, if anything. Either you or the MC can say whether someone is “of consequence”, but once you’ve made the reputation move on someone, they’re “of consequence” and will be a recurring part of the story.',
+        ),
+        Move(
+            'Backup',
+            'You have a group of associates'
+        ),
+        Move(
+            'Balls in the Air',
+            '+1 crew and choose another job.'
+        ),
+        Move(
+            'Chromed',
+            'Choose another piece of cyberware at character creation or in downtime'
+        ),
+        Move(
+            'Deal of a Lifetime',
+            'Hit the Street bonus when selling something'
+        ),
+        Move(
+            'Facetime',
+            'Fast talk bonus'
+        ),
+        Move(
+            'Hard to Find',
+            'Hit the Street bonus.'
+        ),
+        Move(
+            'Sales Engineer',
+            'Produce equipment bonus.'
+        ),
+        Move(
+            'Smooth',
+            'Helping or hindering replacement'
+        ),
+        Move(
+            'Street King Pin',
+            '+1 crew, choose an additional job.'
+        ),
+        Move(
+            'Word on the Street',
+            'Meatspace research bonus'
         )
     ],
     'hacker': [
@@ -134,6 +206,54 @@ playbooks = {
             'Hold over systems (Roll)',
             'consolecowboy',
             fulldescription='Console cowboy: When you connect to a secure system, roll Mind.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nWhile in that system, you may spend 1 hold for any of the following effects:\n\t• Prevent a construct from triggering an alert\n\t• Avoid an ICE routine executed against you, your deck, or your programs\n\t• Increase your hold over compromised security or manipulated systems by 1',
+        ),
+        Move(
+            'Jack in',
+            'You get access the matrix moves'
+        ),
+        Move(
+            'Antivirus',
+            'Legwork roll+cred for chrome chips'
+        ),
+        Move(
+            'Chromed',
+            'Choose another piece of cyberware at character creation or in downtime'
+        ),
+        Move(
+            'Inside Job',
+            'When you login through a comprimised site, +1 matrix moves.'
+        ),
+        Move(
+            'I\'ve had worse',
+            '+1 armour against ice.'
+        ),
+        Move(
+            'Humans are Easy Prey',
+            'Go on the offensive against Sysop, roll synth'
+        ),
+        Move(
+            'Rep',
+            'Fast talk and play hardball replacements while in the matrix.'
+        ),
+        Move(
+            'Search Optimisation',
+            'Matrix research bonus'
+        ),
+        Move(
+            'Rig Enthusiast',
+            'Extra deck tag'
+        ),
+        Move(
+            'Sneak Door Beta',
+            'Create a backdoor for future use.'
+        ),
+        Move(
+            'Tech Support',
+            'Bonus when helping or interfering while in the matrix'
+        ),
+        Move(
+            'Diabolus Ex Machina',
+            'When Ice is activated against you, roll +synth'
         )
     ],
     'hunter': [
@@ -158,6 +278,38 @@ playbooks = {
             'sniper',
             fulldescription='When you set up a covered and concealed place to hide, roll Cool.\n\n\t10+: choose 3\n\t7-9: choose 2\n\t\t• Your site is well hidden\n\t\t• Your site has excellent cover\n\t\t• Your site has an excellent field of view\n\t\t• You have a similarly covered and concealed backup location\n\t\t• Your spot is well secured\n\nThen describe your hide site.',
 
+        ),
+        Move(
+            'Ear to the Ground',
+            'Meatspace research bonus'
+        ),
+        Move(
+            'Chromed',
+            'Choose another piece of cyberware at character creation or in downtime'
+        ),
+        Move(
+            'Deadbeat',
+            'Hit the Street bonus'
+        ),
+        Move(
+            'Enhance',
+            'Research bonus'
+        ),
+        Move(
+            'Eye for Detail',
+            'Bonus when calmly assessing a person or place'
+        ),
+        Move(
+            'Human Terrain',
+            'Bonus when investigating a group'
+        ),
+        Move(
+            'On the Trail',
+            'Additional use of intel against a single person'
+        ),
+        Move(
+            'See the Angles',
+            'At the start of the action phase gain [intel] and [gear].'
         )
     ],
     'infiltrator': [
@@ -189,6 +341,38 @@ playbooks = {
             'psychwarfare',
             fulldescription='When you attempt to influence the morale of your enemies by leaving evidence of violence while remaining undetected, roll Edge.\n\n\t7+: your enemies are impressed and overly cautious, scared and demoralised, or angry and careless (MC’s choice)\n\t10+: you choose',
 
+        ),
+        Move(
+            'Cat Burgler',
+            'On the job [gear] procurement. Used with Covert Entry'
+        ),
+        Move(
+            'Face',
+            'On the job [intel] procurement. Used with Covert Entry'
+        ),
+        Move(
+            'Assassin',
+            'Bonus to attacking unexpectedly.'
+        ),
+        Move(
+            'Chromed',
+            'Choose another piece of cyberware at character creation or in downtime.'
+        ),
+        Move(
+            'Jack In',
+            'You gain access to matrix moves.'
+        ),
+        Move(
+            'Master of Disguise',
+            'Fast talk bonus'
+        ),
+        Move(
+            'Mother Duck',
+            'Allows Covert Entry hold you spend to work for the whole team.'
+        ),
+        Move(
+            'Stealth Operative',
+            'Assess bonus'
         )
     ],
     'killer': [
@@ -205,6 +389,38 @@ playbooks = {
             'trainedeye',
             fulldescription='When you evaluate a person, vehicle, drone or gang, roll Cool.\n\n\t7+: ask the target “How are you vulnerable to me?” Take +1 forward when acting on the answer\n\t10+: gain +1 ongoing when acting against that target',
 
+        ),
+        Move(
+            'Custom Weapon',
+            'You begin with a custom weapon.'
+        ),
+        Move(
+            'Emotionless',
+            'Play hard ball replacement.'
+        ),
+        Move(
+            'Hard',
+            'Harm move bonus'
+        ),
+        Move(
+            'Loaded for Bear',
+            'Choose another bonus weapon.'
+        ),
+        Move(
+            'More Machine than Meat',
+            'Choose another piece of cyberware at character creation or in downtime.'
+        ),
+        Move(
+            'Corporate Secrets',
+            'Bonus when researching a corporation'
+        ),
+        Move(
+            'Military Background',
+            'Bonus when hitting the street.'
+        ),
+        Move(
+            'Milspecs',
+            'Bonus to mix it up.'
         )
     ],
     'pusher': [
@@ -221,6 +437,46 @@ playbooks = {
             'visionthing',
             fulldescription='When you have time and space for an emotional connection with someone and you passionately advocate for your vision, roll Style.\n\n\t10+: gain 2 hold\n\t7-9: gain 1 hold\n\nSpend 1 hold to have the targeted NPCs:\n\t• give you something you want\n\t• do something you ask\n\t• fight to protect you or your cause\n\t• disobey an order given by someone with authority or leverage over them\n\nWhen you use this move on a PC, spend your hold to help or interfere as if you had rolled a 10+ (i.e. give them +1 or -2). If you miss against a PC, they gain 2 hold against you which they can use in the same way.',
 
+        ),
+        Move(
+            'Believers',
+            'You are part of a gang, tribe, band, corporation, or similar group'
+        ),
+        Move(
+            'Bring it on Home',
+            'Bonus when using Vision Thing or One Million Points of Light'
+        ),
+        Move(
+            'Chromed',
+            'Choose another piece of cyberware at character creation or in downtime'
+        ),
+        Move(
+            'Famous',
+            'Bonus against people who recognise you.'
+        ),
+        Move(
+            'Inner Circle',
+            'You have a loyal inner circle of believers'
+        ),
+        Move(
+            'One Million Points of Lights',
+            'Bonus to vision thing.'
+        ),
+        Move(
+            'Opportunistic',
+            'Replacement when helping or interfering.'
+        ),
+        Move(
+            'People Person',
+            'Hit the Street bonus.'
+        ),
+        Move(
+            'Rabble Rouser',
+            'Vision Thing bonus'
+        ),
+        Move(
+            'Silver Tongue',
+            'Fast Talk bonus'
         )
     ],
     'reporter': [
@@ -264,6 +520,26 @@ playbooks = {
             'monstering',
             fulldescription='When you corner someone and hound them with questions to get to the bottom of a story, roll Edge.\n\n\t10+: they tell you the truth, regardless of the consequences\n\t7-9: they give you enough to get you off their back, then when they’re safe, they choose one:\n\t\t• they respond with fear\n\t\t• they respond with anger\n\t\t• they respond with clinical calm',
 
+        ),
+        Move(
+            '24/7 Livefeed',
+            'Bonus to researching when scanning live feeds.'
+        ),
+        Move(
+            'Chromed',
+            'Choose another piece of cyberware at character creation or in downtime.'
+        ),
+        Move(
+            'Filthy Assistants',
+            'Bonus when using research obtained [intel]'
+        ),
+        Move(
+            'Reliable Sources',
+            'Research bonus'
+        ),
+        Move(
+            'Warcorrepondent',
+            'Bonus when Acting Under Pressure'
         )
     ],
     'soldier': [
@@ -296,6 +572,34 @@ playbooks = {
             'slippery',
             fulldescription='At the end of a mission during which you planted or hid evidence to shift blame away from you and your team, name who you threw under the corporate bus and roll Edge.\n\n\t7+: the MC will not increase Corporate Clocks in the retaliation phase\n\t10+: the MC will reduce a Corporate Clock by one\n\t6-: create or increase the Threat Clock of whoever you threw under the bus',
 
+        ),
+        Move(
+            'Here\'s the Plan',
+            'Team bonus when you plan the mission and if you get paid.'
+        ),
+        Move(
+            'Aura of Professionalism',
+            'Bonus when Getting the Job or Getting Paid'
+        ),
+        Move(
+            'Chromed',
+            'Choose another piece of cyberware at character creation or in downtime'
+        ),
+        Move(
+            'Corporate Knowledge',
+            'Bonus when researching a corporation'
+        ),
+        Move(
+            'Hands On Management',
+            'Mix it Up bonus.'
+        ),
+        Move(
+            'Steady Presence',
+            'You can give pep-talks.'
+        ),
+        Move(
+            'Tactical Operations',
+            'Assess bonus'
         )
     ],
     'tech': [
@@ -319,15 +623,54 @@ playbooks = {
             'bypass',
             fulldescription='When you attempt to subvert security measures (bypassing a locked door, disabling an alarm, camera or motion detector, etc), roll Cool.\n\n\t7+: you successfully bypass the system without leaving a trace\n\t10+: you gain some valuable insight into the facility’s security, gain [intel]',
 
+        ),
+        Move(
+            'Expert',
+            'You get an area of expertise'
+        ),
+        Move(
+            'Customiser',
+            'You can examine and modify technology.'
+        ),
+        Move(
+            'Analytic',
+            'Assess replacement'
+        ),
+        Move(
+            'Chromed',
+            'Choose another piece of cyberware at character creation or in downtime'
+        ),
+        Move(
+            'Diverse Interests',
+            'Choose another area of expertise'
+        ),
+        Move(
+            'Jack of All Trades',
+            'Choose another area of expertise'
+        ),
+        Move(
+            'Obsessive',
+            'Research bonus'
+        ),
+        Move(
+            'On It',
+            'Replacement when helping or hindering someone in a topic relating to your expertise'
+        ),
+        Move(
+            'Renaissance Man',
+            'Choose another area of expertise'
         )
     ]
 }
 matrix = []
 
+custom = []
+
 data = {
     'basic': basic,
     'playbooks': playbooks,
-    'matrix': matrix
+    'matrix': matrix,
+    'custom': custom
 }
 
 with open('sprawl_data.pickle', 'wb') as file:

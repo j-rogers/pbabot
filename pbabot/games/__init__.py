@@ -23,9 +23,9 @@ class Game:
                 return None
 
             if not move:
-                moves = ''
+                moves = f'Use .{playbook} <move> to see more details about the following moves:\n'
                 for move in data['playbooks'][playbook]:
-                    moves += move.print() + '\n'
+                    moves += f'\t{move.print()}\n'
                 return moves
 
             m = self._getmove(move, playbook=playbook)
@@ -57,4 +57,4 @@ class Move:
         self.commands = set(commands)
 
     def print(self):
-        return f'{self.name}: {self.description} (Commands: {self.commands}'
+        return f'{self.name}: {self.description} (Commands: {self.commands if self.commands else None})'
