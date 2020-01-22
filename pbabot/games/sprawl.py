@@ -24,7 +24,9 @@ class Sprawl(Game):
         playbook_switch = {
             '.driver': self._driver,
             '.fixer': self._fixer,
-            '.hacker': self._hacker
+            '.hacker': self._hacker,
+            '.hunter': self._hunter,
+            '.infiltrator': self._infiltrator
         }
 
         if command in playbook_switch:
@@ -142,6 +144,29 @@ Other moves:
     .onthetrail: Additional use of intel against a single person.
     .seetheangles: At the start of the action phase gain [intel] and [gear]."""
 
+        m = self._getmove(move, playbook='hunter')
+        return m.description if m else None
+
+    def _infiltrator(self, move):
+        if not move:
+            return """Roll moves:
+    covertentry: Bonus when infilatrating alone. (Roll)
+    casethejoint: Bonus when examining a locations weaknesses. (Roll)
+    planb: When shit hits the fan and you have to get out. (Roll)
+    psychologicalwarfare: When you attempt to demoralise the enemy by leaving evidence of violence. (Roll)\n
+Other moves:
+    .catburgler: On the job [gear] procurement. Used with Covert Entry.
+    .face: On the job [intel] procurement. Used with Covert Entry.
+    .assassin: Bonus to attacking unexpectedly.
+    .chromed: Choose another piece of cyberware at character creation or in downtime.
+    .jackin: You can access the matrix.
+    .masterofdisguise: Fast talk bonus.
+    .motherduck: Allows Covert Entry hold you spend to work for the whole team.
+    .stealthoperative: Assess bonus."""
+
+        m = self._getmove(move, playbook='infiltrator')
+        return m.description if m else None
+
     def _fuckmeup(self, damage):
         dice1 = random.randint(1, 6)
         dice2 = random.randint(1, 6)
@@ -185,20 +210,7 @@ def handle(message):
 
     # Infiltrator
     elif messageString == '.infiltrator':
-        response = """```Roll moves:
-.covertentry: Bonus when infilatrating alone. (Roll)
-.casethejoint: Bonus when examining a locations weaknesses. (Roll)
-.planb: When shit hits the fan and you have to get out. (Roll)
-.psychologicalwarfare: When you attempt to demoralise the enemy by leaving evidence of violence. (Roll)\n
-    Other moves:
-.catburgler: On the job [gear] procurement. Used with Covert Entry.
-.face: On the job [intel] procurement. Used with Covert Entry.
-.assassin: Bonus to attacking unexpectedly.
-.chromed: Choose another piece of cyberware at character creation or in downtime.
-.jackin: You can access the matrix.
-.masterofdisguise: Fast talk bonus.
-.motherduck: Allows Covert Entry hold you spend to work for the whole team.
-.stealthoperative: Assess bonus.```"""
+        response = """``````"""
 
     # Killer
     elif messageString == '.killer':
@@ -394,37 +406,6 @@ You may spend 1 hold to activate routines on that sub-system.```"""
     ############################################################# PLAYBOOK MOVE COMMANDS ##########################################################
     ###############################################################################################################################################
     ###############################################################################################################################################
-
-    # Covert entry
-    elif messageString == ".covertentry":
-        response = """```When you attempt to infiltrate a secure area alone, roll Cool.\n
-	10+: gain 3 hold
-	7-9: gain 1 hold\n
-As the MC describes the infiltration and the security measures you must overcome, you may spend 1 hold to describe how you overcome the obstacle and:
-	• Bypass a security system or guard.
-	• Disable a security system you have bypassed.
-	• Disable a guard.
-	• Escape notice```"""
-
-    # Case the joint
-    elif messageString == ".casethejoint":
-        response = """```When you take time to examine a location for security weaknesses you can exploit, roll Edge.\n
-	10+: gain three [intel]
-	7-9: gain [intel]\n
-You may spend this [intel] in the normal way, or you can spend one point of this [intel] to ask questions from the assess or research lists.```"""
-
-    # Plan B
-    elif messageString == ".planb":
-        response = """```When shit hits the fan and you have to get out, name your escape route and roll Cool.\n
-	10+: sweet, you’re gone
-	7–9: you can go or stay, but if you go it costs you: leave something behind, or take something with you; in either case, the MC will tell you what
-	6-: you’re caught in a vulnerable position, half in and half out. The MC will make a move```"""
-
-    # Psychological warfare
-    elif messageString == ".psychwarfare":
-        response = """```When you attempt to influence the morale of your enemies by leaving evidence of violence while remaining undetected, roll Edge.\n
-	7+: your enemies are impressed and overly cautious, scared and demoralised, or angry and careless (MC’s choice)
-	10+: you choose```"""
 
     # Serious badass
     elif messageString == ".seriousbadass":
