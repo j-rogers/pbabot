@@ -206,19 +206,22 @@ playbooks = {
         )
     ],
     'hacker': [
-        Move(
-            'Console Cowboy',
-            'Hold over systems (Roll)',
-            'consolecowboy',
-            fulldescription='Console cowboy: When you connect to a secure system, roll Mind.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nWhile in that system, you may spend 1 hold for any of the following effects:\n\t• Prevent a construct from triggering an alert\n\t• Avoid an ICE routine executed against you, your deck, or your programs\n\t• Increase your hold over compromised security or manipulated systems by 1',
-        ),
+        # Move(
+        #     'Console Cowboy',
+        #     'Hold over systems (Roll)',
+        #     'consolecowboy',
+        #     fulldescription='Console cowboy: When you connect to a secure system, roll Mind.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nWhile in that system, you may spend 1 hold for any of the following effects:\n\t• Prevent a construct from triggering an alert\n\t• Avoid an ICE routine executed against you, your deck, or your programs\n\t• Increase your hold over compromised security or manipulated systems by 1',
+        # ),
         Move(
             'Jack in',
             'You get access the matrix moves'
         ),
         Move(
-            'Antivirus',
-            'Legwork roll+cred for chrome chips'
+            'Antivirus Subscription',
+            'Legwork roll+cred for chrome chips',
+            'antivirus',
+            'antivirussubscription',
+            fulldescription='Antivirus Subscription: During legwork, you may request a delivery of 2 Single Use Chrome Chips. Roll + Cred Spent:\n\t7+: Mark 2 gear to spend in the matrix.\n\t10+: Next day delivery.'
         ),
         Move(
             'Chromed',
@@ -226,23 +229,31 @@ playbooks = {
         ),
         Move(
             'Inside Job',
-            'When you login through a comprimised site, +1 matrix moves.'
+            'When you login through a compromised site, +1 matrix moves.',
+            'insidejob'
         ),
         Move(
             'I\'ve had worse',
-            '+1 armour against ice.'
+            '+1 armour against ice subroutines.',
+            'ivehadworse'
         ),
         Move(
             'Humans are Easy Prey',
-            'Go on the offensive against Sysop, roll synth'
+            'Go on the offensive against Sysop, roll synth',
+            'humansareeasyprey',
+            fulldescription='Humans are such easy prey: When you go on the offensive against a Sysop, roll Synth:\n\n\t10+: Choose two, or one twice:\n\t7-9: Choose one:\n\t\tYou shake them off your trail, for now.\n\t\tYou damage their rig, slowing them down.\n\t\tYou overload their system, zapping their brain'
         ),
         Move(
             'Rep',
-            'Fast talk and play hardball replacements while in the matrix.'
+            'Fast talk and play hardball replacements while in the matrix.',
+            'rep',
+            fulldescription='Rep: When you appear in the Matrix with a recognisable avatar, roll Synth instead of Style for fast talk and instead of Edge for play hardball.\nWhen your reputation gets you into trouble, mark experience'
         ),
         Move(
             'Search Optimisation',
-            'Matrix research bonus'
+            'Matrix research bonus',
+            'searchoptimisation',
+            fulldescription='When you research a topic in the Matrix, you may always ask a follow up question. On a 10+, take an additional [intel].'
         ),
         Move(
             'Rig Enthusiast',
@@ -250,7 +261,9 @@ playbooks = {
         ),
         Move(
             'Sneak Door Beta',
-            'Create a backdoor for future use.'
+            'Create a backdoor for future use.',
+            'sneakdoorbeta',
+            fulldescription='Sneakdoor Beta: When you have successfully infiltrated a system, you may create a backdoor for quick re-entry. Roll Mind:\n\n\t10+: It’s set up, it’s clean, you’re the only one that knows about it.\n\t7-9: It’s set up, but choose one:\n\t\tSysops will find it sooner rather than later\n\t\tIt’s not silent entry, using it may raise alarms\n\t\tIt’s not a clean backdoor, may still have to attempt to login '
         ),
         Move(
             'Tech Support',
@@ -258,7 +271,9 @@ playbooks = {
         ),
         Move(
             'Diabolus Ex Machina',
-            'When Ice is activated against you, roll +synth'
+            'When Ice is activated against you, roll +synth',
+            'diabolusexmachina',
+            fulldescription='When ICE is activated against you in the Matrix, roll +Synth:\n\n\t10+: The ICE is under your control.\n\t7-9: Choose one temporary effect:\n\t\tThe ICE is deactivated, this server is open season.\n\t\tThe ICE is retargeted, you’re not its priority anymore.\n\t\tYou slip past it, it’s the next guy’s problem.'
         )
     ],
     'hunter': [
@@ -670,27 +685,27 @@ playbooks = {
 
 matrix = [
     Move(
-        'Login',
+        '[OG/CUSTOM] Login',
         'When attempting to gain access to a system, login.',
         '.login',
         fulldescription='When you attempt to gain access to a system, roll Synth.\n\t10+: you’re in clean\n\t7-9: you’re in, but choose one:\n\t\tSysops are alerted\n\t\tICE is activated\n\t\tThey’re onto you, +1 trace\n\t\tYour access is restricted – take -1 ongoing to matrix moves in this system while your access is restricted\n\t6-: you’re in, but the MC chooses two, and a relevant clock is advanced',
     ),
     Move(
-        'Melt ICE',
+        '[OG] Melt ICE',
         'When fighting ICE, melt ICE.',
         '.meltice',
         '.melt',
         fulldescription='When you attempt to evade, destroy or disable an activated ICE construct, roll Edge.\n\n\t7+: you evade, destroy, or temporarily disable the system, your choice\n\t7-9: the system successfully executes a routine before you can disable it'
     ),
     Move(
-        'Compromise Security',
+        '[OG] Compromise Security',
         'When screwing around with a system\'s digital security, comprimise security.',
         '.compromisesecurity',
         '.compsec',
         fulldescription='When you attempt to compromise a sub-system’s security, roll Mind.\n\n\t10+: gain 3 hold over the sub-system you have compromised\n\t7-9: gain 1 hold\n\t6-: you trigger an alert, which may have additional consequences\n\nYou may spend 1 hold to activate a security measure on that sub-system.'
     ),
     Move(
-        'Manipulate Systems',
+        '[OG] Manipulate Systems',
         'When interacting with the meatspace through a system, manipulate systems.',
         '.manipulatesystems',
         '.manipulatesystem',
@@ -698,10 +713,22 @@ matrix = [
         fulldescription='When you attempt to manipulate a digitally-controlled aspect of a facility, roll Synth.\n\n\t10+: gain 3 hold over the sub-system you are manipulating\n\t7-9: gain 1 hold\n\nYou may spend 1 hold to activate routines on that sub-system.'
     ),
     Move(
-        'Jack out',
+        '[OG/CUSTOM] Jack out',
         'When you need to get out quick, jack out.',
         '.jackout',
         fulldescription='Jackout: When you, your programs, or your deck are about to be damaged by ICE, you can try to jack out. Roll Cool.\n\t10+: you disconnect yourself from the system before any serious harm occurs\n\t7-9: you jack out, but choose one:\n\t\tYou lose some data\n\t\tYou take some of the established consequences\n\t\tThe owners of the target system trace you to your current location6-: you take the established consequences... and you’re still connected'
+    ),
+    Move(
+        '[CUSTOM] Bypass Countermeasures',
+        'Outmaneuver or evade system countermeasures.'
+        '.bypasscountermeasures',
+        fulldescription='Bypass Countermeasures: When you attempt to outmaneuver or evade system countermeasures, roll Edge:\n\n\t10+: You’re straight through, no worries\n\t7-9: You’re through, but they’re still on you. Choose one:\n\t\tAdvance Mission Clock\n\t\tICE is activated\n\t\t+1 trace\n\t\tTake established consequences\n\t6-: You’re caught, and the MC chooses one'
+    ),
+    Move(
+        '[CUSTOM] Hijack',
+        'Attempt to gain control over a system.',
+        '.hijack',
+        fulldescription='Hijack System: When you attempt to gain control over a system, roll Mind.\n\n\t7+: You’re in control. You may search, destroy, or wreak whatever chaos you want.\n\t7-9:  Choose one:\n\t\tTime is limited, you can only do so much before they cut you off.\n\t\tAccess is limited, you can’t get into everything you want.\n\t\t+1 trace.'
     )
 ]
 

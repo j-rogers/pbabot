@@ -10,9 +10,8 @@ class Sprawl(Game):
         self.datafile = 'data/sprawl_data.pickle'
         self.commands = {
             '.matrix': 'Displays a list of matrix-specific moves.',
-            '.custom': 'Displays a list of custom moves.',
-            '.weapons': 'Displays a list of weapons and their profiles.',
-            '.drugs': 'Displays a list of drugs.'
+            '.cred': 'Shows you what you can do with cred.',
+            '.weapons': 'Displays a list of weapons and their profiles.'
         }
         self._loaddata()
 
@@ -68,38 +67,10 @@ def handle(message):
     messageString = message.content
     response = ''
 
-    '''
-	Listing
-	'''
-    print(messageString)
 
-    # Lists matrix specific moves
-    if messageString == '.matrix':
-        response = """```Use the following commands to find detailed information about each move.\n
-.login: When attepting to gain access to a system, Login. (Synth)
-.meltice: When figting ICE, Melt Ice (Edge)
-.compromisesecurity: When screwing around with a system's digital security, Compromise Security (Mind)
-.manipulatesystems: When interacting with the meatspace through a system, Manipulate Systems (Synth)
-.jackout: When you need to get out quick, Jack Out (Cool)```"""
-
-    # List custom moves
-    elif messageString == '.custom':
-        response = """```Use the following commands to find detailed information about each move.\n
-.dogie: Git along little dogie (Style)
-.trouble: Nose for trouble (Cool)
-.goodbetter: He's good, but I'm better (Edge)```"""
-
-    # List drugs
-    elif messageString == '.drugs':
-        response = """```Use the following commands to find detailed information about each drug.\n
-.spank: Spank
-.motherfuck: Motherfuck
-.domo: Domo
-.clutch: Clutch
-.meatloaf: Meatloaf```"""
 
     # List weapons
-    elif messageString == '.weapons':
+    if messageString == '.weapons':
         response = """```Firearms:
 	» Holdout pistol (2-harm hand/close discreet quick reload loud)
 	» Flechette pistol (3-harm close/near quick flechette)
@@ -139,56 +110,7 @@ Hand weapons:
     ###############################################################################################################################################
     ###############################################################################################################################################
 
-    # Git along little dogie
-    elif messageString == ".dogie":
-        response = """```When you want to use Waleed to antagonise, roll Style (or +1 Synth if you both have Neural Interface).\n
-	7+ you antagonise one character, giving you +1 Ongoing to act against that character
-	7-9 Choose One:
-	10+ Choose Two:
- 		- Waleed antagonises one additional character, but will struggle to escape harm
- 		- Waleed will escape harm, but will not antagonise for long
- 		- Waleed will allow you to escape harm, but will struggle to escape harm
- 		- Waleed will apply lethal force, but take his sweet time
- 		- Waleed will chase down a lead over great distance, but you will struggle to maintain contact```"""
 
-    # Nose for trouble
-    elif messageString == ".trouble":
-        response = """```When you want to use Waleed to Assess a person, place or thing, justify why dog senses are better than yours and roll Cool (or +1 Synth if you both have Neural Interface). On a hit, gain +1 additional hold.```"""
-
-    # He's good, but I'm better
-    elif messageString == ".goodbetter":
-        response = """```When you attempt to outwit a sentient opponent in The Matrix, roll Edge.\n
-	7+ you temporarily evade/escape/overcome your opponent
-	10+ gain 1 hold. Spend this to temporarily evade/escape/overcome your opponent at any other time in this run. 
-	6- your opponent gets the better of you.```"""
-
-    elif messageString == ".jackin":
-        response = """```
-		Jack in: When you’re jacked into the matrix, you have access to the matrix moves .
-		```"""
-    elif messageString == ".antivirus":
-        response = """```
-		Antivirus Subscription: During legwork, you may request a delivery of 2 Single Use Chrome Chips Roll + Cred Spent:
-		7+: Mark 2 gear to spend in the matrix.
-		10+: Next day delivery.
-		```"""
-    elif messageString == ".insidejob":
-        response = """```
-		Inside Job: When you login through a compromised, on-site location, take +1 on all Matrix Moves. 
-		```"""
-    elif messageString == ".ivehadworse":
-        response = """```
-		I’ve had worse: Gain 1 Armour against ICE subroutines
-		```"""
-    elif messageString == ".humansareeasyprey":
-        response = """```
-		Humans are such easy prey: When you go on the offensive against a Sysop, roll Synth:
-		10+: Choose two, or one twice: 
-		7-9: Choose one:
-		You shake them off your trail, for now.
-		You damage their rig, slowing them down.
-		You overload their system, zapping their brain
-		```"""
     elif messageString == ".cred":
         response = """```
 		Spending 1 Cred will get you:
@@ -211,129 +133,4 @@ Hand weapons:
 			Spending 8 cred will get you:
 			>cutting-edge, military or extortionately expensive gear from a fixer (cyberdecks, military vehicles, most cyberware)
 			```"""
-    elif messageString == ".rep":
-        response = """```
-		Rep: When you appear in the Matrix with a recognisable avatar, 
-		roll Synth instead of Style for fast talk and instead of Edge for play hardball. 
-		When your reputation gets you into trouble, mark experience
-		```"""
-    elif messageString == ".sneakdoorbeta":
-        response = """```
-		Sneakdoor Beta: When you have successfully infiltrated a system, you may create a backdoor for quick re-entry. Roll Mind:
-		10+: It’s set up, it’s clean, you’re the only one that knows about it.
-		7-9: It’s set up, but choose one:
-			Sysops will find it sooner rather than later
-			It’s not silent entry, using it may raise alarms
-			It’s not a clean backdoor, may still have to attempt to login 
-		```"""
-    elif messageString == ".searchoptimisation":
-        response = """```
-		Search optimisation: When you research a topic in the Matrix, 
-		you may always ask a follow up question. On a 10+, take an additional [intel].
-		```"""
-    elif messageString == ".diabolusexmachina":
-        response = """```
-		Diabolus Ex Machina: When ICE is activated against you in the Matrix, roll +Synth: 
-		10+: The ICE is under your control.
-		7-9: Choose one temporary effect: 
-			The ICE is deactivated, this server is open season. 
-			The ICE is retargeted, you’re not its priority anymore. 
-			You slip past it, it’s the next guy’s problem.
-		```"""
 
-    elif messageString == ".bypasscountermeasures":
-        response = """```
-		Bypass Countermeasures: When you attempt to outmaneuver or evade system countermeasures, roll Edge
-		10+: You’re straight through, no worries
-		7-9: You’re through, but they’re still on you. Choose one:
-			Advance Mission Clock
-			ICE is activated
-			+1 trace
-			Take established consequences 
-		6-: You’re caught, and the MC chooses one
-
-			```"""
-    elif messageString == ".hijack":
-        response = """```
-		Hijack System: When you attempt to gain control over a system, roll Mind. 
-		7+: You’re in control. You may search, destroy, or wreak whatever chaos you want.
-		7-9:  Choose one:
-			Time is limited, you can only do so much before they cut you off.
-			Access is limited, you can’t get into everything you want.
-			+1 trace.
-			```"""
-    elif messageString == ".":
-        response = """```
-			```"""
-    elif messageString == ".":
-        response = """```
-			```"""
-    elif messageString == ".":
-        response = """```
-			```"""
-    elif messageString == ".":
-        response = """```
-			```"""
-
-
-    ###############################################################################################################################################
-    ###############################################################################################################################################
-    ################################################################# DRUG COMMANDS ###############################################################
-    ###############################################################################################################################################
-    ###############################################################################################################################################
-
-    # Spank
-    elif messageString == ".spank":
-        response = """```While Active:
-	+1 Meat
-	-1 Synth
-	+unreliable on cyber gear
-	+1 Harm on Melee Attacks
-	+short\n
-Withdrawal:
-	-2 Style
-	-1 Meat
-	-long```"""
-
-    # Motherfuck
-    elif messageString == ".motherfuck":
-        response = """```While Active:
-	+2 Edge
-	-2 Cool
-	-long\n
-Withdrawal:
-	-1 Cool
-	-day```"""
-
-    # Domo
-    elif messageString == ".domo":
-        response = """```While Active:
-	+2 Synth
-	-1 Everything else
-	Take 1 Harm (increases per use per day)
-	-instant\n
-Withdrawal:
-	-1 Synth
-	+Harmful on cybergear
-	-short```"""
-
-    # Clutch
-    elif messageString == ".clutch":
-        response = """```While Active:
-	-1 to Take Harm move
-	-1 Mind
-	-short\n
-Withdrawal:
-	Cardiac arrest if taken more than twice a day```"""
-
-    # Meatloaf
-    elif messageString == ".meatloaf":
-        response = """```While Active:
-	+fast reflexes
-	-short\n
-Withdrawal:
-	-2 Meat
-	-2 Edge
-	-long```"""
-
-    return response
