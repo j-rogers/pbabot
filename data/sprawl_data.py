@@ -667,7 +667,43 @@ playbooks = {
         )
     ]
 }
-matrix = []
+
+matrix = [
+    Move(
+        'Login',
+        'When attempting to gain access to a system, login.',
+        '.login',
+        fulldescription='When you attempt to gain access to a system, roll Synth.\n\t10+: you’re in clean\n\t7-9: you’re in, but choose one:\n\t\tSysops are alerted\n\t\tICE is activated\n\t\tThey’re onto you, +1 trace\n\t\tYour access is restricted – take -1 ongoing to matrix moves in this system while your access is restricted\n\t6-: you’re in, but the MC chooses two, and a relevant clock is advanced',
+    ),
+    Move(
+        'Melt ICE',
+        'When fighting ICE, melt ICE.',
+        '.meltice',
+        '.melt',
+        fulldescription='When you attempt to evade, destroy or disable an activated ICE construct, roll Edge.\n\n\t7+: you evade, destroy, or temporarily disable the system, your choice\n\t7-9: the system successfully executes a routine before you can disable it'
+    ),
+    Move(
+        'Compromise Security',
+        'When screwing around with a system\'s digital security, comprimise security.',
+        '.compromisesecurity',
+        '.compsec',
+        fulldescription='When you attempt to compromise a sub-system’s security, roll Mind.\n\n\t10+: gain 3 hold over the sub-system you have compromised\n\t7-9: gain 1 hold\n\t6-: you trigger an alert, which may have additional consequences\n\nYou may spend 1 hold to activate a security measure on that sub-system.'
+    ),
+    Move(
+        'Manipulate Systems',
+        'When interacting with the meatspace through a system, manipulate systems.',
+        '.manipulatesystems',
+        '.manipulatesystem',
+        '.mansys',
+        fulldescription='When you attempt to manipulate a digitally-controlled aspect of a facility, roll Synth.\n\n\t10+: gain 3 hold over the sub-system you are manipulating\n\t7-9: gain 1 hold\n\nYou may spend 1 hold to activate routines on that sub-system.'
+    ),
+    Move(
+        'Jack out',
+        'When you need to get out quick, jack out.',
+        '.jackout',
+        fulldescription='Jackout: When you, your programs, or your deck are about to be damaged by ICE, you can try to jack out. Roll Cool.\n\t10+: you disconnect yourself from the system before any serious harm occurs\n\t7-9: you jack out, but choose one:\n\t\tYou lose some data\n\t\tYou take some of the established consequences\n\t\tThe owners of the target system trace you to your current location6-: you take the established consequences... and you’re still connected'
+    )
+]
 
 custom = []
 

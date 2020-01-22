@@ -20,6 +20,13 @@ class Sprawl(Game):
         # Handle game-specific moves
         if command == '.fuckmeup':
             return self._fuckmeup(args)
+        elif command == '.matrix':
+            return self._matrix()
+
+        # Check matrix moves
+        move = self._getmove(command, index='matrix')
+        if move:
+            return move.fulldescription
 
         # If not a game-specific move, check if playbook move
         if command in ('.driver', '.fixer', '.hacker', '.hunter', '.infiltrator', '.killer', '.pusher', '.reporter', '.soldier', '.tech'):
@@ -45,6 +52,13 @@ class Sprawl(Game):
             return f'You\'re going to have to suck off the MC on this one, you rolled a {roll}. {harm.description}'
         else:
             return f'You rolled {roll}. You\'re gucci flip flops fam *dabs* haha yeet :3'
+
+    def _matrix(self):
+        matrixmoves = 'Use the following commands to find detailed information about each move.\n'
+        for move in self.data['matrix']:
+            matrixmoves += f'\n\t{move.print()}'
+
+        return matrixmoves
 
 
 
@@ -118,55 +132,6 @@ Hand weapons:
 	» Hand taser (s-harm hand reload)
 	» Monofilament whip (4-harm hand messy area dangerous)
 	» Shuriken or throwing knives (2-harm close numerous)```"""
-
-    #########################################################
-    ################## MATRIX MOVE COMMANDS #################
-    #########################################################
-
-    # Login
-    elif messageString == ".login":
-        response = """```
-		Login :When you attempt to gain access to a system, roll Synth.
-		10+: you’re in clean
-		7-9: you’re in, but choose one:
-		Sysops are alerted
-		ICE is activated
-		They’re onto you, +1 trace
-		Your access is restricted – take -1 ongoing to matrix moves in this system while your access is restricted
-		6-: you’re in, but the MC chooses two, and a relevant clock is advanced```"""
-
-    # Melt Ice
-    elif messageString == ".melt" or messageString == ".meltice":
-        response = """```When you attempt to evade, destroy or disable an activated ICE construct, roll Edge.\n
-	7+: you evade, destroy, or temporarily disable the system, your choice
-	7-9: the system successfully executes a routine before you can disable it```"""
-
-    # Compromise Security
-    elif messageString == ".compsec" or messageString == ".compromisesecurity":
-        response = """```When you attempt to compromise a sub-system’s security, roll Mind.\n
-		10+: gain 3 hold over the sub-system you have compromised
-		7-9: gain 1 hold
-		6-: you trigger an alert, which may have additional consequences\n
-You may spend 1 hold to activate a security measure on that sub-system.```"""
-
-    # Manipulate Systems
-    elif messageString == ".mansys" or messageString == ".manipulatesystem" or messageString == ".manipulatesystems":
-        response = """```When you attempt to manipulate a digitally-controlled aspect of a facility, roll Synth.\n
-	10+: gain 3 hold over the sub-system you are manipulating
-	7-9: gain 1 hold\n
-You may spend 1 hold to activate routines on that sub-system.```"""
-
-    # Jack Out
-    elif messageString == ".jackout":
-        response = """```
-		Jackout: When you, your programs, or your deck are about to be damaged by ICE, you can try to jack out. Roll Cool.
-		10+: you disconnect yourself from the system before any serious harm occurs
-		7-9: you jack out, but choose one:
-			You lose some data
-			You take some of the established consequences
-			The owners of the target system trace you to your current location
-		6-: you take the established consequences... and you’re still connected
-```"""
 
     ###############################################################################################################################################
     ###############################################################################################################################################

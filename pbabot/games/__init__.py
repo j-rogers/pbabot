@@ -47,13 +47,13 @@ class Game:
         m = self._getmove(move, playbook=playbook)
         return m.fulldescription if m else None
 
-    def _getmove(self, query, name=False, playbook=None):
+    def _getmove(self, query, index='basic', name=False, playbook=None):
         if playbook:
             for move in self.data['playbooks'][playbook]:
                 if query in move.commands:
                     return move
 
-        for move in self.data['basic']:
+        for move in self.data[index]:
             if name:
                 if query in move.name:
                     return move
