@@ -30,7 +30,8 @@ class Sprawl(Game):
             '.killer': self._killer,
             '.pusher': self._pusher,
             '.reporter': self._reporter,
-            '.soldier': self._soldier
+            '.soldier': self._soldier,
+            '.tech': self._tech
         }
 
         if command in playbook_switch:
@@ -243,7 +244,27 @@ Other moves:
     .steadypresence: You can give pep-talks.
     .tacticaloperations: Assess bonus."""
 
-        m = self._getmove(move, playbook='reporter')
+        m = self._getmove(move, playbook='soldier')
+        return m.description if m else None
+
+    def _tech(self, move):
+        if not move:
+            return """Roll moves:
+    storage: Pre-mission [gear] bonus. (Roll)
+    blendin: You can act like you belong in places you don't. (Roll)
+    bypass: You can subvert security measures. (Roll)\n
+Other moves:
+    .expert: You get an area of expertise.
+    .customiser: You can examine and modify technology.
+    .analytic: Assess replacement.
+    .chromed: Choose another piece of cyberware at character creation or in downtime.
+    .diverseinterests: Choose another area of expertise.
+    .jackofalltrades: Choose another area of expertise.
+    .obsessive: Research bonus.
+    .onit: Replacement when helping or hindering someone in a topic relating to your expertise.
+    .renaissanceman: Choose another area of expertise."""
+
+        m = self._getmove(move, playbook='tech')
         return m.description if m else None
 
     def _fuckmeup(self, damage):
@@ -278,54 +299,8 @@ def handle(message):
 	'''
     print(messageString)
 
-    # Hacker
-    if messageString == '.hacker':
-        response = """```
-"""
-
-    # Hunter
-    elif messageString == '.hunter':
-        response = """``````"""
-
-    # Infiltrator
-    elif messageString == '.infiltrator':
-        response = """``````"""
-
-    # Killer
-    elif messageString == '.killer':
-        response = """``````"""
-
-    # Pusher
-    elif messageString == '.pusher':
-        response = """``````"""
-
-    # Reporter
-    elif messageString == '.reporter':
-        response = """``````"""
-
-    # Soldier
-    elif messageString == '.soldier':
-        response = """``````"""
-
-    # Tech
-    elif messageString == '.tech':
-        response = """```Roll moves:
-.storage: Pre-mission [gear] bonus. (Roll)
-.blendin: You can act like you belong in places you don't. (Roll)
-.bypass: You can subvert security measures. (Roll)\n
-    Other moves:
-.expert: You get an area of expertise.
-.customiser: You can examine and modify technology.
-.analytic: Assess replacement.
-.chromed: Choose another piece of cyberware at character creation or in downtime.
-.diverseinterests: Choose another area of expertise.
-.jackofalltrades: Choose another area of expertise.
-.obsessive: Research bonus.
-.onit: Replacement when helping or hindering someone in a topic relating to your expertise.
-.renaissanceman: Choose another area of expertise.```"""
-
     # Lists matrix specific moves
-    elif messageString == '.matrix':
+    if messageString == '.matrix':
         response = """```Use the following commands to find detailed information about each move.\n
 .login: When attepting to gain access to a system, Login. (Synth)
 .meltice: When figting ICE, Melt Ice (Edge)
@@ -432,30 +407,6 @@ You may spend 1 hold to activate routines on that sub-system.```"""
 			The owners of the target system trace you to your current location
 		6-: you take the established consequences... and you’re still connected
 ```"""
-
-    ###############################################################################################################################################
-    ###############################################################################################################################################
-    ############################################################# PLAYBOOK MOVE COMMANDS ##########################################################
-    ###############################################################################################################################################
-    ###############################################################################################################################################
-
-    # Storage
-    elif messageString == ".storage":
-        response = """```After receiving a job you may look through your accumulated parts and supplies for equipment that might help with the current mission. Roll Mind.\n
-	10+: gain 3 [gear] relevant to your chosen area(s) of expertise.
-	7-9: gain 1 [gear] relevant to your chosen area(s) of expertise.```"""
-
-    # Blend in
-    elif messageString == ".blendin":
-        response = """```When you’re about to be caught somewhere you shouldn’t be, but look and act like you belong there, roll Cool.\n
-10+: no one thinks twice about your presence until you do something to attract attention
-7-9: you’ll be fine as long as you leave right now, but if you do anything else, your presence will arouse suspicion```"""
-
-    # Bypass
-    elif messageString == ".bypass":
-        response = """```When you attempt to subvert security measures (bypassing a locked door, disabling an alarm, camera or motion detector, etc), roll Cool.\n
-	7+: you successfully bypass the system without leaving a trace
-	10+: you gain some valuable insight into the facility’s security, gain [intel]```"""
 
     ###############################################################################################################################################
     ###############################################################################################################################################

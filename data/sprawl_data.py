@@ -252,6 +252,23 @@ playbooks = {
             'At the end of a mission during which you planted or hid evidence to shift blame away from you and your team, name who you threw under the corporate bus and roll Edge.\n\n\t7+: the MC will not increase Corporate Clocks in the retaliation phase\n\t10+: the MC will reduce a Corporate Clock by one\n\t6-: create or increase the Threat Clock of whoever you threw under the bus',
             'slippery'
         )
+    ],
+    'tech': [
+        Move(
+            'Storage',
+            'After receiving a job you may look through your accumulated parts and supplies for equipment that might help with the current mission. Roll Mind.\n\n\t10+: gain 3 [gear] relevant to your chosen area(s) of expertise.\n\t7-9: gain 1 [gear] relevant to your chosen area(s) of expertise.',
+            'storage'
+        ),
+        Move(
+            'Blend In',
+            'When you’re about to be caught somewhere you shouldn’t be, but look and act like you belong there, roll Cool.\n\n\t10+: no one thinks twice about your presence until you do something to attract attention\n\t7-9: you’ll be fine as long as you leave right now, but if you do anything else, your presence will arouse suspicion',
+            'blendin'
+        ),
+        Move(
+            'Bypass',
+            'When you attempt to subvert security measures (bypassing a locked door, disabling an alarm, camera or motion detector, etc), roll Cool.\n\n\t7+: you successfully bypass the system without leaving a trace\n\t10+: you gain some valuable insight into the facility’s security, gain [intel]',
+            'bypass'
+        )
     ]
 }
 matrix = []
