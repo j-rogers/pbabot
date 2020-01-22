@@ -73,6 +73,11 @@ basic = [
         '.knife'
     ),
     Move(
+        'Harm',
+        'NULL',
+        '.fuckmeup'
+    ),
+    Move(
         'Harm 10',
         'Choose 1:\n\tЂ you’re out of action: unconscious, trapped, incoherent or panicked\n\tЂ take the full harm of the attack, before it was reduced by armour; if you already took the full harm of the attack, take +1-harm\n\tЂ lose the use of a piece of cyberware until you can get it repaired\n\tЂ lose a body part (arm, leg, eye)'
     ),

@@ -7,7 +7,7 @@ from . import Game
 class Sprawl(Game):
     def __init__(self):
         super().__init__()
-        self.data = 'data/sprawl_data.pickle'
+        self.datafile = 'data/sprawl_data.pickle'
         self.commands = {
             '.matrix': 'Displays a list of matrix-specific moves.',
             '.custom': 'Displays a list of custom moves.',
@@ -27,39 +27,6 @@ class Sprawl(Game):
         # Finally, check if basic move, otherwise return None
         move = self._getmove(command)
         return move.description if move else None
-
-    def moves(self, message):
-        return """Use the following commands to find detailed information about each move.\n
-.actunderpressure: Act Under Pressure (Cool)
-.applyfirstaid: Apply First Aid (Cool)
-.assess: Assess (Edge)
-.playhardball: Play Hardball (Edge)
-.amidead: Acquire Agricultural Property (Meat)
-.mixitup: Mix it Up (Meat)
-.research: Research (Mind)
-.fasttalk: Fast Talk (Style)
-.hitthestreet: Hit The Street (Style)
-.undertheknife: Go Under the Knife (Cred)
-.fuckmeup: Harm
-.getthejob: Get the Job (Edge)
-.gettingpaid: Getting Paid (Legwork)
-
-For playbook specific moves see '.playbooks'.
-
-For matrix specific moves see '.matrix'."""
-
-    def playbooks(self, message):
-        return """Use the following commands to find each playbook-specific move.\n
-.driver
-.fixer
-.hacker
-.hunter
-.infiltrator
-.killer
-.pusher
-.reporter
-.soldier
-.tech"""
 
     def _fuckmeup(self, damage):
         dice1 = random.randint(1, 6)
