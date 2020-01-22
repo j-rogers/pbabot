@@ -183,6 +183,18 @@ playbooks = {
             'When you evaluate a person, vehicle, drone or gang, roll Cool.\n\n\t7+: ask the target “How are you vulnerable to me?” Take +1 forward when acting on the answer\n\t10+: gain +1 ongoing when acting against that target',
             'trainedeye'
         )
+    ],
+    'pusher': [
+        Move(
+            'Driven',
+            'When you begin a mission that furthers your vision, roll Edge.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nYou may spend 1 hold before rolling any other move to take +1 or -2 forward to the move.',
+            'driven'
+        ),
+        Move(
+            'Vision Thing',
+            'When you have time and space for an emotional connection with someone and you passionately advocate for your vision, roll Style.\n\n\t10+: gain 2 hold\n\t7-9: gain 1 hold\n\nSpend 1 hold to have the targeted NPCs:\n\t• give you something you want\n\t• do something you ask\n\t• fight to protect you or your cause\n\t• disobey an order given by someone with authority or leverage over them\n\nWhen you use this move on a PC, spend your hold to help or interfere as if you had rolled a 10+ (i.e. give them +1 or -2). If you miss against a PC, they gain 2 hold against you which they can use in the same way.',
+            'visionthing'
+        )
     ]
 }
 matrix = []

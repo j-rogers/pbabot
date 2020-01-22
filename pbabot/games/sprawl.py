@@ -27,7 +27,8 @@ class Sprawl(Game):
             '.hacker': self._hacker,
             '.hunter': self._hunter,
             '.infiltrator': self._infiltrator,
-            '.killer': self._killer
+            '.killer': self._killer,
+            '.pusher': self._pusher
         }
 
         if command in playbook_switch:
@@ -186,6 +187,26 @@ Other moves:
         m = self._getmove(move, playbook='killer')
         return m.description if m else None
 
+    def _pusher(self, move):
+        if not move:
+            return """Roll moves:
+    .driven: Bonus when the mission furthers your vision. (Roll)
+    .visionthing: Bonus when passionately advocating your vision. (Roll)\n
+Other moves:
+    .believers: You are a part of a gang, tribe, band, corporation or similar group.
+    .bringitonhome: Bonus when using Vision Thing or One Million Points of Light.
+    .chromed: Choose another piece of cyberware at character creation or in downtime.
+    .famous: Bonus against people who recognise you.
+    .innercircle: You have a loyal inner circle of believers.
+    .onemillionpointsoflight: Bonus to vision thing.
+    .opportunistic: Replacement when helping or interfering.
+    .peopleperson: Hit the street bonus.
+    .rabblerouser: Vision Thing bonus.
+    .silvertongue: Fast Talk bonus."""
+
+        m = self._getmove(move, playbook='pusher')
+        return m.description if m else None
+
     def _fuckmeup(self, damage):
         dice1 = random.randint(1, 6)
         dice2 = random.randint(1, 6)
@@ -237,20 +258,7 @@ def handle(message):
 
     # Pusher
     elif messageString == '.pusher':
-        response = """```Roll moves:
-.driven: Bonus when the mission furthers your vision. (Roll)
-.visionthing: Bonus when passionately advocating your vision. (Roll)\n
-    Other moves:
-.believers: You are a part of a gang, tribe, band, corporation or similar group.
-.bringitonhome: Bonus when using Vision Thing or One Million Points of Light.
-.chromed: Choose another piece of cyberware at character creation or in downtime.
-.famous: Bonus against people who recognise you.
-.innercircle: You have a loyal inner circle of believers.
-.onemillionpointsoflight: Bonus to vision thing.
-.opportunistic: Replacement when helping or interfering.
-.peopleperson: Hit the street bonus.
-.rabblerouser: Vision Thing bonus.
-.silvertongue: Fast Talk bonus.```"""
+        response = """``````"""
 
     # Reporter
     elif messageString == '.reporter':
@@ -414,39 +422,6 @@ You may spend 1 hold to activate routines on that sub-system.```"""
     ############################################################# PLAYBOOK MOVE COMMANDS ##########################################################
     ###############################################################################################################################################
     ###############################################################################################################################################
-
-    # Serious badass
-    elif messageString == ".seriousbadass":
-        response = """```When you enter a charged situation, roll Style.\n
-	10+: gain 2 hold
-	7–9: gain 1 hold
-	6-: your enemies identify you immediately as their foremost threat\n
-Spend 1 hold to make eye contact with an NPC present, who freezes or flinches and can’t act until you break it off.```"""
-
-    # Trained eye
-    elif messageString == ".trainedeye":
-        response = """```When you evaluate a person, vehicle, drone or gang, roll Cool.\n
-	7+: ask the target “How are you vulnerable to me?” Take +1 forward when acting on the answer
-	10+: gain +1 ongoing when acting against that target```"""
-
-    # Driven
-    elif messageString == ".driven":
-        response = """```When you begin a mission that furthers your vision, roll Edge.\n
-	10+: gain 3 hold
-	7-9: gain 1 hold\n
-You may spend 1 hold before rolling any other move to take +1 or -2 forward to the move.```"""
-
-    # Vision thing
-    elif messageString == ".visionthing":
-        response = """```When you have time and space for an emotional connection with someone and you passionately advocate for your vision, roll Style.\n
-	10+: gain 2 hold
-	7-9: gain 1 hold\n
-Spend 1 hold to have the targeted NPCs:
-	• give you something you want
-	• do something you ask
-	• fight to protect you or your cause
-	• disobey an order given by someone with authority or leverage over them\n
-When you use this move on a PC, spend your hold to help or interfere as if you had rolled a 10+ (i.e. give them +1 or -2). If you miss against a PC, they gain 2 hold against you which they can use in the same way.```"""
 
     # Live and on the air
     elif messageString == ".live":
