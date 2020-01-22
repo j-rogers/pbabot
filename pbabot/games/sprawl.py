@@ -207,6 +207,24 @@ Other moves:
         m = self._getmove(move, playbook='pusher')
         return m.description if m else None
 
+    def _reporter(self, move):
+        if not move:
+            return """Roll moves:
+    .liveandontheair: You can broadcast a stream to hurt your target. (Roll)
+    .noseforastory: Various mission bonuses. (Roll)
+    .gatherevidence: Various effects on story and noise clocks. (Roll)
+    .monstering: You can corner someone and hound them with questions. (Roll)\n
+Other moves:
+    .24/7livefeeds: Bonus to researching when scanning live feeds.
+    .chromed: Choose another piece of cyberware at character creation or in downtime.
+    .filthyassistants: Bonus when using research obtained [intel].
+    .presspass: Bonus when revealing yourself to fast talk your way in.
+    .reliablesources: Research bonus.
+    .warcorrespondent: Bonus when Acting Under Pressure."""
+
+        m = self._getmove(move, playbook='reporter')
+        return m.description if m else None
+
     def _fuckmeup(self, damage):
         dice1 = random.randint(1, 6)
         dice2 = random.randint(1, 6)
@@ -262,18 +280,7 @@ def handle(message):
 
     # Reporter
     elif messageString == '.reporter':
-        response = """```Roll moves:
-.liveandontheair: You can broadcast a stream to hurt your target. (Roll)
-.noseforastory: Various mission bonuses. (Roll)
-.gatherevidence: Various effects on story and noise clocks. (Roll)
-.monstering: You can corner someone and hound them with questions. (Roll)\n
-    Other moves:
-.24/7livefeeds: Bonus to researching when scanning live feeds.
-.chromed: Choose another piece of cyberware at character creation or in downtime.
-.filthyassistants: Bonus when using research obtained [intel].
-.presspass: Bonus when revealing yourself to fast talk your way in.
-.reliablesources: Research bonus.
-.warcorrespondent: Bonus when Acting Under Pressure.```"""
+        response = """``````"""
 
     # Soldier
     elif messageString == '.soldier':
@@ -422,46 +429,6 @@ You may spend 1 hold to activate routines on that sub-system.```"""
     ############################################################# PLAYBOOK MOVE COMMANDS ##########################################################
     ###############################################################################################################################################
     ###############################################################################################################################################
-
-    # Live and on the air
-    elif messageString == ".live":
-        response = """```When you go live from the scene and broadcast a stream to avoid harm and expose your target, roll Edge.\n
-	7+: you get the shot you want and are “escorted” to a position of safety
-	7-9: choose one:
-		• Your story irritates your target (The MC will advance a relevant Threat Clock)
-		• Someone on your team gets hurt off camera
-		• Your story angers your employer
-		• Your rushed narrative is misinterpreted by the public with unintended consequences```"""
-
-    # Nose for a story
-    elif messageString == ".nose":
-        response = """```At the start of a mission, roll Edge.\n
-	10+: gain 3 hold
-	7-9: gain 1 hold\n
-During the mission, spend 1 hold to invoke one of the following effects:
-	• Ask one question from the research list
-	• Take +1 forward when monstering
-	• Find a piece of evidence that links this mission to a current story; start a Story Clock and a linked Noise Clock or roll to gather evidence```"""
-
-    # Gather evidence
-    elif messageString == ".gatherevidence":
-        response = """```When you gather evidence to break a story, roll Mind.\n
-	10+: you get the evidence you need, advance that Story Clock
-	7-9: you get the evidence, but tip your hand to someone implicated in your story; tell the MC which clock to advance: a relevant Corporate Clock, the linked Noise Clock or the relevant Mission Clock (Legwork or Action, depending on which phase of the current mission you’re in)
-	6-: the MC will advance the Noise Clock and make a move\n
-If the Story Clock reaches 0000 before the Noise Clock, the Reporter has broken the story before the implicated parties could cover up the evidence, or stop the investigation. The exact implications of this for the game will vary based on the story, but it should have a major impact on the implicated parties and will affect at least one Corporate Clock.\n
-If the Noise Clock reaches 0000 before the Story Clock, the implicated parties have tied up all the loose ends and the story is dead. Now that damage control is complete, they can deal with the Reporter permanently. Advance any relevant Corporate or Threat Clocks.```"""
-
-    elif messageString == ".press":
-        response = """```Press pass: If you reveal your public persona to fast talk your way in,do not roll the dice, you count as rolling a 10+.\nTake [intel] and advance the Legwork Clock.```"""
-    # Monstering
-    elif messageString == ".monstering":
-        response = """```When you corner someone and hound them with questions to get to the bottom of a story, roll Edge.\n
-	10+: they tell you the truth, regardless of the consequences
-	7-9: they give you enough to get you off their back, then when they’re safe, they choose one:
-		• they respond with fear
-		• they respond with anger
-		• they respond with clinical calm```"""
 
     # I love it when a plan comes together
     elif messageString == ".plan":

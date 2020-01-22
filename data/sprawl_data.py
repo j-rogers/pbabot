@@ -195,6 +195,39 @@ playbooks = {
             'When you have time and space for an emotional connection with someone and you passionately advocate for your vision, roll Style.\n\n\t10+: gain 2 hold\n\t7-9: gain 1 hold\n\nSpend 1 hold to have the targeted NPCs:\n\t• give you something you want\n\t• do something you ask\n\t• fight to protect you or your cause\n\t• disobey an order given by someone with authority or leverage over them\n\nWhen you use this move on a PC, spend your hold to help or interfere as if you had rolled a 10+ (i.e. give them +1 or -2). If you miss against a PC, they gain 2 hold against you which they can use in the same way.',
             'visionthing'
         )
+    ],
+    'reporter': [
+        Move(
+            'Live and on the Air',
+            'When you go live from the scene and broadcast a stream to avoid harm and expose your target, roll Edge.\n\n\t7+: you get the shot you want and are “escorted” to a position of safety\n\t7-9: choose one:\n\t\t• Your story irritates your target (The MC will advance a relevant Threat Clock)\n\t\t• Someone on your team gets hurt off camera\n\t\t• Your story angers your employer\n\t\t• Your rushed narrative is misinterpreted by the public with unintended consequences',
+            'liveandontheair',
+            'live',
+            'liveontheair'
+        ),
+        Move(
+            'Nose for a Story',
+            'At the start of a mission, roll Edge.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nDuring the mission, spend 1 hold to invoke one of the following effects:\n\t• Ask one question from the research list\n\t• Take +1 forward when monstering\n\t• Find a piece of evidence that links this mission to a current story; start a Story Clock and a linked Noise Clock or roll to gather evidence',
+            'noseforastory',
+            'nose'
+        ),
+        Move(
+            'Gather Evidence',
+            'When you gather evidence to break a story, roll Mind.\n\n\t10+: you get the evidence you need, advance that Story Clock\n\t7-9: you get the evidence, but tip your hand to someone implicated in your story; tell the MC which clock to advance: a relevant Corporate Clock, the linked Noise Clock or the relevant Mission Clock (Legwork or Action, depending on which phase of the current mission you’re in)\n\t6-: the MC will advance the Noise Clock and make a move\n\nIf the Story Clock reaches 0000 before the Noise Clock, the Reporter has broken the story before the implicated parties could cover up the evidence, or stop the investigation. The exact implications of this for the game will vary based on the story, but it should have a major impact on the implicated parties and will affect at least one Corporate Clock.\n\nIf the Noise Clock reaches 0000 before the Story Clock, the implicated parties have tied up all the loose ends and the story is dead. Now that damage control is complete, they can deal with the Reporter permanently. Advance any relevant Corporate or Threat Clocks.',
+            'gatherevidence',
+            'gather'
+        ),
+        Move(
+            'Press Pass',
+            'If you reveal your public persona to fast talk your way in,do not roll the dice, you count as rolling a 10+.\nTake [intel] and advance the Legwork Clock.',
+            'presspass',
+            'press',
+            'pass'
+        ),
+        Move(
+            'Monstering',
+            'When you corner someone and hound them with questions to get to the bottom of a story, roll Edge.\n\n\t10+: they tell you the truth, regardless of the consequences\n\t7-9: they give you enough to get you off their back, then when they’re safe, they choose one:\n\t\t• they respond with fear\n\t\t• they respond with anger\n\t\t• they respond with clinical calm',
+            'monstering'
+        )
     ]
 }
 matrix = []
