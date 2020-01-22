@@ -5,63 +5,61 @@ class Game:
     def __init__(self):
         self.commands = {}
         self.datafile = None
+        self.data = None
+
+    def _loaddata(self):
+        try:
+            with open(self.datafile, 'rb') as file:
+                self.data = pickle.loads(file.read())
+        except EOFError:
+            print("No data in file.")
+        except FileNotFoundError:
+            print("No data file found.")
 
     def handle(self, command, args):
         raise NotImplementedError
 
     def moves(self, message):
-        with open(self.datafile, 'rb') as file:
-            data = pickle.loads(file.read())
+        moves = 'Use the following commands to find detailed information about each move.'
+        for move in self.data['basic']:
+            if move.commands:
+                moves += f'\n\t{move.name} {move.commands}'
 
-            moves = 'Use the following commands to find detailed information about each move.'
-            for move in data['basic']:
-                if move.commands:
-                    moves += f'\n\t{move.name} {move.commands}'
-
-            return moves
+        return moves
 
     def playbooks(self, message):
-        with open(self.datafile, 'rb') as file:
-            data = pickle.loads(file.read())
+        playbooks = 'Use the following commands to find each playbook-specific move.'
+        for playbook in self.data['playbooks']:
+            playbooks += f'\n\t.{playbook}'
 
-            playbooks = 'Use the following commands to find each playbook-specific move.'
-            for playbook in data['playbooks']:
-                playbooks += f'\n\t.{playbook}'
-
-            return playbooks
+        return playbooks
 
     def _getplaybook(self, playbook, move):
-        with open(self.datafile, 'rb') as file:
-            data = pickle.loads(file.read())
+        if playbook not in self.data['playbooks']:
+           return None
 
-            if playbook not in data['playbooks']:
-                return None
+        if not move:
+            moves = f'Use .{playbook} <move> to see more details about the following moves:'
+            for move in self.data['playbooks'][playbook]:
+                moves += f'\n\t{move.print()}'
+            return moves
 
-            if not move:
-                moves = f'Use .{playbook} <move> to see more details about the following moves:'
-                for move in data['playbooks'][playbook]:
-                    moves += f'\n\t{move.print()}'
-                return moves
-
-            m = self._getmove(move, playbook=playbook)
-            return m.fulldescription if m else None
+        m = self._getmove(move, playbook=playbook)
+        return m.fulldescription if m else None
 
     def _getmove(self, query, name=False, playbook=None):
-        with open(self.datafile, 'rb') as file:
-            data = pickle.loads(file.read())
+        if playbook:
+            for move in self.data['playbooks'][playbook]:
+                if query in move.commands:
+                    return move
 
-            if playbook:
-                for move in data['playbooks'][playbook]:
-                    if query in move.commands:
-                        return move
-
-            for move in data['basic']:
-                if name:
-                    if query in move.name:
-                        return move
-                else:
-                    if query in move.commands:
-                        return move
+        for move in self.data['basic']:
+            if name:
+                if query in move.name:
+                    return move
+            else:
+                if query in move.commands:
+                    return move
 
 
 class Move:

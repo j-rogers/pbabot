@@ -14,6 +14,7 @@ class Sprawl(Game):
             '.weapons': 'Displays a list of weapons and their profiles.',
             '.drugs': 'Displays a list of drugs.'
         }
+        self._loaddata()
 
     def handle(self, command, args):
         # Handle game-specific moves
@@ -36,16 +37,14 @@ class Sprawl(Game):
             modifier = int(damage)
         roll = dice1 + dice2 + modifier
 
-        with open(self.data, 'rb') as file:
-            moves = pickle.loads(file.read())
-            if roll >= 10:
-                harm = self._getmove('Harm 10', name=True)
-                return f'Oh you fucked up now, you rolled a {roll}. {harm.description}'
-            elif 7 <= roll <= 9:
-                harm = self._getmove('Harm 7', name=True)
-                return f'You\'re going to have to suck off the MC on this one, you rolled a {roll}. {harm.description}'
-            else:
-                return f'You rolled {roll}. You\'re gucci flip flops fam *dabs* haha yeet :3'
+        if roll >= 10:
+            harm = self._getmove('Harm 10', name=True)
+            return f'Oh you fucked up now, you rolled a {roll}. {harm.description}'
+        elif 7 <= roll <= 9:
+            harm = self._getmove('Harm 7', name=True)
+            return f'You\'re going to have to suck off the MC on this one, you rolled a {roll}. {harm.description}'
+        else:
+            return f'You rolled {roll}. You\'re gucci flip flops fam *dabs* haha yeet :3'
 
 
 
