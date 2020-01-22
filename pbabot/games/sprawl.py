@@ -126,6 +126,22 @@ Other moves:
         m = self._getmove(move, playbook='hacker')
         return m.description if m else None
 
+    def _hunter(self, move):
+        if not move:
+            return """Roll moves:
+    itallfits: Research bonus. (Roll)
+    biggamehunter: Bonus when springing a trap against a researced target. (Roll)
+    sniper: Bonus when hiding. (Roll)\n
+Other moves:
+    .eartotheground: Meatspace reseach bonus. 
+    .chromed: Choose another piece of cyberware at character creation or in downtime.
+    .deadbeat: Hit the street bonus.
+    .enhance: Research bonus.
+    .eyefordetail: Bonus when calmly assessing a person or place.
+    .humanterrain: Bonus when investigating a group.
+    .onthetrail: Additional use of intel against a single person.
+    .seetheangles: At the start of the action phase gain [intel] and [gear]."""
+
     def _fuckmeup(self, damage):
         dice1 = random.randint(1, 6)
         dice2 = random.randint(1, 6)
@@ -161,35 +177,11 @@ def handle(message):
     # Hacker
     if messageString == '.hacker':
         response = """```
-.jackin: You can access the matrix moves.
-.antivirus: Legwork roll+cred for chrome chips.
-.chromed: Choose another piece of cyberware at character creation or in downtime. 
-.insidejob: When you login through a comprimised site +1 matrix moves.
-.ivehadworse: +1 armor against ice
-.humansareeasyprey: Go on the offensive against Sysop roll synth.
-.rep: Fast talk and Play hard ball replacements while in the matrix.
-.searchoptimisation: Matrix research bonus.
-.rigenthusiast: extra deck tag.
-.sneakdoorbeta: create a backdoor in for future use.
-.techsupport: Bonus when helping or interfering while in the matrix.
-.diabolusexmchina When Ice is activated against you roll + synth.
-```"""
+"""
 
     # Hunter
     elif messageString == '.hunter':
-        response = """```Roll moves:
-.itallfits: Research bonus. (Roll)
-.biggamehunter: Bonus when springing a trap against a researced target. (Roll)
-.sniper: Bonus when hiding. (Roll)\n
-    Other moves:
-.eartotheground: Meatspace reseach bonus. 
-.chromed: Choose another piece of cyberware at character creation or in downtime.
-.deadbeat: Hit the street bonus.
-.enhance: Research bonus.
-.eyefordetail: Bonus when calmly assessing a person or place.
-.humanterrain: Bonus when investigating a group.
-.onthetrail: Additional use of intel against a single person.
-.seetheangles: At the start of the action phase gain [intel] and [gear].```"""
+        response = """``````"""
 
     # Infiltrator
     elif messageString == '.infiltrator':
@@ -402,41 +394,6 @@ You may spend 1 hold to activate routines on that sub-system.```"""
     ############################################################# PLAYBOOK MOVE COMMANDS ##########################################################
     ###############################################################################################################################################
     ###############################################################################################################################################
-
-    # Console Cowboy
-    elif messageString == ".consolecowboy":
-        response = """```Console cowboy: When you connect to a secure system, roll Mind.\n
-	10+: gain 3 hold
-	7-9: gain 1 hold\n
-While in that system, you may spend 1 hold for any of the following effects:
-	• Prevent a construct from triggering an alert
-	• Avoid an ICE routine executed against you, your deck, or your programs
-	• Increase your hold over compromised security or manipulated systems by 1```"""
-
-    # It all fits together!
-    elif messageString == ".itallfits":
-        response = """```You’re a master of making connections between seemingly unrelated events. At the start of a mission, roll Edge.\n
-	10+: gain 3 hold
-	7-9: gain 1 hold\n
-As you put everything together during the mission, spend 1 hold at any time to ask a question from the research list.```"""
-
-    # Big game hunter
-    elif messageString == ".biggamehunter":
-        response = """```When you spring a trap for a target you have investigated, roll Edge.\n
-	7+: you have them trapped, the only way out is through you
-	10+: they are at your mercy; if the target attempts to escape, roll Edge instead of Meat to mix it up```"""
-
-    # Sniper
-    elif messageString == ".sniper":
-        response = """```When you set up a covered and concealed place to hide, roll Cool.\n
-	10+: choose 3
-	7-9: choose 2
-		• Your site is well hidden
-		• Your site has excellent cover
-		• Your site has an excellent field of view
-		• You have a similarly covered and concealed backup location
-		• Your spot is well secured\n
-Then describe your hide site.```"""
 
     # Covert entry
     elif messageString == ".covertentry":
