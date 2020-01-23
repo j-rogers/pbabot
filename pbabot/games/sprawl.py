@@ -13,7 +13,7 @@ class Sprawl(Game):
             '.cred': 'Shows you what you can do with cred.',
             '.weapons': 'Displays a list of weapons and their profiles.'
         }
-        self._loaddata()
+        self.loaddata()
 
     def handle(self, command, args):
         # Handle game-specific moves

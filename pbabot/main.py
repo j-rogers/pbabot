@@ -558,6 +558,9 @@ Game-specific Commands:
         except FileNotFoundError:
             print("No data file found.")
 
+        # Refresh game data as well
+        self.game.loaddata()
+
         return msg
 
     def log(self, message):
@@ -588,6 +591,8 @@ Game-specific Commands:
         data = {'clocks': self.clocks, 'contacts': self.contacts}
         with open(self.datafile, 'wb') as file:
             file.write(pickle.dumps(data))
+
+
 
 
 def main():

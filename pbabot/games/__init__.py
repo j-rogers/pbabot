@@ -7,7 +7,7 @@ class Game:
         self.datafile = None
         self.data = None
 
-    def _loaddata(self):
+    def loaddata(self):
         try:
             with open(self.datafile, 'rb') as file:
                 self.data = pickle.loads(file.read())
