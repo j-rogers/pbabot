@@ -1,4 +1,18 @@
-import discord  # version 0.16.12
+"""PBABot
+
+Powered By the Apocolypse (PBA) is a engine for playing tabletop roleplaying games such as The Sprawl and Apocolype
+World. Each PBA game has features that are common between them, such as the use of basic moves, playbooks, rolling
+2d6, clocks, contacts, etc. To make playing PBA games online (specifically over Discord) easier, this bot has been
+created that handles the common features of PBA games. Specific game features can be easily added by creating a
+class and giving it the required functionality as outlined in the games module.
+
+Currently supported PBA games:
+    The Sprawl
+
+Author: Josh Rogers (2020)
+Github: https://github.com/j-rogers/thesprawlbot
+"""
+import discord
 import random
 import pickle
 import argparse
@@ -14,11 +28,21 @@ IMAGES = 'images'
 
 
 class Clock:
+    """Countdown Clock
+
+    This class maintains the state of a countdown clock. It also increaes and decreases their value.
+
+    Attributes:
+        name -> String: Name of the clock
+        time -> String: Time of the clock (defaults to 1200 on creation)
+    """
     def __init__(self, name, time='1200'):
+        """Init"""
         self.name = name
         self.time = time
 
     def increase(self):
+        """Increases the clock's time by one segment"""
         if self.time == "1200":
             self.time = "1500"
         elif self.time == "1500":
@@ -35,6 +59,7 @@ class Clock:
             return '```Clock is already at midnight.```'
 
     def decrease(self):
+        """Decreases the clock's time by one segment"""
         if self.time == "0000":
             self.time = "2300"
         elif self.time == "2300":
@@ -52,29 +77,52 @@ class Clock:
 
 
 class Contact:
+    """Contact
+
+    Stores a contacts name and description.
+
+    Attributes:
+        name -> String: Name of the contact
+        description -> String: Description of the contact
+    """
     def __init__(self, name, description):
         self.name = name
         self.description = description
 
 
 class PBABot(discord.Client):
-    def __init__(self, game, datafile=DATA_FILE, personaldata = PERSONAL_DATA):
+    """PBABot
+
+    Inherits the discord client so it can receive commands and respond to them appropriately. Clock and contact data is
+    saved within a pickled file. For fun, this bot includes a feature where you can record dead characters and
+    memorable moments and look back on them. This personal data is currently saved in XML format.
+
+    Attributes:
+        game -> pbabot.games.Game: The game currently loaded into PBABot that contains game-specific features
+        clocks -> List: The clocks currently being used
+        contacts -> List: The contacts currently being used
+        personaldata -> String: Data file containing dead characters and rememberable moments.
+        datafile -> String: Data file containing current clock and contact data
+    """
+    def __init__(self, game, datafile=DATA_FILE, personaldata=PERSONAL_DATA):
+        """Init"""
         super().__init__()
 
+        # Get game
         game_switch = {
             'sprawl': sprawl.Sprawl(),
         }
         self.game = game_switch.get(game, None)
 
+        # No game found
         if not self.game:
             raise Exception
-
-        self.clocks = []
-        self.contacts = []
 
         # Extract data from file
         self.personaldata = personaldata
         self.datafile = datafile
+        self.clocks = []
+        self.contacts = []
         try:
             with open(self.datafile, 'rb') as file:
                 data = pickle.loads(file.read())
@@ -87,12 +135,22 @@ class PBABot(discord.Client):
             print("No data file found.")
 
     def on_message(self, message):
+        """Event callback when receiving a message
+
+        From discord.Client, this method is an event callback for when the bot receives a message. It checks the message
+        to make sure it is a command (identified by a '.' in front of the message), and if it is then parses the message
+        and attempts to form a response. If the message does not match any known commands, the bot will reply with a
+        invalid command error.
+
+        Args:
+            message -> discord.Message: Message received from Discord
+        """
         # Prevents bot replying to itself
         if message.author == self.user:
             return
 
         # Prevents bot responding to regular messages
-        if not message.content.startswith("."):
+        if not message.content.startswith('.'):
             return
 
         # Parse message
@@ -100,6 +158,7 @@ class PBABot(discord.Client):
         command = content[0]
         args = content[1] if len(content) > 1 else ''
 
+        # Lookup table of commands the the respective callback
         text_switch = {
             # Listing commands
             '.help': self.help,
@@ -128,41 +187,48 @@ class PBABot(discord.Client):
             '.refresh': self.refresh,
             '.log': self.log
         }
-
         callback = text_switch.get(command, None)
 
+        # If match was found, get response
         response = None
         if callback:
             response = callback(args)
 
+        # Lookup table if command is requesting an image
         image_switch = {
             '.map': discord.File(f'{IMAGES}/map.jpg', 'map.jpg'),
             '.fuckmendle': discord.File(f'{IMAGES}/mendle.png', 'mendle.png'),
             '.fridge': discord.File(f'{IMAGES}/FRIDGE.jpg', 'fridge.jpg'),
             '.clones': discord.File(f'{IMAGES}/clones.png', 'clones.png')
         }
-
         image = image_switch.get(command, None)
 
+        # If command didn't match a PBA or image command, try game-specific command
         if not response and not image:
             response = self.game.handle(command, args)
+            # Didn't match game-specific command, send back invalid command
             if not response:
                 response = 'Invalid command. Type ".help" for a list of commands.'
 
+        # If text response, surround in "```" for discord formatting
         if response and not image:
             response = f'```{response}```'
 
-        return response
-
-        #await message.channel.send(response, files=image)
+        # Respond if we have something to send back
+        if response or image:
+            return response
+            #await message.channel.send(response, files=image)
 
     async def on_ready(self):
-        print("Logged in as")
+        """Event callback for when discord.Client is ready"""
+        print('Logged in as')
         print(self.user.name)
         print(self.user.id)
-        print("------")
+        print('------')
 
     def help(self, message):
+        """Prints list of commands
+        """
         commands = """Use \".command\" when using this bot.\n
     .help: Displays this help message.
     .roll: Rolls 2d6 dice.
@@ -186,6 +252,7 @@ class PBABot(discord.Client):
     
 Game-specific Commands:
 """
+        # Add game-specific commands
         for command, description in self.game.commands.items():
             commands += f'\t{command}: {description}\n'
 
@@ -193,19 +260,23 @@ Game-specific Commands:
         return commands
 
     def links(self, message):
+        """Prints links to PBA games"""
         msg = """
         **Apocalpyse World:** https://www.dropbox.com/sh/fmsh9kyaiplqhom/AACw1iLMQ7f53Q40FUnMjlz4a?dl=0
         **The Sprawl:** https://www.dropbox.com/sh/9fr35ivzbvfh06p/AACarsYBpNXxBpEUk_-fz_PXa?dl=0
         **Tremulas:** https://www.dropbox.com/sh/tbhk0w0zgihrf2h/AACtvyv9l5ruLBE6UG3XeGfba?dl=0
         **Dungeon World:** https://www.dropbox.com/sh/p61lutt9m6dfpa3/AACTvHhbJa7K1RIHFYVvJqIza?dl=0
         """
-        msg = msg.replace("\t", "")
+        msg = msg.replace('\t', '')
         return msg
 
     def printclocks(self, message):
+        """Prints current clock times"""
+        # Check that there are clocks
         if not self.clocks:
             return 'No clocks have been added.'
 
+        # Convert time values to segments
         switch = {
             '1200': '□□□□ □□□□ □□□□ □ □ □',
             '1500': '■■■■ □□□□ □□□□ □ □ □',
@@ -216,6 +287,7 @@ Game-specific Commands:
             '0000': '■■■■ ■■■■ ■■■■ ■ ■ ■'
         }
 
+        # Build string
         clocks = ''
         for clock in self.clocks:
             clocks += f'{clock.name}: {switch[clock.time]}\n'
@@ -223,47 +295,51 @@ Game-specific Commands:
         return clocks
 
     def printcontacts(self, message):
+        """Prints list of contacts"""
+        # Check there are contacts
         if not self.contacts:
             return 'No contacts have been added.'
 
+        # Build string
         contacts = ''
         for contact in self.contacts:
             contacts += f'{contact.name}: {contact.description}\n'
 
-
         return contacts
 
     def rememberlist(self, message):
-        rememberindexes = """
-        1-9: Christoff focused
-        10-13: Laramy focused
-        14-19: Seraph focused
-        20: I missed a number..
-        21-23:  Syntax Terror focused
-        24-27: H4KKK3R focused
-        28-32: Noor focused
-        33-60: Reat of Sprawl campaign 1 (in order things happened after I stopped grouping by character.)
-        61-73: Sprawl campaign 2, while Jayden(swarf) was still playing
-        74-106: Sprawl 2 while Mercer was still alive.
-        107-114: The last of Sprawl 2.
-        115-134: First time playing Apoc world, what a mess that was, also lots of pvp.
-        135-178: The last of Apoc world campaign 1, lots of weird stuff and overtrowing.
-        179-206: Back to the Sprawl, oh how we missed the Sprawls writing. A one shot spanned over a couple of sessions.
-        207-219: Apoc world, Tat and Cowboy.
-        220-244: Jayden comes back and Tat dies.
-        245: The sprawl and pissing on machines... 
-        """
+        """Prints indexes of remember moments"""
+        # TODO Generate this automatically based of data
+        rememberindexes = """1-9: Christoff focused
+10-13: Laramy focused
+14-19: Seraph focused
+20: I missed a number..
+21-23:  Syntax Terror focused
+24-27: H4KKK3R focused
+28-32: Noor focused
+33-60: Reat of Sprawl campaign 1 (in order things happened after I stopped grouping by character.)
+61-73: Sprawl campaign 2, while Jayden(swarf) was still playing
+74-106: Sprawl 2 while Mercer was still alive.
+107-114: The last of Sprawl 2.
+115-134: First time playing Apoc world, what a mess that was, also lots of pvp.
+135-178: The last of Apoc world campaign 1, lots of weird stuff and overtrowing.
+179-206: Back to the Sprawl, oh how we missed the Sprawls writing. A one shot spanned over a couple of sessions.
+207-219: Apoc world, Tat and Cowboy.
+220-244: Jayden comes back and Tat dies.
+245: The sprawl and pissing on machines..."""
+
         rememberindexes = rememberindexes.replace("\t", "")
         return rememberindexes
 
     def roll(self, message):
+        """Rolls 2d6 and prints the result"""
         # Generate the roll
         dice1 = random.randint(1, 6)
         dice2 = random.randint(1, 6)
         roll = dice1 + dice2
-        result = ''
 
         # Unique response based on roll
+        result = ''
         if roll == 1:
             result = 'Throwbacks to when Martin\'s bot could roll a 1 from 2d6. Good times, not for you though, you rolled a 1.'
         elif roll == 2:
@@ -292,9 +368,9 @@ Game-specific Commands:
         return result
 
     def addclock(self, name):
+        """Adds a clock of the given name at 1200"""
         # Checks if clock has already been added
         clock = self._getclock(name)
-
         if clock:
             return f'Clock {name} already exists.'
 
@@ -309,12 +385,13 @@ Game-specific Commands:
         return f'Clock added to file: {name} at 1200'
 
     def deleteclock(self, name):
+        """Deletes the clock with specified name"""
         # Find the clock to be deleted
         clock = self._getclock(name)
-
         if not clock:
             return f'Clock {name} not found.'
 
+        # Delete clock
         self.clocks.remove(clock)
 
         # Update and refresh file
@@ -325,6 +402,7 @@ Game-specific Commands:
         return f'Deleted clock {name}.'
 
     def increaseclock(self, name):
+        """Increases the clock of specified name by one segment"""
         # Find the clock to be increased
         clock = self._getclock(name)
 
@@ -332,6 +410,7 @@ Game-specific Commands:
         if not clock:
             return f'Clock "{name}" not found.'
 
+        # Increase clock
         clock.increase()
 
         # Update and refresh file
@@ -342,35 +421,53 @@ Game-specific Commands:
         return f'{clock.name} clock increased to {clock.time}.'
 
     def decreaseclock(self, name):
+        """Decreases the clock of specified name by one segment"""
+        # Find clock
         clock = self._getclock(name)
 
+        # Check if clock exists
         if not clock:
             return f'Clock "{name}" not found.'
 
+        # Decrease clock
         clock.decrease()
 
+        # Update and save data
         self._savedata()
 
         return f'{clock.name} clock decreased to {clock.time}'
 
     def addcontact(self, args):
+        """Adds a contact with specified information
+
+        A contact can be added by either using .addcontact name description, where name is a single word and description
+        is multiple. If you want to add a contact with a name that has multiple words then you can use
+        .addcontact "first last" description.
+
+        Args:
+            args -> String: Information of contact to be added
+        """
         # Get the contact name and description
         name = None
         description = None
         tokens = args.split('"', 2)
+
+        # Multiple word name
         if len(tokens) > 1:
             name = tokens[1]
             description = tokens[2].strip()
+        # Single world name
         else:
             tokens = args.split(' ', 1)
             name = tokens[0]
             description = tokens[1]
 
+        # Check if contact already exists
         if self._getcontact(name):
             return f'Contact "{name}" already added as a contact.'
 
+        # Add contact and save data
         self.contacts.append(Contact(name, description))
-
         self._savedata()
 
         return f'Contact added: {name}.'
