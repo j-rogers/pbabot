@@ -66,7 +66,7 @@ class Sprawl(Game):
         return matrixmoves
 
     def _cred(self):
-        return """```Spending 1 Cred will get you:
+        return """Spending 1 Cred will get you:
     >useful information from a contact
     >basic restricted gear from a fixer (sidearms, hunting weapons, ammo)
     >replacement parts for a cyberdeck
@@ -84,10 +84,10 @@ Spending 4 Cred will get you:
     >expensive or illegal gear from a fixer (vehicles, security drones, heavy
     >weapons, cutting edge Russian attack software, basic cheap cyberware)
     Spending 8 cred will get you:
-    >cutting-edge, military or extortionately expensive gear from a fixer (cyberdecks, military vehicles, most cyberware)```"""
+    >cutting-edge, military or extortionately expensive gear from a fixer (cyberdecks, military vehicles, most cyberware)"""
 
     def _weapons(self):
-        return """```Firearms:
+        return """Firearms:
     » Holdout pistol (2-harm hand/close discreet quick reload loud)
     » Flechette pistol (3-harm close/near quick flechette)
     » Revolver (2-harm close/near reload loud quick)
@@ -118,4 +118,4 @@ Hand weapons:
     » Sword (3-harm hand messy)
     » Hand taser (s-harm hand reload)
     » Monofilament whip (4-harm hand messy area dangerous)
-    » Shuriken or throwing knives (2-harm close numerous)```"""
+    » Shuriken or throwing knives (2-harm close numerous)"""

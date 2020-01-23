@@ -134,7 +134,7 @@ class PBABot(discord.Client):
         except FileNotFoundError:
             print("No data file found.")
 
-    def on_message(self, message):
+    async def on_message(self, message):
         """Event callback when receiving a message
 
         From discord.Client, this method is an event callback for when the bot receives a message. It checks the message
@@ -216,8 +216,7 @@ class PBABot(discord.Client):
 
         # Respond if we have something to send back
         if response or image:
-            return response
-            #await message.channel.send(response, files=image)
+            await message.channel.send(response, files=image)
 
     async def on_ready(self):
         """Event callback for when discord.Client is ready"""
@@ -599,13 +598,7 @@ def main():
     game = vars(args)['game']
 
     client = PBABot(game)
-    content = None
-    while content != 'q':
-        content = input()
-        Message = namedtuple('Message', 'content author')
-        m = Message(content, 'jeff')
-        print(client.on_message(m))
-    #client.run(TOKEN)
+    client.run(TOKEN)
 
 
 if __name__ == '__main__':
