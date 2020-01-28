@@ -11,3 +11,5 @@ map.psd
 **/venv
 **/.idea
 **/test_data.pickle
+images/*
+!images/no_map.jpg

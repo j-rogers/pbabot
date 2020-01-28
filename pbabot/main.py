@@ -134,7 +134,7 @@ class PBABot(discord.Client):
         except FileNotFoundError:
             print("No data file found.")
 
-    def on_message(self, message):
+    async def on_message(self, message):
         """Event callback when receiving a message
 
         From discord.Client, this method is an event callback for when the bot receives a message. It checks the message
@@ -196,12 +196,13 @@ class PBABot(discord.Client):
 
         # Lookup table if command is requesting an image
         image_switch = {
-            '.map': discord.File(f'{IMAGES}/map.jpg', 'map.jpg'),
-            '.fuckmendle': discord.File(f'{IMAGES}/mendle.png', 'mendle.png'),
-            '.fridge': discord.File(f'{IMAGES}/FRIDGE.jpg', 'fridge.jpg'),
-            '.clones': discord.File(f'{IMAGES}/clones.png', 'clones.png')
+            '.map', self.map,
+            '.image', self.image,
         }
-        image = image_switch.get(command, None)
+        image_callback = image_switch.get(command, None)
+        if image_callback:
+            image = image_callback(args)
+
 
         # If command didn't match a PBA or image command, try game-specific command
         if not response and not image:
@@ -216,8 +217,7 @@ class PBABot(discord.Client):
 
         # Respond if we have something to send back
         if response or image:
-            return response
-            #await message.channel.send(response, files=image)
+            await message.channel.send(response, files=image)
 
     async def on_ready(self):
         """Event callback for when discord.Client is ready"""
@@ -531,6 +531,22 @@ Game-specific Commands:
 
         return msg
 
+    def map(self, args):
+        # TODO: delete images from repo once saved
+        return self.image('map.jpg')
+
+    def image(self, name):
+        image = None
+        if name:
+            try:
+                image = discord.File(f'{IMAGES}/{name}', f'{name}')
+            except FileNotFoundError:
+                image = discord.File(f'{IMAGES}/no_map.jpg', 'no_map.jpg')
+        else:
+            image = discord.File(f'{IMAGES}/no_map.jpg', 'no_map.jpg')
+
+        return image
+
     def chess(self, message):
         msg = "**THE\t  TECHSORCIST\n\tIS    THE\nCHESS\t\tMASTER!**"
         return msg
@@ -599,8 +615,6 @@ Game-specific Commands:
             file.write(pickle.dumps(data))
 
 
-
-
 def main():
     # Command line arguments
     parser = argparse.ArgumentParser()
@@ -609,13 +623,7 @@ def main():
     game = vars(args)['game']
 
     client = PBABot(game)
-    i = ''
-    while i != 'q':
-        i = input()
-        Message = namedtuple('Message', 'content author')
-        msg = Message(i, 'jeff')
-        print(client.on_message(msg))
-    #client.run(TOKEN)
+    client.run(TOKEN)
 
 
 if __name__ == '__main__':
