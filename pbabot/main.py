@@ -308,7 +308,7 @@ Game-specific Commands:
 
     def rememberlist(self, message):
         """Prints indexes of remember moments"""
-        # TODO Generate this automatically based of data
+        # TODO remove personal file from tracking
         rememberindexes = """1-9: Christoff focused
 10-13: Laramy focused
 14-19: Seraph focused
