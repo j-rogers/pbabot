@@ -309,7 +309,6 @@ Game-specific Commands:
 
     def rememberlist(self, message):
         """Prints indexes of remember moments"""
-        # TODO remove personal file from tracking
         try:
             tree = et.parse(self.personaldata)
         except FileNotFoundError:
@@ -532,7 +531,6 @@ Game-specific Commands:
         return msg
 
     def map(self, args):
-        # TODO: delete images from repo once saved
         return self.image('map.jpg')
 
     def image(self, name):
