@@ -196,13 +196,14 @@ class PBABot(discord.Client):
 
         # Lookup table if command is requesting an image
         image_switch = {
-            '.map', self.map,
-            '.image', self.image,
+            '.map': self.map,
+            '.image': self.image,
         }
         image_callback = image_switch.get(command, None)
+
+        image = None
         if image_callback:
             image = image_callback(args)
-
 
         # If command didn't match a PBA or image command, try game-specific command
         if not response and not image:
@@ -217,7 +218,7 @@ class PBABot(discord.Client):
 
         # Respond if we have something to send back
         if response or image:
-            await message.channel.send(response, files=image)
+            await message.channel.send(response, file=image)
 
     async def on_ready(self):
         """Event callback for when discord.Client is ready"""
