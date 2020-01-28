@@ -14,3 +14,4 @@ map.psd
 data/personal
 images/*
 !images/no_map.jpg
+data/data.pickle
