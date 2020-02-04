@@ -196,12 +196,14 @@ class PBABot(discord.Client):
 
         # Lookup table if command is requesting an image
         image_switch = {
-            '.map': discord.File(f'{IMAGES}/map.jpg', 'map.jpg'),
-            '.fuckmendle': discord.File(f'{IMAGES}/mendle.png', 'mendle.png'),
-            '.fridge': discord.File(f'{IMAGES}/FRIDGE.jpg', 'fridge.jpg'),
-            '.clones': discord.File(f'{IMAGES}/clones.png', 'clones.png')
+            '.map': self.map,
+            '.image': self.image,
         }
-        image = image_switch.get(command, None)
+        image_callback = image_switch.get(command, None)
+
+        image = None
+        if image_callback:
+            image = image_callback(args)
 
         # If command didn't match a PBA or image command, try game-specific command
         if not response and not image:
@@ -216,7 +218,7 @@ class PBABot(discord.Client):
 
         # Respond if we have something to send back
         if response or image:
-            await message.channel.send(response, files=image)
+            await message.channel.send(response, file=image)
 
     async def on_ready(self):
         """Event callback for when discord.Client is ready"""
@@ -308,26 +310,21 @@ Game-specific Commands:
 
     def rememberlist(self, message):
         """Prints indexes of remember moments"""
-        # TODO Generate this automatically based of data
-        rememberindexes = """1-9: Christoff focused
-10-13: Laramy focused
-14-19: Seraph focused
-20: I missed a number..
-21-23:  Syntax Terror focused
-24-27: H4KKK3R focused
-28-32: Noor focused
-33-60: Reat of Sprawl campaign 1 (in order things happened after I stopped grouping by character.)
-61-73: Sprawl campaign 2, while Jayden(swarf) was still playing
-74-106: Sprawl 2 while Mercer was still alive.
-107-114: The last of Sprawl 2.
-115-134: First time playing Apoc world, what a mess that was, also lots of pvp.
-135-178: The last of Apoc world campaign 1, lots of weird stuff and overtrowing.
-179-206: Back to the Sprawl, oh how we missed the Sprawls writing. A one shot spanned over a couple of sessions.
-207-219: Apoc world, Tat and Cowboy.
-220-244: Jayden comes back and Tat dies.
-245: The sprawl and pissing on machines..."""
+        try:
+            tree = et.parse(self.personaldata)
+        except FileNotFoundError:
+            return 'No personal file found.'
 
-        rememberindexes = rememberindexes.replace("\t", "")
+        remember = tree.find('remember')
+
+        rememberindexes = ''
+        for group in list(remember):
+            memories = list(group)
+            min = memories[0].get('index')
+            max = memories[-1].get('index')
+            description = group.get('description')
+            rememberindexes += f'\n{min}-{max}: {description}'
+
         return rememberindexes
 
     def roll(self, message):
@@ -504,26 +501,50 @@ Game-specific Commands:
         return death
 
     def remember(self, index):
-        # Generates random number to get remember message from  events that have happened.
-        min = 1
-        max = 280
-        member = random.randint(min, max)
+        try:
+            tree = et.parse(self.personaldata)
+        except FileNotFoundError:
+            return 'No personal file found.'
 
-        if index:  # If more values other than .remember
-            number = int(index)  # converts stringArray  (['.remember' 'num']) to int
-            if number >= min and number <= max:  # Ensures it will exist within the range of .remember
-                member = number  # sets member to the number.
-
-        tree = et.parse(self.personaldata)
         remember = tree.find('remember')
+        memories = [list(group) for group in list(remember)]
 
-        memories = {}
-        for memory in list(remember):
-            memories[memory.get('index')] = memory.text
+        min = memories[0][0].get('index')
+        max = memories[-1][-1].get('index')
 
-        msg = f"{memories[str(member)]}"
+        if index:
+            try:
+                num = int(index)
+            except ValueError:
+                return 'Incorrect selection.'
+            else:
+                if num < int(min) or num > int(max):
+                    index = str(random.randint(int(min), int(max)))
+        else:
+            index = str(random.randint(int(min), int(max)))
+
+        msg = None
+        for group in memories:
+            for remember in group:
+                if remember.get('index') == index:
+                    msg = remember.text
 
         return msg
+
+    def map(self, args):
+        return self.image('map.jpg')
+
+    def image(self, name):
+        image = None
+        if name:
+            try:
+                image = discord.File(f'{IMAGES}/{name}', f'{name}')
+            except FileNotFoundError:
+                image = discord.File(f'{IMAGES}/no_map.jpg', 'no_map.jpg')
+        else:
+            image = discord.File(f'{IMAGES}/no_map.jpg', 'no_map.jpg')
+
+        return image
 
     def chess(self, message):
         msg = "**THE\t  TECHSORCIST\n\tIS    THE\nCHESS\t\tMASTER!**"
@@ -591,8 +612,6 @@ Game-specific Commands:
         data = {'clocks': self.clocks, 'contacts': self.contacts}
         with open(self.datafile, 'wb') as file:
             file.write(pickle.dumps(data))
-
-
 
 
 def main():
