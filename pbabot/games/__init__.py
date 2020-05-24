@@ -36,7 +36,7 @@ class Game:
 
     def _getplaybook(self, playbook, move):
         if playbook not in self.data['playbooks']:
-           return None
+            return None
 
         if not move:
             moves = f'Use .{playbook} <move> to see more details about the following moves:'

@@ -36,6 +36,10 @@ class Sprawl(Game):
         '.driver', '.fixer', '.hacker', '.hunter', '.infiltrator', '.killer', '.pusher', '.reporter', '.soldier',
         '.tech'):
             return self._getplaybook(command[1:], args)
+        for playbook in self.data['playbooks']:
+            move = self._getplaybook(playbook, command[1:])
+            if move:
+                return move
 
         # Finally, check if basic move, otherwise return None
         move = self._getmove(command)
