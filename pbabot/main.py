@@ -341,7 +341,7 @@ Game-specific Commands:
                 except ValueError:
                     pass
                 else:
-                    roll += num
+                    roll -= num
 
         # Unique response based on roll
         result = ''
