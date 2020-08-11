@@ -17,8 +17,7 @@ import random
 import pickle
 import argparse
 import xml.etree.ElementTree as et
-from pbabot.games import sprawl
-from collections import namedtuple
+from pbabot.games import Game, Sprawl
 
 # API Token
 TOKEN = open('token.txt', 'r').read()
@@ -98,7 +97,7 @@ class PBABot(discord.Client):
     memorable moments and look back on them. This personal data is currently saved in XML format.
 
     Attributes:
-        game -> pbabot.games.Game: The game currently loaded into PBABot that contains game-specific features
+        game -> pbabot.games.Game: Default game to load.
         clocks -> List: The clocks currently being used
         contacts -> List: The contacts currently being used
         personaldata -> String: Data file containing dead characters and rememberable moments.
@@ -108,15 +107,10 @@ class PBABot(discord.Client):
         """Init"""
         super().__init__()
 
-        # Get game
-        game_switch = {
-            'sprawl': sprawl.Sprawl(),
-        }
-        self.game = game_switch.get(game, None)
-
-        # No game found
-        if not self.game:
-            raise Exception
+        if game:
+            self.setgame(game)
+        else:
+            self.game = Game()
 
         # Extract data from file
         self.personaldata = personaldata
@@ -176,6 +170,7 @@ class PBABot(discord.Client):
             '.decreaseclock': self.decreaseclock,
             '.addcontact': self.addcontact,
             '.deletecontact': self.deletecontact,
+            '.game': self.setgame,
             # Miscellaneous commands
             '.rip': self.rip,
             '.f': self.rip,
@@ -206,10 +201,14 @@ class PBABot(discord.Client):
 
         # If command didn't match a PBA or image command, try game-specific command
         if not response and not image:
-            response = self.game.handle(command, args)
-            # Didn't match game-specific command, send back invalid command
-            if not response:
-                response = 'Invalid command. Type ".help" for a list of commands.'
+            try:
+                response = self.game.handle(command, args)
+            except NotImplementedError:
+                response = 'No game has been loaded. Use .game'
+            else:
+                # Didn't match game-specific command, send back invalid command
+                if not response:
+                    response = 'Invalid command. Type ".help" for a list of commands.'
 
         # If text response, surround in "```" for discord formatting
         if response and not image:
@@ -242,6 +241,7 @@ class PBABot(discord.Client):
     .contacts: Displays the current list of contacts.
     .addcontact <contact name> <description>: Adds a new contact.
     .deletecontact <contact name>: Deletes a contact.
+    .game: Set a game to use.
     .map: Displays a current map.
     .rip: List all dead characters.
     .remember <index|list>: Displays a message of a memorable moment.
@@ -257,6 +257,19 @@ Game-specific Commands:
 
         commands.strip()
         return commands
+
+    def setgame(self, game):
+        game_switch = {
+            'sprawl': Sprawl,
+        }
+
+        game_callback = game_switch.get(game, None)
+
+        if game_callback:
+            self.game = game_callback()
+            return f'Now playing {game}.'
+        else:
+            return f'No game {game} found.'
 
     def links(self, message):
         """Prints links to PBA games"""
@@ -635,7 +648,7 @@ Game-specific Commands:
 def main():
     # Command line arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument('-g', '--game', type=str, required=True, choices=['sprawl', 'apoc'])
+    parser.add_argument('-g', '--game', type=str, default=None, choices=['sprawl', 'apoc'])
     args = parser.parse_args()
     game = vars(args)['game']
 

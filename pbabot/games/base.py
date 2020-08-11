@@ -20,6 +20,8 @@ class Game:
         raise NotImplementedError
 
     def moves(self, message):
+        if not self.data:
+            return 'Data not found. Have you loaded a game using .game?'
         moves = 'Use the following commands to find detailed information about each move.'
         for move in self.data['basic']:
             if move.commands:
@@ -28,6 +30,8 @@ class Game:
         return moves
 
     def playbooks(self, message):
+        if not self.data:
+            return 'Data not found. Have you loaded a game using .game?'
         playbooks = 'Use the following commands to find each playbook-specific move.'
         for playbook in self.data['playbooks']:
             playbooks += f'\n\t.{playbook}'
