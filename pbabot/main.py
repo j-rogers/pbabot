@@ -307,15 +307,34 @@ Game-specific Commands:
 
         return contacts
 
-    def roll(self, message):
+    def roll(self, modifier):
         """Rolls 2d6 and prints the result"""
         # Generate the roll
         dice1 = random.randint(1, 6)
         dice2 = random.randint(1, 6)
         roll = dice1 + dice2
 
+        # Add any modifiers
+        if modifier:
+            if '+' in modifier:
+                try:
+                    num = int(modifier.split('+')[1])
+                except ValueError:
+                    pass
+                else:
+                    roll += num
+            elif '-' in modifier:
+                try:
+                    num = int(modifier.split('-')[1])
+                except ValueError:
+                    pass
+                else:
+                    roll += num
+
         # Unique response based on roll
         result = ''
+        if roll <= 0:
+            result = f'How did you even get this roll? Oh well, you\'ve basically killed yourself since you rolled a {roll}'
         if roll == 1:
             result = 'Throwbacks to when Martin\'s bot could roll a 1 from 2d6. Good times, not for you though, you rolled a 1.'
         elif roll == 2:
@@ -340,6 +359,8 @@ Game-specific Commands:
             result = 'You could fuck up someones day with this. You rolled an 11.'
         elif roll == 12:
             result = 'Okay, now THIS is epic. You rolled a 12.'
+        elif roll >= 13:
+            result = f'Thank you dice gods, very cool! You rolled a {roll}'
 
         return result
 
