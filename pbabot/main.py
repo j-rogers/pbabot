@@ -10,15 +10,14 @@ Currently supported PBA games:
     The Sprawl
 
 Author: Josh Rogers (2020)
-Github: https://github.com/j-rogers/thesprawlbot
+Github: https://github.com/j-rogers/pbabot
 """
 import discord
 import random
 import pickle
 import argparse
 import xml.etree.ElementTree as et
-from pbabot.games import sprawl
-from collections import namedtuple
+from pbabot.games import Game, Sprawl
 
 # API Token
 TOKEN = open('token.txt', 'r').read()
@@ -98,7 +97,7 @@ class PBABot(discord.Client):
     memorable moments and look back on them. This personal data is currently saved in XML format.
 
     Attributes:
-        game -> pbabot.games.Game: The game currently loaded into PBABot that contains game-specific features
+        game -> pbabot.games.Game: Default game to load.
         clocks -> List: The clocks currently being used
         contacts -> List: The contacts currently being used
         personaldata -> String: Data file containing dead characters and rememberable moments.
@@ -108,15 +107,10 @@ class PBABot(discord.Client):
         """Init"""
         super().__init__()
 
-        # Get game
-        game_switch = {
-            'sprawl': sprawl.Sprawl(),
-        }
-        self.game = game_switch.get(game, None)
-
-        # No game found
-        if not self.game:
-            raise Exception
+        if game:
+            self.setgame(game)
+        else:
+            self.game = Game()
 
         # Extract data from file
         self.personaldata = personaldata
@@ -165,7 +159,6 @@ class PBABot(discord.Client):
             '.links': self.links,
             '.clocks': self.printclocks,
             '.contacts': self.printcontacts,
-            '.rememberlist': self.rememberlist,
             '.moves': self.game.moves,
             '.playbooks': self.game.playbooks,
             # Functional commands
@@ -177,6 +170,7 @@ class PBABot(discord.Client):
             '.decreaseclock': self.decreaseclock,
             '.addcontact': self.addcontact,
             '.deletecontact': self.deletecontact,
+            '.game': self.setgame,
             # Miscellaneous commands
             '.rip': self.rip,
             '.f': self.rip,
@@ -207,10 +201,14 @@ class PBABot(discord.Client):
 
         # If command didn't match a PBA or image command, try game-specific command
         if not response and not image:
-            response = self.game.handle(command, args)
-            # Didn't match game-specific command, send back invalid command
-            if not response:
-                response = 'Invalid command. Type ".help" for a list of commands.'
+            try:
+                response = self.game.handle(command, args)
+            except NotImplementedError:
+                response = 'No game has been loaded. Use .game'
+            else:
+                # Didn't match game-specific command, send back invalid command
+                if not response:
+                    response = 'Invalid command. Type ".help" for a list of commands.'
 
         # If text response, surround in "```" for discord formatting
         if response and not image:
@@ -232,7 +230,7 @@ class PBABot(discord.Client):
         """
         commands = """Use \".command\" when using this bot.\n
     .help: Displays this help message.
-    .roll: Rolls 2d6 dice.
+    .roll <+/- modifier>: Rolls 2d6 dice and applies your +/- modifier.
     .moves: Displays a list of basic moves.
     .playbooks: Displays a list of playbooks.
     .clocks: Displays the current list of clocks.
@@ -243,10 +241,10 @@ class PBABot(discord.Client):
     .contacts: Displays the current list of contacts.
     .addcontact <contact name> <description>: Adds a new contact.
     .deletecontact <contact name>: Deletes a contact.
-    .map: Displays a current map
+    .game: Set a game to use.
+    .map: Displays a current map.
     .rip: List all dead characters.
-    .rememberlist: Displays rough numbers for specific moments. 
-    .remember: Displays a message of a memorable moment.
+    .remember <index|list>: Displays a message of a memorable moment.
     .refresh: Reloads the clock and contact data.
     .log <message>: Saves a message to the log file.
     .links: Displays a link to all the PBA games.
@@ -259,6 +257,19 @@ Game-specific Commands:
 
         commands.strip()
         return commands
+
+    def setgame(self, game):
+        game_switch = {
+            'sprawl': Sprawl,
+        }
+
+        game_callback = game_switch.get(game, None)
+
+        if game_callback:
+            self.game = game_callback()
+            return f'Now playing {game}.'
+        else:
+            return f'No game {game} found.'
 
     def links(self, message):
         """Prints links to PBA games"""
@@ -308,34 +319,34 @@ Game-specific Commands:
 
         return contacts
 
-    def rememberlist(self, message):
-        """Prints indexes of remember moments"""
-        try:
-            tree = et.parse(self.personaldata)
-        except FileNotFoundError:
-            return 'No personal file found.'
-
-        remember = tree.find('remember')
-
-        rememberindexes = ''
-        for group in list(remember):
-            memories = list(group)
-            min = memories[0].get('index')
-            max = memories[-1].get('index')
-            description = group.get('description')
-            rememberindexes += f'\n{min}-{max}: {description}'
-
-        return rememberindexes
-
-    def roll(self, message):
+    def roll(self, modifier):
         """Rolls 2d6 and prints the result"""
         # Generate the roll
         dice1 = random.randint(1, 6)
         dice2 = random.randint(1, 6)
         roll = dice1 + dice2
 
+        # Add any modifiers
+        if modifier:
+            if '+' in modifier:
+                try:
+                    num = int(modifier.split('+')[1])
+                except ValueError:
+                    pass
+                else:
+                    roll += num
+            elif '-' in modifier:
+                try:
+                    num = int(modifier.split('-')[1])
+                except ValueError:
+                    pass
+                else:
+                    roll += num
+
         # Unique response based on roll
         result = ''
+        if roll <= 0:
+            result = f'How did you even get this roll? Oh well, you\'ve basically killed yourself since you rolled a {roll}'
         if roll == 1:
             result = 'Throwbacks to when Martin\'s bot could roll a 1 from 2d6. Good times, not for you though, you rolled a 1.'
         elif roll == 2:
@@ -360,6 +371,8 @@ Game-specific Commands:
             result = 'You could fuck up someones day with this. You rolled an 11.'
         elif roll == 12:
             result = 'Okay, now THIS is epic. You rolled a 12.'
+        elif roll >= 13:
+            result = f'Thank you dice gods, very cool! You rolled a {roll}'
 
         return result
 
@@ -501,6 +514,24 @@ Game-specific Commands:
         return death
 
     def remember(self, index):
+        if index == 'list':
+            try:
+                tree = et.parse(self.personaldata)
+            except FileNotFoundError:
+                return 'No personal file found.'
+
+            remember = tree.find('remember')
+
+            rememberindexes = ''
+            for group in list(remember):
+                memories = list(group)
+                min = memories[0].get('index')
+                max = memories[-1].get('index')
+                description = group.get('description')
+                rememberindexes += f'\n{min}-{max}: {description}'
+
+            return rememberindexes
+
         try:
             tree = et.parse(self.personaldata)
         except FileNotFoundError:
@@ -617,7 +648,7 @@ Game-specific Commands:
 def main():
     # Command line arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument('-g', '--game', type=str, required=True, choices=['sprawl', 'apoc'])
+    parser.add_argument('-g', '--game', type=str, default=None, choices=['sprawl', 'apoc'])
     args = parser.parse_args()
     game = vars(args)['game']
 

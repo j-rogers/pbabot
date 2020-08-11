@@ -32,9 +32,8 @@ class Sprawl(Game):
             return move.fulldescription
 
         # If not a game-specific move, check if playbook move
-        if command in (
-        '.driver', '.fixer', '.hacker', '.hunter', '.infiltrator', '.killer', '.pusher', '.reporter', '.soldier',
-        '.tech'):
+        if command in ('.driver', '.fixer', '.hacker', '.hunter', '.infiltrator', '.killer', '.pusher', '.reporter',
+                       '.soldier', '.tech'):
             return self._getplaybook(command[1:], args)
         for playbook in self.data['playbooks']:
             move = self._getplaybook(playbook, command[1:])
