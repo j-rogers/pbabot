@@ -165,7 +165,6 @@ class PBABot(discord.Client):
             '.links': self.links,
             '.clocks': self.printclocks,
             '.contacts': self.printcontacts,
-            '.rememberlist': self.rememberlist,
             '.moves': self.game.moves,
             '.playbooks': self.game.playbooks,
             # Functional commands
@@ -232,7 +231,7 @@ class PBABot(discord.Client):
         """
         commands = """Use \".command\" when using this bot.\n
     .help: Displays this help message.
-    .roll: Rolls 2d6 dice.
+    .roll <+/- modifier>: Rolls 2d6 dice and applies your +/- modifier.
     .moves: Displays a list of basic moves.
     .playbooks: Displays a list of playbooks.
     .clocks: Displays the current list of clocks.
