@@ -10,7 +10,7 @@ Currently supported PBA games:
     The Sprawl
 
 Author: Josh Rogers (2020)
-Github: https://github.com/j-rogers/thesprawlbot
+Github: https://github.com/j-rogers/pbabot
 """
 import discord
 import random
@@ -243,10 +243,9 @@ class PBABot(discord.Client):
     .contacts: Displays the current list of contacts.
     .addcontact <contact name> <description>: Adds a new contact.
     .deletecontact <contact name>: Deletes a contact.
-    .map: Displays a current map
+    .map: Displays a current map.
     .rip: List all dead characters.
-    .rememberlist: Displays rough numbers for specific moments. 
-    .remember: Displays a message of a memorable moment.
+    .remember <index|list>: Displays a message of a memorable moment.
     .refresh: Reloads the clock and contact data.
     .log <message>: Saves a message to the log file.
     .links: Displays a link to all the PBA games.
@@ -307,25 +306,6 @@ Game-specific Commands:
             contacts += f'{contact.name}: {contact.description}\n'
 
         return contacts
-
-    def rememberlist(self, message):
-        """Prints indexes of remember moments"""
-        try:
-            tree = et.parse(self.personaldata)
-        except FileNotFoundError:
-            return 'No personal file found.'
-
-        remember = tree.find('remember')
-
-        rememberindexes = ''
-        for group in list(remember):
-            memories = list(group)
-            min = memories[0].get('index')
-            max = memories[-1].get('index')
-            description = group.get('description')
-            rememberindexes += f'\n{min}-{max}: {description}'
-
-        return rememberindexes
 
     def roll(self, message):
         """Rolls 2d6 and prints the result"""
@@ -501,6 +481,24 @@ Game-specific Commands:
         return death
 
     def remember(self, index):
+        if index == 'list':
+            try:
+                tree = et.parse(self.personaldata)
+            except FileNotFoundError:
+                return 'No personal file found.'
+
+            remember = tree.find('remember')
+
+            rememberindexes = ''
+            for group in list(remember):
+                memories = list(group)
+                min = memories[0].get('index')
+                max = memories[-1].get('index')
+                description = group.get('description')
+                rememberindexes += f'\n{min}-{max}: {description}'
+
+            return rememberindexes
+
         try:
             tree = et.parse(self.personaldata)
         except FileNotFoundError:
