@@ -18,7 +18,7 @@ import pickle
 import argparse
 import xml.etree.ElementTree as et
 from pbabot.games import Game, Sprawl
-from .character import Character
+from pbabot.character import Character
 
 # API Token
 TOKEN = open('token.txt', 'r').read()
@@ -199,11 +199,11 @@ class PBABot(discord.Client):
             character_switch = {
                 '.newcharacter': self.new_character,
                 '.setcharacter': self.set_character,
-                '.character':  self.print_character,
+                '.character':  self.handle_character,
             }
             character_callback = character_switch.get(command, None)
             if character_callback:
-                response = character_callback(args, message.author)
+                response = character_callback(args, hash(message.author))
 
         # Lookup table if command is requesting an image
         image_switch = {
@@ -248,7 +248,7 @@ class PBABot(discord.Client):
         commands = """Use \".command\" when using this bot.\n
 General Commands:
     .help: Displays this help message.
-    .roll <+/- modifier>: Rolls 2d6 dice and applies your +/- modifier.
+    .roll <modifier>: Rolls 2d6 dice and applies your +/- modifier.
     .moves: Displays a list of basic moves.
     .playbooks: Displays a list of playbooks.
     .clocks: Displays the current list of clocks.
@@ -270,7 +270,7 @@ General Commands:
 Character Commands:
     .newcharacter <name>: Create a new character for the currently selected game.
     .setcharacter <name>: Set the character you want to use.
-    .character: Display a summary of your current character.
+    .character [help|set]: Modify character elements.
     
 Game-specific Commands:
 """
@@ -294,57 +294,49 @@ Game-specific Commands:
         else:
             return f'No game {game} found.'
 
-    def new_character(self, name: str, player: str) -> str:
+    def handle_character(self, args: str, player: int) -> str:
+        character = self._get_character(player)
+        if not character:
+            return 'No character has been set. Please create a new character using .newcharacter <name> or use an ' \
+                   'existing character using .setcharacter <name>.'
+
+        return character.handle(args)
+
+    def new_character(self, name: str, player: int) -> str:
         if not self.game:
             return 'You haven\'t loaded a game yet.'
         if not name:
             return 'Usage: .newcharacter <name>'
 
+        # Unset previous character (if exists)
+        character = self._get_character(player)
+        print(type(player))
+        if character:
+            character.player = None
+
+        # Create the character
         character = Character(name, self.game.stats, player)
         self.characters.append(character)
         self._savedata()
 
         return f'Character {name} created.'
 
-    def set_character(self, name: str, player: str) -> str:
+    def set_character(self, name: str, player: int) -> str:
+        # Get current character to unset
+        old_character = self._get_character(player)
+
+        # Find and set new character
+        found = False
         for character in self.characters:
             if character.name == name:
+                found = True
                 character.player = player
 
+        # Unset old character
+        if found and old_character:
+            old_character.player = None
+
         return f'Successfully set character to {name}.'
-
-    def set_character_stat(self, query: str, player: str) -> str:
-        character = self._get_character(player)
-        if not character:
-            return 'No character has been set. Please create a new character using .newcharacter <name> or use an' \
-                   'existing character using .setcharacter <name>.'
-
-        stat, num = query.split(' ', 1)
-
-        if stat not in character.stats:
-            return f'No stat {stat} was found.'
-
-        try:
-            num = int(num)
-        except ValueError:
-            return f'Non-integer value given.'
-        else:
-            character.stats[stat] = num
-
-        return f'{character.name}\'s {stat} stat has been changed to {num}.'
-
-    def print_character(self, message: str, player: str):
-        character = self._get_character(player)
-        if not character:
-            return 'No character has been set. Please create a new character using .newcharacter <name> or use an' \
-                   'existing character using .setcharacter <name>.'
-
-        stat_line = ''
-        for stat in character.stats:
-            stat_line += f'\t{stat}\n'
-
-        return f'{character.name}\nGame: TODO\nDescription: {character.description}\nStats: {stat_line}Attributes: TODO'
-
 
     def links(self, message):
         """Prints links to PBA games"""
@@ -414,20 +406,12 @@ Game-specific Commands:
 
         # Add any modifiers
         if modifier:
-            if '+' in modifier:
-                try:
-                    num = int(modifier.split('+')[1])
-                except ValueError:
-                    pass
-                else:
-                    roll += num
-            elif '-' in modifier:
-                try:
-                    num = int(modifier.split('-')[1])
-                except ValueError:
-                    pass
-                else:
-                    roll -= num
+            try:
+                num = int(modifier)
+            except ValueError:
+                pass
+            else:
+                roll += num
 
         # Unique response based on roll
         result = ''
