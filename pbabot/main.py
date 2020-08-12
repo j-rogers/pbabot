@@ -89,6 +89,14 @@ class Contact:
         self.description = description
 
 
+class Character:
+    def __init__(self, name, stats):
+        self.name = name
+        self.stats = stats
+        self.description = ''
+        self.attributes = {}
+
+
 class PBABot(discord.Client):
     """PBABot
 
@@ -117,16 +125,20 @@ class PBABot(discord.Client):
         self.datafile = datafile
         self.clocks = []
         self.contacts = []
+        self.characters = []
         try:
             with open(self.datafile, 'rb') as file:
                 data = pickle.loads(file.read())
-            self.clocks = data["clocks"]
-            self.contacts = data["contacts"]
-            print("Data extracted")
+            self.clocks = data['clocks']
+            self.contacts = data['contacts']
+            self.characters = data['characters']
+            print('Data extracted')
         except EOFError:
-            print("No data in file.")
+            print('No data in file.')
         except FileNotFoundError:
-            print("No data file found.")
+            print('No data file found.')
+        except KeyError:
+            print(f'KeyError while loading data.')
 
     async def on_message(self, message):
         """Event callback when receiving a message
@@ -161,6 +173,7 @@ class PBABot(discord.Client):
             '.contacts': self.printcontacts,
             '.moves': self.game.moves,
             '.playbooks': self.game.playbooks,
+            '.characters': self.print_characters,
             # Functional commands
             '.roll': self.roll,
             '.dice': self.roll,
@@ -171,6 +184,8 @@ class PBABot(discord.Client):
             '.addcontact': self.addcontact,
             '.deletecontact': self.deletecontact,
             '.game': self.setgame,
+            # Character commands,
+            '.newcharacter': self.new_character,
             # Miscellaneous commands
             '.rip': self.rip,
             '.f': self.rip,
@@ -271,6 +286,18 @@ Game-specific Commands:
         else:
             return f'No game {game} found.'
 
+    def new_character(self, name):
+        if not self.game:
+            return 'You haven\'t loaded a game yet.'
+
+        character = Character(name, self.game.stats)
+        self.characters.append(character)
+        self._savedata()
+
+        print(self.characters)
+
+        return f'Character {name} created.'
+
     def links(self, message):
         """Prints links to PBA games"""
         msg = """
@@ -281,6 +308,17 @@ Game-specific Commands:
         """
         msg = msg.replace('\t', '')
         return msg
+
+    def print_characters(self, message):
+        if not self.characters:
+            return 'No characters have been added.'
+
+        characters = ''
+        for character in self.characters:
+            print(character.name)
+            characters += f'{character.name}\n'
+
+        return characters
 
     def printclocks(self, message):
         """Prints current clock times"""
@@ -601,14 +639,17 @@ Game-specific Commands:
         msg = ''
         try:
             data = pickle.loads(open(self.datafile, 'rb').read())
-            self.clocks = data["clocks"]
-            self.contacts = data["contacts"]
+            self.clocks = data['clocks']
+            self.contacts = data['contacts']
+            self.characters = data['characters']
             msg = 'Data has been refreshed.'
-            print("Data extracted")
+            print('Data refreshed.')
         except EOFError:
-            print("No data in file.")
+            print('No data in file.')
         except FileNotFoundError:
-            print("No data file found.")
+            print('No data file found.')
+        except KeyError:
+            print(f'KeyError while loading data.')
 
         # Refresh game data as well
         self.game.loaddata()
@@ -640,7 +681,7 @@ Game-specific Commands:
         return None
 
     def _savedata(self):
-        data = {'clocks': self.clocks, 'contacts': self.contacts}
+        data = {'clocks': self.clocks, 'contacts': self.contacts, 'characters': self.characters}
         with open(self.datafile, 'wb') as file:
             file.write(pickle.dumps(data))
 

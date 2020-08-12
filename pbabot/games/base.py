@@ -6,6 +6,7 @@ class Game:
         self.commands = {}
         self.datafile = None
         self.data = None
+        self.stats = None
 
     def loaddata(self):
         try:
