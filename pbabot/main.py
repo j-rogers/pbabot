@@ -405,6 +405,7 @@ Game-specific Commands:
         roll = dice1 + dice2
 
         # Add any modifiers
+        num = None
         if modifier:
             try:
                 num = int(modifier)
@@ -443,6 +444,9 @@ Game-specific Commands:
             result = 'Okay, now THIS is epic. You rolled a 12.'
         elif roll >= 13:
             result = f'Thank you dice gods, very cool! You rolled a {roll}'
+
+        if num:
+            result += f' ({dice1 + dice2} + {num})'
 
         return result
 
