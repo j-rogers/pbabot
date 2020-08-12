@@ -18,6 +18,7 @@ import pickle
 import argparse
 import xml.etree.ElementTree as et
 from pbabot.games import Game, Sprawl
+from .character import Character
 
 # API Token
 TOKEN = open('token.txt', 'r').read()
@@ -87,14 +88,6 @@ class Contact:
     def __init__(self, name, description):
         self.name = name
         self.description = description
-
-
-class Character:
-    def __init__(self, name, stats):
-        self.name = name
-        self.stats = stats
-        self.description = ''
-        self.attributes = {}
 
 
 class PBABot(discord.Client):
@@ -184,8 +177,6 @@ class PBABot(discord.Client):
             '.addcontact': self.addcontact,
             '.deletecontact': self.deletecontact,
             '.game': self.setgame,
-            # Character commands,
-            '.newcharacter': self.new_character,
             # Miscellaneous commands
             '.rip': self.rip,
             '.f': self.rip,
@@ -202,6 +193,17 @@ class PBABot(discord.Client):
         response = None
         if callback:
             response = callback(args)
+
+        # If no response, check if it's a character command
+        if not response:
+            character_switch = {
+                '.newcharacter': self.new_character,
+                '.setcharacter': self.set_character,
+                '.character':  self.print_character,
+            }
+            character_callback = character_switch.get(command, None)
+            if character_callback:
+                response = character_callback(args, message.author)
 
         # Lookup table if command is requesting an image
         image_switch = {
@@ -244,6 +246,7 @@ class PBABot(discord.Client):
         """Prints list of commands
         """
         commands = """Use \".command\" when using this bot.\n
+General Commands:
     .help: Displays this help message.
     .roll <+/- modifier>: Rolls 2d6 dice and applies your +/- modifier.
     .moves: Displays a list of basic moves.
@@ -263,6 +266,11 @@ class PBABot(discord.Client):
     .refresh: Reloads the clock and contact data.
     .log <message>: Saves a message to the log file.
     .links: Displays a link to all the PBA games.
+    
+Character Commands:
+    .newcharacter <name>: Create a new character for the currently selected game.
+    .setcharacter <name>: Set the character you want to use.
+    .character: Display a summary of your current character.
     
 Game-specific Commands:
 """
@@ -286,17 +294,57 @@ Game-specific Commands:
         else:
             return f'No game {game} found.'
 
-    def new_character(self, name):
+    def new_character(self, name: str, player: str) -> str:
         if not self.game:
             return 'You haven\'t loaded a game yet.'
+        if not name:
+            return 'Usage: .newcharacter <name>'
 
-        character = Character(name, self.game.stats)
+        character = Character(name, self.game.stats, player)
         self.characters.append(character)
         self._savedata()
 
-        print(self.characters)
-
         return f'Character {name} created.'
+
+    def set_character(self, name: str, player: str) -> str:
+        for character in self.characters:
+            if character.name == name:
+                character.player = player
+
+        return f'Successfully set character to {name}.'
+
+    def set_character_stat(self, query: str, player: str) -> str:
+        character = self._get_character(player)
+        if not character:
+            return 'No character has been set. Please create a new character using .newcharacter <name> or use an' \
+                   'existing character using .setcharacter <name>.'
+
+        stat, num = query.split(' ', 1)
+
+        if stat not in character.stats:
+            return f'No stat {stat} was found.'
+
+        try:
+            num = int(num)
+        except ValueError:
+            return f'Non-integer value given.'
+        else:
+            character.stats[stat] = num
+
+        return f'{character.name}\'s {stat} stat has been changed to {num}.'
+
+    def print_character(self, message: str, player: str):
+        character = self._get_character(player)
+        if not character:
+            return 'No character has been set. Please create a new character using .newcharacter <name> or use an' \
+                   'existing character using .setcharacter <name>.'
+
+        stat_line = ''
+        for stat in character.stats:
+            stat_line += f'\t{stat}\n'
+
+        return f'{character.name}\nGame: TODO\nDescription: {character.description}\nStats: {stat_line}Attributes: TODO'
+
 
     def links(self, message):
         """Prints links to PBA games"""
@@ -684,6 +732,13 @@ Game-specific Commands:
         data = {'clocks': self.clocks, 'contacts': self.contacts, 'characters': self.characters}
         with open(self.datafile, 'wb') as file:
             file.write(pickle.dumps(data))
+
+    def _get_character(self, player) -> Character:
+        for character in self.characters:
+            if character.player == player:
+                return character
+
+        return None
 
 
 def main():

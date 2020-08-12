@@ -13,6 +13,15 @@ class Sprawl(Game):
             '.cred': 'Shows you what you can do with cred.',
             '.weapons': 'Displays a list of weapons and their profiles.'
         }
+        self.stats = {
+            'cred': 5,
+            'edge': 0,
+            'style': 0,
+            'mind': 0,
+            'meat': 0,
+            'cool': 0,
+            'synth': 0
+        }
         self.loaddata()
 
     def handle(self, command, args):
