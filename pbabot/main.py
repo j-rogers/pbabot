@@ -19,29 +19,37 @@ import argparse
 import xml.etree.ElementTree as et
 from pbabot.games import Game, Sprawl
 from pbabot.character import Character
+from typing import Optional
+
+# Flags
+NO_DISCORD = True   # Prevents logging into Discord and instead receiving input and sending output to console
 
 # API Token
-TOKEN = open('token.txt', 'r').read()
+TOKEN = open('token.txt', 'r').read() if not NO_DISCORD else None
+
+# Data files
 DATA_FILE = 'data/data.pickle'
 PERSONAL_DATA = 'data/personal'
+
+# Image folder
 IMAGES = 'images'
 
 
 class Clock:
     """Countdown Clock
 
-    This class maintains the state of a countdown clock. It also increaes and decreases their value.
+    This class maintains the state of a countdown clock. It also increases and decreases their value.
 
     Attributes:
         name -> String: Name of the clock
         time -> String: Time of the clock (defaults to 1200 on creation)
     """
-    def __init__(self, name, time='1200'):
+    def __init__(self, name: str, time: str = '1200'):
         """Init"""
         self.name = name
         self.time = time
 
-    def increase(self):
+    def increase(self) -> str:
         """Increases the clock's time by one segment"""
         if self.time == "1200":
             self.time = "1500"
@@ -58,7 +66,7 @@ class Clock:
         elif self.time == "0000":
             return '```Clock is already at midnight.```'
 
-    def decrease(self):
+    def decrease(self) -> str:
         """Decreases the clock's time by one segment"""
         if self.time == "0000":
             self.time = "2300"
@@ -85,7 +93,8 @@ class Contact:
         name -> String: Name of the contact
         description -> String: Description of the contact
     """
-    def __init__(self, name, description):
+    def __init__(self, name: str, description: str):
+        """Init"""
         self.name = name
         self.description = description
 
@@ -101,26 +110,28 @@ class PBABot(discord.Client):
         game -> pbabot.games.Game: Default game to load.
         clocks -> List: The clocks currently being used
         contacts -> List: The contacts currently being used
-        personaldata -> String: Data file containing dead characters and rememberable moments.
-        datafile -> String: Data file containing current clock and contact data
+        personal_data -> String: Data file containing dead characters and rememberable moments.
+        data_file -> String: Data file containing current clock and contact data
     """
-    def __init__(self, game, datafile=DATA_FILE, personaldata=PERSONAL_DATA):
+    def __init__(self, game: str, data_file: str = DATA_FILE, personal_data: str = PERSONAL_DATA):
         """Init"""
-        super().__init__()
+        if not NO_DISCORD:
+            super().__init__()
 
+        # If a game was specified, set it, otherwise default to no game
         if game:
-            self.setgame(game)
+            self.set_game(game)
         else:
             self.game = Game()
 
         # Extract data from file
-        self.personaldata = personaldata
-        self.datafile = datafile
+        self.personal_data = personal_data
+        self.data_file = data_file
         self.clocks = []
         self.contacts = []
         self.characters = []
         try:
-            with open(self.datafile, 'rb') as file:
+            with open(self.data_file, 'rb') as file:
                 data = pickle.loads(file.read())
             self.clocks = data['clocks']
             self.contacts = data['contacts']
@@ -133,7 +144,108 @@ class PBABot(discord.Client):
         except KeyError:
             print(f'KeyError while loading data.')
 
-    async def on_message(self, message):
+    def debug_on_message(self, message: str) -> str:
+        """Alternative to on_message when NO_DISCORD flag is set to True
+
+        When debugged without discord, we instead need to read input from console, and also print to console. This
+        method is used instead of on_message when the NO_DISCORD flag is set, allowing us to do just that.
+
+        NOTE: Functionality that requires a hash of the user is currently disabled, such as the character stuff.
+
+        Args:
+            message: Message received from console
+
+        Returns:
+            Response to be printed out
+        """
+        # Prevents bot responding to regular messages
+        if not message.startswith('.'):
+            return
+
+        # Parse message
+        content = message.lower().split(' ', 1)
+        command = content[0]
+        args = content[1] if len(content) > 1 else ''
+
+        # Lookup table of commands the the respective callback
+        text_switch = {
+            # Listing commands
+            '.help': self.help,
+            '.links': self.links,
+            '.clocks': self.print_clocks,
+            '.contacts': self.print_contacts,
+            '.moves': self.game.moves,
+            '.playbooks': self.game.playbooks,
+            #'.characters': self.print_characters,
+            # Functional commands
+            '.roll': self.roll,
+            '.dice': self.roll,
+            '.addclock': self.add_clock,
+            '.deleteclock': self.delete_clock,
+            '.increaseclock': self.increase_clock,
+            '.decreaseclock': self.decrease_clock,
+            '.addcontact': self.add_contact,
+            '.deletecontact': self.delete_contact,
+            '.game': self.set_game,
+            # Miscellaneous commands
+            '.rip': self.rip,
+            '.f': self.rip,
+            '.remember': self.remember,
+            '.chess': self.chess,
+            '.answerphone': self.answerphone,
+            # Dev commands
+            '.refresh': self.refresh,
+            '.log': self.log
+        }
+        callback = text_switch.get(command, None)
+
+        # If match was found, get response
+        response = None
+        if callback:
+            response = callback(args)
+
+        # DISABLED
+        # If no response, check if it's a character command
+        #if not response:
+        #    character_switch = {
+        #        '.newcharacter': self.new_character,
+        #        '.setcharacter': self.set_character,
+        #        '.character': self.handle_character,
+        #    }
+        #    character_callback = character_switch.get(command, None)
+        #    if character_callback:
+        #        response = character_callback(args, hash(message.author))
+
+        # Lookup table if command is requesting an image
+        image_switch = {
+            '.map': self.map,
+            '.image': self.image,
+        }
+        image_callback = image_switch.get(command, None)
+
+        image = None
+        if image_callback:
+            image = image_callback(args)
+
+        # If command didn't match a PBA or image command, try game-specific command
+        if not response and not image:
+            try:
+                response = self.game.handle(command, args)
+            except NotImplementedError:
+                response = 'No game has been loaded. Use .game'
+            else:
+                # Didn't match game-specific command, send back invalid command
+                if not response:
+                    response = 'Invalid command. Type ".help" for a list of commands.'
+
+        # If text response, surround in "```" for discord formatting
+        if response and not image:
+            response = f'```{response}```'
+
+        # Respond if we have something to send back
+        return response
+
+    async def on_message(self, message: discord.Message):
         """Event callback when receiving a message
 
         From discord.Client, this method is an event callback for when the bot receives a message. It checks the message
@@ -162,21 +274,21 @@ class PBABot(discord.Client):
             # Listing commands
             '.help': self.help,
             '.links': self.links,
-            '.clocks': self.printclocks,
-            '.contacts': self.printcontacts,
+            '.clocks': self.print_clocks,
+            '.contacts': self.print_contacts,
             '.moves': self.game.moves,
             '.playbooks': self.game.playbooks,
             '.characters': self.print_characters,
             # Functional commands
             '.roll': self.roll,
             '.dice': self.roll,
-            '.addclock': self.addclock,
-            '.deleteclock': self.deleteclock,
-            '.increaseclock': self.increaseclock,
-            '.decreaseclock': self.decreaseclock,
-            '.addcontact': self.addcontact,
-            '.deletecontact': self.deletecontact,
-            '.game': self.setgame,
+            '.addclock': self.add_clock,
+            '.deleteclock': self.delete_clock,
+            '.increaseclock': self.increase_clock,
+            '.decreaseclock': self.decrease_clock,
+            '.addcontact': self.add_contact,
+            '.deletecontact': self.delete_contact,
+            '.game': self.set_game,
             # Miscellaneous commands
             '.rip': self.rip,
             '.f': self.rip,
@@ -242,9 +354,8 @@ class PBABot(discord.Client):
         print(self.user.id)
         print('------')
 
-    def help(self, message):
-        """Prints list of commands
-        """
+    def help(self, message: str) -> str:
+        """Prints list of commands"""
         commands = """Use \".command\" when using this bot.\n
 General Commands:
     .help: Displays this help message.
@@ -259,7 +370,7 @@ General Commands:
     .contacts: Displays the current list of contacts.
     .addcontact <contact name> <description>: Adds a new contact.
     .deletecontact <contact name>: Deletes a contact.
-    .game: Set a game to use.
+    .game <game>: Set a game to use.
     .map: Displays a current map.
     .rip: List all dead characters.
     .remember <index|list>: Displays a message of a memorable moment.
@@ -281,7 +392,14 @@ Game-specific Commands:
         commands.strip()
         return commands
 
-    def setgame(self, game):
+    def set_game(self, game: str) -> str:
+        """Sets the current game being played"""
+        if not game:
+            if self.game:
+                return f'Currently playing {self.game}.'
+            else:
+                return 'No game is currently set. Set a game with .game <game>.'
+
         game_switch = {
             'sprawl': Sprawl,
         }
@@ -295,6 +413,7 @@ Game-specific Commands:
             return f'No game {game} found.'
 
     def handle_character(self, args: str, player: int) -> str:
+        """Passes args to the character handler"""
         character = self._get_character(player)
         if not character:
             return 'No character has been set. Please create a new character using .newcharacter <name> or use an ' \
@@ -303,6 +422,7 @@ Game-specific Commands:
         return character.handle(args)
 
     def new_character(self, name: str, player: int) -> str:
+        """Creates a new player character"""
         if not self.game:
             return 'You haven\'t loaded a game yet.'
         if not name:
@@ -317,11 +437,12 @@ Game-specific Commands:
         # Create the character
         character = Character(name, self.game.stats, player)
         self.characters.append(character)
-        self._savedata()
+        self._save_data()
 
         return f'Character {name} created.'
 
     def set_character(self, name: str, player: int) -> str:
+        """Sets current player character to specified character"""
         # Get current character to unset
         old_character = self._get_character(player)
 
@@ -338,7 +459,7 @@ Game-specific Commands:
 
         return f'Successfully set character to {name}.'
 
-    def links(self, message):
+    def links(self, message: str) -> str:
         """Prints links to PBA games"""
         msg = """
         **Apocalpyse World:** https://www.dropbox.com/sh/fmsh9kyaiplqhom/AACw1iLMQ7f53Q40FUnMjlz4a?dl=0
@@ -349,7 +470,8 @@ Game-specific Commands:
         msg = msg.replace('\t', '')
         return msg
 
-    def print_characters(self, message):
+    def print_characters(self, message: str) -> str:
+        """Prints a list of all characters"""
         if not self.characters:
             return 'No characters have been added.'
 
@@ -360,7 +482,7 @@ Game-specific Commands:
 
         return characters
 
-    def printclocks(self, message):
+    def print_clocks(self, message: str) -> str:
         """Prints current clock times"""
         # Check that there are clocks
         if not self.clocks:
@@ -384,7 +506,7 @@ Game-specific Commands:
 
         return clocks
 
-    def printcontacts(self, message):
+    def print_contacts(self, message: str) -> str:
         """Prints list of contacts"""
         # Check there are contacts
         if not self.contacts:
@@ -397,7 +519,7 @@ Game-specific Commands:
 
         return contacts
 
-    def roll(self, modifier):
+    def roll(self, modifier: str) -> str:
         """Rolls 2d6 and prints the result"""
         # Generate the roll
         dice1 = random.randint(1, 6)
@@ -450,10 +572,10 @@ Game-specific Commands:
 
         return result
 
-    def addclock(self, name):
+    def add_clock(self, name: str) -> str:
         """Adds a clock of the given name at 1200"""
         # Checks if clock has already been added
-        clock = self._getclock(name)
+        clock = self._get_clock(name)
         if clock:
             return f'Clock {name} already exists.'
 
@@ -461,16 +583,16 @@ Game-specific Commands:
         self.clocks.append(Clock(name))
 
         # Update and refresh file
-        self._savedata()
+        self._save_data()
         print(f'Clock added to file: {name} at 1200')
 
         # Form message and send
         return f'Clock added to file: {name} at 1200'
 
-    def deleteclock(self, name):
+    def delete_clock(self, name: str) -> str:
         """Deletes the clock with specified name"""
         # Find the clock to be deleted
-        clock = self._getclock(name)
+        clock = self._get_clock(name)
         if not clock:
             return f'Clock {name} not found.'
 
@@ -478,16 +600,16 @@ Game-specific Commands:
         self.clocks.remove(clock)
 
         # Update and refresh file
-        self._savedata()
+        self._save_data()
         print(f'Clock deleted from file: {name}')
 
         # Form message and send
         return f'Deleted clock {name}.'
 
-    def increaseclock(self, name):
+    def increase_clock(self, name: str) -> str:
         """Increases the clock of specified name by one segment"""
         # Find the clock to be increased
-        clock = self._getclock(name)
+        clock = self._get_clock(name)
 
         # Check if the clock was found
         if not clock:
@@ -497,16 +619,16 @@ Game-specific Commands:
         clock.increase()
 
         # Update and refresh file
-        self._savedata()
+        self._save_data()
         print(f'Clock update reflected in file (INCREASE): ({clock.name} {clock.time})')
 
         # Form message and send
         return f'{clock.name} clock increased to {clock.time}.'
 
-    def decreaseclock(self, name):
+    def decrease_clock(self, name: str) -> str:
         """Decreases the clock of specified name by one segment"""
         # Find clock
-        clock = self._getclock(name)
+        clock = self._get_clock(name)
 
         # Check if clock exists
         if not clock:
@@ -516,16 +638,16 @@ Game-specific Commands:
         clock.decrease()
 
         # Update and save data
-        self._savedata()
+        self._save_data()
 
         return f'{clock.name} clock decreased to {clock.time}'
 
-    def addcontact(self, args):
+    def add_contact(self, args: str) -> str:
         """Adds a contact with specified information
 
-        A contact can be added by either using .addcontact name description, where name is a single word and description
+        A contact can be added by either using .add_contact name description, where name is a single word and description
         is multiple. If you want to add a contact with a name that has multiple words then you can use
-        .addcontact "first last" description.
+        .add_contact "first last" description.
 
         Args:
             args -> String: Information of contact to be added
@@ -546,29 +668,31 @@ Game-specific Commands:
             description = tokens[1]
 
         # Check if contact already exists
-        if self._getcontact(name):
+        if self._get_contact(name):
             return f'Contact "{name}" already added as a contact.'
 
         # Add contact and save data
         self.contacts.append(Contact(name, description))
-        self._savedata()
+        self._save_data()
 
         return f'Contact added: {name}.'
 
-    def deletecontact(self, name):
-        contact = self._getcontact(name)
+    def delete_contact(self, name: str) -> str:
+        """Deletes the given contact"""
+        contact = self._get_contact(name)
 
         if not contact:
             return f'Contact {name} not found.'
 
         self.contacts.remove(contact)
 
-        self._savedata()
+        self._save_data()
 
         return f'Deleted contact {name}'
 
-    def rip(self, player):
-        tree = et.parse(self.personaldata)
+    def rip(self, player: str) -> str:
+        """Displays a list of dead characters (in total or for the given player)"""
+        tree = et.parse(self.personal_data)
         rip = tree.getroot().find('rip')
 
         death = ''
@@ -587,10 +711,11 @@ Game-specific Commands:
         death = death.strip()
         return death
 
-    def remember(self, index):
+    def remember(self, index: str) -> str:
+        """Displays a memory or list of memory indices"""
         if index == 'list':
             try:
-                tree = et.parse(self.personaldata)
+                tree = et.parse(self.personal_data)
             except FileNotFoundError:
                 return 'No personal file found.'
 
@@ -607,7 +732,7 @@ Game-specific Commands:
             return rememberindexes
 
         try:
-            tree = et.parse(self.personaldata)
+            tree = et.parse(self.personal_data)
         except FileNotFoundError:
             return 'No personal file found.'
 
@@ -636,10 +761,12 @@ Game-specific Commands:
 
         return msg
 
-    def map(self, args):
+    def map(self, args: str) -> discord.File:
+        """Returns the default map"""
         return self.image('map.jpg')
 
-    def image(self, name):
+    def image(self, name: str) -> discord.File:
+        """Returns the given image"""
         image = None
         if name:
             try:
@@ -651,11 +778,13 @@ Game-specific Commands:
 
         return image
 
-    def chess(self, message):
+    def chess(self, message: str) -> str:
+        """idk what this is"""
         msg = "**THE\t  TECHSORCIST\n\tIS    THE\nCHESS\t\tMASTER!**"
         return msg
 
-    def answerphone(self, index):
+    def answerphone(self, index: str) -> str:
+        """idk what this is either"""
         min = 1
         max = 1
         member = random.randint(min, max)
@@ -671,10 +800,11 @@ Game-specific Commands:
 
         return switch[member]
 
-    def refresh(self, message):
+    def refresh(self, message: str) -> str:
+        """Reloads game data"""
         msg = ''
         try:
-            data = pickle.loads(open(self.datafile, 'rb').read())
+            data = pickle.loads(open(self.data_file, 'rb').read())
             self.clocks = data['clocks']
             self.contacts = data['contacts']
             self.characters = data['characters']
@@ -688,11 +818,12 @@ Game-specific Commands:
             print(f'KeyError while loading data.')
 
         # Refresh game data as well
-        self.game.loaddata()
+        self.game.load_data()
 
         return msg
 
-    def log(self, message):
+    def log(self, message: str) -> str:
+        """Writes the message to a log file"""
         # Write to the file
         file = open("log.txt", "a")
         file.write(message + "\n")
@@ -702,26 +833,30 @@ Game-specific Commands:
         # Form and send message
         return 'Log saved.'
 
-    def _getcontact(self, name):
+    def _get_contact(self, name: str) -> Optional[Contact]:
+        """Retrieves the given contact"""
         for contact in self.contacts:
             if name.lower() == contact.name.lower():
                 return contact
 
         return None
 
-    def _getclock(self, name):
+    def _get_clock(self, name: str) -> Optional[Clock]:
+        """Retrieves the given clock"""
         for clock in self.clocks:
             if name.lower() == clock.name.lower():
                 return clock
 
         return None
 
-    def _savedata(self):
+    def _save_data(self) -> None:
+        """Saves the current data to file"""
         data = {'clocks': self.clocks, 'contacts': self.contacts, 'characters': self.characters}
-        with open(self.datafile, 'wb') as file:
+        with open(self.data_file, 'wb') as file:
             file.write(pickle.dumps(data))
 
-    def _get_character(self, player) -> Character:
+    def _get_character(self, player) -> Optional[Character]:
+        """Retrieves the given character"""
         for character in self.characters:
             if character.player == player:
                 return character
@@ -737,7 +872,13 @@ def main():
     game = vars(args)['game']
 
     client = PBABot(game)
-    client.run(TOKEN)
+    if not NO_DISCORD:
+        client.run(TOKEN)
+    else:
+        while True:
+            message = input()
+            response = client.debug_on_message(message)
+            print(response)
 
 
 if __name__ == '__main__':

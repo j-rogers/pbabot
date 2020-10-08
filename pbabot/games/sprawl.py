@@ -1,13 +1,11 @@
 import random
-import pickle
-
 from . import Game
 
 
 class Sprawl(Game):
     def __init__(self):
         super().__init__()
-        self.datafile = 'data/sprawl_data.pickle'
+        self.data_file = 'data/sprawl_data.pickle'
         self.commands = {
             '.matrix': 'Displays a list of matrix-specific moves.',
             '.cred': 'Shows you what you can do with cred.',
@@ -15,6 +13,7 @@ class Sprawl(Game):
         }
         self.stats = {
             'cred': 5,
+            'xp': 0,
             'edge': 0,
             'style': 0,
             'mind': 0,
@@ -22,7 +21,7 @@ class Sprawl(Game):
             'cool': 0,
             'synth': 0
         }
-        self.loaddata()
+        self.load_data()
 
     def handle(self, command, args):
         # Handle game-specific moves
@@ -36,21 +35,21 @@ class Sprawl(Game):
             return self._weapons()
 
         # Check matrix moves
-        move = self._getmove(command, index='matrix')
+        move = self._get_move(command, index='matrix')
         if move:
-            return move.fulldescription
+            return move.full_description
 
         # If not a game-specific move, check if playbook move
         if command in ('.driver', '.fixer', '.hacker', '.hunter', '.infiltrator', '.killer', '.pusher', '.reporter',
                        '.soldier', '.tech'):
-            return self._getplaybook(command[1:], args)
+            return self._get_playbook(command[1:], args)
         for playbook in self.data['playbooks']:
-            move = self._getplaybook(playbook, command[1:])
+            move = self._get_playbook(playbook, command[1:])
             if move:
                 return move
 
         # Finally, check if basic move, otherwise return None
-        move = self._getmove(command)
+        move = self._get_move(command)
         return move.description if move else None
 
     def _fuckmeup(self, damage):
@@ -62,10 +61,10 @@ class Sprawl(Game):
         roll = dice1 + dice2 + modifier
 
         if roll >= 10:
-            harm = self._getmove('Harm 10', name=True)
+            harm = self._get_move('Harm 10', name=True)
             return f'Oh you fucked up now, you rolled a {roll}. {harm.description}'
         elif 7 <= roll <= 9:
-            harm = self._getmove('Harm 7', name=True)
+            harm = self._get_move('Harm 7', name=True)
             return f'You\'re going to have to suck off the MC on this one, you rolled a {roll}. {harm.description}'
         else:
             return f'You rolled {roll}. You\'re gucci flip flops fam *dabs* haha yeet :3'
@@ -73,7 +72,7 @@ class Sprawl(Game):
     def _matrix(self):
         matrixmoves = 'Use the following commands to find detailed information about each move.\n'
         for move in self.data['matrix']:
-            matrixmoves += f'\n\t{move.print()}'
+            matrixmoves += f'\n\t{move}'
 
         return matrixmoves
 
