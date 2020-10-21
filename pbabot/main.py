@@ -160,7 +160,7 @@ class PBABot(discord.Client):
         """
         # Prevents bot responding to regular messages
         if not message.startswith('.'):
-            return
+            return 'Incorrect command.'
 
         # Parse message
         content = message.lower().split(' ', 1)
@@ -176,7 +176,7 @@ class PBABot(discord.Client):
             '.contacts': self.print_contacts,
             '.moves': self.game.moves,
             '.playbooks': self.game.playbooks,
-            #'.characters': self.print_characters,
+            # '.characters': self.print_characters,
             # Functional commands
             '.roll': self.roll,
             '.dice': self.roll,
@@ -245,7 +245,7 @@ class PBABot(discord.Client):
         # Respond if we have something to send back
         return response
 
-    async def on_message(self, message: discord.Message):
+    async def on_message(self, message: discord.Message) -> None:
         """Event callback when receiving a message
 
         From discord.Client, this method is an event callback for when the bot receives a message. It checks the message
@@ -386,7 +386,7 @@ Character Commands:
 Game-specific Commands:
 """
         # Add game-specific commands
-        for command, description in self.game.commands.items():
+        for command, description in self.game.COMMANDS.items():
             commands += f'\t{command}: {description}\n'
 
         commands.strip()
@@ -435,7 +435,7 @@ Game-specific Commands:
             character.player = None
 
         # Create the character
-        character = Character(name, self.game.stats, player)
+        character = Character(name, self.game.STATS, player)
         self.characters.append(character)
         self._save_data()
 
@@ -816,9 +816,6 @@ Game-specific Commands:
             print('No data file found.')
         except KeyError:
             print(f'KeyError while loading data.')
-
-        # Refresh game data as well
-        self.game.load_data()
 
         return msg
 

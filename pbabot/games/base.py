@@ -34,22 +34,11 @@ class Game:
         data -> Dictionary: Unpacked data from file
         stats -> Dictionary: Game-specific stats and values
     """
-    def __init__(self):
-        """Init"""
-        self.commands = {}
-        self.data_file = None
-        self.data = None
-        self.stats = {}
-
-    def load_data(self) -> None:
-        """Loads data from file"""
-        try:
-            with open(self.data_file, 'rb') as file:
-                self.data = pickle.loads(file.read())
-        except EOFError:
-            print("No data in file.")
-        except FileNotFoundError:
-            print("No data file found.")
+    BASIC_MOVES = []
+    PLAYBOOK_MOVES = {}
+    GAME_MOVES = {}
+    STATS = {}
+    COMMANDS = {}
 
     def handle(self, command: str, args: str) -> Optional[str]:
         """Handler for game-specific commands. To be implemented in the actual game class."""
@@ -57,10 +46,10 @@ class Game:
 
     def moves(self, message: str) -> str:
         """Lists all basic (common) moves"""
-        if not self.data:
+        if not self.BASIC_MOVES:
             return 'Data not found. Have you loaded a game using .game?'
         moves = 'Use the following commands to find detailed information about each move.'
-        for move in self.data['basic']:
+        for move in self.BASIC_MOVES:
             if move.commands:
                 moves += f'\n\t{move.name} {move.commands}'
 
@@ -68,29 +57,29 @@ class Game:
 
     def playbooks(self, message: str) -> str:
         """Lists all playbooks"""
-        if not self.data:
+        if not self.BASIC_MOVES:
             return 'Data not found. Have you loaded a game using .game?'
         playbooks = 'Use the following commands to find each playbook-specific move.'
-        for playbook in self.data['playbooks']:
+        for playbook in self.PLAYBOOK_MOVES:
             playbooks += f'\n\t.{playbook}'
 
         return playbooks
 
     def _get_playbook(self, playbook: str, move: str) -> Optional[str]:
         """Gets the specified move from the given playbook, if it exists"""
-        if playbook not in self.data['playbooks']:
+        if playbook not in self.PLAYBOOK_MOVES:
             return None
 
         if not move:
             moves = f'Use .{playbook} <move> to see more details about the following moves:'
-            for move in self.data['playbooks'][playbook]:
+            for move in self.PLAYBOOK_MOVES[playbook]:
                 moves += f'\n\t{move}'
             return moves
 
         m = self._get_move(move, playbook=playbook)
         return m.full_description if m else None
 
-    def _get_move(self, query: str, index: str = 'basic', name: bool = False, playbook: str = None) -> Optional[Move]:
+    def _get_move(self, query: str, index: list = None, name: bool = False, playbook: str = None) -> Optional[Move]:
         """Queries for the given move
 
         Searches for a move based on its name or command. Can be a playbook or other move (e.g. basic).
@@ -108,12 +97,14 @@ class Game:
         """
         # Search playbook for the move
         if playbook:
-            for move in self.data['playbooks'][playbook]:
+            for move in self.PLAYBOOK_MOVES[playbook]:
                 if query in move.commands:
                     return move
 
         # Not a playbook move, search specified index for the move instead
-        for move in self.data[index]:
+        if not index:
+            index = self.BASIC_MOVES
+        for move in index:
             if name:
                 if query in move.name:
                     return move
