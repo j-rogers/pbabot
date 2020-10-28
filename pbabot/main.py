@@ -271,8 +271,8 @@ class PBABot(discord.Client):
             return
 
         # Parse message
-        content = message.content.lower().split(' ', 1)
-        command = content[0]
+        content = message.content.split(' ', 1)
+        command = content[0].lower()
         args = content[1] if len(content) > 1 else ''
 
         # Lookup table of commands the the respective callback
@@ -299,6 +299,8 @@ class PBABot(discord.Client):
             '.rip': self.rip,
             '.f': self.rip,
             '.remember': self.remember,
+            '.forget': self.forget,
+            '.kill': self.kill,
             '.chess': self.chess,
             '.answerphone': self.answerphone,
             # Dev commands
