@@ -20,6 +20,7 @@ import xml.etree.ElementTree as et
 from pbabot.games import Game, Sprawl
 from pbabot.character import Character
 from typing import Optional
+from collections import defaultdict
 
 # Flags
 NO_DISCORD = True   # Prevents logging into Discord and instead receiving input and sending output to console
@@ -125,6 +126,8 @@ class PBABot(discord.Client):
             self.game = Game()
 
         # Extract data from file
+        self.memories = []
+        self.dead_characters = tree()
         self.personal_data = personal_data
         self.data_file = data_file
         self.clocks = []
@@ -136,6 +139,7 @@ class PBABot(discord.Client):
             self.clocks = data['clocks']
             self.contacts = data['contacts']
             self.characters = data['characters']
+            self.memories = data['memories']
             print('Data extracted')
         except EOFError:
             print('No data in file.')
@@ -163,8 +167,8 @@ class PBABot(discord.Client):
             return 'Incorrect command.'
 
         # Parse message
-        content = message.lower().split(' ', 1)
-        command = content[0]
+        content = message.split(' ', 1)
+        command = content[0].lower()
         args = content[1] if len(content) > 1 else ''
 
         # Lookup table of commands the the respective callback
@@ -191,6 +195,8 @@ class PBABot(discord.Client):
             '.rip': self.rip,
             '.f': self.rip,
             '.remember': self.remember,
+            '.forget': self.forget,
+            '.kill': self.kill,
             '.chess': self.chess,
             '.answerphone': self.answerphone,
             # Dev commands
@@ -368,12 +374,14 @@ General Commands:
     .decreaseclock <clock name>: Decreases a clock by one segment.
     .deleteclock <clock name>: Deletes the specified clock.
     .contacts: Displays the current list of contacts.
-    .addcontact <contact name> <description>: Adds a new contact.
+    .addcontact "<contact name>" <description>: Adds a new contact. Use double quotes for names (e.g. .addcontact "John Smith" Friend of bucky.)
     .deletecontact <contact name>: Deletes a contact.
     .game <game>: Set a game to use.
     .map: Displays a current map.
+    .kill <character> <description>: Add a dead character with a description of how they died.
     .rip: List all dead characters.
-    .remember <index|list>: Displays a message of a memorable moment.
+    .remember [when <memory>] [index]: Displays a message of a memorable moment, or add a new memory.
+    .forget <index>: Delete a memory.
     .refresh: Reloads the clock and contact data.
     .log <message>: Saves a message to the log file.
     .links: Displays a link to all the PBA games.
@@ -461,14 +469,10 @@ Game-specific Commands:
 
     def links(self, message: str) -> str:
         """Prints links to PBA games"""
-        msg = """
-        **Apocalpyse World:** https://www.dropbox.com/sh/fmsh9kyaiplqhom/AACw1iLMQ7f53Q40FUnMjlz4a?dl=0
-        **The Sprawl:** https://www.dropbox.com/sh/9fr35ivzbvfh06p/AACarsYBpNXxBpEUk_-fz_PXa?dl=0
-        **Tremulas:** https://www.dropbox.com/sh/tbhk0w0zgihrf2h/AACtvyv9l5ruLBE6UG3XeGfba?dl=0
-        **Dungeon World:** https://www.dropbox.com/sh/p61lutt9m6dfpa3/AACTvHhbJa7K1RIHFYVvJqIza?dl=0
-        """
-        msg = msg.replace('\t', '')
-        return msg
+        return """**Apocalpyse World:** https://www.dropbox.com/sh/fmsh9kyaiplqhom/AACw1iLMQ7f53Q40FUnMjlz4a?dl=0
+**The Sprawl:** https://www.dropbox.com/sh/9fr35ivzbvfh06p/AACarsYBpNXxBpEUk_-fz_PXa?dl=0
+**Tremulas:** https://www.dropbox.com/sh/tbhk0w0zgihrf2h/AACtvyv9l5ruLBE6UG3XeGfba?dl=0
+**Dungeon World:** https://www.dropbox.com/sh/p61lutt9m6dfpa3/AACTvHhbJa7K1RIHFYVvJqIza?dl=0"""
 
     def print_characters(self, message: str) -> str:
         """Prints a list of all characters"""
@@ -657,15 +661,13 @@ Game-specific Commands:
         description = None
         tokens = args.split('"', 2)
 
-        # Multiple word name
+        # Check if name was surround by double quotes
         if len(tokens) > 1:
             name = tokens[1]
             description = tokens[2].strip()
-        # Single world name
+        # No quotes
         else:
-            tokens = args.split(' ', 1)
-            name = tokens[0]
-            description = tokens[1]
+            return 'You must surround the contact\'s name in double quotes.'
 
         # Check if contact already exists
         if self._get_contact(name):
@@ -711,55 +713,44 @@ Game-specific Commands:
         death = death.strip()
         return death
 
-    def remember(self, index: str) -> str:
+    def kill(self, args: str) -> str:
+        pass
+
+    def remember(self, args: str) -> str:
         """Displays a memory or list of memory indices"""
-        if index == 'list':
+        if 'when' in args.split(' ', 1)[0].lower():
+            self.memories.append(args.split(' ', 1)[1])
+            self._save_data()
+            return f'Memory added at index {len(self.memories)-1}'
+        else:
             try:
-                tree = et.parse(self.personal_data)
-            except FileNotFoundError:
-                return 'No personal file found.'
+                index = int(args)
+            except ValueError:
+                max = len(self.memories)
+                if not max:
+                    return 'No memories have been added.'
+                index = random.randint(0, max-1)
 
-            remember = tree.find('remember')
+            try:
+                memory = self.memories[index]
+            except IndexError:
+                return f'No memory at index {index}.'
 
-            rememberindexes = ''
-            for group in list(remember):
-                memories = list(group)
-                min = memories[0].get('index')
-                max = memories[-1].get('index')
-                description = group.get('description')
-                rememberindexes += f'\n{min}-{max}: {description}'
+            return f'{index}: {memory}' if memory else f'No memory found at index {index}.'
 
-            return rememberindexes
+    def forget(self, index: str) -> str:
+        """Forgets the memory at given index"""
+        try:
+            i = int(index)
+        except ValueError:
+            return f'Invalid index given: {index} (should be an integer).'
 
         try:
-            tree = et.parse(self.personal_data)
-        except FileNotFoundError:
-            return 'No personal file found.'
-
-        remember = tree.find('remember')
-        memories = [list(group) for group in list(remember)]
-
-        min = memories[0][0].get('index')
-        max = memories[-1][-1].get('index')
-
-        if index:
-            try:
-                num = int(index)
-            except ValueError:
-                return 'Incorrect selection.'
-            else:
-                if num < int(min) or num > int(max):
-                    index = str(random.randint(int(min), int(max)))
+            memory = self.memories.pop(i)
+        except IndexError:
+            return f'No memory at index {i}.'
         else:
-            index = str(random.randint(int(min), int(max)))
-
-        msg = None
-        for group in memories:
-            for remember in group:
-                if remember.get('index') == index:
-                    msg = remember.text
-
-        return msg
+            return f'Memory deleted at index {i}: "{memory}".'
 
     def map(self, args: str) -> discord.File:
         """Returns the default map"""
@@ -808,6 +799,7 @@ Game-specific Commands:
             self.clocks = data['clocks']
             self.contacts = data['contacts']
             self.characters = data['characters']
+            self.memories = data['memories']
             msg = 'Data has been refreshed.'
             print('Data refreshed.')
         except EOFError:
@@ -848,7 +840,13 @@ Game-specific Commands:
 
     def _save_data(self) -> None:
         """Saves the current data to file"""
-        data = {'clocks': self.clocks, 'contacts': self.contacts, 'characters': self.characters}
+        data = {
+            'clocks': self.clocks,
+            'contacts': self.contacts,
+            'characters': self.characters,
+            'memories': self.memories
+        }
+
         with open(self.data_file, 'wb') as file:
             file.write(pickle.dumps(data))
 
@@ -859,6 +857,10 @@ Game-specific Commands:
                 return character
 
         return None
+
+
+def tree():
+    return defaultdict(tree)
 
 
 def main():
