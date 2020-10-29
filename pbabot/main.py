@@ -20,7 +20,6 @@ import xml.etree.ElementTree as et
 from pbabot.games import Game, Sprawl
 from pbabot.character import Character
 from typing import Optional
-from collections import defaultdict
 
 # Flags
 NO_DISCORD = True   # Prevents logging into Discord and instead receiving input and sending output to console
@@ -111,10 +110,9 @@ class PBABot(discord.Client):
         game -> pbabot.games.Game: Default game to load.
         clocks -> List: The clocks currently being used
         contacts -> List: The contacts currently being used
-        personal_data -> String: Data file containing dead characters and rememberable moments.
         data_file -> String: Data file containing current clock and contact data
     """
-    def __init__(self, game: str, data_file: str = DATA_FILE, personal_data: str = PERSONAL_DATA):
+    def __init__(self, game: str, data_file: str = DATA_FILE):
         """Init"""
         if not NO_DISCORD:
             super().__init__()
@@ -127,8 +125,7 @@ class PBABot(discord.Client):
 
         # Extract data from file
         self.memories = []
-        self.dead_characters = tree()
-        self.personal_data = personal_data
+        self.dead_characters = {}
         self.data_file = data_file
         self.clocks = []
         self.contacts = []
@@ -140,6 +137,7 @@ class PBABot(discord.Client):
             self.contacts = data['contacts']
             self.characters = data['characters']
             self.memories = data['memories']
+            self.dead_characters = data['dead_characters']
             print('Data extracted')
         except EOFError:
             print('No data in file.')
@@ -380,7 +378,7 @@ General Commands:
     .deletecontact <contact name>: Deletes a contact.
     .game <game>: Set a game to use.
     .map: Displays a current map.
-    .kill <character> <description>: Add a dead character with a description of how they died.
+    .kill "<player>" "<character>" <description>: Add a dead character with a description of how they died. Must use double quotes for player and character name.
     .rip: List all dead characters.
     .remember [when <memory>] [index]: Displays a message of a memorable moment, or add a new memory.
     .forget <index>: Delete a memory.
@@ -696,27 +694,39 @@ Game-specific Commands:
 
     def rip(self, player: str) -> str:
         """Displays a list of dead characters (in total or for the given player)"""
-        tree = et.parse(self.personal_data)
-        rip = tree.getroot().find('rip')
-
         death = ''
-        if player:  # specific message
-            player = rip.find(player)
-            if player:
-                for character in list(player):
-                    death += f"{character.get('name')}: {character.get('cause')}\n"
-        else:  # short list
-            for player in list(rip):
-                death += f'{player.tag}: '
-                for character in list(player):
-                    death += f'{character.get("name")}, '
-                death += '\n'
+        if player in self.dead_characters:
+            for character, description in self.dead_characters[player].items():
+                death += f'{character}: {description}'
+        else:
+            for player, characters in self.dead_characters.items():
+                death += f'{player}: '
+                death += ', '.join(characters.keys()) + '\n'
 
-        death = death.strip()
+        if not death:
+            death = 'No dead characters.'
+
         return death
 
     def kill(self, args: str) -> str:
-        pass
+        """Adds a dead character"""
+        tokens = [arg for arg in args.split('"', 4) if arg.strip()]
+
+        if len(tokens) != 3:
+            return 'Please surround player and character names in double quotes.'
+
+        player = tokens[0]
+        character = tokens[1]
+        description = tokens[2]
+
+        if player not in self.dead_characters:
+            self.dead_characters[player] = {character: description}
+        else:
+            self.dead_characters[player][character] = description
+
+        self._save_data()
+
+        return f'{player}\'s character {character} was killed: {description}.'
 
     def remember(self, args: str) -> str:
         """Displays a memory or list of memory indices"""
@@ -802,6 +812,7 @@ Game-specific Commands:
             self.contacts = data['contacts']
             self.characters = data['characters']
             self.memories = data['memories']
+            self.dead_characters = data['dead_characters']
             msg = 'Data has been refreshed.'
             print('Data refreshed.')
         except EOFError:
@@ -846,7 +857,8 @@ Game-specific Commands:
             'clocks': self.clocks,
             'contacts': self.contacts,
             'characters': self.characters,
-            'memories': self.memories
+            'memories': self.memories,
+            'dead_characters': self.dead_characters
         }
 
         with open(self.data_file, 'wb') as file:
@@ -859,10 +871,6 @@ Game-specific Commands:
                 return character
 
         return None
-
-
-def tree():
-    return defaultdict(tree)
 
 
 def main():
