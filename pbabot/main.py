@@ -29,7 +29,6 @@ TOKEN = open('token.txt', 'r').read() if not NO_DISCORD else None
 
 # Data files
 DATA_FILE = 'data/data.pickle'
-PERSONAL_DATA = 'data/personal'
 
 # Image folder
 IMAGES = 'images'
