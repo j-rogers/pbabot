@@ -16,9 +16,7 @@ import discord
 import random
 import pickle
 import argparse
-import xml.etree.ElementTree as et
 from pbabot.games import Game, Sprawl
-from pbabot.character import Character
 from typing import Optional
 
 # Flags
@@ -128,13 +126,11 @@ class PBABot(discord.Client):
         self.data_file = data_file
         self.clocks = []
         self.contacts = []
-        self.characters = []
         try:
             with open(self.data_file, 'rb') as file:
                 data = pickle.loads(file.read())
             self.clocks = data['clocks']
             self.contacts = data['contacts']
-            self.characters = data['characters']
             self.memories = data['memories']
             self.dead_characters = data['dead_characters']
             print('Data extracted')
@@ -206,18 +202,6 @@ class PBABot(discord.Client):
         response = None
         if callback:
             response = callback(args)
-
-        # DISABLED
-        # If no response, check if it's a character command
-        #if not response:
-        #    character_switch = {
-        #        '.newcharacter': self.new_character,
-        #        '.setcharacter': self.set_character,
-        #        '.character': self.handle_character,
-        #    }
-        #    character_callback = character_switch.get(command, None)
-        #    if character_callback:
-        #        response = character_callback(args, hash(message.author))
 
         # Lookup table if command is requesting an image
         image_switch = {
@@ -305,22 +289,10 @@ class PBABot(discord.Client):
             '.log': self.log
         }
         callback = text_switch.get(command, None)
-
         # If match was found, get response
-        response = None
-        if callback:
-            response = callback(args)
+        response = callback(args) if callback else None
 
-        # If no response, check if it's a character command
-        if not response:
-            character_switch = {
-                '.newcharacter': self.new_character,
-                '.setcharacter': self.set_character,
-                '.character':  self.handle_character,
-            }
-            character_callback = character_switch.get(command, None)
-            if character_callback:
-                response = character_callback(args, hash(message.author))
+        # hash(message.author))
 
         # Lookup table if command is requesting an image
         image_switch = {
@@ -328,10 +300,7 @@ class PBABot(discord.Client):
             '.image': self.image,
         }
         image_callback = image_switch.get(command, None)
-
-        image = None
-        if image_callback:
-            image = image_callback(args)
+        image = image_callback(args) if image_callback else None
 
         # If command didn't match a PBA or image command, try game-specific command
         if not response and not image:
@@ -418,53 +387,6 @@ Game-specific Commands:
             return f'Now playing {game}.'
         else:
             return f'No game {game} found.'
-
-    def handle_character(self, args: str, player: int) -> str:
-        """Passes args to the character handler"""
-        character = self._get_character(player)
-        if not character:
-            return 'No character has been set. Please create a new character using .newcharacter <name> or use an ' \
-                   'existing character using .setcharacter <name>.'
-
-        return character.handle(args)
-
-    def new_character(self, name: str, player: int) -> str:
-        """Creates a new player character"""
-        if not self.game:
-            return 'You haven\'t loaded a game yet.'
-        if not name:
-            return 'Usage: .newcharacter <name>'
-
-        # Unset previous character (if exists)
-        character = self._get_character(player)
-        print(type(player))
-        if character:
-            character.player = None
-
-        # Create the character
-        character = Character(name, self.game.STATS, player)
-        self.characters.append(character)
-        self._save_data()
-
-        return f'Character {name} created.'
-
-    def set_character(self, name: str, player: int) -> str:
-        """Sets current player character to specified character"""
-        # Get current character to unset
-        old_character = self._get_character(player)
-
-        # Find and set new character
-        found = False
-        for character in self.characters:
-            if character.name == name:
-                found = True
-                character.player = player
-
-        # Unset old character
-        if found and old_character:
-            old_character.player = None
-
-        return f'Successfully set character to {name}.'
 
     def links(self, message: str) -> str:
         """Prints links to PBA games"""
@@ -809,7 +731,6 @@ Game-specific Commands:
             data = pickle.loads(open(self.data_file, 'rb').read())
             self.clocks = data['clocks']
             self.contacts = data['contacts']
-            self.characters = data['characters']
             self.memories = data['memories']
             self.dead_characters = data['dead_characters']
             msg = 'Data has been refreshed.'
@@ -855,21 +776,12 @@ Game-specific Commands:
         data = {
             'clocks': self.clocks,
             'contacts': self.contacts,
-            'characters': self.characters,
             'memories': self.memories,
             'dead_characters': self.dead_characters
         }
 
         with open(self.data_file, 'wb') as file:
             file.write(pickle.dumps(data))
-
-    def _get_character(self, player) -> Optional[Character]:
-        """Retrieves the given character"""
-        for character in self.characters:
-            if character.player == player:
-                return character
-
-        return None
 
 
 def main():
