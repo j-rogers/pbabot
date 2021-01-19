@@ -138,8 +138,8 @@ class PBABot(discord.Client):
             print('No data in file.')
         except FileNotFoundError:
             print('No data file found.')
-        except KeyError:
-            print(f'KeyError while loading data.')
+        except KeyError as ke:
+            print(f'KeyError while loading data: {ke}')
 
     def debug_on_message(self, message: str) -> str:
         """Alternative to on_message when NO_DISCORD flag is set to True
@@ -147,7 +147,7 @@ class PBABot(discord.Client):
         When debugged without discord, we instead need to read input from console, and also print to console. This
         method is used instead of on_message when the NO_DISCORD flag is set, allowing us to do just that.
 
-        NOTE: Functionality that requires a hash of the user is currently disabled, such as the character stuff.
+        NOTE: Functionality that requires a hash of the user is currently disabled
 
         Args:
             message: Message received from console

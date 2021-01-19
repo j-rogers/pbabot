@@ -773,7 +773,10 @@ class Sprawl(Game):
         dice2 = random.randint(1, 6)
         modifier = 0
         if damage:
-            modifier = int(damage)
+            try:
+                modifier = int(damage)
+            except ValueError:
+                return 'Incorrect damage given.'
         roll = dice1 + dice2 + modifier
 
         if roll >= 10:
