@@ -32,12 +32,10 @@ class Game:
         commands -> Dictionary: Dictionary of game-specific commands
         data_file -> String: Name of file containing game-specific data
         data -> Dictionary: Unpacked data from file
-        stats -> Dictionary: Game-specific stats and values
     """
     BASIC_MOVES = []
     PLAYBOOK_MOVES = {}
     GAME_MOVES = {}
-    STATS = {}
     COMMANDS = {}
 
     def handle(self, command: str, args: str) -> Optional[str]:

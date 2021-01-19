@@ -733,16 +733,6 @@ class Sprawl(Game):
     )
 ]
     }
-    STATS = {
-            'cred': 5,
-            'xp': 0,
-            'edge': 0,
-            'style': 0,
-            'mind': 0,
-            'meat': 0,
-            'cool': 0,
-            'synth': 0
-        }
     COMMANDS = {
         '.matrix': 'Displays a list of matrix-specific moves.',
         '.cred': 'Shows you what you can do with cred.',
