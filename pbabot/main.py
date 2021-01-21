@@ -20,7 +20,7 @@ from pbabot.games import Game, Sprawl
 from typing import Optional
 
 # Flags
-NO_DISCORD = True   # Prevents logging into Discord and instead receiving input and sending output to console
+NO_DISCORD = False   # Prevents logging into Discord and instead receiving input and sending output to console
 
 # API Token
 TOKEN = open('token.txt', 'r').read() if not NO_DISCORD else None
@@ -114,11 +114,10 @@ class PBABot(discord.Client):
         if not NO_DISCORD:
             super().__init__()
 
-        # If a game was specified, set it, otherwise default to no game
-        if game:
-            self.set_game(game)
-        else:
-            self.game = Game()
+        # Bot properties
+        self.game = self.set_game(game)[1] if game else Game()
+        self.private_clocks = True
+        self.mc = None
 
         # Extract data from file
         self.memories = []
@@ -173,7 +172,6 @@ class PBABot(discord.Client):
             '.contacts': self.print_contacts,
             '.moves': self.game.moves,
             '.playbooks': self.game.playbooks,
-            # '.characters': self.print_characters,
             # Functional commands
             '.roll': self.roll,
             '.dice': self.roll,
@@ -183,7 +181,7 @@ class PBABot(discord.Client):
             '.decreaseclock': self.decrease_clock,
             '.addcontact': self.add_contact,
             '.deletecontact': self.delete_contact,
-            '.game': self.set_game,
+            '.set': self.set_property,
             # Miscellaneous commands
             '.rip': self.rip,
             '.f': self.rip,
@@ -197,11 +195,7 @@ class PBABot(discord.Client):
             '.log': self.log
         }
         callback = text_switch.get(command, None)
-
-        # If match was found, get response
-        response = None
-        if callback:
-            response = callback(args)
+        response = callback(args) if callback else None
 
         # Lookup table if command is requesting an image
         image_switch = {
@@ -265,7 +259,6 @@ class PBABot(discord.Client):
             '.contacts': self.print_contacts,
             '.moves': self.game.moves,
             '.playbooks': self.game.playbooks,
-            '.characters': self.print_characters,
             # Functional commands
             '.roll': self.roll,
             '.dice': self.roll,
@@ -275,7 +268,6 @@ class PBABot(discord.Client):
             '.decreaseclock': self.decrease_clock,
             '.addcontact': self.add_contact,
             '.deletecontact': self.delete_contact,
-            '.game': self.set_game,
             # Miscellaneous commands
             '.rip': self.rip,
             '.f': self.rip,
@@ -289,10 +281,10 @@ class PBABot(discord.Client):
             '.log': self.log
         }
         callback = text_switch.get(command, None)
-        # If match was found, get response
         response = callback(args) if callback else None
 
-        # hash(message.author))
+        # Include hash of message author for setting properties
+        response = self.set_property(args, user=hash(message.author)) if command == '.set' else response
 
         # Lookup table if command is requesting an image
         image_switch = {
@@ -307,7 +299,7 @@ class PBABot(discord.Client):
             try:
                 response = self.game.handle(command, args)
             except NotImplementedError:
-                response = 'No game has been loaded. Use .game'
+                response = 'No game has been loaded. Use .set game <game>'
             else:
                 # Didn't match game-specific command, send back invalid command
                 if not response:
@@ -344,7 +336,7 @@ General Commands:
     .contacts: Displays the current list of contacts.
     .addcontact "<contact name>" <description>: Adds a new contact. Use double quotes for names (e.g. .addcontact "John Smith" Friend of bucky.)
     .deletecontact <contact name>: Deletes a contact.
-    .game <game>: Set a game to use.
+    .set <property> <value>: Set a bot property. Current properties: game, private_clocks, mc.
     .map: Displays a current map.
     .kill "<player>" "<character>" <description>: Add a dead character with a description of how they died. Must use double quotes for player and character name.
     .rip: List all dead characters.
@@ -354,11 +346,6 @@ General Commands:
     .log <message>: Saves a message to the log file.
     .links: Displays a link to all the PBA games.
     
-Character Commands:
-    .newcharacter <name>: Create a new character for the currently selected game.
-    .setcharacter <name>: Set the character you want to use.
-    .character [help|set]: Modify character elements.
-    
 Game-specific Commands:
 """
         # Add game-specific commands
@@ -367,6 +354,34 @@ Game-specific Commands:
 
         commands.strip()
         return commands
+
+    def set_property(self, args: str, user: int = None) -> str:
+        property = None
+        value = None
+        try:
+            property, value = args.split(' ', 1)
+        except ValueError:
+            if 'mc' not in args:
+                return 'Usage: .set <property> <value>'
+            else:
+                property = 'mc'
+
+        if property == 'game':
+            response, game = self.set_game(value)
+            self.game = game if game else self.game
+            return response
+        elif property == 'private_clocks':
+            if value.lower() == 'true':
+                self.private_clocks = True
+            elif value.lower() == 'False':
+                self.private_clocks = False
+            else:
+                return 'Invalid value given, either true or false.'
+        elif property == 'mc':
+            self.mc = user
+            return 'MC has been set.'
+        else:
+            return 'Invalid property. Properties are game, private_clocks, mc.'
 
     def set_game(self, game: str) -> str:
         """Sets the current game being played"""
@@ -383,10 +398,9 @@ Game-specific Commands:
         game_callback = game_switch.get(game, None)
 
         if game_callback:
-            self.game = game_callback()
-            return f'Now playing {game}.'
+            return f'Now playing {game}.', game_callback()
         else:
-            return f'No game {game} found.'
+            return f'No game {game} found.', None
 
     def links(self, message: str) -> str:
         """Prints links to PBA games"""
@@ -394,18 +408,6 @@ Game-specific Commands:
 **The Sprawl:** https://www.dropbox.com/sh/9fr35ivzbvfh06p/AACarsYBpNXxBpEUk_-fz_PXa?dl=0
 **Tremulas:** https://www.dropbox.com/sh/tbhk0w0zgihrf2h/AACtvyv9l5ruLBE6UG3XeGfba?dl=0
 **Dungeon World:** https://www.dropbox.com/sh/p61lutt9m6dfpa3/AACTvHhbJa7K1RIHFYVvJqIza?dl=0"""
-
-    def print_characters(self, message: str) -> str:
-        """Prints a list of all characters"""
-        if not self.characters:
-            return 'No characters have been added.'
-
-        characters = ''
-        for character in self.characters:
-            print(character.name)
-            characters += f'{character.name}\n'
-
-        return characters
 
     def print_clocks(self, message: str) -> str:
         """Prints current clock times"""
