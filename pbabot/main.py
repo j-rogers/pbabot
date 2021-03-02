@@ -109,6 +109,33 @@ class PBABot(discord.Client):
         contacts -> List: The contacts currently being used
         data_file -> String: Data file containing current clock and contact data
     """
+    COMMANDS = {
+        'help': 'Displays the help message.',
+        'roll': 'Rolls 2d6 dice and applies your +/- modifier. Usage: .roll <modifier>',
+        'moves': 'Displays a list of basic moves.',
+        'playbooks': 'Displays a list of playbooks',
+        'clocks': 'Displays the current list of clocks. If the private_clocks property is set then only the MC can view'
+                  'the clocks.',
+        'addclock': 'Adds a clock with a value of 1200. Usage: .addclock <clock-name>',
+        'increaseclock': 'Increases the specified clock by one segment. Usage: .increaseclock <clock-name>',
+        'decreaseclock': 'Decreases the specified clock by one segment. Usage: .decreaseclock <clock-name>',
+        'deleteclock': 'Deletes the specified clock. Usage: .deleteclock <clock-name>',
+        'contacts': 'Displays the current list of contacts',
+        'addcontact': 'Adds a new contact. Usage: .addcontact "<contact-name>"',
+        'deletecontact': 'Deletes a contact. Usage: .deletecontact "<contact-name>"',
+        'set': 'Sets a bot property. Current properties: game, private_clocks, mc. Usage: .set <property> <value>',
+        'map': 'Displays the current map.',
+        'image': 'Displays the specified image. Usage: .image <image-name>',
+        'kill': 'Add a dead character with a description of how they died. Usage: .kill "<player>" "<character>"'
+                '<description>',
+        'rip': 'List all dead characters.',
+        'remember': 'Displays a message of a memorable moment, or add a new memory. Usage: .remember [when <memory>] '
+                     '[<index>]',
+        'forget': 'Delete a memory. Usage: .forget <index>',
+        'log': 'Saves a message to the log file. Usage: .log <message>',
+        'links': 'Displays a link to all the PBA games.',
+    }
+
     def __init__(self, game: str, data_file: str = DATA_FILE):
         """Init"""
         if not NO_DISCORD:
@@ -322,32 +349,12 @@ class PBABot(discord.Client):
 
     def help(self, message: str) -> str:
         """Prints list of commands"""
-        commands = """Use \".command\" when using this bot.\n
-General Commands:
-    .help: Displays this help message.
-    .roll <modifier>: Rolls 2d6 dice and applies your +/- modifier.
-    .moves: Displays a list of basic moves.
-    .playbooks: Displays a list of playbooks.
-    .clocks: Displays the current list of clocks.
-    .addclock <clock name>: Adds a clock with a value of 1500.
-    .increaseclock <clock name>: Increases a clock by one segment.
-    .decreaseclock <clock name>: Decreases a clock by one segment.
-    .deleteclock <clock name>: Deletes the specified clock.
-    .contacts: Displays the current list of contacts.
-    .addcontact "<contact name>" <description>: Adds a new contact. Use double quotes for names (e.g. .addcontact "John Smith" Friend of bucky.)
-    .deletecontact <contact name>: Deletes a contact.
-    .set <property> <value>: Set a bot property. Current properties: game, private_clocks, mc.
-    .map: Displays a current map.
-    .kill "<player>" "<character>" <description>: Add a dead character with a description of how they died. Must use double quotes for player and character name.
-    .rip: List all dead characters.
-    .remember [when <memory>] [index]: Displays a message of a memorable moment, or add a new memory.
-    .forget <index>: Delete a memory.
-    .refresh: Reloads the clock and contact data.
-    .log <message>: Saves a message to the log file.
-    .links: Displays a link to all the PBA games.
-    
-Game-specific Commands:
-"""
+        # General commands
+        commands = 'Use \".command\" when using this bot.\n\nGeneral commands:\n'
+        for command, description in self.COMMANDS.items():
+            commands += f'\t{command}: {description}\n'
+
+        commands += "\nGame-specific Commands:\n"
         # Add game-specific commands
         for command, description in self.game.COMMANDS.items():
             commands += f'\t{command}: {description}\n'
