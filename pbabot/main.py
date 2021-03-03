@@ -406,6 +406,7 @@ class PBABot(discord.Client):
                 return 'Invalid value given, either true or false.'
         elif property.lower() == 'mc':
             self.mc = user
+            print(f'MC has been set to {user}.')
             return 'MC has been set.'
         else:
             return 'Invalid property. Properties are game, private_clocks, mc.'
@@ -576,7 +577,6 @@ class PBABot(discord.Client):
 
         # Update and refresh file
         self._save_data()
-        print(f'Clock update reflected in file (INCREASE): ({clock.name} {clock.time})')
 
         # Form message and send
         return f'{clock.name} clock increased to {clock.time}.'
