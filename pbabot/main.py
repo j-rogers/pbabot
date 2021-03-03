@@ -393,18 +393,18 @@ class PBABot(discord.Client):
             else:
                 property = 'mc'
 
-        if property == 'game':
+        if property.lower() == 'game':
             response, game = self.set_game(value)
             self.game = game if game else self.game
             return response
-        elif property == 'private_clocks':
+        elif property.lower() == 'private_clocks':
             if value.lower() == 'true':
                 self.private_clocks = True
             elif value.lower() == 'False':
                 self.private_clocks = False
             else:
                 return 'Invalid value given, either true or false.'
-        elif property == 'mc':
+        elif property.lower() == 'mc':
             self.mc = user
             return 'MC has been set.'
         else:
@@ -422,7 +422,7 @@ class PBABot(discord.Client):
             'sprawl': Sprawl,
         }
 
-        game_callback = game_switch.get(game, None)
+        game_callback = game_switch.get(game.lower(), None)
 
         if game_callback:
             return f'Now playing {game}.', game_callback()
