@@ -46,6 +46,20 @@ class Clock:
         self.name = name
         self.time = time
 
+    def __str__(self):
+        """String representation of a clock"""
+        switch = {
+            '1200': '□□□□ □□□□ □□□□ □ □ □',
+            '1500': '■■■■ □□□□ □□□□ □ □ □',
+            '1800': '■■■■ ■■■■ □□□□ □ □ □',
+            '2100': '■■■■ ■■■■ ■■■■ □ □ □',
+            '2200': '■■■■ ■■■■ ■■■■ ■ □ □',
+            '2300': '■■■■ ■■■■ ■■■■ ■ ■ □',
+            '0000': '■■■■ ■■■■ ■■■■ ■ ■ ■'
+        }
+
+        return f'{self.name}: {switch[self.time]}'
+
     def increase(self) -> str:
         """Increases the clock's time by one segment"""
         if self.time == "1200":
@@ -119,6 +133,7 @@ class PBABot(discord.Client):
         'addclock': 'Adds a clock with a value of 1200. Usage: .addclock <clock-name>',
         'increaseclock': 'Increases the specified clock by one segment. Usage: .increaseclock <clock-name>',
         'decreaseclock': 'Decreases the specified clock by one segment. Usage: .decreaseclock <clock-name>',
+        'resetclock': 'Resets the specified clock to 1200. Usage: .resetclock <clock-name>',
         'deleteclock': 'Deletes the specified clock. Usage: .deleteclock <clock-name>',
         'contacts': 'Displays the current list of contacts',
         'addcontact': 'Adds a new contact. Usage: .addcontact "<contact-name>"',
@@ -293,6 +308,7 @@ class PBABot(discord.Client):
             '.deleteclock': self.delete_clock,
             '.increaseclock': self.increase_clock,
             '.decreaseclock': self.decrease_clock,
+            '.resetclock': self.reset_clock,
             '.addcontact': self.add_contact,
             '.deletecontact': self.delete_contact,
             # Miscellaneous commands
@@ -422,21 +438,10 @@ class PBABot(discord.Client):
         if not self.clocks:
             return 'No clocks have been added.'
 
-        # Convert time values to segments
-        switch = {
-            '1200': '□□□□ □□□□ □□□□ □ □ □',
-            '1500': '■■■■ □□□□ □□□□ □ □ □',
-            '1800': '■■■■ ■■■■ □□□□ □ □ □',
-            '2100': '■■■■ ■■■■ ■■■■ □ □ □',
-            '2200': '■■■■ ■■■■ ■■■■ ■ □ □',
-            '2300': '■■■■ ■■■■ ■■■■ ■ ■ □',
-            '0000': '■■■■ ■■■■ ■■■■ ■ ■ ■'
-        }
-
-        # Build string
+        # Print clocks
         clocks = ''
         for clock in self.clocks:
-            clocks += f'{clock.name}: {switch[clock.time]}\n'
+            clocks += f'{clock}\n'
 
         return clocks
 
@@ -575,6 +580,23 @@ class PBABot(discord.Client):
         self._save_data()
 
         return f'{clock.name} clock decreased to {clock.time}'
+
+    def reset_clock(self, name: str) -> str:
+        """Reset a clock of specified name to 1200"""
+        # Find clock
+        clock = self._get_clock(name)
+
+        # Check if clock exists
+        if not clock:
+            return f'Clock "{name}" not found.'
+
+        # Reset the clock
+        clock.time = '1200'
+
+        # Update and save data
+        self._save_data()
+
+        return f'{clock.name} clock reset to 1200.'
 
     def add_contact(self, args: str) -> str:
         """Adds a contact with specified information
