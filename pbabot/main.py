@@ -297,18 +297,12 @@ class PBABot(discord.Client):
             # Listing commands
             '.help': self.help,
             '.links': self.links,
-            '.clocks': self.print_clocks,
             '.contacts': self.print_contacts,
             '.moves': self.game.moves,
             '.playbooks': self.game.playbooks,
             # Functional commands
             '.roll': self.roll,
             '.dice': self.roll,
-            '.addclock': self.add_clock,
-            '.deleteclock': self.delete_clock,
-            '.increaseclock': self.increase_clock,
-            '.decreaseclock': self.decrease_clock,
-            '.resetclock': self.reset_clock,
             '.addcontact': self.add_contact,
             '.deletecontact': self.delete_contact,
             # Miscellaneous commands
@@ -326,8 +320,18 @@ class PBABot(discord.Client):
         callback = text_switch.get(command, None)
         response = callback(args) if callback else None
 
-        # Include hash of message author for setting properties
-        response = self.set_property(args, user=hash(message.author)) if command == '.set' else response
+        # Include hash of message author for some commands
+        user_switch = {
+            '.addclock': self.add_clock,
+            '.deleteclock': self.delete_clock,
+            '.increaseclock': self.increase_clock,
+            '.decreaseclock': self.decrease_clock,
+            '.resetclock': self.reset_clock,
+            '.clocks': self.print_clocks,
+            '.set': self.set_property,
+        }
+        callback = user_switch.get(command, None)
+        response = callback(args, hash(message.author)) if callback else response
 
         # Lookup table if command is requesting an image
         image_switch = {
@@ -378,7 +382,7 @@ class PBABot(discord.Client):
         commands.strip()
         return commands
 
-    def set_property(self, args: str, user: int = None) -> str:
+    def set_property(self, args: str, user: int) -> str:
         property = None
         value = None
         try:
@@ -432,8 +436,11 @@ class PBABot(discord.Client):
 **Tremulas:** https://www.dropbox.com/sh/tbhk0w0zgihrf2h/AACtvyv9l5ruLBE6UG3XeGfba?dl=0
 **Dungeon World:** https://www.dropbox.com/sh/p61lutt9m6dfpa3/AACTvHhbJa7K1RIHFYVvJqIza?dl=0"""
 
-    def print_clocks(self, message: str) -> str:
+    def print_clocks(self, message: str, user: int) -> str:
         """Prints current clock times"""
+        if self.private_clocks and self.mc != user:
+            return 'You are not the MC. Increasing all clocks to 0000 (not really).'
+
         # Check that there are clocks
         if not self.clocks:
             return 'No clocks have been added.'
@@ -511,8 +518,12 @@ class PBABot(discord.Client):
 
         return result
 
-    def add_clock(self, name: str) -> str:
+    def add_clock(self, name: str, user: int) -> str:
         """Adds a clock of the given name at 1200"""
+        # Check private clock and MC permissions
+        if self.private_clocks and self.mc != user:
+            return 'You are not the MC. Cheeky.'
+
         # Checks if clock has already been added
         clock = self._get_clock(name)
         if clock:
@@ -528,8 +539,11 @@ class PBABot(discord.Client):
         # Form message and send
         return f'Clock added to file: {name} at 1200'
 
-    def delete_clock(self, name: str) -> str:
+    def delete_clock(self, name: str, user: int) -> str:
         """Deletes the clock with specified name"""
+        if self.private_clocks and self.mc != user:
+            return 'You are not the MC. Naughty.'
+
         # Find the clock to be deleted
         clock = self._get_clock(name)
         if not clock:
@@ -545,8 +559,11 @@ class PBABot(discord.Client):
         # Form message and send
         return f'Deleted clock {name}.'
 
-    def increase_clock(self, name: str) -> str:
+    def increase_clock(self, name: str, user: int) -> str:
         """Increases the clock of specified name by one segment"""
+        if self.private_clocks and self.mc != user:
+            return 'You are not the MC. I\'m going to dob on you.'
+
         # Find the clock to be increased
         clock = self._get_clock(name)
 
@@ -564,8 +581,11 @@ class PBABot(discord.Client):
         # Form message and send
         return f'{clock.name} clock increased to {clock.time}.'
 
-    def decrease_clock(self, name: str) -> str:
+    def decrease_clock(self, name: str, user: int) -> str:
         """Decreases the clock of specified name by one segment"""
+        if self.private_clocks and self.mc != user:
+            return 'You are not the MC. -1 ongoing.'
+
         # Find clock
         clock = self._get_clock(name)
 
@@ -581,8 +601,11 @@ class PBABot(discord.Client):
 
         return f'{clock.name} clock decreased to {clock.time}'
 
-    def reset_clock(self, name: str) -> str:
+    def reset_clock(self, name: str, user: int) -> str:
         """Reset a clock of specified name to 1200"""
+        if self.private_clocks and self.mc != user:
+            return 'You are not the MC. The Thing has been alerted to your position.'
+
         # Find clock
         clock = self._get_clock(name)
 
