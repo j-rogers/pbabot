@@ -537,10 +537,10 @@ class PBABot(commands.Bot):
         command = content[0].lower()
         args = content[1] if len(content) > 1 else ''
         try:
-            await message.channel.send(self.game.handle(command, args))
+            await message.channel.send(f'```{self.game.handle(command, args)}```')
             return
         except NotImplementedError:
-            response = '```No game has been loaded. Use .set game <game>```'
+            await message.channel.send('```No game has been loaded. Use .set game <game>```')
         except discord.errors.HTTPException:
             pass
 
