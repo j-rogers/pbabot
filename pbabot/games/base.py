@@ -2,7 +2,7 @@ from discord.ext import commands
 from typing import Optional
 
 
-class Move():
+class Move:
     """Base Move class
 
     Attributes:

@@ -2,6 +2,8 @@ import random
 from discord.ext import commands
 from . import Game, Move
 
+# TODO: Seperate base and custom stuff
+
 
 class Sprawl(Game):
     BASIC_MOVES = [

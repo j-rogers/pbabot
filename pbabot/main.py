@@ -7,7 +7,6 @@ created that handles the common features of PBA games. Specific game features ca
 class and giving it the required functionality as outlined in the games module.
 
 TODO: Clean up game extensions
-TODO: Format messages properly (code output mostly)
 
 Currently supported PBA games:
     The Sprawl
@@ -45,22 +44,22 @@ class ClockCommands(commands.Cog, name='Clock Commands'):
         """Displays the current list of clocks. If the private_clocks property is set then only the MC can view the
         clocks"""
         if self.bot.private_clocks and self.bot.mc != hash(ctx.author):
-            await ctx.send('You are not the MC. Increasing all clocks to 0000 (not really).')
+            await ctx.send('```You are not the MC. Increasing all clocks to 0000 (not really).```')
             return
 
         # Check that there are clocks
         if not self.bot.clocks:
-            await ctx.send('No clocks have been added')
+            await ctx.send('```No clocks have been added```')
             return
 
-        await ctx.send('\n'.join([str(clock) for clock in self.bot.clocks]))
+        await ctx.send('```'+'\n'.join([str(clock) for clock in self.bot.clocks])+'```')
 
     @commands.command(name='addclock', aliases=['clock', 'newclock'])
     async def add_clock(self, ctx, *, clock_name):
         """Adds a clock of the given name at 1200"""
         # Check private clock and MC permissions
         if self.bot.private_clocks and self.bot.mc != hash(ctx.author):
-            await ctx.send('You are not the MC. Cheeky.')
+            await ctx.send('```You are not the MC. Cheeky.```')
             return
 
         # Checks if clock has already been added
@@ -74,22 +73,22 @@ class ClockCommands(commands.Cog, name='Clock Commands'):
             self.bot.save_data()
 
             # Form message and send
-            await ctx.send(f'{clock_name} clock added at 1200.')
+            await ctx.send(f'```{clock_name} clock added at 1200.```')
         else:
-            await ctx.send(f'Clock "{clock.name}" has already been added.')
+            await ctx.send(f'```Clock "{clock.name}" has already been added.```')
 
     @commands.command(name='deleteclock', aliases=['removeclock'],)
     async def delete_clock(self, ctx, *, clock_name):
         """Deletes the clock with specified name"""
         if self.bot.private_clocks and self.bot.mc != hash(ctx.author):
-            await ctx.send('You are not the MC. Naughty.')
+            await ctx.send('```You are not the MC. Naughty.```')
             return
 
         # Find the clock to be deleted
         try:
             clock = [c for c in self.bot.clocks if c.name.lower() == clock_name.lower()].pop()
         except IndexError:
-            await ctx.send(f'Clock "{clock_name}" not found.')
+            await ctx.send(f'```Clock "{clock_name}" not found.```')
         else:
             # Delete clock
             self.bot.clocks.remove(clock)
@@ -98,20 +97,20 @@ class ClockCommands(commands.Cog, name='Clock Commands'):
             self.bot.save_data()
 
             # Form message and send
-            await ctx.send(f'Deleted {clock.name} clock.')
+            await ctx.send(f'```Deleted {clock.name} clock.```')
 
     @commands.command(name='increaseclock')
     async def increase_clock(self, ctx, *, clock_name):
         """Increases the clock of specified name by one segment"""
         if self.bot.private_clocks and self.bot.mc != hash(ctx.author):
-            await ctx.send('You are not the MC. I\'m going to dob on you.')
+            await ctx.send('```You are not the MC. I\'m going to dob on you.```')
             return
 
         # Find the clock to be increased
         try:
             clock = [c for c in self.bot.clocks if c.name.lower() == clock_name.lower()].pop()
         except IndexError:
-            await ctx.send(f'Clock "{clock_name}" not found.')
+            await ctx.send(f'```Clock "{clock_name}" not found.```')
         else:
             # Increase clock
             res = clock.increase()
@@ -120,13 +119,13 @@ class ClockCommands(commands.Cog, name='Clock Commands'):
             self.bot.save_data()
 
             # Form message and send
-            await ctx.send(res if res else f'{clock.name} clock increased to {clock.time}.')
+            await ctx.send(f'```{res}```' if res else f'```{clock.name} clock increased to {clock.time}.```')
 
     @commands.command(name='decreaseclock')
     async def decrease_clock(self, ctx, *, clock_name):
         """Decreases the clock of specified name by one segment"""
         if self.bot.private_clocks and self.bot.mc != hash(ctx.author):
-            await ctx.send('You are not the MC. -1 ongoing.')
+            await ctx.send('```You are not the MC. -1 ongoing.```')
             return
 
         # Find clock
@@ -134,7 +133,7 @@ class ClockCommands(commands.Cog, name='Clock Commands'):
         try:
             clock = [c for c in self.bot.clocks if c.name.lower() == clock_name.lower()].pop()
         except IndexError:
-            await ctx.send(f'Clock "{clock_name}" not found.')
+            await ctx.send(f'```Clock "{clock_name}" not found.```')
         else:
             # Decrease clock
             res = clock.decrease()
@@ -142,19 +141,19 @@ class ClockCommands(commands.Cog, name='Clock Commands'):
             # Update and save data
             self.bot.save_data()
 
-            await ctx.send(res if res else f'{clock.name} clock decreased to {clock.time}.')
+            await ctx.send(f'```{res}```' if res else f'```{clock.name} clock decreased to {clock.time}.```')
 
     @commands.command(name='resetclock')
     async def reset_clock(self, ctx, *, clock_name):
         """Reset a clock of specified name to 1200"""
         if self.bot.private_clocks and self.bot.mc != hash(ctx.author):
-            await ctx.send('You are not the MC. The Thing has been alerted to your position.')
+            await ctx.send('```You are not the MC. The Thing has been alerted to your position.```')
             return
 
         try:
             clock = [c for c in self.bot.clocks if c.name.lower() == clock_name.lower()].pop()
         except IndexError:
-            await ctx.send(f'Clock "{clock_name}" not found.')
+            await ctx.send(f'```Clock "{clock_name}" not found.```')
         else:
             # Reset the clock
             clock.time = '1200'
@@ -162,7 +161,7 @@ class ClockCommands(commands.Cog, name='Clock Commands'):
             # Update and save data
             self.bot.save_data()
 
-            await ctx.send(f'{clock.name} clock reset to 1200.')
+            await ctx.send(f'```{clock.name} clock reset to 1200.```')
 
 
 class ContactCommands(commands.Cog, name='Contact Commands'):
@@ -174,10 +173,10 @@ class ContactCommands(commands.Cog, name='Contact Commands'):
         """Displays the current list of contacts"""
         # Check there are contacts
         if not self.bot.contacts:
-            await ctx.send('No contacts have been added.')
+            await ctx.send('```No contacts have been added.```')
             return
 
-        await ctx.send('\n'.join([str(contact) for contact in self.bot.contacts]))
+        await ctx.send('```'+'\n'.join([str(contact) for contact in self.bot.contacts])+'```')
 
     @commands.command(name='addcontact', aliases=['newcontact'], usage='"<contact_name>" <contact_description>')
     async def add_contact(self, ctx, *, args):
@@ -186,7 +185,7 @@ class ContactCommands(commands.Cog, name='Contact Commands'):
         try:
             a, name, description = args.split('"', 2)
         except ValueError:
-            await ctx.send('You must surround the contact\'s name in double quotes.')
+            await ctx.send('```You must surround the contact\'s name in double quotes.```')
         else:
             description = description.strip(' "')
 
@@ -198,9 +197,9 @@ class ContactCommands(commands.Cog, name='Contact Commands'):
                 self.bot.contacts.append(Contact(name, description))
                 self.bot.save_data()
 
-                await ctx.send(f'Contact added: {name}.')
+                await ctx.send(f'```Contact added: {name}.```')
             else:
-                await ctx.send(f'Contact "{contact.name}" already added as a contact.')
+                await ctx.send(f'```Contact "{contact.name}" already added as a contact.```')
 
     @commands.command(name='deletecontact', aliases=['removecontact'])
     async def delete_contact(self, ctx, *, contact_name):
@@ -208,12 +207,12 @@ class ContactCommands(commands.Cog, name='Contact Commands'):
         try:
             contact = [c for c in self.bot.contacts if c.name.lower() == contact_name.strip('"').lower()].pop()
         except IndexError:
-            await ctx.send(f'Contact {contact_name} not found.')
+            await ctx.send(f'```Contact {contact_name} not found.```')
         else:
             self.bot.contacts.remove(contact)
             self.bot.save_data()
 
-            await ctx.send(f'Deleted contact {contact.name}')
+            await ctx.send(f'```Deleted contact {contact.name}```')
 
 
 class FunctionalCommands(commands.Cog, name='Functional Commands'):
@@ -272,7 +271,7 @@ class FunctionalCommands(commands.Cog, name='Functional Commands'):
         if num:
             result += f' ({dice1 + dice2} + {num})'
 
-        await ctx.send(result)
+        await ctx.send(f'```{result}```')
 
     @commands.command(name='image', enabled=False)
     async def get_image(self, ctx, image_name):
@@ -307,7 +306,7 @@ class FunctionalCommands(commands.Cog, name='Functional Commands'):
             file.write(f'{message}\n')
             print(f'Log saved: {message}')
 
-        await ctx.send('Log saved.')
+        await ctx.send('```Log saved.```')
 
     @commands.command(name='set')
     async def set_property(self, ctx, property, value=None):
@@ -315,28 +314,28 @@ class FunctionalCommands(commands.Cog, name='Functional Commands'):
         if property.lower() == 'game':
             if value.lower() in self.bot.game:
                 self.bot.game = self.bot.GAMES[value.lower()](self.bot)
-                await ctx.send(f'Now playing {value}.')
+                await ctx.send(f'```Now playing {value}.```')
             else:
-                await ctx.send(f'The game {value} was not found.')
+                await ctx.send(f'```The game {value} was not found.```')
         elif property.lower() == 'private_clocks':
             if value.lower() == 'true':
                 self.bot.private_clocks = True
-                await ctx.send('Property private_clocks set to true.')
+                await ctx.send('```Property private_clocks set to true.```')
             elif value.lower() == 'false':
                 self.bot.private_clocks = False
-                await ctx.send('Property private_clocks set to false.')
+                await ctx.send('```Property private_clocks set to false.```')
             else:
-                await ctx.send('Invalid value given, either true or false.')
+                await ctx.send('```Invalid value given, either true or false.```')
         elif property.lower() == 'mc':
             if value and value == 'none':
                 self.bot.mc = None
-                await ctx.send('MC has been cleared.')
+                await ctx.send('```MC has been cleared.```')
             elif not value:
                 self.bot.mc = hash(ctx.author)
                 print(f'MC has been set to {hash(ctx.author)}.')
-                await ctx.send('MC has been set.')
+                await ctx.send('```MC has been set.```')
         else:
-            await ctx.send('Invalid property. Properties are game, private_clocks, mc.')
+            await ctx.send('```Invalid property. Properties are game, private_clocks, mc.```')
 
 
 class MiscCommands(commands.Cog, name='Miscellaneous Commands'):
@@ -365,9 +364,9 @@ class MiscCommands(commands.Cog, name='Miscellaneous Commands'):
                 death += ', '.join(characters.keys()) + '\n'
 
         if not death:
-            death = 'No dead characters.'
+            death = '```No dead characters.```'
 
-        await ctx.send(death)
+        await ctx.send(f'```{death}```')
 
     @commands.command(name='kill', usage='"<player>" "<character>" <description>')
     async def kill_character(self, ctx, *, args):
@@ -375,7 +374,7 @@ class MiscCommands(commands.Cog, name='Miscellaneous Commands'):
         try:
             player, character, description = [arg.strip(' "') for arg in args.split('"', 4) if arg.strip()]
         except ValueError:
-            await ctx.send('Please surround player and character names in double quotes.')
+            await ctx.send('```Please surround player and character names in double quotes.```')
         else:
             if player not in self.bot.dead_characters:
                 self.bot.dead_characters[player] = {character: description}
@@ -384,7 +383,7 @@ class MiscCommands(commands.Cog, name='Miscellaneous Commands'):
 
             self.bot.save_data()
 
-            await ctx.send(f'{player}\'s character {character} was killed: {description}.')
+            await ctx.send(f'```{player}\'s character {character} was killed: {description}.```')
 
     @commands.command(name='remember', usage='[when <memory>]|[<index>]')
     async def remember_memory(self, ctx, *, args=None):
@@ -394,23 +393,23 @@ class MiscCommands(commands.Cog, name='Miscellaneous Commands'):
         if 'when' in args.split(' ', 1)[0].lower():
             self.bot.memories.append(args.split(' ', 1)[1])
             self.bot.save_data()
-            await ctx.send(f'Memory added at index {len(self.bot.memories) - 1}')
+            await ctx.send(f'```Memory added at index {len(self.bot.memories) - 1}```')
         else:
             try:
                 index = int(args)
             except ValueError:
                 max = len(self.bot.memories)
                 if not max:
-                    await ctx.send('No memories have been added.')
+                    await ctx.send('```No memories have been added.```')
                     return
                 index = random.randint(0, max - 1)
 
             try:
                 memory = self.bot.memories[index]
             except IndexError:
-                await ctx.send(f'No memory at index {index}.')
+                await ctx.send(f'```No memory at index {index}.```')
             else:
-                await ctx.send(f'{index}: {memory}' if memory else f'No memory found at index {index}.')
+                await ctx.send(f'```{index}: {memory}```' if memory else f'```No memory found at index {index}.```')
 
     @commands.command(name='forget')
     async def forget_memory(self, ctx, index):
@@ -418,15 +417,15 @@ class MiscCommands(commands.Cog, name='Miscellaneous Commands'):
         try:
             i = int(index)
         except ValueError:
-            await ctx.send(f'Invalid index given: {index} (should be an integer).')
+            await ctx.send(f'```Invalid index given: {index} (should be an integer).```')
         else:
             try:
                 memory = self.bot.memories.pop(i)
                 self.bot.save_data()
             except IndexError:
-                await ctx.send(f'No memory at index {i}.')
+                await ctx.send(f'```No memory at index {i}.```')
             else:
-                await ctx.send(f'Memory deleted at index {i}: "{memory}".')
+                await ctx.send(f'```Memory deleted at index {i}: "{memory}".```')
 
 
 class HiddenCommands(commands.Cog, name='Hidden Commands'):
@@ -454,7 +453,7 @@ class HiddenCommands(commands.Cog, name='Hidden Commands'):
             1: 'css\nWelcome to the Wii Fit helpline how can I help you?',
         }
 
-        await ctx.send(switch[member])
+        await ctx.send(f'```{switch[member]}```')
 
 
 class PBABot(commands.Bot):
@@ -541,7 +540,9 @@ class PBABot(commands.Bot):
             await message.channel.send(self.game.handle(command, args))
             return
         except NotImplementedError:
-            response = 'No game has been loaded. Use .set game <game>'
+            response = '```No game has been loaded. Use .set game <game>```'
+        except discord.errors.HTTPException:
+            pass
 
     async def on_ready(self):
         """Event callback for when discord.Client is ready"""
