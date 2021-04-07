@@ -6,11 +6,15 @@ World. Each PBA game has features that are common between them, such as the use 
 created that handles the common features of PBA games. Specific game features can be easily added by creating a
 class and giving it the required functionality as outlined in the games module.
 
+TODO: Clean up game extensions
+TODO: Format messages properly (code output mostly)
+
 Currently supported PBA games:
     The Sprawl
 
-Author: Josh Rogers (2020)
+Author: Josh Rogers (2021)
 Github: https://github.com/j-rogers/pbabot
+Version: 3.0
 """
 import discord
 from discord.ext import commands
@@ -36,12 +40,10 @@ class ClockCommands(commands.Cog, name='Clock Commands'):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(
-        name='clocks',
-        help='Displays the current list of clocks. If the private_clocks property is set then only the MC can view the'
-             'clocks'
-    )
+    @commands.command(name='clocks')
     async def print_clocks(self, ctx):
+        """Displays the current list of clocks. If the private_clocks property is set then only the MC can view the
+        clocks"""
         if self.bot.private_clocks and self.bot.mc != hash(ctx.author):
             await ctx.send('You are not the MC. Increasing all clocks to 0000 (not really).')
             return
@@ -53,11 +55,7 @@ class ClockCommands(commands.Cog, name='Clock Commands'):
 
         await ctx.send('\n'.join([str(clock) for clock in self.bot.clocks]))
 
-    @commands.command(
-        name='addclock',
-        aliases=['clock', 'newclock'],
-        help='Adds a clock with a value of 1200.'
-    )
+    @commands.command(name='addclock', aliases=['clock', 'newclock'])
     async def add_clock(self, ctx, *, clock_name):
         """Adds a clock of the given name at 1200"""
         # Check private clock and MC permissions
@@ -80,11 +78,7 @@ class ClockCommands(commands.Cog, name='Clock Commands'):
         else:
             await ctx.send(f'Clock "{clock.name}" has already been added.')
 
-    @commands.command(
-        name='deleteclock',
-        aliases=['removeclock'],
-        help='Deletes the specified clock.'
-    )
+    @commands.command(name='deleteclock', aliases=['removeclock'],)
     async def delete_clock(self, ctx, *, clock_name):
         """Deletes the clock with specified name"""
         if self.bot.private_clocks and self.bot.mc != hash(ctx.author):
@@ -106,10 +100,7 @@ class ClockCommands(commands.Cog, name='Clock Commands'):
             # Form message and send
             await ctx.send(f'Deleted {clock.name} clock.')
 
-    @commands.command(
-        name='increaseclock',
-        help='Increases the specified clock by one segment.'
-    )
+    @commands.command(name='increaseclock')
     async def increase_clock(self, ctx, *, clock_name):
         """Increases the clock of specified name by one segment"""
         if self.bot.private_clocks and self.bot.mc != hash(ctx.author):
@@ -131,10 +122,7 @@ class ClockCommands(commands.Cog, name='Clock Commands'):
             # Form message and send
             await ctx.send(res if res else f'{clock.name} clock increased to {clock.time}.')
 
-    @commands.command(
-        name='decreaseclock',
-        help='Decreases the specified clock by one segment.'
-    )
+    @commands.command(name='decreaseclock')
     async def decrease_clock(self, ctx, *, clock_name):
         """Decreases the clock of specified name by one segment"""
         if self.bot.private_clocks and self.bot.mc != hash(ctx.author):
@@ -156,10 +144,7 @@ class ClockCommands(commands.Cog, name='Clock Commands'):
 
             await ctx.send(res if res else f'{clock.name} clock decreased to {clock.time}.')
 
-    @commands.command(
-        name='resetclock',
-        help='Resets the specified clock to 1200.'
-    )
+    @commands.command(name='resetclock')
     async def reset_clock(self, ctx, *, clock_name):
         """Reset a clock of specified name to 1200"""
         if self.bot.private_clocks and self.bot.mc != hash(ctx.author):
@@ -184,12 +169,9 @@ class ContactCommands(commands.Cog, name='Contact Commands'):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(
-        name='contacts',
-        help='Displays the current list of contacts'
-    )
+    @commands.command(name='contacts')
     async def print_contacts(self, ctx):
-        """Prints list of contacts"""
+        """Displays the current list of contacts"""
         # Check there are contacts
         if not self.bot.contacts:
             await ctx.send('No contacts have been added.')
@@ -197,12 +179,7 @@ class ContactCommands(commands.Cog, name='Contact Commands'):
 
         await ctx.send('\n'.join([str(contact) for contact in self.bot.contacts]))
 
-    @commands.command(
-        name='addcontact',
-        aliases=['newcontact'],
-        usage='"<contact_name>" <contact_description>',
-        help='Adds a new contact.'
-    )
+    @commands.command(name='addcontact', aliases=['newcontact'], usage='"<contact_name>" <contact_description>')
     async def add_contact(self, ctx, *, args):
         """Adds a contact with specified information"""
         # Get the contact name and description
@@ -225,11 +202,7 @@ class ContactCommands(commands.Cog, name='Contact Commands'):
             else:
                 await ctx.send(f'Contact "{contact.name}" already added as a contact.')
 
-    @commands.command(
-        name='deletecontact',
-        aliases=['removecontact'],
-        help='Deletes a contact.'
-    )
+    @commands.command(name='deletecontact', aliases=['removecontact'])
     async def delete_contact(self, ctx, *, contact_name):
         """Deletes the given contact"""
         try:
@@ -247,13 +220,9 @@ class FunctionalCommands(commands.Cog, name='Functional Commands'):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(
-        name='roll',
-        aliases=['dice'],
-        help='Rolls 2d6 dice and applies your +/- modifier'
-    )
+    @commands.command(name='roll', aliases=['dice'])
     async def roll(self, ctx, modifier=None):
-        """Rolls 2d6 and prints the result"""
+        """Rolls 2d6 dice and applies the given +/- modifier"""
         # Generate the roll
         dice1 = random.randint(1, 6)
         dice2 = random.randint(1, 6)
@@ -305,19 +274,24 @@ class FunctionalCommands(commands.Cog, name='Functional Commands'):
 
         await ctx.send(result)
 
-    @commands.command(
-        name='image',
-        help='[TEMPORARILY DISABLED] Displays the specified image.'
-    )
+    @commands.command(name='image', enabled=False)
     async def get_image(self, ctx, image_name):
-        await ctx.send('Temporarily disabled.')
+        """[TEMPORARILY DISABLED] Displays the specified image."""
+        # TODO: fix the local file inclusion vuln before adding this
+        image = None
+        if image_name:
+            try:
+                image = discord.File(f'{IMAGES}/{image_name}', f'{image_name}')
+            except FileNotFoundError:
+                image = discord.File(f'{IMAGES}/no_map.jpg', 'no_map.jpg')
+        else:
+            image = discord.File(f'{IMAGES}/no_map.jpg', 'no_map.jpg')
 
-    @commands.command(
-        name='map',
-        help='Displays the current map'
-    )
+        await ctx.send(file=image)
+
+    @commands.command(name='map')
     async def get_map(self, ctx):
-        """Returns the default map"""
+        """Displays the current map"""
         image = None
         try:
             image = discord.File('images/map.jpg', 'map.jpg')
@@ -326,23 +300,18 @@ class FunctionalCommands(commands.Cog, name='Functional Commands'):
 
         await ctx.send(file=image)
 
-    @commands.command(
-        name='log',
-        help='Saves a message to the log file.'
-    )
+    @commands.command(name='log')
     async def save_log_message(self, ctx, *, message):
-        """Writes the message to a log file"""
+        """Saves a message to the log file"""
         with open('log.txt', 'a') as file:
             file.write(f'{message}\n')
             print(f'Log saved: {message}')
 
         await ctx.send('Log saved.')
 
-    @commands.command(
-        name='set',
-        help='Sets a bot property. Current properties: game, private_clocks, mc.'
-    )
+    @commands.command(name='set')
     async def set_property(self, ctx, property, value=None):
+        """Sets a bot property. Current properties: game, private_clocks, mc."""
         if property.lower() == 'game':
             if value.lower() in self.bot.game:
                 self.bot.game = self.bot.GAMES[value.lower()](self.bot)
@@ -374,22 +343,16 @@ class MiscCommands(commands.Cog, name='Miscellaneous Commands'):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(
-        name='links',
-        help='Displays a link to all the PBA games.'
-    )
+    @commands.command(name='links')
     async def print_links(self, ctx):
+        """Displays links to all PBA games"""
         links = """**Apocalpyse World:** https://www.dropbox.com/sh/fmsh9kyaiplqhom/AACw1iLMQ7f53Q40FUnMjlz4a?dl=0
 **The Sprawl:** https://www.dropbox.com/sh/9fr35ivzbvfh06p/AACarsYBpNXxBpEUk_-fz_PXa?dl=0
 **Tremulas:** https://www.dropbox.com/sh/tbhk0w0zgihrf2h/AACtvyv9l5ruLBE6UG3XeGfba?dl=0
 **Dungeon World:** https://www.dropbox.com/sh/p61lutt9m6dfpa3/AACTvHhbJa7K1RIHFYVvJqIza?dl=0"""
         await ctx.send(links)
 
-    @commands.command(
-        name='rip',
-        aliases=['f'],
-        help='List all dead characters (in total or for a given player).'
-    )
+    @commands.command(name='rip', aliases=['f'])
     async def print_dead_characters(self, ctx, *, player=None):
         """Displays a list of dead characters (in total or for the given player)"""
         death = ''
@@ -406,14 +369,9 @@ class MiscCommands(commands.Cog, name='Miscellaneous Commands'):
 
         await ctx.send(death)
 
-    @commands.command(
-        name='kill',
-        usage='"<player>" "<character>" <description>',
-        help='Add a dead character with a description of how they died. Usage: .kill "<player>" "<character>"'
-             '<description>'
-    )
+    @commands.command(name='kill', usage='"<player>" "<character>" <description>')
     async def kill_character(self, ctx, *, args):
-        """Adds a dead character"""
+        """Add a dead character with a description of how they died"""
         try:
             player, character, description = [arg.strip(' "') for arg in args.split('"', 4) if arg.strip()]
         except ValueError:
@@ -428,13 +386,9 @@ class MiscCommands(commands.Cog, name='Miscellaneous Commands'):
 
             await ctx.send(f'{player}\'s character {character} was killed: {description}.')
 
-    @commands.command(
-        name='remember',
-        usage='[when <memory>]|[<index>]',
-        help='Displays a message of a memorable moment, or add a new memory.'
-    )
+    @commands.command(name='remember', usage='[when <memory>]|[<index>]')
     async def remember_memory(self, ctx, *, args=None):
-        """Displays a memory or list of memory indices"""
+        """Displays a message of a memorable moment, or add a new memory."""
         if not args:
             args = ''
         if 'when' in args.split(' ', 1)[0].lower():
@@ -458,10 +412,7 @@ class MiscCommands(commands.Cog, name='Miscellaneous Commands'):
             else:
                 await ctx.send(f'{index}: {memory}' if memory else f'No memory found at index {index}.')
 
-    @commands.command(
-        name='forget',
-        help='Deletes a memory.'
-    )
+    @commands.command(name='forget')
     async def forget_memory(self, ctx, index):
         """Forgets the memory at given index"""
         try:
@@ -482,18 +433,12 @@ class HiddenCommands(commands.Cog, name='Hidden Commands'):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(
-        name='chess',
-        hidden=True
-    )
+    @commands.command(name='chess', hidden=True)
     async def chess(self, ctx):
         """Who is the chess master?"""
         await ctx.send('**THE\t  TECHSORCIST\n\tIS    THE\nCHESS\t\tMASTER!**')
 
-    @commands.command(
-        name='answerphone',
-        hidden=True
-    )
+    @commands.command(name='answerphone', hidden=True)
     async def answer_phone(self, ctx, index=None):
         """Wii Fit Helpline"""
         min = 1
@@ -515,27 +460,28 @@ class HiddenCommands(commands.Cog, name='Hidden Commands'):
 class PBABot(commands.Bot):
     """PBABot
 
-    Inherits the discord client so it can receive commands and respond to them appropriately. Clock and contact data is
-    saved within a pickled file. For fun, this bot includes a feature where you can record dead characters and
-    memorable moments and look back on them. This personal data is currently saved in XML format.
+    Inherits the discord commands.Bot so it can receive commands and respond to them appropriately. Clock, contact,
+    memory, and dead character data is saved within a pickled file. There are also a number of bot properties that can
+    be configured to change bot behaviour.
 
     Attributes:
-        game -> pbabot.games.Game: Default game to load.
-        clocks -> List: The clocks currently being used
-        contacts -> List: The contacts currently being used
-        data_file -> String: Data file containing current clock and contact data
+        Current bot properties:
+            game -> pbabot.games.Game: Currently game data to load.
+            private_clocks -> Boolean: Flag to determine if clocks should only be printed to the current MC
+            mc -> Integer: A hash of the Discord user who is the current MC
+        Data attributes:
+            data_file -> String: Data file containing data
+            clocks -> List: The clocks currently being used
+            contacts -> List: The contacts currently being used
+            memories -> List: List of memorable moments
+            dead_characters -> Dict: Dictionary of player's dead characters and how they died
     """
     GAMES = {}
 
     def __init__(self, game: str, data_file: str = DATA_FILE):
         """Init"""
+        # Set command prefix
         super().__init__(command_prefix='.')
-
-        self.add_cog(ClockCommands(self))
-        self.add_cog(ContactCommands(self))
-        self.add_cog(FunctionalCommands(self))
-        self.add_cog(MiscCommands(self))
-        self.add_cog(HiddenCommands(self))
 
         # Get all games
         for name, obj in inspect.getmembers(pbabot.games, inspect.ismodule):
@@ -549,6 +495,12 @@ class PBABot(commands.Bot):
         self.private_clocks = False
         self.mc = None
 
+        # Add commands
+        self.add_cog(ClockCommands(self))
+        self.add_cog(ContactCommands(self))
+        self.add_cog(FunctionalCommands(self))
+        self.add_cog(MiscCommands(self))
+        self.add_cog(HiddenCommands(self))
         self.add_cog(self.game)
 
         # Extract data from file
@@ -573,6 +525,7 @@ class PBABot(commands.Bot):
             print(f'KeyError while loading data: {ke}')
 
     async def on_message(self, message):
+        """On message event callback - currently used so previous Game functionality works"""
         await self.process_commands(message)
         # Prevents bot replying to itself
         if message.author == self.user:
@@ -607,19 +560,6 @@ class PBABot(commands.Bot):
 
         with open(self.data_file, 'wb') as file:
             file.write(pickle.dumps(data))
-
-    def image(self, name: str) -> discord.File:
-        """Returns the given image"""
-        image = None
-        if name:
-            try:
-                image = discord.File(f'{IMAGES}/{name}', f'{name}')
-            except FileNotFoundError:
-                image = discord.File(f'{IMAGES}/no_map.jpg', 'no_map.jpg')
-        else:
-            image = discord.File(f'{IMAGES}/no_map.jpg', 'no_map.jpg')
-
-        return image
 
 
 def main():
