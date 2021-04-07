@@ -13,17 +13,17 @@ Author: Josh Rogers (2020)
 Github: https://github.com/j-rogers/pbabot
 """
 import discord
-import random
+from discord.ext import commands
 import pickle
+import random
 import argparse
-from pbabot.games import Game, Sprawl
-from typing import Optional
-
-# Flags
-NO_DISCORD = False   # Prevents logging into Discord and instead receiving input and sending output to console
+import inspect
+from pbabot.games import Game
+from pbabot.util import Clock, Contact
+import pbabot.games
 
 # API Token
-TOKEN = open('token.txt', 'r').read() if not NO_DISCORD else None
+TOKEN = open('token.txt', 'r').read()
 
 # Data files
 DATA_FILE = 'data/data.pickle'
@@ -32,441 +32,227 @@ DATA_FILE = 'data/data.pickle'
 IMAGES = 'images'
 
 
-class Clock:
-    """Countdown Clock
+class ClockCommands(commands.Cog, name='Clock Commands'):
+    def __init__(self, bot):
+        self.bot = bot
 
-    This class maintains the state of a countdown clock. It also increases and decreases their value.
-
-    Attributes:
-        name -> String: Name of the clock
-        time -> String: Time of the clock (defaults to 1200 on creation)
-    """
-    def __init__(self, name: str, time: str = '1200'):
-        """Init"""
-        self.name = name
-        self.time = time
-
-    def __str__(self):
-        """String representation of a clock"""
-        switch = {
-            '1200': '□□□□ □□□□ □□□□ □ □ □',
-            '1500': '■■■■ □□□□ □□□□ □ □ □',
-            '1800': '■■■■ ■■■■ □□□□ □ □ □',
-            '2100': '■■■■ ■■■■ ■■■■ □ □ □',
-            '2200': '■■■■ ■■■■ ■■■■ ■ □ □',
-            '2300': '■■■■ ■■■■ ■■■■ ■ ■ □',
-            '0000': '■■■■ ■■■■ ■■■■ ■ ■ ■'
-        }
-
-        return f'{self.name}: {switch[self.time]}'
-
-    def increase(self) -> str:
-        """Increases the clock's time by one segment"""
-        if self.time == "1200":
-            self.time = "1500"
-        elif self.time == "1500":
-            self.time = "1800"
-        elif self.time == "1800":
-            self.time = "2100"
-        elif self.time == "2100":
-            self.time = "2200"
-        elif self.time == "2200":
-            self.time = "2300"
-        elif self.time == "2300":
-            self.time = "0000"
-        elif self.time == "0000":
-            return '```Clock is already at midnight.```'
-
-    def decrease(self) -> str:
-        """Decreases the clock's time by one segment"""
-        if self.time == "0000":
-            self.time = "2300"
-        elif self.time == "2300":
-            self.time = "2200"
-        elif self.time == "2200":
-            self.time = "2100"
-        elif self.time == "2100":
-            self.time = "1800"
-        elif self.time == "1800":
-            self.time = "1500"
-        elif self.time == "1500":
-            self.time = "1200"
-        elif self.time == "1200":
-            return '```Clock is already at 1200.```'
-
-
-class Contact:
-    """Contact
-
-    Stores a contacts name and description.
-
-    Attributes:
-        name -> String: Name of the contact
-        description -> String: Description of the contact
-    """
-    def __init__(self, name: str, description: str):
-        """Init"""
-        self.name = name
-        self.description = description
-
-
-class PBABot(discord.Client):
-    """PBABot
-
-    Inherits the discord client so it can receive commands and respond to them appropriately. Clock and contact data is
-    saved within a pickled file. For fun, this bot includes a feature where you can record dead characters and
-    memorable moments and look back on them. This personal data is currently saved in XML format.
-
-    Attributes:
-        game -> pbabot.games.Game: Default game to load.
-        clocks -> List: The clocks currently being used
-        contacts -> List: The contacts currently being used
-        data_file -> String: Data file containing current clock and contact data
-    """
-    COMMANDS = {
-        'help': 'Displays the help message.',
-        'roll': 'Rolls 2d6 dice and applies your +/- modifier. Usage: .roll <modifier>',
-        'moves': 'Displays a list of basic moves.',
-        'playbooks': 'Displays a list of playbooks',
-        'clocks': 'Displays the current list of clocks. If the private_clocks property is set then only the MC can view'
-                  'the clocks.',
-        'addclock': 'Adds a clock with a value of 1200. Usage: .addclock <clock-name>',
-        'increaseclock': 'Increases the specified clock by one segment. Usage: .increaseclock <clock-name>',
-        'decreaseclock': 'Decreases the specified clock by one segment. Usage: .decreaseclock <clock-name>',
-        'resetclock': 'Resets the specified clock to 1200. Usage: .resetclock <clock-name>',
-        'deleteclock': 'Deletes the specified clock. Usage: .deleteclock <clock-name>',
-        'contacts': 'Displays the current list of contacts',
-        'addcontact': 'Adds a new contact. Usage: .addcontact "<contact-name>"',
-        'deletecontact': 'Deletes a contact. Usage: .deletecontact "<contact-name>"',
-        'set': 'Sets a bot property. Current properties: game, private_clocks, mc. Usage: .set <property> <value>',
-        'map': 'Displays the current map.',
-        'image': 'Displays the specified image. Usage: .image <image-name>',
-        'kill': 'Add a dead character with a description of how they died. Usage: .kill "<player>" "<character>"'
-                '<description>',
-        'rip': 'List all dead characters.',
-        'remember': 'Displays a message of a memorable moment, or add a new memory. Usage: .remember [when <memory>] '
-                     '[<index>]',
-        'forget': 'Delete a memory. Usage: .forget <index>',
-        'log': 'Saves a message to the log file. Usage: .log <message>',
-        'links': 'Displays a link to all the PBA games.',
-    }
-
-    def __init__(self, game: str, data_file: str = DATA_FILE):
-        """Init"""
-        if not NO_DISCORD:
-            super().__init__()
-
-        # Bot properties
-        self.game = self.set_game(game)[1] if game else Game()
-        self.private_clocks = True
-        self.mc = None
-
-        # Extract data from file
-        self.memories = []
-        self.dead_characters = {}
-        self.data_file = data_file
-        self.clocks = []
-        self.contacts = []
-        try:
-            with open(self.data_file, 'rb') as file:
-                data = pickle.loads(file.read())
-            self.clocks = data['clocks']
-            self.contacts = data['contacts']
-            self.memories = data['memories']
-            self.dead_characters = data['dead_characters']
-            print('Data extracted')
-        except EOFError:
-            print('No data in file.')
-        except FileNotFoundError:
-            print('No data file found.')
-        except KeyError as ke:
-            print(f'KeyError while loading data: {ke}')
-
-    def debug_on_message(self, message: str) -> str:
-        """Alternative to on_message when NO_DISCORD flag is set to True
-
-        When debugged without discord, we instead need to read input from console, and also print to console. This
-        method is used instead of on_message when the NO_DISCORD flag is set, allowing us to do just that.
-
-        NOTE: Functionality that requires a hash of the user is currently disabled
-
-        Args:
-            message: Message received from console
-
-        Returns:
-            Response to be printed out
-        """
-        # Prevents bot responding to regular messages
-        if not message.startswith('.'):
-            return 'Incorrect command.'
-
-        # Parse message
-        content = message.split(' ', 1)
-        command = content[0].lower()
-        args = content[1] if len(content) > 1 else ''
-
-        # Lookup table of commands the the respective callback
-        text_switch = {
-            # Listing commands
-            '.help': self.help,
-            '.links': self.links,
-            '.clocks': self.print_clocks,
-            '.contacts': self.print_contacts,
-            '.moves': self.game.moves,
-            '.playbooks': self.game.playbooks,
-            # Functional commands
-            '.roll': self.roll,
-            '.dice': self.roll,
-            '.addclock': self.add_clock,
-            '.deleteclock': self.delete_clock,
-            '.increaseclock': self.increase_clock,
-            '.decreaseclock': self.decrease_clock,
-            '.addcontact': self.add_contact,
-            '.deletecontact': self.delete_contact,
-            '.set': self.set_property,
-            # Miscellaneous commands
-            '.rip': self.rip,
-            '.f': self.rip,
-            '.remember': self.remember,
-            '.forget': self.forget,
-            '.kill': self.kill,
-            '.chess': self.chess,
-            '.answerphone': self.answerphone,
-            # Dev commands
-            '.refresh': self.refresh,
-            '.log': self.log
-        }
-        callback = text_switch.get(command, None)
-        response = callback(args) if callback else None
-
-        # Lookup table if command is requesting an image
-        image_switch = {
-            '.map': self.map,
-            '.image': self.image,
-        }
-        image_callback = image_switch.get(command, None)
-
-        image = None
-        if image_callback:
-            image = image_callback(args)
-
-        # If command didn't match a PBA or image command, try game-specific command
-        if not response and not image:
-            try:
-                response = self.game.handle(command, args)
-            except NotImplementedError:
-                response = 'No game has been loaded. Use .game'
-            else:
-                # Didn't match game-specific command, send back invalid command
-                if not response:
-                    response = 'Invalid command. Type ".help" for a list of commands.'
-
-        # If text response, surround in "```" for discord formatting
-        if response and not image:
-            response = f'```{response}```'
-
-        # Respond if we have something to send back
-        return response
-
-    async def on_message(self, message: discord.Message) -> None:
-        """Event callback when receiving a message
-
-        From discord.Client, this method is an event callback for when the bot receives a message. It checks the message
-        to make sure it is a command (identified by a '.' in front of the message), and if it is then parses the message
-        and attempts to form a response. If the message does not match any known commands, the bot will reply with a
-        invalid command error.
-
-        Args:
-            message -> discord.Message: Message received from Discord
-        """
-        # Prevents bot replying to itself
-        if message.author == self.user:
+    @commands.command(
+        name='clocks',
+        help='Displays the current list of clocks. If the private_clocks property is set then only the MC can view the'
+             'clocks'
+    )
+    async def print_clocks(self, ctx):
+        if self.bot.private_clocks and self.bot.mc != hash(ctx.author):
+            await ctx.send('You are not the MC. Increasing all clocks to 0000 (not really).')
             return
-
-        # Prevents bot responding to regular messages
-        if not message.content.startswith('.'):
-            return
-
-        # Parse message
-        content = message.content.split(' ', 1)
-        command = content[0].lower()
-        args = content[1] if len(content) > 1 else ''
-
-        # Lookup table of commands the the respective callback
-        text_switch = {
-            # Listing commands
-            '.help': self.help,
-            '.links': self.links,
-            '.contacts': self.print_contacts,
-            '.moves': self.game.moves,
-            '.playbooks': self.game.playbooks,
-            # Functional commands
-            '.roll': self.roll,
-            '.dice': self.roll,
-            '.addcontact': self.add_contact,
-            '.deletecontact': self.delete_contact,
-            # Miscellaneous commands
-            '.rip': self.rip,
-            '.f': self.rip,
-            '.remember': self.remember,
-            '.forget': self.forget,
-            '.kill': self.kill,
-            '.chess': self.chess,
-            '.answerphone': self.answerphone,
-            # Dev commands
-            '.refresh': self.refresh,
-            '.log': self.log
-        }
-        callback = text_switch.get(command, None)
-        response = callback(args) if callback else None
-
-        # Include hash of message author for some commands
-        user_switch = {
-            '.addclock': self.add_clock,
-            '.deleteclock': self.delete_clock,
-            '.increaseclock': self.increase_clock,
-            '.decreaseclock': self.decrease_clock,
-            '.resetclock': self.reset_clock,
-            '.clocks': self.print_clocks,
-            '.set': self.set_property,
-        }
-        callback = user_switch.get(command, None)
-        response = callback(args, hash(message.author)) if callback else response
-
-        # Lookup table if command is requesting an image
-        image_switch = {
-            '.map': self.map,
-            '.image': self.image,
-        }
-        image_callback = image_switch.get(command, None)
-        image = image_callback(args) if image_callback else None
-
-        # If command didn't match a PBA or image command, try game-specific command
-        if not response and not image:
-            try:
-                response = self.game.handle(command, args)
-            except NotImplementedError:
-                response = 'No game has been loaded. Use .set game <game>'
-            else:
-                # Didn't match game-specific command, send back invalid command
-                if not response:
-                    response = 'Invalid command. Type ".help" for a list of commands.'
-
-        # If text response, surround in "```" for discord formatting
-        if response and not image:
-            response = f'```{response}```'
-
-        # Respond if we have something to send back
-        if response or image:
-            await message.channel.send(response, file=image)
-
-    async def on_ready(self):
-        """Event callback for when discord.Client is ready"""
-        print('Logged in as')
-        print(self.user.name)
-        print(self.user.id)
-        print('------')
-
-    def help(self, message: str) -> str:
-        """Prints list of commands"""
-        # General commands
-        commands = 'Use \".command\" when using this bot.\n\nGeneral commands:\n'
-        for command, description in self.COMMANDS.items():
-            commands += f'\t{command}: {description}\n'
-
-        commands += "\nGame-specific Commands:\n"
-        # Add game-specific commands
-        for command, description in self.game.COMMANDS.items():
-            commands += f'\t{command}: {description}\n'
-
-        commands.strip()
-        return commands
-
-    def set_property(self, args: str, user: int) -> str:
-        property = None
-        value = None
-        try:
-            property, value = args.split(' ', 1)
-        except ValueError:
-            if 'mc' not in args:
-                return 'Usage: .set <property> <value>'
-            else:
-                property = 'mc'
-
-        if property.lower() == 'game':
-            response, game = self.set_game(value)
-            self.game = game if game else self.game
-            return response
-        elif property.lower() == 'private_clocks':
-            if value.lower() == 'true':
-                self.private_clocks = True
-            elif value.lower() == 'False':
-                self.private_clocks = False
-            else:
-                return 'Invalid value given, either true or false.'
-        elif property.lower() == 'mc':
-            self.mc = user
-            print(f'MC has been set to {user}.')
-            return 'MC has been set.'
-        else:
-            return 'Invalid property. Properties are game, private_clocks, mc.'
-
-    def set_game(self, game: str) -> str:
-        """Sets the current game being played"""
-        if not game:
-            if self.game:
-                return f'Currently playing {self.game}.'
-            else:
-                return 'No game is currently set. Set a game with .game <game>.'
-
-        game_switch = {
-            'sprawl': Sprawl,
-        }
-
-        game_callback = game_switch.get(game.lower(), None)
-
-        if game_callback:
-            return f'Now playing {game}.', game_callback()
-        else:
-            return f'No game {game} found.', None
-
-    def links(self, message: str) -> str:
-        """Prints links to PBA games"""
-        return """**Apocalpyse World:** https://www.dropbox.com/sh/fmsh9kyaiplqhom/AACw1iLMQ7f53Q40FUnMjlz4a?dl=0
-**The Sprawl:** https://www.dropbox.com/sh/9fr35ivzbvfh06p/AACarsYBpNXxBpEUk_-fz_PXa?dl=0
-**Tremulas:** https://www.dropbox.com/sh/tbhk0w0zgihrf2h/AACtvyv9l5ruLBE6UG3XeGfba?dl=0
-**Dungeon World:** https://www.dropbox.com/sh/p61lutt9m6dfpa3/AACTvHhbJa7K1RIHFYVvJqIza?dl=0"""
-
-    def print_clocks(self, message: str, user: int) -> str:
-        """Prints current clock times"""
-        if self.private_clocks and self.mc != user:
-            return 'You are not the MC. Increasing all clocks to 0000 (not really).'
 
         # Check that there are clocks
-        if not self.clocks:
-            return 'No clocks have been added.'
+        if not self.bot.clocks:
+            await ctx.send('No clocks have been added')
+            return
 
-        # Print clocks
-        clocks = ''
-        for clock in self.clocks:
-            clocks += f'{clock}\n'
+        await ctx.send('\n'.join([str(clock) for clock in self.bot.clocks]))
 
-        return clocks
+    @commands.command(
+        name='addclock',
+        aliases=['clock', 'newclock'],
+        help='Adds a clock with a value of 1200.'
+    )
+    async def add_clock(self, ctx, *, clock_name):
+        """Adds a clock of the given name at 1200"""
+        # Check private clock and MC permissions
+        if self.bot.private_clocks and self.bot.mc != hash(ctx.author):
+            await ctx.send('You are not the MC. Cheeky.')
+            return
 
-    def print_contacts(self, message: str) -> str:
+        # Checks if clock has already been added
+        try:
+            clock = [c for c in self.bot.clocks if c.name.lower() == clock_name.lower()].pop()
+        except IndexError:
+            # Append to clocks list
+            self.bot.clocks.append(Clock(clock_name))
+
+            # Update and refresh file
+            self.bot.save_data()
+
+            # Form message and send
+            await ctx.send(f'{clock_name} clock added at 1200.')
+        else:
+            await ctx.send(f'Clock "{clock.name}" has already been added.')
+
+    @commands.command(
+        name='deleteclock',
+        aliases=['removeclock'],
+        help='Deletes the specified clock.'
+    )
+    async def delete_clock(self, ctx, *, clock_name):
+        """Deletes the clock with specified name"""
+        if self.bot.private_clocks and self.bot.mc != hash(ctx.author):
+            await ctx.send('You are not the MC. Naughty.')
+            return
+
+        # Find the clock to be deleted
+        try:
+            clock = [c for c in self.bot.clocks if c.name.lower() == clock_name.lower()].pop()
+        except IndexError:
+            await ctx.send(f'Clock "{clock_name}" not found.')
+        else:
+            # Delete clock
+            self.bot.clocks.remove(clock)
+
+            # Update and refresh file
+            self.bot.save_data()
+
+            # Form message and send
+            await ctx.send(f'Deleted {clock.name} clock.')
+
+    @commands.command(
+        name='increaseclock',
+        help='Increases the specified clock by one segment.'
+    )
+    async def increase_clock(self, ctx, *, clock_name):
+        """Increases the clock of specified name by one segment"""
+        if self.bot.private_clocks and self.bot.mc != hash(ctx.author):
+            await ctx.send('You are not the MC. I\'m going to dob on you.')
+            return
+
+        # Find the clock to be increased
+        try:
+            clock = [c for c in self.bot.clocks if c.name.lower() == clock_name.lower()].pop()
+        except IndexError:
+            await ctx.send(f'Clock "{clock_name}" not found.')
+        else:
+            # Increase clock
+            res = clock.increase()
+
+            # Update and refresh file
+            self.bot.save_data()
+
+            # Form message and send
+            await ctx.send(res if res else f'{clock.name} clock increased to {clock.time}.')
+
+    @commands.command(
+        name='decreaseclock',
+        help='Decreases the specified clock by one segment.'
+    )
+    async def decrease_clock(self, ctx, *, clock_name):
+        """Decreases the clock of specified name by one segment"""
+        if self.bot.private_clocks and self.bot.mc != hash(ctx.author):
+            await ctx.send('You are not the MC. -1 ongoing.')
+            return
+
+        # Find clock
+
+        try:
+            clock = [c for c in self.bot.clocks if c.name.lower() == clock_name.lower()].pop()
+        except IndexError:
+            await ctx.send(f'Clock "{clock_name}" not found.')
+        else:
+            # Decrease clock
+            res = clock.decrease()
+
+            # Update and save data
+            self.bot.save_data()
+
+            await ctx.send(res if res else f'{clock.name} clock decreased to {clock.time}.')
+
+    @commands.command(
+        name='resetclock',
+        help='Resets the specified clock to 1200.'
+    )
+    async def reset_clock(self, ctx, *, clock_name):
+        """Reset a clock of specified name to 1200"""
+        if self.bot.private_clocks and self.bot.mc != hash(ctx.author):
+            await ctx.send('You are not the MC. The Thing has been alerted to your position.')
+            return
+
+        try:
+            clock = [c for c in self.bot.clocks if c.name.lower() == clock_name.lower()].pop()
+        except IndexError:
+            await ctx.send(f'Clock "{clock_name}" not found.')
+        else:
+            # Reset the clock
+            clock.time = '1200'
+
+            # Update and save data
+            self.bot.save_data()
+
+            await ctx.send(f'{clock.name} clock reset to 1200.')
+
+
+class ContactCommands(commands.Cog, name='Contact Commands'):
+    def __init__(self, bot):
+        self.bot = bot
+
+    @commands.command(
+        name='contacts',
+        help='Displays the current list of contacts'
+    )
+    async def print_contacts(self, ctx):
         """Prints list of contacts"""
         # Check there are contacts
-        if not self.contacts:
-            return 'No contacts have been added.'
+        if not self.bot.contacts:
+            await ctx.send('No contacts have been added.')
+            return
 
-        # Build string
-        contacts = ''
-        for contact in self.contacts:
-            contacts += f'{contact.name}: {contact.description}\n'
+        await ctx.send('\n'.join([str(contact) for contact in self.bot.contacts]))
 
-        return contacts
+    @commands.command(
+        name='addcontact',
+        aliases=['newcontact'],
+        usage='"<contact_name>" <contact_description>',
+        help='Adds a new contact.'
+    )
+    async def add_contact(self, ctx, *, args):
+        """Adds a contact with specified information"""
+        # Get the contact name and description
+        try:
+            a, name, description = args.split('"', 2)
+        except ValueError:
+            await ctx.send('You must surround the contact\'s name in double quotes.')
+        else:
+            description = description.strip(' "')
 
-    def roll(self, modifier: str) -> str:
+            # Check if contact already exists
+            try:
+                contact = [c for c in self.bot.contacts if c.name.lower() == name.lower()].pop()
+            except IndexError:
+                # Add contact and save data
+                self.bot.contacts.append(Contact(name, description))
+                self.bot.save_data()
+
+                await ctx.send(f'Contact added: {name}.')
+            else:
+                await ctx.send(f'Contact "{contact.name}" already added as a contact.')
+
+    @commands.command(
+        name='deletecontact',
+        aliases=['removecontact'],
+        help='Deletes a contact.'
+    )
+    async def delete_contact(self, ctx, *, contact_name):
+        """Deletes the given contact"""
+        try:
+            contact = [c for c in self.bot.contacts if c.name.lower() == contact_name.strip('"').lower()].pop()
+        except IndexError:
+            await ctx.send(f'Contact {contact_name} not found.')
+        else:
+            self.bot.contacts.remove(contact)
+            self.bot.save_data()
+
+            await ctx.send(f'Deleted contact {contact.name}')
+
+
+class FunctionalCommands(commands.Cog, name='Functional Commands'):
+    def __init__(self, bot):
+        self.bot = bot
+
+    @commands.command(
+        name='roll',
+        aliases=['dice'],
+        help='Rolls 2d6 dice and applies your +/- modifier'
+    )
+    async def roll(self, ctx, modifier=None):
         """Rolls 2d6 and prints the result"""
         # Generate the roll
         dice1 = random.randint(1, 6)
@@ -517,231 +303,310 @@ class PBABot(discord.Client):
         if num:
             result += f' ({dice1 + dice2} + {num})'
 
-        return result
+        await ctx.send(result)
 
-    def add_clock(self, name: str, user: int) -> str:
-        """Adds a clock of the given name at 1200"""
-        # Check private clock and MC permissions
-        if self.private_clocks and self.mc != user:
-            return 'You are not the MC. Cheeky.'
+    @commands.command(
+        name='image',
+        help='[TEMPORARILY DISABLED] Displays the specified image.'
+    )
+    async def get_image(self, ctx, image_name):
+        await ctx.send('Temporarily disabled.')
 
-        # Checks if clock has already been added
-        clock = self._get_clock(name)
-        if clock:
-            return f'Clock {name} already exists.'
+    @commands.command(
+        name='map',
+        help='Displays the current map'
+    )
+    async def get_map(self, ctx):
+        """Returns the default map"""
+        image = None
+        try:
+            image = discord.File('images/map.jpg', 'map.jpg')
+        except FileNotFoundError:
+            image = discord.File('images/no_map.jpg', 'no_map.jpg')
 
-        # Append to clocks list
-        self.clocks.append(Clock(name))
+        await ctx.send(file=image)
 
-        # Update and refresh file
-        self._save_data()
-        print(f'Clock added to file: {name} at 1200')
+    @commands.command(
+        name='log',
+        help='Saves a message to the log file.'
+    )
+    async def save_log_message(self, ctx, *, message):
+        """Writes the message to a log file"""
+        with open('log.txt', 'a') as file:
+            file.write(f'{message}\n')
+            print(f'Log saved: {message}')
 
-        # Form message and send
-        return f'Clock added to file: {name} at 1200'
+        await ctx.send('Log saved.')
 
-    def delete_clock(self, name: str, user: int) -> str:
-        """Deletes the clock with specified name"""
-        if self.private_clocks and self.mc != user:
-            return 'You are not the MC. Naughty.'
-
-        # Find the clock to be deleted
-        clock = self._get_clock(name)
-        if not clock:
-            return f'Clock {name} not found.'
-
-        # Delete clock
-        self.clocks.remove(clock)
-
-        # Update and refresh file
-        self._save_data()
-        print(f'Clock deleted from file: {name}')
-
-        # Form message and send
-        return f'Deleted clock {name}.'
-
-    def increase_clock(self, name: str, user: int) -> str:
-        """Increases the clock of specified name by one segment"""
-        if self.private_clocks and self.mc != user:
-            return 'You are not the MC. I\'m going to dob on you.'
-
-        # Find the clock to be increased
-        clock = self._get_clock(name)
-
-        # Check if the clock was found
-        if not clock:
-            return f'Clock "{name}" not found.'
-
-        # Increase clock
-        clock.increase()
-
-        # Update and refresh file
-        self._save_data()
-
-        # Form message and send
-        return f'{clock.name} clock increased to {clock.time}.'
-
-    def decrease_clock(self, name: str, user: int) -> str:
-        """Decreases the clock of specified name by one segment"""
-        if self.private_clocks and self.mc != user:
-            return 'You are not the MC. -1 ongoing.'
-
-        # Find clock
-        clock = self._get_clock(name)
-
-        # Check if clock exists
-        if not clock:
-            return f'Clock "{name}" not found.'
-
-        # Decrease clock
-        clock.decrease()
-
-        # Update and save data
-        self._save_data()
-
-        return f'{clock.name} clock decreased to {clock.time}'
-
-    def reset_clock(self, name: str, user: int) -> str:
-        """Reset a clock of specified name to 1200"""
-        if self.private_clocks and self.mc != user:
-            return 'You are not the MC. The Thing has been alerted to your position.'
-
-        # Find clock
-        clock = self._get_clock(name)
-
-        # Check if clock exists
-        if not clock:
-            return f'Clock "{name}" not found.'
-
-        # Reset the clock
-        clock.time = '1200'
-
-        # Update and save data
-        self._save_data()
-
-        return f'{clock.name} clock reset to 1200.'
-
-    def add_contact(self, args: str) -> str:
-        """Adds a contact with specified information
-
-        A contact can be added by either using .add_contact name description, where name is a single word and description
-        is multiple. If you want to add a contact with a name that has multiple words then you can use
-        .add_contact "first last" description.
-
-        Args:
-            args -> String: Information of contact to be added
-        """
-        # Get the contact name and description
-        name = None
-        description = None
-        tokens = args.split('"', 2)
-
-        # Check if name was surround by double quotes
-        if len(tokens) > 1:
-            name = tokens[1]
-            description = tokens[2].strip()
-        # No quotes
+    @commands.command(
+        name='set',
+        help='Sets a bot property. Current properties: game, private_clocks, mc.'
+    )
+    async def set_property(self, ctx, property, value=None):
+        if property.lower() == 'game':
+            if value.lower() in self.bot.game:
+                self.bot.game = self.bot.GAMES[value.lower()](self.bot)
+                await ctx.send(f'Now playing {value}.')
+            else:
+                await ctx.send(f'The game {value} was not found.')
+        elif property.lower() == 'private_clocks':
+            if value.lower() == 'true':
+                self.bot.private_clocks = True
+                await ctx.send('Property private_clocks set to true.')
+            elif value.lower() == 'false':
+                self.bot.private_clocks = False
+                await ctx.send('Property private_clocks set to false.')
+            else:
+                await ctx.send('Invalid value given, either true or false.')
+        elif property.lower() == 'mc':
+            if value and value == 'none':
+                self.bot.mc = None
+                await ctx.send('MC has been cleared.')
+            elif not value:
+                self.bot.mc = hash(ctx.author)
+                print(f'MC has been set to {hash(ctx.author)}.')
+                await ctx.send('MC has been set.')
         else:
-            return 'You must surround the contact\'s name in double quotes.'
+            await ctx.send('Invalid property. Properties are game, private_clocks, mc.')
 
-        # Check if contact already exists
-        if self._get_contact(name):
-            return f'Contact "{name}" already added as a contact.'
 
-        # Add contact and save data
-        self.contacts.append(Contact(name, description))
-        self._save_data()
+class MiscCommands(commands.Cog, name='Miscellaneous Commands'):
+    def __init__(self, bot):
+        self.bot = bot
 
-        return f'Contact added: {name}.'
+    @commands.command(
+        name='links',
+        help='Displays a link to all the PBA games.'
+    )
+    async def print_links(self, ctx):
+        links = """**Apocalpyse World:** https://www.dropbox.com/sh/fmsh9kyaiplqhom/AACw1iLMQ7f53Q40FUnMjlz4a?dl=0
+**The Sprawl:** https://www.dropbox.com/sh/9fr35ivzbvfh06p/AACarsYBpNXxBpEUk_-fz_PXa?dl=0
+**Tremulas:** https://www.dropbox.com/sh/tbhk0w0zgihrf2h/AACtvyv9l5ruLBE6UG3XeGfba?dl=0
+**Dungeon World:** https://www.dropbox.com/sh/p61lutt9m6dfpa3/AACTvHhbJa7K1RIHFYVvJqIza?dl=0"""
+        await ctx.send(links)
 
-    def delete_contact(self, name: str) -> str:
-        """Deletes the given contact"""
-        contact = self._get_contact(name)
-
-        if not contact:
-            return f'Contact {name} not found.'
-
-        self.contacts.remove(contact)
-
-        self._save_data()
-
-        return f'Deleted contact {name}'
-
-    def rip(self, player: str) -> str:
+    @commands.command(
+        name='rip',
+        aliases=['f'],
+        help='List all dead characters (in total or for a given player).'
+    )
+    async def print_dead_characters(self, ctx, *, player=None):
         """Displays a list of dead characters (in total or for the given player)"""
         death = ''
-        if player in self.dead_characters:
-            for character, description in self.dead_characters[player].items():
+        if player in self.bot.dead_characters:
+            for character, description in self.bot.dead_characters[player].items():
                 death += f'{character}: {description}'
         else:
-            for player, characters in self.dead_characters.items():
+            for player, characters in self.bot.dead_characters.items():
                 death += f'{player}: '
                 death += ', '.join(characters.keys()) + '\n'
 
         if not death:
             death = 'No dead characters.'
 
-        return death
+        await ctx.send(death)
 
-    def kill(self, args: str) -> str:
+    @commands.command(
+        name='kill',
+        usage='"<player>" "<character>" <description>',
+        help='Add a dead character with a description of how they died. Usage: .kill "<player>" "<character>"'
+             '<description>'
+    )
+    async def kill_character(self, ctx, *, args):
         """Adds a dead character"""
-        tokens = [arg for arg in args.split('"', 4) if arg.strip()]
-
-        if len(tokens) != 3:
-            return 'Please surround player and character names in double quotes.'
-
-        player = tokens[0]
-        character = tokens[1]
-        description = tokens[2]
-
-        if player not in self.dead_characters:
-            self.dead_characters[player] = {character: description}
+        try:
+            player, character, description = [arg.strip(' "') for arg in args.split('"', 4) if arg.strip()]
+        except ValueError:
+            await ctx.send('Please surround player and character names in double quotes.')
         else:
-            self.dead_characters[player][character] = description
+            if player not in self.bot.dead_characters:
+                self.bot.dead_characters[player] = {character: description}
+            else:
+                self.bot.dead_characters[player][character] = description
 
-        self._save_data()
+            self.bot.save_data()
 
-        return f'{player}\'s character {character} was killed: {description}.'
+            await ctx.send(f'{player}\'s character {character} was killed: {description}.')
 
-    def remember(self, args: str) -> str:
+    @commands.command(
+        name='remember',
+        usage='[when <memory>]|[<index>]',
+        help='Displays a message of a memorable moment, or add a new memory.'
+    )
+    async def remember_memory(self, ctx, *, args=None):
         """Displays a memory or list of memory indices"""
+        if not args:
+            args = ''
         if 'when' in args.split(' ', 1)[0].lower():
-            self.memories.append(args.split(' ', 1)[1])
-            self._save_data()
-            return f'Memory added at index {len(self.memories)-1}'
+            self.bot.memories.append(args.split(' ', 1)[1])
+            self.bot.save_data()
+            await ctx.send(f'Memory added at index {len(self.bot.memories) - 1}')
         else:
             try:
                 index = int(args)
             except ValueError:
-                max = len(self.memories)
+                max = len(self.bot.memories)
                 if not max:
-                    return 'No memories have been added.'
-                index = random.randint(0, max-1)
+                    await ctx.send('No memories have been added.')
+                    return
+                index = random.randint(0, max - 1)
 
             try:
-                memory = self.memories[index]
+                memory = self.bot.memories[index]
             except IndexError:
-                return f'No memory at index {index}.'
+                await ctx.send(f'No memory at index {index}.')
+            else:
+                await ctx.send(f'{index}: {memory}' if memory else f'No memory found at index {index}.')
 
-            return f'{index}: {memory}' if memory else f'No memory found at index {index}.'
-
-    def forget(self, index: str) -> str:
+    @commands.command(
+        name='forget',
+        help='Deletes a memory.'
+    )
+    async def forget_memory(self, ctx, index):
         """Forgets the memory at given index"""
         try:
             i = int(index)
         except ValueError:
-            return f'Invalid index given: {index} (should be an integer).'
-
-        try:
-            memory = self.memories.pop(i)
-        except IndexError:
-            return f'No memory at index {i}.'
+            await ctx.send(f'Invalid index given: {index} (should be an integer).')
         else:
-            return f'Memory deleted at index {i}: "{memory}".'
+            try:
+                memory = self.bot.memories.pop(i)
+                self.bot.save_data()
+            except IndexError:
+                await ctx.send(f'No memory at index {i}.')
+            else:
+                await ctx.send(f'Memory deleted at index {i}: "{memory}".')
 
-    def map(self, args: str) -> discord.File:
-        """Returns the default map"""
-        return self.image('map.jpg')
+
+class HiddenCommands(commands.Cog, name='Hidden Commands'):
+    def __init__(self, bot):
+        self.bot = bot
+
+    @commands.command(
+        name='chess',
+        hidden=True
+    )
+    async def chess(self, ctx):
+        """Who is the chess master?"""
+        await ctx.send('**THE\t  TECHSORCIST\n\tIS    THE\nCHESS\t\tMASTER!**')
+
+    @commands.command(
+        name='answerphone',
+        hidden=True
+    )
+    async def answer_phone(self, ctx, index=None):
+        """Wii Fit Helpline"""
+        min = 1
+        max = 1
+        member = random.randint(min, max)
+
+        if index:  # If more values other than .remember
+            number = int(index)  # converts stringArray  (['.remember' 'num']) to int
+            if min <= number <= max:  # Ensures it will exist within the range of .remember
+                member = number  # sets member to the number.
+
+        switch = {
+            1: 'css\nWelcome to the Wii Fit helpline how can I help you?',
+        }
+
+        await ctx.send(switch[member])
+
+
+class PBABot(commands.Bot):
+    """PBABot
+
+    Inherits the discord client so it can receive commands and respond to them appropriately. Clock and contact data is
+    saved within a pickled file. For fun, this bot includes a feature where you can record dead characters and
+    memorable moments and look back on them. This personal data is currently saved in XML format.
+
+    Attributes:
+        game -> pbabot.games.Game: Default game to load.
+        clocks -> List: The clocks currently being used
+        contacts -> List: The contacts currently being used
+        data_file -> String: Data file containing current clock and contact data
+    """
+    GAMES = {}
+
+    def __init__(self, game: str, data_file: str = DATA_FILE):
+        """Init"""
+        super().__init__(command_prefix='.')
+
+        self.add_cog(ClockCommands(self))
+        self.add_cog(ContactCommands(self))
+        self.add_cog(FunctionalCommands(self))
+        self.add_cog(MiscCommands(self))
+        self.add_cog(HiddenCommands(self))
+
+        # Get all games
+        for name, obj in inspect.getmembers(pbabot.games, inspect.ismodule):
+            if name != 'base':
+                for n, o in inspect.getmembers(inspect.getmodule(obj), inspect.isclass):
+                    if n not in ('Move', 'Game'):
+                        self.GAMES[n.lower()] = o
+
+        # Bot properties
+        self.game = self.GAMES[game](self) if game else Game(self)
+        self.private_clocks = False
+        self.mc = None
+
+        self.add_cog(self.game)
+
+        # Extract data from file
+        self.memories = []
+        self.dead_characters = {}
+        self.clocks = []
+        self.contacts = []
+        self.data_file = data_file
+        try:
+            with open(self.data_file, 'rb') as file:
+                data = pickle.loads(file.read())
+            self.clocks = data['clocks']
+            self.contacts = data['contacts']
+            self.memories = data['memories']
+            self.dead_characters = data['dead_characters']
+            print('Data extracted')
+        except EOFError:
+            print('No data in file.')
+        except FileNotFoundError:
+            print('No data file found.')
+        except KeyError as ke:
+            print(f'KeyError while loading data: {ke}')
+
+    async def on_message(self, message):
+        await self.process_commands(message)
+        # Prevents bot replying to itself
+        if message.author == self.user:
+            return
+
+        # Prevents bot responding to regular messages
+        if not message.content.startswith('.'):
+            return
+        content = message.content.split(' ', 1)
+        command = content[0].lower()
+        args = content[1] if len(content) > 1 else ''
+        try:
+            await message.channel.send(self.game.handle(command, args))
+            return
+        except NotImplementedError:
+            response = 'No game has been loaded. Use .set game <game>'
+
+    async def on_ready(self):
+        """Event callback for when discord.Client is ready"""
+        print('Logged in as')
+        print(self.user.name)
+        print(self.user.id)
+        print('------')
+
+    def save_data(self):
+        data = {
+            'clocks': self.clocks,
+            'contacts': self.contacts,
+            'memories': self.memories,
+            'dead_characters': self.dead_characters
+        }
+
+        with open(self.data_file, 'wb') as file:
+            file.write(pickle.dumps(data))
 
     def image(self, name: str) -> discord.File:
         """Returns the given image"""
@@ -756,87 +621,6 @@ class PBABot(discord.Client):
 
         return image
 
-    def chess(self, message: str) -> str:
-        """idk what this is"""
-        msg = "**THE\t  TECHSORCIST\n\tIS    THE\nCHESS\t\tMASTER!**"
-        return msg
-
-    def answerphone(self, index: str) -> str:
-        """idk what this is either"""
-        min = 1
-        max = 1
-        member = random.randint(min, max)
-
-        if index:  # If more values other than .remember
-            number = int(index)  # converts stringArray  (['.remember' 'num']) to int
-            if number >= min and number <= max:  # Ensures it will exist within the range of .remember
-                member = number  # sets member to the number.
-
-        switch = {
-            1: 'css\nWelcome to the Wii Fit helpline how can I help you?',
-        }
-
-        return switch[member]
-
-    def refresh(self, message: str) -> str:
-        """Reloads game data"""
-        msg = ''
-        try:
-            data = pickle.loads(open(self.data_file, 'rb').read())
-            self.clocks = data['clocks']
-            self.contacts = data['contacts']
-            self.memories = data['memories']
-            self.dead_characters = data['dead_characters']
-            msg = 'Data has been refreshed.'
-            print('Data refreshed.')
-        except EOFError:
-            print('No data in file.')
-        except FileNotFoundError:
-            print('No data file found.')
-        except KeyError:
-            print(f'KeyError while loading data.')
-
-        return msg
-
-    def log(self, message: str) -> str:
-        """Writes the message to a log file"""
-        # Write to the file
-        file = open("log.txt", "a")
-        file.write(message + "\n")
-        file.close()
-        print(f'Log saved: {message}')
-
-        # Form and send message
-        return 'Log saved.'
-
-    def _get_contact(self, name: str) -> Optional[Contact]:
-        """Retrieves the given contact"""
-        for contact in self.contacts:
-            if name.lower() == contact.name.lower():
-                return contact
-
-        return None
-
-    def _get_clock(self, name: str) -> Optional[Clock]:
-        """Retrieves the given clock"""
-        for clock in self.clocks:
-            if name.lower() == clock.name.lower():
-                return clock
-
-        return None
-
-    def _save_data(self) -> None:
-        """Saves the current data to file"""
-        data = {
-            'clocks': self.clocks,
-            'contacts': self.contacts,
-            'memories': self.memories,
-            'dead_characters': self.dead_characters
-        }
-
-        with open(self.data_file, 'wb') as file:
-            file.write(pickle.dumps(data))
-
 
 def main():
     # Command line arguments
@@ -845,14 +629,8 @@ def main():
     args = parser.parse_args()
     game = vars(args)['game']
 
-    client = PBABot(game)
-    if not NO_DISCORD:
-        client.run(TOKEN)
-    else:
-        while True:
-            message = input()
-            response = client.debug_on_message(message)
-            print(response)
+    pbabot = PBABot(game)
+    pbabot.run(TOKEN)
 
 
 if __name__ == '__main__':

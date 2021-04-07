@@ -1,8 +1,8 @@
-import pickle
+from discord.ext import commands
 from typing import Optional
 
 
-class Move:
+class Move():
     """Base Move class
 
     Attributes:
@@ -16,14 +16,14 @@ class Move:
         self.name = name
         self.description = description
         self.full_description = full_description if full_description else description
-        self.commands = set(commands)
+        self.commands = list(commands)
 
     def __str__(self) -> str:
         """String representation of the move"""
         return f'{self.name}: {self.description} {self.commands if self.commands else ""}'
 
 
-class Game:
+class Game(commands.Cog):
     """Base Game class
 
     The base Game class contains common methods across all games, such as retrieving moves and playbooks from the data.
@@ -38,30 +38,37 @@ class Game:
     GAME_MOVES = {}
     COMMANDS = {}
 
-    def handle(self, command: str, args: str) -> Optional[str]:
-        """Handler for game-specific commands. To be implemented in the actual game class."""
-        raise NotImplementedError
+    def __init__(self, bot):
+        self.bot = bot
 
-    def moves(self, message: str) -> str:
+    @commands.command(name='moves')
+    async def print_basic_moves(self, ctx):
         """Lists all basic (common) moves"""
         if not self.BASIC_MOVES:
-            return 'Data not found. Have you loaded a game using .game?'
+            await ctx.send('Data not found. Have you loaded a game using .game?')
+            return
         moves = 'Use the following commands to find detailed information about each move.'
         for move in self.BASIC_MOVES:
             if move.commands:
                 moves += f'\n\t{move.name} {move.commands}'
 
-        return moves
+        await ctx.send(moves)
 
-    def playbooks(self, message: str) -> str:
+    @commands.command(name='playbooks')
+    async def print_playbooks(self, ctx):
         """Lists all playbooks"""
         if not self.BASIC_MOVES:
-            return 'Data not found. Have you loaded a game using .game?'
+            await ctx.send('Data not found. Have you loaded a game using .game?')
+            return
         playbooks = 'Use the following commands to find each playbook-specific move.'
         for playbook in self.PLAYBOOK_MOVES:
             playbooks += f'\n\t.{playbook}'
 
-        return playbooks
+        await ctx.send(playbooks)
+
+    def handle(self, command: str, args: str) -> Optional[str]:
+        """Handler for game-specific commands. To be implemented in the actual game class."""
+        raise NotImplementedError
 
     def _get_playbook(self, playbook: str, move: str) -> Optional[str]:
         """Gets the specified move from the given playbook, if it exists"""
