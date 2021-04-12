@@ -6,8 +6,6 @@ World. Each PBA game has features that are common between them, such as the use 
 created that handles the common features of PBA games. Specific game features can be easily added by creating a
 class and giving it the required functionality as outlined in the games module.
 
-TODO: Clean up game extensions
-
 Currently supported PBA games:
     The Sprawl
 
@@ -794,29 +792,6 @@ class PBABot(commands.Bot):
             print('No data file found.')
         except KeyError as ke:
             print(f'KeyError while loading data: {ke}')
-
-    async def on_message(self, message):
-        """On message event callback - currently used so previous Game functionality works"""
-        await self.process_commands(message)
-        # Prevents bot replying to itself
-        if message.author == self.user:
-            return
-
-        # Prevents bot responding to regular messages
-        if not message.content.startswith('.'):
-            return
-        content = message.content.split(' ', 1)
-        command = content[0].lower()
-        args = content[1] if len(content) > 1 else ''
-        try:
-            response = self.game.handle(command, args)
-            if response:
-                await message.channel.send(f'```{response}```')
-            return
-        except NotImplementedError:
-            await message.channel.send('```No game has been loaded. Use .set game <game>```')
-        except discord.errors.HTTPException:
-            pass
 
     async def on_ready(self):
         """Event callback for when discord.Client is ready"""
