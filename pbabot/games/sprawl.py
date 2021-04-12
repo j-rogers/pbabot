@@ -1,3 +1,9 @@
+"""The Sprawl
+
+The Sprawl is a PBtA game set in a cyberpunk world.
+
+Author: Joshua Rogers (2021)
+"""
 import random
 from discord.ext import commands
 from . import Game, Move, Playbook
@@ -7,6 +13,14 @@ from . import Game, Move, Playbook
 
 
 class Sprawl(Game):
+    """Sprawl Game
+
+    Commands:
+        fuckmeup: Check for additional consequences after taking damage
+        matrix: Print matrix moves
+        cred: Print cred options
+        weapons: Print weapon profiles
+    """
     BASIC_MOVES = [
         Move(
             'Act Under Pressure',
@@ -784,7 +798,7 @@ class Sprawl(Game):
     }
 
     @commands.command(name='fuckmeup')
-    async def fuck_me_up(self, ctx, damage=None):
+    async def fuck_me_up(self, ctx: commands.Context, damage: int = None) -> None:
         """Check how fucked you are after taking damage"""
         dice1 = random.randint(1, 6)
         dice2 = random.randint(1, 6)
@@ -805,7 +819,7 @@ class Sprawl(Game):
             await ctx.send(f'```You rolled {roll}. You\'re gucci flip flops fam *dabs* haha yeet :3```')
 
     @commands.command(name='matrix')
-    async def print_matrix_moves(self, ctx):
+    async def print_matrix_moves(self, ctx: commands.Context) -> None:
         """Displays a list of matrix-specific moves"""
         matrix_moves = 'Use the following commands to find detailed information about each move.\n'
         for move in self.GAME_MOVES['matrix']:
@@ -814,7 +828,7 @@ class Sprawl(Game):
         await ctx.send(f'```{matrix_moves}```')
 
     @commands.command(name='cred')
-    async def print_cred_options(self, ctx):
+    async def print_cred_options(self, ctx: commands.Context) -> None:
         """Shows you what you can do with cred"""
         await ctx.send("""```Spending 1 Cred will get you:
     >useful information from a contact
@@ -838,7 +852,7 @@ Spending 4 Cred will get you:
 cyberware)```""")
 
     @commands.command(name='weapons')
-    async def print_weapons(self, ctx):
+    async def print_weapons(self, ctx: commands.Context) -> None:
         """Displays a list of weapons and their profiles"""
         await ctx.send("""```Firearms:
     » Holdout pistol (2-harm hand/close discreet quick reload loud)
