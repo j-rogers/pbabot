@@ -120,7 +120,7 @@ class ClockCommands(commands.Cog, name='Clock Commands'):
     Attributes:
         bot -> PBABot: Reference to bot to access clock data
     """
-    def __init__(self, bot: pbabot.main.PBABot):
+    def __init__(self, bot):
         self.bot = bot
 
     @commands.command(name='clocks')
@@ -253,7 +253,7 @@ class ContactCommands(commands.Cog, name='Contact Commands'):
     Attributes:
         bot -> PBABot: Reference to bot to access clock data
     """
-    def __init__(self, bot: pbabot.main.PBABot):
+    def __init__(self, bot):
         self.bot = bot
 
     @commands.command(name='contacts')
@@ -311,7 +311,7 @@ class FunctionalCommands(commands.Cog, name='Functional Commands'):
     Attributes:
         bot -> PBABot: Reference to bot to access clock data
     """
-    def __init__(self, bot: pbabot.main.PBABot):
+    def __init__(self, bot):
         self.bot = bot
 
     @commands.command(name='roll', aliases=['dice'])
@@ -407,7 +407,8 @@ class FunctionalCommands(commands.Cog, name='Functional Commands'):
     async def set_property(self, ctx: commands.Context, property: str, value: str = None) -> None:
         """Sets a bot property. Current properties: game, private_clocks, mc."""
         if property.lower() == 'game':
-            if value.lower() in self.bot.game:
+            if value.lower() in self.bot.GAMES:
+                self.bot.remove_cog(self.bot.game)
                 self.bot.game = self.bot.GAMES[value.lower()](self.bot)
                 await ctx.send(f'```Now playing {value}.```')
             else:
@@ -441,7 +442,7 @@ class MiscCommands(commands.Cog, name='Miscellaneous Commands'):
     Attributes:
         bot -> PBABot: Reference to bot to access clock data
     """
-    def __init__(self, bot: pbabot.main.PBABot):
+    def __init__(self, bot):
         self.bot = bot
 
     @commands.command(name='links')
@@ -538,7 +539,7 @@ class HiddenCommands(commands.Cog, name='Hidden Commands'):
     Attributes:
         bot -> PBABot: Reference to bot to access clock data
     """
-    def __init__(self, bot: pbabot.main.PBABot):
+    def __init__(self, bot):
         self.bot = bot
 
     @commands.command(name='chess', hidden=True)
@@ -867,7 +868,8 @@ class PBABot(commands.Bot):
         for name, obj in inspect.getmembers(pbabot.games, inspect.ismodule):
             if name != 'base':
                 for n, o in inspect.getmembers(inspect.getmodule(obj), inspect.isclass):
-                    if n not in ('Move', 'Game'):
+                    if n not in ('Move', 'Game', 'Playbook'):
+                        print(n)
                         self.GAMES[n.lower()] = o
 
         # Bot properties
@@ -926,7 +928,7 @@ class PBABot(commands.Bot):
 def main():
     # Command line arguments
     parser = argparse.ArgumentParser()
-    parser.add_argument('-g', '--game', type=str, default=None, choices=['sprawl', 'apoc'])
+    parser.add_argument('-g', '--game', type=str, default=None, choices=['sprawl', 'sprawlcustom'])
     args = parser.parse_args()
     game = vars(args)['game']
 

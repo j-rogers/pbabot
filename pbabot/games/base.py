@@ -3,6 +3,8 @@
 This module contains base classes to implement a PBA game. The Game class should be inherited by the implementing PBA
 Game with each move and playbook specified by the Move and Playbook classes.
 
+TODO: Have Playbooks and Moves be added to the Game Cog so they are removed appropriately when changing game
+
 Author: Joshua Rogers (2021)
 """
 from discord.ext import commands

@@ -1,23 +1,17 @@
-"""The Sprawl
-
-The Sprawl is a PBtA game set in a cyberpunk world.
-
-Author: Joshua Rogers (2021)
 """
-import random
+customised:
+- matrix
+- hacker
+- currency (rep/cred) (get the job and get paid changed)
+- cyberware
+
+# TODO: clean this up and add reporter
+"""
+from . import Sprawl, Move, Playbook
 from discord.ext import commands
-from . import Game, Move, Playbook
 
 
-class Sprawl(Game):
-    """Sprawl Game
-
-    Commands:
-        fuckmeup: Check for additional consequences after taking damage
-        matrix: Print matrix moves
-        cred: Print cred options
-        weapons: Print weapon profiles
-    """
+class SprawlCustom(Sprawl):
     BASIC_MOVES = [
         Move(
             'Act Under Pressure',
@@ -33,22 +27,22 @@ class Sprawl(Game):
             'applyfirstaid',
             aliases=['firstaid', 'aid'],
             full_description='When you treat someone’s wounds using appropriate medical equipment, roll Cool.\n\t10+: if their Harm Clock '
-            'is at 2100 or less, reduce their harm by two segments. If their Harm Clock is at more than 2100, '
-            'reduce their harm by one segment\n\t7-9: reduce their harm by one segment. If their Harm Clock is still at '
-            'more than 2100, they take -1 ongoing until they receive proper medical attention'
+                             'is at 2100 or less, reduce their harm by two segments. If their Harm Clock is at more than 2100, '
+                             'reduce their harm by one segment\n\t7-9: reduce their harm by one segment. If their Harm Clock is still at '
+                             'more than 2100, they take -1 ongoing until they receive proper medical attention'
         ),
         Move(
             'Assess',
             'Study a person, place or sitaution (Edge).',
             'assess',
             full_description='When you closely study a person, place or situation, or when you quickly size up an opponent or a charged '
-            'situation, roll Edge.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nIn the ensuing action, you may spend 1 '
-            'hold at any time to ask the MC a question from the list below if your examination could have revealed the '
-            'answer. The MC may ask you questions to clarify your intent. Take +1 forward when acting on the '
-            'answers.\n\n\tЂ What potential complication do I need to be wary of?\n\tЂ What do I notice despite an effort '
-            'to conceal it?\n\tЂ How is ______ vulnerable to me?\n\tЂ How can I avoid trouble or hide here?\n\tЂ What is '
-            'my best way in/way out/way past?\n\tЂ Where can I gain the most advantage?\n\tЂ Who or what is my biggest '
-            'threat in this situation?\n\tЂ Who or what is in control here?'
+                             'situation, roll Edge.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nIn the ensuing action, you may spend 1 '
+                             'hold at any time to ask the MC a question from the list below if your examination could have revealed the '
+                             'answer. The MC may ask you questions to clarify your intent. Take +1 forward when acting on the '
+                             'answers.\n\n\tЂ What potential complication do I need to be wary of?\n\tЂ What do I notice despite an effort '
+                             'to conceal it?\n\tЂ How is ______ vulnerable to me?\n\tЂ How can I avoid trouble or hide here?\n\tЂ What is '
+                             'my best way in/way out/way past?\n\tЂ Where can I gain the most advantage?\n\tЂ Who or what is my biggest '
+                             'threat in this situation?\n\tЂ Who or what is in control here?'
         ),
         Move(
             'Play Hardball',
@@ -102,7 +96,7 @@ class Sprawl(Game):
             'Negotiating the terms of a job (Edge).',
             'getthejob',
             aliases=['job'],
-            full_description='When you negotiate the terms of a job, roll Edge.\n\n\t10+: choose 3 from the list below\n\t7-9: choose 1 from the list below\n\t\tЂ the employer provides useful information ([intel])\n\t\tЂ the employer provides useful assets ([gear])\n\t\tЂ the job pays well\n\t\tЂ the meeting doesn’t attract attention\n\t\tЂ the employer is identifiable',
+            full_description='When you negotiate the terms of a job, roll Edge.\n\n\t10+: choose 3 from the list below\n\t7-9: choose 1 from the list below\n\t\tЂ The employer is a professional {You get 1 Cred upfront for expenses; this option can be chosen multiple times}\n\t\tЂ The employer is hedging their bets {You may ask a research question using the employer\'s Corp network}\n\t\tЂ The job pays well {When getting paid you make back triple the amount of staked rep}\n\t\tЂ The meeting isnt being monitored by outside forces {A player staking 3 Rep does not increase the Legwork clock; this option can be chosen multiple times}\n\t\tЂ The employer has made a misstep and is implicated in the mission {Only the employer\'s Corporate clock can be raised in retaliation to this mission}',
         ),
         Move(
             'Getting Paid',
@@ -110,10 +104,10 @@ class Sprawl(Game):
             'gettingpaid',
             aliases=['getpaid', 'paid'],
             full_description='When you go to a meet to get paid by your employer, roll and add the number of unfilled segments on the '
-            'Legwork Clock.\n\n\t10+: choose 3 from the list below\n\t7-9: choose 1 from the list below\n\t\tЂ It’s not a '
-            'set-up or an ambush\n\t\tЂ You are paid in full\n\t\tЂ The employer is identifiable\n\t\tЂ The meeting '
-            'doesn’t attract the attention of outside parties\n\t\tЂ You learned something from the mission; everyone '
-            'marks experience',
+                             'Legwork Clock.\n\n\t10+: choose 3 from the list below\n\t7-9: choose 1 from the list below\n\t\tЂ It’s not a '
+                             'set-up or an ambush\n\t\tЂ You are paid in full {You split your earnings in any integer combination of Rep/Cred you choose}\n\t\tЂ The employer is impressed with your professionalism {Everyone gets one additional Rep; this option can be chosen multiple times}\n\t\tЂ The meeting '
+                             'doesn’t attract the attention of outside parties\n\t\tЂ You learned something from the mission; everyone '
+                             'marks experience',
         )
     ]
     PLAYBOOK_MOVES = [
@@ -237,12 +231,6 @@ class Sprawl(Game):
         ]),
         Playbook('hacker', [
             Move(
-                'Console Cowboy',
-                'Hold over systems (Roll)',
-                'consolecowboy',
-                full_description='Console cowboy: When you connect to a secure system, roll Mind.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nWhile in that system, you may spend 1 hold for any of the following effects:\n\t• Prevent a construct from triggering an alert\n\t• Avoid an ICE routine executed against you, your deck, or your programs\n\t• Increase your hold over compromised security or manipulated systems by 1',
-            ),
-            Move(
                 'Jack in',
                 'You get access the matrix moves',
                 'jackin'
@@ -253,8 +241,43 @@ class Sprawl(Game):
                 'chromed'
             ),
             Move(
-                'Black ICE Vet',
-                'Less penalty for triggering Back ICE',
+                'Inside Job',
+                'When you login through a compromised site, +1 matrix moves.',
+                'insidejob'
+            ),
+            Move(
+                'I\'ve had worse',
+                '+1 armour against ice subroutines.',
+                'ivehadworse'
+            ),
+            Move(
+                'Humans are Easy Prey',
+                'Go on the offensive against Sysop, roll synth',
+                'humansareeasyprey',
+                full_description='Humans are such easy prey: When you go on the offensive against a Sysop, roll Synth:\n\n\t10+: Choose two, or one twice:\n\t7-9: Choose one:\n\t\tYou shake them off your trail, for now.\n\t\tYou damage their rig, slowing them down.\n\t\tYou overload their system, zapping their brain'
+            ),
+            Move(
+                'Rep',
+                'Fast talk and play hardball replacements while in the matrix.',
+                'rep',
+                full_description='Rep: When you appear in the Matrix with a recognisable avatar, roll Synth instead of Style for fast talk and instead of Edge for play hardball.\nWhen your reputation gets you into trouble, mark experience'
+            ),
+            Move(
+                'Search Optimisation',
+                'Matrix research bonus',
+                'searchoptimisation',
+                full_description='When you research a topic in the Matrix, you may always ask a follow up question. On a 10+, take an additional [intel].'
+            ),
+            Move(
+                'Rig Enthusiast',
+                'Extra deck tag',
+                'rigenthusiast'
+            ),
+            Move(
+                'Sneak Door Beta',
+                'Create a backdoor for future use.',
+                'sneakdoorbeta',
+                full_description='Sneakdoor Beta: When you have successfully infiltrated a system, you may create a backdoor for quick re-entry. Roll Mind:\n\n\t10+: It’s set up, it’s clean, you’re the only one that knows about it.\n\t7-9: It’s set up, but choose one:\n\t\tSysops will find it sooner rather than later\n\t\tIt’s not silent entry, using it may raise alarms\n\t\tIt’s not a clean backdoor, may still have to attempt to login '
             ),
             Move(
                 'Tech Support',
@@ -262,28 +285,10 @@ class Sprawl(Game):
                 'techsupport'
             ),
             Move(
-                'ICE Breaker',
-                'Cancel a routine executed against you.'
-            ),
-            Move(
-                'Neural Scars',
-                'You get 1-armour against Black ICE'
-            ),
-            Move(
-                'Programming on the Fly',
-                'When you compromise security or manipulate systems, hold +1'
-            ),
-            Move(
-                'Rep',
-                'Roll Synth for fast talk and Edge for Play Hardball. Mark XP when you get in trouble.'
-            ),
-            Move(
-                'Search Optimisation',
-                'Always ask a follow up question when researching in the Matrix. Get additional intel on strong hit.'
-            ),
-            Move(
-                'Zeroed',
-                'Deck gets +2 stealth'
+                'Diabolus Ex Machina',
+                'When Ice is activated against you, roll +synth',
+                'diabolusexmachina',
+                full_description='When ICE is activated against you in the Matrix, roll +Synth:\n\n\t10+: The ICE is under your control.\n\t7-9: Choose one temporary effect:\n\t\tThe ICE is deactivated, this server is open season.\n\t\tThe ICE is retargeted, you’re not its priority anymore.\n\t\tYou slip past it, it’s the next guy’s problem.'
             )
         ]),
         Playbook('hunter', [
@@ -729,121 +734,117 @@ class Sprawl(Game):
                 full_description='When you attempt to gain access to a system, roll Synth.\n\t10+: you’re in clean\n\t7-9: you’re in, but choose one:\n\t\tSysops are alerted\n\t\tICE is activated\n\t\tThey’re onto you, +1 trace\n\t\tYour access is restricted – take -1 ongoing to matrix moves in this system while your access is restricted\n\t6-: you’re in, but the MC chooses two, and a relevant clock is advanced',
             ),
             Move(
-                'Melt ICE',
-                'When fighting ICE, melt ICE.',
-                'meltice',
-                aliases=['melt'],
-                full_description='When you attempt to evade, destroy or disable an activated ICE construct, roll Edge.\n\n\t7+: you evade, destroy, or temporarily disable the system, your choice\n\t7-9: the system successfully executes a routine before you can disable it'
-            ),
-            Move(
-                'Compromise Security',
-                'When screwing around with a system\'s digital security, comprimise security.',
-                'compromisesecurity',
-                aliases=['compsec'],
-                full_description='When you attempt to compromise a sub-system’s security, roll Mind.\n\n\t10+: gain 3 hold over the sub-system you have compromised\n\t7-9: gain 1 hold\n\t6-: you trigger an alert, which may have additional consequences\n\nYou may spend 1 hold to activate a security measure on that sub-system.'
-            ),
-            Move(
-                'Manipulate Systems',
-                'When interacting with the meatspace through a system, manipulate systems.',
-                'manipulatesystems',
-                aliases=['manipulatesystem', 'mansys'],
-                full_description='When you attempt to manipulate a digitally-controlled aspect of a facility, roll Synth.\n\n\t10+: gain 3 hold over the sub-system you are manipulating\n\t7-9: gain 1 hold\n\nYou may spend 1 hold to activate routines on that sub-system.'
-            ),
-            Move(
                 'Jack out',
                 'When you need to get out quick, jack out.',
                 'jackout',
                 full_description='Jackout: When you, your programs, or your deck are about to be damaged by ICE, you can try to jack out. Roll Cool.\n\t10+: you disconnect yourself from the system before any serious harm occurs\n\t7-9: you jack out, but choose one:\n\t\tYou lose some data\n\t\tYou take some of the established consequences\n\t\tThe owners of the target system trace you to your current location6-: you take the established consequences... and you’re still connected'
+            ),
+            Move(
+                'Bypass Countermeasures',
+                'Outmaneuver or evade system countermeasures.',
+                'bypasscountermeasures',
+                full_description='Bypass Countermeasures: When you attempt to outmaneuver or evade system countermeasures, roll Edge:\n\n\t10+: You’re straight through, no worries\n\t7-9: You’re through, but they’re still on you. Choose one:\n\t\tAdvance Mission Clock\n\t\tICE is activated\n\t\t+1 trace\n\t\tTake established consequences\n\t6-: You’re caught, and the MC chooses one'
+            ),
+            Move(
+                'Hijack Systems',
+                'Attempt to gain control over a system.',
+                'hijack',
+                full_description='Hijack System: When you attempt to gain control over a system, roll Mind.\n\n\t7+: You’re in control. You may search, destroy, or wreak whatever chaos you want.\n\t7-9:  Choose one:\n\t\tTime is limited, you can only do so much before they cut you off.\n\t\tAccess is limited, you can’t get into everything you want.\n\t\t+1 trace.'
             )
         ]
     }
 
-    @commands.command(name='fuckmeup')
-    async def fuck_me_up(self, ctx: commands.Context, damage: int = None) -> None:
-        """Check how fucked you are after taking damage"""
-        dice1 = random.randint(1, 6)
-        dice2 = random.randint(1, 6)
-        modifier = 0
-        if damage:
-            try:
-                modifier = int(damage)
-            except ValueError:
-                await ctx.send('```Incorrect damage given.```')
-                return
-        roll = dice1 + dice2 + modifier
+    @commands.command(name='currency')
+    async def print_currency(self, ctx: commands.Context) -> None:
+        """Print rep/cred rules"""
+        await ctx.send("""```Rep is a measure of how well respected/feared/liked a character is. {10 max}
+Cred is a measure of the funds a character has access to.
 
-        if roll >= 10:
-            await ctx.send(f'```Oh you fucked up now, you rolled a {roll}. Choose 1:\n\tЂ you’re out of action: unconscious, trapped, incoherent or panicked\n\tЂ take the full harm of the attack, before it was reduced by armour; if you already took the full harm of the attack, take +1-harm\n\tЂ lose the use of a piece of cyberware until you can get it repaired\n\tЂ lose a body part (arm, leg, eye)```')
-        elif 7 <= roll <= 9:
-            await ctx.send(f'```You\'re going to have to suck off the MC on this one, you rolled a {roll}. The MC will choose 1:\n\tЂ you lose your footing\n\tЂ you lose your grip on whatever you’re holding\n\tЂ you lose track of someone or something you’re attending to\n\tЂ someone gets the drop on you```')
-        else:
-            await ctx.send(f'```You rolled {roll}. You\'re gucci flip flops fam *dabs* haha yeet :3```')
+Before rolling to get the job, stake your Rep. {Maximum 3 per player}
+When getting paid you may take back double the amount of staked Rep in either Rep OR Cred.```""")
 
-    @commands.command(name='matrix')
-    async def print_matrix_moves(self, ctx: commands.Context) -> None:
-        """Displays a list of matrix-specific moves"""
-        matrix_moves = 'Use the following commands to find detailed information about each move.\n'
-        for move in self.GAME_MOVES['matrix']:
-            matrix_moves += f'\n\t{move}'
+    @commands.command(name='cyberware')
+    async def print_cyberware(self, ctx: commands.Context) -> None:
+        """Print cybereware options"""
+        await ctx.send("""```Cybereyes
+When you have cybereyes installed, choose two of the following tags:
++thermographic, +light amplification, +magnification, +flare compensation, +recording, +encrypted, +inaccessible partition
+When your cybereyes give you advantage in the situation add your synth to the roll in addition to the relevant stat.
 
-        await ctx.send(f'```{matrix_moves}```')
+Cyberears
+When you have cyberears installed, choose two of the following tags:
++dampening, +wide frequency, +recording, +encrypted, +inaccessible partition
+When your cyberears give you advantage in the situation add your synth to the roll in addition to the relevant stat.
 
-    @commands.command(name='cred')
-    async def print_cred_options(self, ctx: commands.Context) -> None:
-        """Shows you what you can do with cred"""
-        await ctx.send("""```Spending 1 Cred will get you:
-    >useful information from a contact
-    >basic restricted gear from a fixer (sidearms, hunting weapons, ammo)
-    >replacement parts for a cyberdeck
-    >unreliable gang members for muscle
-    >a chauffeur
-Spending 2 Cred will get you:
-    >a getaway driver for a mission
-    >a hacker for a matrix run (but at this price he’ll be poking around for pay-data on the side)
-    >professional muscle (a dangerous individual or a competent gang)
-    >a street doctor for gunshot wounds
-    >more complex, restricted gear from a fixer (grenades, assault weapons, legal drones, basic hacking programs)
-Spending 4 Cred will get you:
-    >a hacker with a sense of professional integrity
-    >discreet medical services for life-threatening wounds
-    >expensive or illegal gear from a fixer (vehicles, security drones, heavy
-    >weapons, cutting edge Russian attack software, basic cheap cyberware)
-    Spending 8 cred will get you:
-    >cutting-edge, military or extortionately expensive gear from a fixer (cyberdecks, military vehicles, most\
-cyberware)```""")
+Cybercoms
+When you have cybercoms installed, choose two of the following tags:
++encrypted, +jamming, +recording, +satellite relay, +inaccessible partition
+When your cybercoms give you advantage in the situation add your synth to the roll in addition to the relevant stat.
 
-    @commands.command(name='weapons')
-    async def print_weapons(self, ctx: commands.Context) -> None:
-        """Displays a list of weapons and their profiles"""
-        await ctx.send("""```Firearms:
-    » Holdout pistol (2-harm hand/close discreet quick reload loud)
-    » Flechette pistol (3-harm close/near quick flechette)
-    » Revolver (2-harm close/near reload loud quick)
-    » Semi-auto pistol (2-harm close/near loud quick)
-    » Heavy revolver (3-harm close/near reload loud)
-    » Heavy pistol (3-harm close/near loud)
-    » Shotgun (3-harm close/near loud messy reload)
-    » Automatic shotgun (3-harm close/near loud messy autofire)
-    » Assault rifle (3-harm near/far loud autofire)
-    » Machine pistol (2-harm close/near loud autofire)
-    » SMG (2-harm close/near loud autofire)
-    » LMG (3-harm near/far loud messy autofire clumsy)
-    » Hunting rifle (2-harm far/ex loud)
-    » Crossbow or hunting bow (2-harm close/near/far reload)
-    » Sniper rifle (3-harm far/ex loud clumsy)
-    » Anti-materiel rifle (3-harm far/ex loud messy breach clumsy)
-    » Grenade launcher (4-harm near/far area loud messy clumsy)
-    » Grenade tube (4-harm near area reload loud messy)
-    » Assault cannon (4-harm near/far area messy breach clumsy)
-    » Missile launcher (5-harm far area messy breach clumsy)\n
-Grenades:
-    » Fragmentation grenades (4-harm near area reload loud messy)
-    » Flashbangs (s-harm near area loud reload)
-    » Gas grenades (s-harm near area reload gas)\n
-Hand weapons:
-    » Knife (2-harm hand)
-    » Club (2-harm hand)
-    » Sword (3-harm hand messy)
-    » Hand taser (s-harm hand reload)
-    » Monofilament whip (4-harm hand messy area dangerous)
-    » Shuriken or throwing knives (2-harm close numerous)```""")
+Cyberlegs
+When you have cyberlegs installed, choose two of the following tags:
++encrypted, +fast, +quiet, +powerful, +stabilizing, +rough terrain 
+When your cyberlegs give you advantage in the situation add your synth to the roll in addition to the relevant stat.
+
+Cyberarm
+When you have a cyberarm installed, select one of the following packages below (You may only have one package installed in an arm at a time):
+	Courier:
+		Your arm has undetectable storage for small objects, this storage additionally allows you to retain a [gear] between missions.
+		Your arm is indistinguishable from a biological arm to all scans and has the +encrypted tag.
+
+	Tinkerer:
+		Your arm has a suite of tools installed in it and additional precision that goes beyond human capabilities.
+		When your tools and/or increased precision give you advantage in the situation add your synth to the roll in addition to the relevant stat.
+
+	Brawler:
+		Your arm has been enhanced to endure and inflict severe punishment.
+		+2 harm when using a melee weapon.
+		+1 armour when receiving harm from a melee weapon.
+
+
+Dermal Plating
+The +AP tag on weapons used against you now only cause you to subtract 1 armour value.
++1 armour
+
+Implant Weapon
+When you have a implant weapon installed, choose two of the following tags:
++fast, +discrete, -clumsy, -reload, +quiet, +powerful, +undisarmable
+All implant weapons installed have the two tags chosen in additonal to the weapon's natural tags.
+
+Muscle Grafts
+When your muscle grafts give you an advantage in the situation add your synth to the roll in addition to the relevant stat.
+
+Neural Interface
+When you have a neural interface installed you are able to jack in to the matrix, interface with drones and drive vehicles.
+When you have a neural interface installed, select one of the following packages below (You may only have one package installed at a time):
+	Multi-Tasker:
+		Your neural interface allows you to perform 2 separate matrix actions at once, or act both in the matrix and meatspace at once.
+	
+	Hacker:
+		Choose two of the following tags:
+		+high capacity, +high speed, +inaccesible partition, +encrypted
+		When rolling the research move add your synth to the roll in addition to the relevant stat.
+
+	Combatant:
+		When using a weapon with the +linked tag add +2 harm to all damage done with that weapon.
+		You may also precisely define targets when using a weapon with the +area tag.
+
+Synthetic Nerves
+When your quick reactions give you an advantage in the situation add your synth to the roll in addition to the relevant stat.
+
+Skillwires
+When you have skillwires installed, choose one stat.
+When rolling with the selected stat and a weak hit occurs, choose one less negative outcome. This cannot reduce negative outcomes to less than one.
+
+Tactical Computer
+When assessing a situation take +1 hold even on a miss.
+When using a weapon with the +linked tag add your synth to the mix it up roll in addition to the relevant stat.
+
+Negative Tags:
+	Negative tags on a piece of cyberware cannot be removed, except by replacing the entire piece of cyberware.
+	+damaging: On a miss the user of this cyberware takes +1 Harm.
+	+hardware decay: Each use of this cyberware gives -1 forward when using this cyberware again. Spending 1 cred per -1 forward on a hit the street roll can reset your cyberware.
+	+substandard: When selecting +tags for this cyberware select one less than stated.
+		      When adding your synth to a roll because of this cyberware, add half your synth instead.
+	+unreliable:  Weak hits using this cyberware count as a miss.
+```""")
