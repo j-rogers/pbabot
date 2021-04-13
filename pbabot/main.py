@@ -408,8 +408,10 @@ class FunctionalCommands(commands.Cog, name='Functional Commands'):
         """Sets a bot property. Current properties: game, private_clocks, mc."""
         if property.lower() == 'game':
             if value.lower() in self.bot.GAMES:
-                self.bot.remove_cog(self.bot.game)
+                self.bot.game.cleanup()
+                self.bot.remove_cog(self.bot.game.qualified_name)
                 self.bot.game = self.bot.GAMES[value.lower()](self.bot)
+                self.bot.add_cog(self.bot.game)
                 await ctx.send(f'```Now playing {value}.```')
             else:
                 await ctx.send(f'```The game {value} was not found.```')

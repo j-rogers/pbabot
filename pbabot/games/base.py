@@ -74,7 +74,7 @@ class Playbook(commands.Command):
     def __init__(self, name: str, moves: List[Move]):
         """Init"""
         self.moves = moves
-        super().__init__(self.call, name=name, hidden=True)
+        super().__init__(self.call, name=name, cog=moves[0].cog, hidden=True)
 
     async def call(self, ctx: commands.Context) -> None:
         """Sends a list of all moves associated with this playbook"""
@@ -109,7 +109,7 @@ class Game(commands.Cog):
         for move in self.BASIC_MOVES:
             try:
                 self.bot.add_command(move)
-            except commands.errors.CommandRegistrationError:
+            except commands.errors.CommandRegistrationError as e:
                 pass
 
         # Add playbook move commands
@@ -128,6 +128,23 @@ class Game(commands.Cog):
                     self.bot.add_command(move)
                 except commands.errors.CommandRegistrationError:
                     pass
+
+    def cleanup(self):
+        """Removes all commands associated with this game"""
+        # Remove basic move commands
+        for move in self.BASIC_MOVES:
+            self.bot.remove_command(move.qualified_name)
+
+        # Remove playbook move commands
+        for playbook in self.PLAYBOOK_MOVES:
+            self.bot.remove_command(playbook.qualified_name)
+            for move in playbook.moves:
+                self.bot.remove_command(move.qualified_name)
+
+        # Remove game move commands
+        for mode, moves in self.GAME_MOVES.items():
+            for move in moves:
+                self.bot.remove_command(move.qualified_name)
 
     @commands.command(name='moves')
     async def print_basic_moves(self, ctx: commands.Context) -> None:
