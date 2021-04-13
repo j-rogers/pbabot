@@ -8,7 +8,6 @@ This is The Sprawl but with modified and custom rules/playbooks. We have made th
     - Cyberware overhaul
     - Updated Reporter playbook
 
-# Add updated reporter
 Author: Joshua Rogers (2021)
 """
 from . import Game, Move, Playbook
@@ -605,39 +604,42 @@ class SprawlCustom(Game):
                                  'misinterpreted by the public with unintended consequences',
             ),
             Move(
-                'Nose for a Story',
-                'Various mission bonuses. (Roll)',
-                aliases=['nose'],
-                full_description='At the start of a mission, roll Edge.\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\n'
-                                 'During the mission, spend 1 hold to invoke one of the following effects:\n\t• Ask one'
-                                 ' question from the research list\n\t• Take +1 forward when monstering\n\t• Find a '
-                                 'piece of evidence that links this mission to a current story; start a Story Clock and'
-                                 ' a linked Noise Clock or roll to gather evidence',
+                'News Hound',
+                'Pre-game move to get stuff from contacts during mission.',
+                aliases=['hound'],
+                full_description='At the start of a mission, roll +staked Rep.\n\t10+: gain 3 hold\n\t7-9: gain 1 hold'
+                                 '\nDuring the mission, spend 1 hold to go to your regular contacts to:\n\t• Beg. -2 '
+                                 'Rep, mark 1 [intel]\n\t• Barter. Spend 1 [intel] to gain 1 Rep\n\t• Politely enquire.'
+                                 ' Ask a question from the research list.'
             ),
             Move(
-                'Gather Evidence',
-                'Various effects on story and noise clocks. (Roll)',
-                aliases=['gather'],
-                full_description='When you gather evidence to break a story, roll Mind.\n\n\t10+: you get the evidence'
-                                 ' you need, advance that Story Clock\n\t7-9: you get the evidence, but tip your hand '
-                                 'to someone implicated in your story; tell the MC which clock to advance: a relevant '
-                                 'Corporate Clock, the linked Noise Clock or the relevant Mission Clock (Legwork or '
-                                 'Action, depending on which phase of the current mission you’re in)\n\t6-: the MC will'
-                                 ' advance the Noise Clock and make a move\n\nIf the Story Clock reaches 0000 before '
-                                 'the Noise Clock, the Reporter has broken the story before the implicated parties '
-                                 'could cover up the evidence, or stop the investigation. The exact implications of '
-                                 'this for the game will vary based on the story, but it should have a major impact on '
-                                 'the implicated parties and will affect at least one Corporate Clock.\n\nIf the Noise '
-                                 'Clock reaches 0000 before the Story Clock, the implicated parties have tied up all '
-                                 'the loose ends and the story is dead. Now that damage control is complete, they can '
-                                 'deal with the Reporter permanently. Advance any relevant Corporate or Threat Clocks.',
+                'Expose',
+                'Spend intel and Rep to take an action against a target.',
+                full_description='When you have enough dirt to bury someone, spend 3 combined [intel] and Rep. Name '
+                                 'your target and choose one:\n\t• Take +1 Forward when acting against your target or '
+                                 'their interests until the end of the mission. Increase the relevant action clock by '
+                                 '1.\n\t• Decrease the relevant action clock by 2. Increase a relevant corp clock by '
+                                 '1.\n\t• Decrease a relevant corp clock by 1. When the mission ends increase that '
+                                 'corps clock by 1.'
+            ),
+            Move(
+                'Regularly Scheduled Broadcast',
+                '+2 Rep when mission ends if you when live where the action is during the mission'
+            ),
+            Move(
+                'Sell Out',
+                'Talk about raid shadow legends for money.',
+                full_description='When you trade in your professionalism for a quick buck while on the air, name your '
+                                 'sponser and roll +Style:\n\t10+: Overtime bonus! Mark relevant [intel] or [gear].'
+                                 '\n\t7-9: Choose two:\n\t\t• -1 Rep\n\t\t• The MC increases a relevant clock\n\t\t• '
+                                 '-1 ongoing towards this move.\n\t7+: Your sponsers are please. Gain +2 cred.'
             ),
             Move(
                 'Press Pass',
                 'Bonus when revealing yourself to fast talk your way in.',
                 aliases=['press', 'pass'],
                 full_description='If you reveal your public persona to fast talk your way in, do not roll the dice, you'
-                                 ' count as rolling a 10+.\nTake [intel] and advance the Legwork Clock.',
+                                 ' count as rolling a 10+.\nGain 1 Rep and advance the Legwork Clock.',
             ),
             Move(
                 'Monstering',
@@ -656,16 +658,9 @@ class SprawlCustom(Game):
                 'Chromed',
                 'Choose another piece of cyberware at character creation or in downtime.',
             ),
+
             Move(
-                'Filthy Assistants',
-                'Bonus when using research obtained [intel]',
-            ),
-            Move(
-                'Reliable Sources',
-                'Research bonus',
-            ),
-            Move(
-                'Warcorrepondent',
+                'War Correspondent',
                 'Bonus when Acting Under Pressure',
             )
         ]),
