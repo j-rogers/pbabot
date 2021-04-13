@@ -26,7 +26,9 @@ class Move(commands.Command):
         full_name -> String: Full name of the move
         full_description -> String: Full description of the move
     """
-    def __init__(self, full_name: str, brief: str, command: str = None, aliases: List[str] = None, full_description: str = None):
+
+    def __init__(self, full_name: str, brief: str, command: str = None,
+                 aliases: List[str] = None, full_description: str = None):
         """Init
 
         If a command is not given then it will default to a lowercase and no whitespace version of the full name. The
@@ -71,6 +73,7 @@ class Playbook(commands.Command):
     Attributes:
         moves -> List[pbabot.games.Move]: List of moves associated with this playbook
     """
+
     def __init__(self, name: str, moves: List[Move]):
         """Init"""
         self.moves = moves
@@ -109,7 +112,7 @@ class Game(commands.Cog):
         for move in self.BASIC_MOVES:
             try:
                 self.bot.add_command(move)
-            except commands.errors.CommandRegistrationError as e:
+            except commands.errors.CommandRegistrationError:
                 pass
 
         # Add playbook move commands
