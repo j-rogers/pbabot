@@ -17,6 +17,7 @@ import discord
 from discord.ext import commands
 import pickle
 import random
+import os
 import argparse
 import inspect
 from pbabot.games import Game
@@ -368,18 +369,14 @@ class FunctionalCommands(commands.Cog, name='Functional Commands'):
 
         await ctx.send(f'```{result}```')
 
-    @commands.command(name='image', enabled=False)
+    @commands.command(name='image')
     async def get_image(self, ctx: commands.Context, image_name: str) -> None:
-        """[TEMPORARILY DISABLED] Displays the specified image."""
-        # TODO: fix the local file inclusion vuln before adding this
-        image = None
-        if image_name:
-            try:
-                image = discord.File(f'{IMAGES}/{image_name}', f'{image_name}')
-            except FileNotFoundError:
-                image = discord.File(f'{IMAGES}/no_map.jpg', 'no_map.jpg')
-        else:
-            image = discord.File(f'{IMAGES}/no_map.jpg', 'no_map.jpg')
+        """Displays the specified image."""
+        if image_name not in os.listdir(IMAGES):
+            await ctx.send(f'```Image {image_name} not found.```')
+            return
+
+        image = discord.File(f'{IMAGES}/{image_name}', f'{image_name}')
 
         await ctx.send(file=image)
 
@@ -871,7 +868,6 @@ class PBABot(commands.Bot):
             if name != 'base':
                 for n, o in inspect.getmembers(inspect.getmodule(obj), inspect.isclass):
                     if n not in ('Move', 'Game', 'Playbook'):
-                        print(n)
                         self.GAMES[n.lower()] = o
 
         # Bot properties
@@ -934,8 +930,8 @@ def main():
     args = parser.parse_args()
     game = vars(args)['game']
 
-    pbabot = PBABot(game)
-    pbabot.run(TOKEN)
+    bot = PBABot(game)
+    bot.run(TOKEN)
 
 
 if __name__ == '__main__':
