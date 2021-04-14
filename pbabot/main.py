@@ -152,7 +152,7 @@ class ClockCommands(commands.Cog, name='Clock Commands'):
             clock = [c for c in self.bot.clocks if c.name.lower() == clock_name.lower()].pop()
         except IndexError:
             # Append to clocks list
-            self.bot.clocks.append(Clock(clock_name))
+            self.bot.clocks.append(Clock(clock_name.replace('```', '')))
 
             # Update and refresh file
             self.bot.save_data()
@@ -276,7 +276,8 @@ class ContactCommands(commands.Cog, name='Contact Commands'):
         except ValueError:
             await ctx.send('```You must surround the contact\'s name in double quotes.```')
         else:
-            description = description.strip(' "')
+            name = name.replace('```', '')
+            description = description.strip(' "').replace('```', '')
 
             # Check if contact already exists
             try:
@@ -497,7 +498,7 @@ class MiscCommands(commands.Cog, name='Miscellaneous Commands'):
         if not args:
             args = ''
         if 'when' in args.split(' ', 1)[0].lower():
-            self.bot.memories.append(args.split(' ', 1)[1])
+            self.bot.memories.append(args.split(' ', 1)[1].replace('```', ''))
             self.bot.save_data()
             await ctx.send(f'```Memory added at index {len(self.bot.memories) - 1}```')
         else:
