@@ -370,8 +370,12 @@ class FunctionalCommands(commands.Cog, name='Functional Commands'):
         await ctx.send(f'```{result}```')
 
     @commands.command(name='image')
-    async def get_image(self, ctx: commands.Context, image_name: str) -> None:
-        """Displays the specified image."""
+    async def get_image(self, ctx: commands.Context, image_name: str = None) -> None:
+        """Displays the specified image or list of images if no name is given."""
+        if not image_name:
+            await ctx.send(f'```Images: {", ".join(os.listdir(IMAGES))}```')
+            return
+
         if image_name not in os.listdir(IMAGES):
             await ctx.send(f'```Image {image_name} not found.```')
             return
@@ -388,8 +392,8 @@ class FunctionalCommands(commands.Cog, name='Functional Commands'):
             image = discord.File('images/map.jpg', 'map.jpg')
         except FileNotFoundError:
             image = discord.File('images/no_map.jpg', 'no_map.jpg')
-
-        await ctx.send(file=image)
+        finally:
+            await ctx.send(file=image)
 
     @commands.command(name='log')
     async def save_log_message(self, ctx: commands.Context, *, message: str) -> None:
