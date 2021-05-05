@@ -13,5 +13,6 @@ map.psd
 **/test_data.pickle
 data/personal
 images/*
+data/*.json
 !images/no_map.jpg
 data/data.pickle
