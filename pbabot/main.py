@@ -464,7 +464,7 @@ class MiscCommands(commands.Cog, name='Miscellaneous Commands'):
         death = ''
         if player in self.bot.dead_characters:
             for character, description in self.bot.dead_characters[player].items():
-                death += f'{character}: {description}'
+                death += f'{character}: {description}\n'
         else:
             for player, characters in self.bot.dead_characters.items():
                 death += f'{player}: '
