@@ -15,7 +15,7 @@ Version: 3.0
 """
 import discord
 from discord.ext import commands
-import pickle
+import jsons
 import random
 import os
 import argparse
@@ -27,7 +27,7 @@ import pbabot.games
 TOKEN = open('token.txt', 'r').read()
 
 # Data files
-DATA_FILE = 'data/data.pickle'
+DATA = 'data'
 
 # Image folder
 IMAGES = 'images'
@@ -863,7 +863,7 @@ class PBABot(commands.Bot):
     """
     GAMES = {}
 
-    def __init__(self, game: str, data_file: str = DATA_FILE):
+    def __init__(self, game: str, data_file: str = DATA):
         """Init"""
         # Set command prefix
         super().__init__(command_prefix='.')
@@ -895,12 +895,16 @@ class PBABot(commands.Bot):
         self.contacts = []
         self.data_file = data_file
         try:
-            with open(self.data_file, 'rb') as file:
-                data = pickle.loads(file.read())
-            self.clocks = data['clocks']
-            self.contacts = data['contacts']
-            self.memories = data['memories']
-            self.dead_characters = data['dead_characters']
+            with open(f'{self.data_file}/clocks.json', 'rb') as file:
+                clocks = jsons.loadb(file.read())
+                self.clocks = [Clock(clock['name'], time=clock['time']) for clock in clocks]
+            with open(f'{self.data_file}/contacts.json', 'rb') as file:
+                contacts = jsons.loadb(file.read())
+                self.contacts = [Contact(contact['name'], contact['description']) for contact in contacts]
+            with open(f'{self.data_file}/memories.json', 'rb') as file:
+                self.memories = jsons.loadb(file.read())
+            with open(f'{self.data_file}/dead_characters.json', 'rb') as file:
+                self.dead_characters = jsons.loadb(file.read())
             print('Data extracted')
         except EOFError:
             print('No data in file.')
@@ -917,15 +921,15 @@ class PBABot(commands.Bot):
         print('------')
 
     def save_data(self):
-        data = {
-            'clocks': self.clocks,
-            'contacts': self.contacts,
-            'memories': self.memories,
-            'dead_characters': self.dead_characters
-        }
-
-        with open(self.data_file, 'wb') as file:
-            file.write(pickle.dumps(data))
+        """Dumps data structures to JSON files"""
+        with open(f'{self.data_file}/clocks.json', 'wb') as file:
+            file.write(jsons.dumpb(self.clocks))
+        with open(f'{self.data_file}/contacts.json', 'wb') as file:
+            file.write(jsons.dumpb(self.contacts))
+        with open(f'{self.data_file}/memories.json', 'wb') as file:
+            file.write(jsons.dumpb(self.memories))
+        with open(f'{self.data_file}/dead_characters.json', 'wb') as file:
+            file.write(jsons.dumpb(self.dead_characters))
 
 
 def main():
