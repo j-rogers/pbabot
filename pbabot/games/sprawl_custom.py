@@ -291,66 +291,69 @@ class SprawlCustom(Game):
         ]),
         Playbook('hacker', [
             Move(
-                'Jack in',
-                'You get access the matrix moves',
+                'Script Kiddy',
+                'Gain access to the ADVANCED matrix moves',
+            ),
+            Move(
+                'Hashcat',
+                'Crack encrypted data, roll Synth',
+                full_description='When you attempt to crack the encryption on some data, roll Synth.'
+                                 '\n\n\t10+: You crack the encryption without any issues.'
+                                 '\n\t7-9: You crack the encryption, but the data is partially corrupt'
+                                 '\n\t6-: The encryption is too complex and can\'t be cracked',
             ),
             Move(
                 'Chromed',
-                'Choose another piece of cyberware at character creation or in downtime',
-            ),
-            Move(
-                'Inside Job',
-                'When you login through a compromised site, +1 matrix moves.',
-            ),
-            Move(
-                'I\'ve had worse',
-                '+1 armour against ice subroutines.',
-            ),
-            Move(
-                'Humans are Easy Prey',
-                'Go on the offensive against Sysop, roll synth',
-                full_description='Humans are such easy prey: When you go on the offensive against a Sysop, roll '
-                                 'Synth:\n\n\t10+: Choose two, or one twice:\n\t7-9: Choose one:\n\t\tYou shake them'
-                                 ' off your trail, for now.\n\t\tYou damage their rig, slowing them down.\n\t\tYou '
-                                 'overload their system, zapping their brain'
-            ),
-            Move(
-                'Rep',
-                'Fast talk and play hardball replacements while in the matrix.',
-                full_description='Rep: When you appear in the Matrix with a recognisable avatar, roll Synth instead of '
-                                 'Style for fast talk and instead of Edge for play hardball.\nWhen your reputation gets'
-                                 ' you into trouble, mark experience'
-            ),
-            Move(
-                'Search Optimisation',
-                'Matrix research bonus',
-                full_description='When you research a topic in the Matrix, you may always ask a follow up question. On '
-                                 'a 10+, take an additional [intel].'
-            ),
-            Move(
-                'Rig Enthusiast',
-                'Extra deck tag',
-            ),
-            Move(
-                'Sneak Door Beta',
-                'Create a backdoor for future use.',
-                full_description='Sneakdoor Beta: When you have successfully infiltrated a system, you may create a '
-                                 'backdoor for quick re-entry. Roll Mind:\n\n\t10+: It’s set up, it’s clean, you’re '
-                                 'the only one that knows about it.\n\t7-9: It’s set up, but choose one:\n\t\tSysops '
-                                 'will find it sooner rather than later\n\t\tIt’s not silent entry, using it may raise '
-                                 'alarms\n\t\tIt’s not a clean backdoor, may still have to attempt to login '
-            ),
-            Move(
-                'Tech Support',
-                'Bonus when helping or interfering while in the matrix',
+                'Choose another piece of cyberware at character creation or in downtime. Describe how you got it and paid for it the same as you did your first piece of cyberware.',
             ),
             Move(
                 'Diabolus Ex Machina',
-                'When Ice is activated against you, roll +synth',
-                full_description='When ICE is activated against you in the Matrix, roll +Synth:\n\n\t10+: The ICE is'
-                                 ' under your control.\n\t7-9: Choose one temporary effect:\n\t\tThe ICE is '
-                                 'deactivated, this server is open season.\n\t\tThe ICE is retargeted, you’re not its '
-                                 'priority anymore.\n\t\tYou slip past it, it’s the next guy’s problem.'
+                'Go on the offensive against syops and/or ice, roll Synth',
+                full_description='When ICE or sysops are activated against you in the Matrix, roll Synth.'
+                                 '\n\n\t10+: Choose two, or one twice:'
+                                 '\n\t7-9: Choose one:'
+                                   '\n\t\t- You shake them off your trail, for now (2x = left them in the dust)'
+                                   '\n\t\t- You go on the offensive and launch a cyber attack (2-harm) against your foe (2x = 4-harm)'
+                                 '\n\t6-: The sysop or ICE makes a move against you'
+            ),
+            Move(
+                'Humans are Easy Prey',
+                'When you mix it up against someone with cyberware in meatspace, launch a cyber attack (2-harm) instead. Roll Synth instead of Meat'
+            ),
+            Move(
+                'Regex-pert',
+                'When you Grep in the matrix, you may always ask a followup question. On a 10+, take an additional [intel]'
+            ),
+            Move(
+                'Sneakdoor Beta',
+                'Create a backdoor in a system for future use, roll Mind',
+                full_description='When you have succesfully infiltrated a system, you may create a backdoor for quick re-entry. Roll Mind.'
+                                 '\n\n\t10+: You create a clean and covert backdoor that won\'t be found.'
+                                 '\n\t7-9: It\'s set up, but choose one:'
+                                   '\n\t\t- Sysops will find it sooner rather than later'
+                                   '\n\t\t- It\'s not covert (+1 trace when using it)'
+                                   '\n\t\t- It\'s not clean (still need to Jack In, but take +1)'
+                                 '\n\t6-: The sysops find and remove your backdoor, but not before tracing it back to you (+1 trace)'
+            ),
+            Move(
+                'Vulnerability Scanner',
+                'Roll Synth instead of Mind when using Privilege Escalation.',
+            ),
+            Move(
+                'Inside Job',
+                'When you physically jack in to a compromised system, take +1 ongoing while in the Matrix'
+            ),
+            Move(
+                'IPSec',
+                'Your communications are encrypted and harder to track, negate the first trace you take in a system.'
+            ),
+            Move(
+                'Social Engineering',
+                'When you use your expertise to baffle your conversational partner, roll Mind instead of Style',
+            ),
+            Move(
+                'You Got Pwned',
+                'When you hack a system and leave your signature, increase a relevant clock and mark experience.'
             )
         ]),
         Playbook('hunter', [
@@ -793,44 +796,84 @@ class SprawlCustom(Game):
         ])
     ]
     GAME_MOVES = {
-        'matrix': [
+        'basicmatrix': [
             Move(
                 'Login',
                 'When attempting to gain access to a system, login.',
-                full_description='When you attempt to gain access to a system, roll Synth.\n\t10+: you’re in clean\n\t'
-                                 '7-9: you’re in, but choose one:\n\t\tSysops are alerted\n\t\tICE is activated\n\t\t'
-                                 'They’re onto you, +1 trace\n\t\tYour access is restricted – take -1 ongoing to matrix'
-                                 ' moves in this system while your access is restricted\n\t6-: you’re in, but the MC '
-                                 'chooses two, and a relevant clock is advanced',
+                full_description="""When you attempt to gain access to a hostile or unfamiliar system, roll Synth.
+10+: You're in clean.
+7-9: You're in, but choose one:
+    - Sysops are alerted
+    - ICE is activated
+    - They're on to you, +1 Trace
+    - Your access is restricted - take -1 ongoing to matrix moves in this system while you access is restricted
+6-: You're in, but the MC chooses two, and a relevant clock is advanced"""
             ),
             Move(
-                'Jack out',
-                'When you need to get out quick, jack out.',
-                full_description='Jackout: When you, your programs, or your deck are about to be damaged by ICE, you '
-                                 'can try to jack out. Roll Cool.\n\t10+: you disconnect yourself from the system '
-                                 'before any serious harm occurs\n\t7-9: you jack out, but choose one:\n\t\tYou lose '
-                                 'some data\n\t\tYou take some of the established consequences\n\t\tThe owners of the '
-                                 'target system trace you to your current location6-: you take the established '
-                                 'consequences... and you’re still connected'
+                'Gain Access',
+                'When you try to gain basic access to a system you\'re jacked into, roll Mind',
+                full_description="""When you attempt to gain basic access to the system you're jacked in to, roll Mind.
+10+: You're in control. You may execute regular processes of the system, and may use one ADVANCED matrix move while jacked into the system.
+7-9: You gain access, but choose one:
+    - Time is limited you can only do so much before they cut you off.
+    - Access is limited, some functions of the system are disabled (MC's discretion)
+    - +1 Trace
+6-: You fail to gain access and are forcibly ejected from the system (take Jackout as if you rolled a weak hit)"""
+            ),
+            Move(
+                'Jack Out',
+                'When you\'re under meatspace or matrix pressure and need to jack out, roll Cool',
+                full_description="""When you're under meatspace or matrix pressure and need to jack out, roll Cool:
+10+: You disconnect yourself from the system before any serious harm occurs
+7-9: You jack out, but choose one:
+    - You lose some data
+    - You take some of the established consequences
+    - Trace set to level 3
+6-: You take the established consequences... and you're still connected."""
+            )
+        ],
+        'advancedmatrix': [
+            Move(
+                'Privilege Escalation',
+                'When you attempt to gain privileged access to the system you\'re jacked into, roll Mind.',
+                aliases=['privesc'],
+                full_description="""When you attempt to gain privileged access to the system you're jacked into, roll Mind.
+10+ You're in control. You have unfiltered access to the system. Take +1 ongoing to matrix moves in the target system.
+7-9: You gain access, but choose one:
+    - Time is limited, you can only do so much before they cut you off.
+    - +1 Trace
+6-: Choose one from above. You fail to gain priviledged access, and only have basic control over the system"""
+            ),
+            Move(
+                'Grep',
+                'When you attempt to search through the system for interesting data, roll Mind.',
+                full_description="""When you attempt to search through the system for interesting data, roll Mind.
+10+: You find what you're looking for. Gain [intel] and ask a question from the research list.
+7-9: You find a few breadcrumbs of data, choose one:
+    - Data is encrypted (can potentially be cracked offline to gain [intel] and ask a question from the research list)
+    - Only partial data can be recovered, ask a question from the research list.
+    - You found the data but were noisy, take [intel] and +1 trace.
+6-: You couldn't find what you were looking for and were noisy, +1 trace"""
+            ),
+            Move(
+                'Pivot',
+                'When you try to gain access to a network connected system, roll Mind.',
+                full_description="""When you try to gain access to a network connected system, roll Mind.
+10+: You pivot succesfully, and gain privileged access to the target system.
+7-9: You pivot succesfully, but only gain basic access to the target system.
+6-: You fail to pivot and make some noise, +1 trace"""
             ),
             Move(
                 'Bypass Countermeasures',
-                'Outmaneuver or evade system countermeasures.',
+                'When you attempt to evade system countermeasures, roll Edge.',
                 aliases=['bypass'],
-                full_description='Bypass Countermeasures: When you attempt to outmaneuver or evade system '
-                                 'countermeasures, roll Edge:\n\n\t10+: You’re straight through, no worries\n\t7-9: '
-                                 'You’re through, but they’re still on you. Choose one:\n\t\tAdvance Mission Clock'
-                                 '\n\t\tICE is activated\n\t\t+1 trace\n\t\tTake established consequences\n\t6-: You’re'
-                                 ' caught, and the MC chooses one'
-            ),
-            Move(
-                'Hijack Systems',
-                'Attempt to gain control over a system.',
-                aliases=['hijack'],
-                full_description='Hijack System: When you attempt to gain control over a system, roll Mind.\n\n\t7+: '
-                                 'You’re in control. You may search, destroy, or wreak whatever chaos you want.\n\t7-9:'
-                                 '  Choose one:\n\t\tTime is limited, you can only do so much before they cut you off.'
-                                 '\n\t\tAccess is limited, you can’t get into everything you want.\n\t\t+1 trace.'
+                full_description="""When you attempt to evade system countermeasures, roll Edge.
+10+: You slip past without triggering any alerts
+7-9: You get past, but you left a trail. Choose one:
+    - Advance mission clock
+    - ICE is activated
+    - +1 Trace
+6-: You're caught, and the MC chooses one"""
             )
         ]
     }
@@ -863,11 +906,20 @@ class SprawlCustom(Game):
         else:
             await ctx.send(f'```You rolled {roll}. You\'re gucci flip flops fam *dabs* haha yeet :3```')
 
-    @commands.command(name='matrix')
-    async def print_matrix_moves(self, ctx: commands.Context) -> None:
+    @commands.command(name='basicmatrix')
+    async def print_basic_matrix_moves(self, ctx: commands.Context) -> None:
         """Displays a list of matrix-specific moves"""
         matrix_moves = 'Use the following commands to find detailed information about each move.\n'
-        for move in self.GAME_MOVES['matrix']:
+        for move in self.GAME_MOVES['basicmatrix']:
+            matrix_moves += f'\n\t{move}'
+
+        await ctx.send(f'```{matrix_moves}```')
+
+    @commands.command(name='advancedmatrix')
+    async def print_advanced_matrix_moves(self, ctx: commands.Context) -> None:
+        """Displays a list of matrix-specific moves"""
+        matrix_moves = 'Use the following commands to find detailed information about each move.\n'
+        for move in self.GAME_MOVES['advancedmatrix']:
             matrix_moves += f'\n\t{move}'
 
         await ctx.send(f'```{matrix_moves}```')
