@@ -16,3 +16,4 @@ images/*
 data/*.json
 !images/no_map.jpg
 data/data.pickle
+docker-compose.yml
