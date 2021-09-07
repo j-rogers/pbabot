@@ -20,11 +20,11 @@ import random
 import os
 import argparse
 import inspect
-from pbabot.games import Game
-import pbabot.games
+from games import Game
+import games
 
 # API Token
-TOKEN = open('token.txt', 'r').read()
+TOKEN = os.environ['DISCORDTOKEN']
 
 # Data files
 DATA = 'data'
@@ -869,7 +869,7 @@ class PBABot(commands.Bot):
         super().__init__(command_prefix='.')
 
         # Get all games
-        for name, obj in inspect.getmembers(pbabot.games, inspect.ismodule):
+        for name, obj in inspect.getmembers(games, inspect.ismodule):
             if name != 'base':
                 for n, o in inspect.getmembers(inspect.getmodule(obj), inspect.isclass):
                     if n not in ('Move', 'Game', 'Playbook'):
