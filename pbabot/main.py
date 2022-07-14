@@ -6,14 +6,12 @@ World. Each PBA game has features that are common between them, such as the use 
 created that handles the common features of PBA games. Specific game features can be easily added by creating a
 class and giving it the required functionality as outlined in the games module.
 
-TODO: have bot respond when bad command given
-
 Currently supported PBA games:
     The Sprawl
 
 Author: Josh Rogers (2021)
 Github: https://github.com/j-rogers/pbabot
-Version: 3.0
+Version: 3.1
 """
 import discord
 from discord.ext import commands
