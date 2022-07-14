@@ -56,6 +56,7 @@ services:
     volumes:
       - /opt/pbabot/data:/pbabot/data
       - /opt/pbabot/images:/pbabot/images
+      - /opt/pbabot/log:/pbabot/log
     restart: unless-stopped
 ```
 
