@@ -906,6 +906,19 @@ class SprawlCustom(Game):
         else:
             await ctx.send(f'```You rolled {roll}. You\'re gucci flip flops fam *dabs* haha yeet :3```')
 
+    @commands.command(name='matrix')
+    async def print_all_matrix_moves(self, ctx: commands.Context) -> None:
+        """Displays a list of all matrix moves"""
+        matrix_moves = 'Use the following commands to find detailed information about each move.\n\nBasic Matrix (available to anyone with a Neural Interface):'
+        for move in self.GAME_MOVES['basicmatrix']:
+            matrix_moves += f'\n\t{move}'
+
+        matrix_moves += '\n\nAdvanced Matrix (only accessible to those with Hacker move "Script Kiddy"):'
+        for move in self.GAME_MOVES['advancedmatrix']:
+            matrix_moves += f'\n\t{move}'
+
+        await ctx.send(f'```{matrix_moves}```')
+
     @commands.command(name='basicmatrix')
     async def print_basic_matrix_moves(self, ctx: commands.Context) -> None:
         """Displays a list of matrix-specific moves"""
