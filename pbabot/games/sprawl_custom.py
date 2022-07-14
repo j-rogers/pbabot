@@ -864,9 +864,9 @@ class SprawlCustom(Game):
 6-: You fail to pivot and make some noise, +1 trace"""
             ),
             Move(
-                'Bypass Countermeasures',
+                'Circumvent Countermeasures',
                 'When you attempt to evade system countermeasures, roll Edge.',
-                aliases=['bypass'],
+                aliases=['circumvent'],
                 full_description="""When you attempt to evade system countermeasures, roll Edge.
 10+: You slip past without triggering any alerts
 7-9: You get past, but you left a trail. Choose one:
