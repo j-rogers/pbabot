@@ -793,6 +793,89 @@ class SprawlCustom(Game):
                 'Renaissance Man',
                 'Choose another area of expertise',
             )
+        ]),
+        Playbook('cleaner', [
+            Move(
+                'Coverup',
+                'Prevent clocks from advancing using hold. (Roll)',
+                full_description='After recieving a job, you being to map out your schemes. Take 1 hold and roll '
+                                 'Edge.\n\t 10+: choose two from the list.\n\t7+:\n\t\t• You\'ve covered all the '
+                                 'angles, gain an additional hold.\n\t\t• Your coverups will make escaping easier'
+                                 ', take +1 ongoing to It\'s Raining Somewhere Else for the mission.\n\t\t• You '
+                                 'realise something important, gain [intel].\nWhen you or your ally\'s actions '
+                                 'cause a mission clock to advance, you may spend one hold to stop it from advancing.'
+            ),
+            Move(
+                'It\'s Raining Somewhere Else',
+                'Create a distraction. (Roll)',
+                aliases=['raining'],
+                full_description='You know how to manipulate people\'s attention in a pinch. When you need a '
+                                 'distraction NOW, describe how you rigged explosives, alarms, or another diversion'
+                                 ' beforehand and roll Edge. \n\t7+: Choose one:\n\t\t• You give a pursuer the slip'
+                                 '\n\t\t• You distract a possible witness\n\t\t• You shift the media\'s attention '
+                                 'with a flashier story.\n\t7-9: Advance the relevant mission clock.\n\t6-: Something\'s'
+                                 ' fucked on the other end. The MC advances a clock and makes a move.'
+            ),
+            Move(
+                'Counterintelligence',
+                'Intercept an information transfer. (Roll)',
+                full_description='When you become aware of an information transfer, you can attempt to intercept it.'
+                                 'Roll Edge if you do so physically, or Synth if you do so digitally.\n\t7+: Gain '
+                                 '[intel] and choose one:\n\t\t• It never reaches its destination\n\t\t• It reaches '
+                                 'the right ears, bit it\'s the wrong message.\n\t\t• You redirect it to someone '
+                                 'else.\n\t7-9: The sender can tell something\'s up. Advance the mission clock.'
+                                 '\n\t6-: Something\'s not right... The MC makes a move.'
+            ),
+            Move(
+                'Bodysnatcher',
+                'Make someone disappear and steal their identity.'
+            ),
+            Move(
+                'Chromed',
+                'Choose another piece of cyberware.'
+            ),
+            Move(
+                'Demolitionist',
+                'Ignore the +dangerous tag for explosives and take +1 forward when using Mix it Up using fire or grenades'
+            ),
+            Move(
+                'Interrogate',
+                'Gain [intel] when playing Hardball.'
+            ),
+            Move(
+                'Mass Wipe',
+                'Take +1 forward when first interfacing with technology to destroy data.'
+            ),
+            Move(
+                'Memory Leak',
+                'While in the matrix take -1 trace ongoing.'
+            ),
+            Move(
+                'Torch the Place',
+                'When you attempt to destroy property to cover your trail, roll Edge.',
+                aliases=['torch'],
+                full_description='When you destroy important property to cover your trail, roll Edge.\n\t10+: You\'re '
+                                 'a ghost, gain 1 hold for Coverup.\n\t7+: Your pursuers will be delayed, and you take'
+                                 ' +1 forward against them when they do show up.\n\t6-: You make too much noise, '
+                                 'advance the mission clock.'
+            ),
+            Move(
+                'Need a Light?',
+                'Roll Edge instead of Style to Fast Talk, and ask one question from the assess list.',
+                command='needalight'
+            ),
+            Move(
+                'I Was Hoping You\'d Do That',
+                'Take +1 ongoing against someone else when they initiate violence.'
+            ),
+            Move(
+                'Conspiratorial',
+                'Additionally ask a question from the research list when you Assess.'
+            ),
+            Move(
+                'Hide the Bodies',
+                'Gain an additional hold from Coverup. You can now prevent corporate and threat clocks from advancing'
+            )
         ])
     ]
     GAME_MOVES = {
