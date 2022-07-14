@@ -6,6 +6,8 @@ World. Each PBA game has features that are common between them, such as the use 
 created that handles the common features of PBA games. Specific game features can be easily added by creating a
 class and giving it the required functionality as outlined in the games module.
 
+TODO: have bot respond when bad command given
+
 Currently supported PBA games:
     The Sprawl
 
@@ -31,6 +33,9 @@ DATA = 'data'
 
 # Image folder
 IMAGES = 'images'
+
+# Log folder
+LOG = 'log'
 
 
 class Clock:
@@ -399,7 +404,7 @@ class FunctionalCommands(commands.Cog, name='Functional Commands'):
     @commands.command(name='log')
     async def save_log_message(self, ctx: commands.Context, *, message: str) -> None:
         """Saves a message to the log file"""
-        with open('log.txt', 'a') as file:
+        with open(f'{LOG}/log.txt', 'a') as file:
             file.write(f'{message}\n')
             print(f'Log saved: {message}')
 
@@ -912,6 +917,9 @@ class PBABot(commands.Bot):
             print('No data file found.')
         except KeyError as ke:
             print(f'KeyError while loading data: {ke}')
+
+    async def on_command_error(self, ctx, exception):
+        await ctx.send(exception)
 
     async def on_ready(self):
         """Event callback for when discord.Client is ready"""
