@@ -45,6 +45,7 @@ class Clock:
         name -> String: Name of the clock
         time -> String: Time of the clock (defaults to 1200 on creation)
     """
+
     def __init__(self, name: str, time: str = '1200'):
         """Init"""
         self.name = name
@@ -108,6 +109,7 @@ class Contact:
         name -> String: Name of the contact
         description -> String: Description of the contact
     """
+
     def __init__(self, name: str, description: str):
         """Init"""
         self.name = name
@@ -124,6 +126,7 @@ class ClockCommands(commands.Cog, name='Clock Commands'):
     Attributes:
         bot -> PBABot: Reference to bot to access clock data
     """
+
     def __init__(self, bot):
         self.bot = bot
 
@@ -140,7 +143,7 @@ class ClockCommands(commands.Cog, name='Clock Commands'):
             await ctx.send('```No clocks have been added```')
             return
 
-        await ctx.send('```'+'\n'.join([str(clock) for clock in self.bot.clocks])+'```')
+        await ctx.send('```' + '\n'.join([str(clock) for clock in self.bot.clocks]) + '```')
 
     @commands.command(name='addclock', aliases=['clock', 'newclock'])
     async def add_clock(self, ctx: commands.Context, *, clock_name: str) -> None:
@@ -165,7 +168,7 @@ class ClockCommands(commands.Cog, name='Clock Commands'):
         else:
             await ctx.send(f'```Clock "{clock.name}" has already been added.```')
 
-    @commands.command(name='deleteclock', aliases=['removeclock'],)
+    @commands.command(name='deleteclock', aliases=['removeclock'], )
     async def delete_clock(self, ctx: commands.Context, *, clock_name: str) -> None:
         """Deletes the clock with specified name"""
         if self.bot.private_clocks and self.bot.mc != hash(ctx.author):
@@ -257,6 +260,7 @@ class ContactCommands(commands.Cog, name='Contact Commands'):
     Attributes:
         bot -> PBABot: Reference to bot to access clock data
     """
+
     def __init__(self, bot):
         self.bot = bot
 
@@ -268,7 +272,7 @@ class ContactCommands(commands.Cog, name='Contact Commands'):
             await ctx.send('```No contacts have been added.```')
             return
 
-        await ctx.send('```'+'\n'.join([str(contact) for contact in self.bot.contacts])+'```')
+        await ctx.send('```' + '\n'.join([str(contact) for contact in self.bot.contacts]) + '```')
 
     @commands.command(name='addcontact', aliases=['newcontact'], usage='"<contact_name>" <contact_description>')
     async def add_contact(self, ctx: commands.Context, *, args: str) -> None:
@@ -316,6 +320,7 @@ class FunctionalCommands(commands.Cog, name='Functional Commands'):
     Attributes:
         bot -> PBABot: Reference to bot to access clock data
     """
+
     def __init__(self, bot):
         self.bot = bot
 
@@ -449,6 +454,7 @@ class MiscCommands(commands.Cog, name='Miscellaneous Commands'):
     Attributes:
         bot -> PBABot: Reference to bot to access clock data
     """
+
     def __init__(self, bot):
         self.bot = bot
 
@@ -546,6 +552,7 @@ class HiddenCommands(commands.Cog, name='Hidden Commands'):
     Attributes:
         bot -> PBABot: Reference to bot to access clock data
     """
+
     def __init__(self, bot):
         self.bot = bot
 
@@ -840,7 +847,7 @@ class HiddenCommands(commands.Cog, name='Hidden Commands'):
             "I oughta break a broomhandle off in your ass.",
             "Quit wasting my time.",
         ]
-        index = random.randint(0, len(quotes)-1)
+        index = random.randint(0, len(quotes) - 1)
 
         await ctx.send(f'```{quotes[index]}```')
 
@@ -868,8 +875,9 @@ class PBABot(commands.Bot):
 
     def __init__(self, game: str, data_file: str = DATA):
         """Init"""
-        # Set command prefix
-        super().__init__(command_prefix='.')
+        # Set command prefix and intents.
+        intents = discord.Intents().all()
+        super().__init__(command_prefix='.', intent=intents)
 
         # Get all games
         for name, obj in inspect.getmembers(games, inspect.ismodule):
