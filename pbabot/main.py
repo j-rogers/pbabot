@@ -424,7 +424,8 @@ class FunctionalCommands(commands.Cog, name='Functional Commands'):
                 self.bot.add_cog(self.bot.game)
                 await ctx.send(f'```Now playing {value}.```')
             else:
-                await ctx.send(f'```The game {value} was not found.```')
+                quote_char = "\', \'"
+                await ctx.send(f'```ini\nThe game \'{value}\' was not found. Please try: \n[\'{quote_char.join(self.bot.GAMES)}\']\n```')
         elif property.lower() == 'private_clocks':
             if value.lower() == 'true':
                 self.bot.private_clocks = True
