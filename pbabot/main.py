@@ -424,7 +424,8 @@ class FunctionalCommands(commands.Cog, name='Functional Commands'):
                 self.bot.add_cog(self.bot.game)
                 await ctx.send(f'```Now playing {value}.```')
             else:
-                await ctx.send(f'```The game {value} was not found.```')
+                quote_char = "\', \'"
+                await ctx.send(f'```ini\nThe game \'{value}\' was not found. Please try: \n[\'{quote_char.join(self.bot.GAMES)}\']\n```')
         elif property.lower() == 'private_clocks':
             if value.lower() == 'true':
                 self.bot.private_clocks = True
@@ -471,18 +472,35 @@ class MiscCommands(commands.Cog, name='Miscellaneous Commands'):
     async def print_dead_characters(self, ctx: commands.Context, *, player: str = None) -> None:
         """Displays a list of dead characters (in total or for the given player)"""
         death = ''
+        many_deaths = []
+        # actual limit is 2000 but message is wrapped in '''message'''
+        discord_message_limit = 1994
+
         if player in self.bot.dead_characters:
             for character, description in self.bot.dead_characters[player].items():
-                death += f'{character}: {description}\n'
+                msg = f'{character}: {description}\n'
+                if len(death + msg) > discord_message_limit:
+                    many_deaths.append(death)
+                    death = msg
+                else:
+                    death += msg
         else:
             for player, characters in self.bot.dead_characters.items():
-                death += f'{player}: '
-                death += ', '.join(characters.keys()) + '\n'
+                msg = f'{player}: '
+                msg += ', '.join(characters.keys()) + '\n'
+                if len(death + msg) > discord_message_limit:
+                    many_deaths.append(death)
+                    death = msg
+                else:
+                    death += msg
 
         if not death:
             death = '```No dead characters.```'
 
-        await ctx.send(f'```{death}```')
+        many_deaths.append(death)
+
+        for dead in many_deaths:
+            await ctx.send(f'```{dead}```')
 
     @commands.command(name='kill', usage='"<player>" "<character>" <description>')
     async def kill_character(self, ctx: commands.Context, *, args: str) -> None:

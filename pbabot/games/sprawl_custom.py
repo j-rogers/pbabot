@@ -164,6 +164,7 @@ class SprawlCustom(Game):
             Move(
                 'Hot Shit Driver',
                 'Bonus while high-tension driving. (Roll)',
+                aliases=['hotshit', 'hot'],
                 full_description='When you’re driving a cyber-linked vehicle in a high-pressure situation, roll Edge.'
                                  '\n\n\t10+: gain 3 hold\n\t7-9: gain 1 hold\n\nYou may spend 1 hold to do one of the '
                                  'following:\n\t• Avoid one external danger (a rocket, a burst of gunfire, a collision,'
@@ -309,16 +310,18 @@ class SprawlCustom(Game):
             Move(
                 'Diabolus Ex Machina',
                 'Go on the offensive against syops and/or ice, roll Synth',
+                aliases=['diabolus', 'exmachina'],
                 full_description='When ICE or sysops are activated against you in the Matrix, roll Synth.'
                                  '\n\n\t10+: Choose two, or one twice:'
                                  '\n\t7-9: Choose one:'
-                                   '\n\t\t- You shake them off your trail, for now (2x = left them in the dust)'
-                                   '\n\t\t- You go on the offensive and launch a cyber attack (2-harm) against your foe (2x = 4-harm)'
+                                 '\n\t\t- You shake them off your trail, for now (2x = left them in the dust)'
+                                 '\n\t\t- You go on the offensive and launch a cyber attack (2-harm) against your foe (2x = 4-harm)'
                                  '\n\t6-: The sysop or ICE makes a move against you'
             ),
             Move(
                 'Humans are Easy Prey',
-                'When you mix it up against someone with cyberware in meatspace, launch a cyber attack (2-harm) instead. Roll Synth instead of Meat'
+                'When you mix it up against someone with cyberware in meatspace, launch a cyber attack (2-harm) instead. Roll Synth instead of Meat',
+                aliases=['easyprey', 'humanprey']
             ),
             Move(
                 'Regex-pert',
@@ -327,12 +330,13 @@ class SprawlCustom(Game):
             Move(
                 'Sneakdoor Beta',
                 'Create a backdoor in a system for future use, roll Mind',
+                aliases=['sneakdoor'],
                 full_description='When you have succesfully infiltrated a system, you may create a backdoor for quick re-entry. Roll Mind.'
                                  '\n\n\t10+: You create a clean and covert backdoor that won\'t be found.'
                                  '\n\t7-9: It\'s set up, but choose one:'
-                                   '\n\t\t- Sysops will find it sooner rather than later'
-                                   '\n\t\t- It\'s not covert (+1 trace when using it)'
-                                   '\n\t\t- It\'s not clean (still need to Jack In, but take +1)'
+                                 '\n\t\t- Sysops will find it sooner rather than later'
+                                 '\n\t\t- It\'s not covert (+1 trace when using it)'
+                                 '\n\t\t- It\'s not clean (still need to Jack In, but take +1)'
                                  '\n\t6-: The sysops find and remove your backdoor, but not before tracing it back to you (+1 trace)'
             ),
             Move(
@@ -353,7 +357,8 @@ class SprawlCustom(Game):
             ),
             Move(
                 'You Got Pwned',
-                'When you hack a system and leave your signature, increase a relevant clock and mark experience.'
+                'When you hack a system and leave your signature, increase a relevant clock and mark experience.',
+                aliases=['pwned']
             )
         ]),
         Playbook('hunter', [
@@ -369,6 +374,7 @@ class SprawlCustom(Game):
             Move(
                 'Big Game Hunter',
                 'Bonus when springing a trap against a researced target. (Roll)',
+                aliases=['biggame'],
                 full_description='When you spring a trap for a target you have investigated, roll Edge.\n\n\t7+: you '
                                  'have them trapped, the only way out is through you\n\t10+: they are at your mercy; if'
                                  ' the target attempts to escape, roll Edge instead of Meat to mix it up',
@@ -413,12 +419,14 @@ class SprawlCustom(Game):
             Move(
                 'See the Angles',
                 'At the start of the action phase gain [intel] and [gear].',
+                aliases=['seetheangels', 'angles', 'angels']
             )
         ]),
         Playbook('infiltrator', [
             Move(
                 'Covert Entry',
                 'Bonus when infilatrating alone. (Roll)',
+                aliases=['covert'],
                 full_description='When you attempt to infiltrate a secure area alone, roll Cool.\n\n\t10+: gain 3 hold'
                                  '\n\t7-9: gain 1 hold\n\nAs the MC describes the infiltration and the security '
                                  'measures you must overcome, you may spend 1 hold to describe how you overcome the '
@@ -428,6 +436,7 @@ class SprawlCustom(Game):
             Move(
                 'Case the Joint',
                 'Bonus when examining a locations weaknesses. (Roll)',
+                aliases=['case'],
                 full_description='When you take time to examine a location for security weaknesses you can exploit, '
                                  'roll Edge.\n\n\t10+: gain three [intel]\n\t7-9: gain [intel]\n\nYou may spend this '
                                  '[intel] in the normal way, or you can spend one point of this [intel] to ask '
@@ -478,6 +487,7 @@ class SprawlCustom(Game):
             Move(
                 'Mother Duck',
                 'Allows Covert Entry hold you spend to work for the whole team.',
+                aliases=['quack']
             ),
             Move(
                 'Stealth Operative',
@@ -488,6 +498,7 @@ class SprawlCustom(Game):
             Move(
                 'Serious Badass',
                 'Bonus when entering a charged situation. (Roll)',
+                aliases=['badass'],
                 full_description='When you enter a charged situation, roll Style.\n\n\t10+: gain 2 hold\n\t7–9: gain 1 '
                                  'hold\n\t6-: your enemies identify you immediately as their foremost threat\n\nSpend 1'
                                  ' hold to make eye contact with an NPC present, who freezes or flinches and can’t act '
@@ -792,6 +803,105 @@ class SprawlCustom(Game):
             Move(
                 'Renaissance Man',
                 'Choose another area of expertise',
+            )
+        ]),
+        Playbook('cleaner', [
+            Move(
+                'cover up',
+                'When mapping out schemes after getting the job, gain 1 hold. (roll)',
+                full_description='After receiving a job, you begin to map out your schemes. Take 1 hold and roll Edge.'
+                                 'When you or one of your allies actions cause a mission vlock to advance, you may'
+                                 'spend one hold to stop it from advancing.'
+                                 '\n\n\t10+: choose two from the list.\n\t7-9: choose one\n\n'
+                                 '• You\'ve covered all the angles, gain an additional hold.\n'
+                                 '• >Your coverups will make escaping easier: take +1 ongoing to It’s Raining Somewhere'
+                                 ' else for the mission.\n'
+                                 '• You realize something important, gain [intel].'
+            ),
+            Move(
+                'Its raining somewhere else',
+                'Somekind of distraction (please don\'t make too many explosions Martin). (Roll)',
+                aliases=['itsraining', 'raining', 'quicklookanobviousdistraction'],
+                full_description='You know how to manipulate  people’s attention in a pinch. When you need a '
+                                 'distraction NOW, describe how you rigged explosives, alarms, or another diversion '
+                                 'beforehand and roll Edge\n 7+ Choose one:\n'
+                                 '• You give the pursuer the slip\n'
+                                 '• You distract a possible witness\n'
+                                 '• You shift the medias attention with a flashier story\n\n'
+                                 '7-9: Advance a relevant mission clock\n'
+                                 '6-: Something\'s fucked on the other end. The MC advances a clock and makes a move.'
+            ),
+            Move(
+                'Counterintelligence',
+                'Intercepting information transfers! (Roll)',
+                full_description='When you become aware of an  information transfer, you can attempt to intercept it.'
+                                 'Roll Edge if you do so physically or Synth if you do so digitally.\n'
+                                 '7+ Gain [intel] and choose one'
+                                 '• It never reaches the destination\n'
+                                 '• It reaches the right ears, but it\'s the wrong message'
+                                 '• You redirect it to someone else.\n\n'
+                                 '7-9: The sender can tell something\'s up. Advance a relevant clock.\n'
+                                 '6- Something\'s not right... The MC makes a move!'
+            ),
+            Move(
+                'Body snatcher',
+                'Is that me? Is that me stronger than me? I\'ll fucking kill me',
+                full_description='When someone or their information is at your mercy, you can make them disappear.'
+                                 'If you do so, you can coopt their identity as a disguise to fool anyone who didn’t' 
+                                 'know them personally.'
+            ),
+            Move(
+                'Chromed',
+                'Choose another piece of cyberware at character creation or in downtime',
+            ),
+            Move(
+                'Demolitionist',
+                'Ignore +Dangerous tag explosives and +1 forward when mix it up with GRENADES or FIRE.'
+            ),
+            Move(
+                'Interrogate',
+                'You have "ways" of making people talk.',
+                full_description='You have ways of making people talk. When you play hardball with someone and they '
+                                 'have no immediate sign of rescue, gain [Intel].'
+            ),
+            Move(
+                'Mass wipe',
+                'Are you sure you want to delete System32.exe? [Y\\N]',
+                full_description='When you first interface with technology to destroy data, take +1 forward against '
+                                 'that system. When you Melt ICE and roll 10+ you can evade, destroy, or disable two '
+                                 'systems instead of one'
+            ),
+            Move(
+                'Memory Leak',
+                'Does this even work with our sprawl? +1 "Stealth"',
+                full_description='You know how to cover your tracks in cyberspace. While in the matrix, you and any '
+                                 'allies in the same system each get +1 stealth.'
+            ),
+            Move(
+                'Torch the place',
+                'Time to destroy some stuff! (Roll)',
+                aliases=['torch', 'burnitalldown'],
+                full_description='When you destroy important property to cover your trail, roll Edge:\n'
+                                 '10+ You\'re a ghost, gain 1 hold for Coverup.\n'
+                                 '7+ Your pursuers will be delayed, and you take +1 forward against them when they do '
+                                 'show up.\n6- You make too much noise, advance the mission clock'
+            ),
+            Move(
+                'Need a light',
+                'Woah what have you seen? Roll edge instead of style to fast talk and ask one question from assess'
+            ),
+            Move(
+                'I was hoping youd do that',
+                'Somoene else initiated combat? +1 against whoever (Josh?) did. If it was you mark exp.',
+                aliases=['iwashoping', 'myturn', 'youddothat']
+            ),
+            Move(
+                'Conspiratorial',
+                'When you assess you can also ask a question from research'
+            ),
+            Move(
+                'Hide the bodies',
+                'Gain additional hold when you use Coverup. Also can now prevent corporate clocks somehow..'
             )
         ])
     ]
