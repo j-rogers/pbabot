@@ -1117,7 +1117,7 @@ Before rolling to get the job, stake your Rep. {Maximum 3 per player}
 When getting paid you may take back double the amount of staked Rep in either Rep OR Cred.```""")
 
 
-    @commands.command(name='tags')
+    @commands.command(name='tags', aliases =['tag'])
     async def print_tags(self, ctx: commands.Context) -> None:
         """Print tag options"""
         await ctx.send("""```
@@ -1132,6 +1132,18 @@ Negative Tags:
     +hardware decay: Each use of this cyberware gives -1 forward when using this cyberware again. Spending 1 cred per -1 forward on a hit the street roll can reset your cyberware.
     +substandard: When selecting +tags for this cyberware select one less than stated. When adding your synth to a roll because of this cyberware, add half your synth instead.
     +unreliable:  Weak hits using this cyberware count as a miss.
+```""")
+
+ @commands.command(name='gangs', aliases =['gang'])
+    async def print_tags(self, ctx: commands.Context) -> None:
+        """Print tag options"""
+        await ctx.send("""```
+Gangs can be a source of information and illegal equipment, in which case treat them as you would any other Contact.
+Gangs can be tough, well-armed and brutal, but they’re seldom seasoned professionals like the characters. 
+If you mix it up with a gang, with a gang at your back, or if two gangs fight, they inflict and suffer harm like characters. 
+The larger gang inflicts +1 harm and suffers -1 harm for each size step difference between the two gangs;  
+a handful of people are a step below a small gang. 
+So if a large gang fights a Fixer and his small gang, that’s a difference of two size steps: the large gang inflicts +2 harm and suffers -2 harm
 ```""")
 
     @commands.command(name='helporinterfere', aliases=['helpmove', 'interfere' , 'linkmove', 'bringabuddy', 'buddy'])
