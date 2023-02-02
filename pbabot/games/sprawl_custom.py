@@ -1116,6 +1116,16 @@ Cred is a measure of the funds a character has access to.
 Before rolling to get the job, stake your Rep. {Maximum 3 per player}
 When getting paid you may take back double the amount of staked Rep in either Rep OR Cred.```""")
 
+
+    @commands.command(name='helporinterfere', aliases=['helpmove', 'interfere' , 'linkmove', 'bringabuddy', 'buddy'])
+    async def print_helpOrHinder(self, ctx: commands.Context) -> None:
+        """Print player help/hinder/link options"""
+        await ctx.send("""```
+When you help or hinder another character, roll Links with them.
+    7+: On a hit they take +1 or -2 forward, your choice
+    7-9:you are implicated in the results of the other character’s move and may expose yourself to danger, retribution, or cost
+```"""")
+
     @commands.command(name='cyberware')
     async def print_cyberware(self, ctx: commands.Context) -> None:
         """Print cybereware options"""
