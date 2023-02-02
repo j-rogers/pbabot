@@ -796,6 +796,15 @@ class Sprawl(Game):
 
         await ctx.send(f'```{matrix_moves}```')
 
+    @commands.command(name='helporinterfere', aliases=['helpmove', 'interfere' , 'linkmove', 'bringabuddy', 'buddy'])
+    async def print_helpOrHinder(self, ctx: commands.Context) -> None:
+        """Print player help/hinder/link options"""
+        await ctx.send("""```
+When you help or hinder another character, roll Links with them.
+    7+: On a hit they take +1 or -2 forward, your choice
+    7-9:you are implicated in the results of the other character’s move and may expose yourself to danger, retribution, or cost
+```""")    
+
     @commands.command(name='cred')
     async def print_cred_options(self, ctx: commands.Context) -> None:
         """Shows you what you can do with cred"""
