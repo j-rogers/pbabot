@@ -796,6 +796,27 @@ class Sprawl(Game):
 
         await ctx.send(f'```{matrix_moves}```')
 
+    @commands.command(name='helporinterfere', aliases=['helpmove', 'interfere' , 'linkmove', 'bringabuddy', 'buddy'])
+    async def print_helpOrHinder(self, ctx: commands.Context) -> None:
+        """Print player help/hinder/link options"""
+        await ctx.send("""```
+When you help or hinder another character, roll Links with them.
+    7+: On a hit they take +1 or -2 forward, your choice
+    7-9:you are implicated in the results of the other character’s move and may expose yourself to danger, retribution, or cost
+```""")    
+
+    @commands.command(name='gangs', aliases =['gang'])
+    async def print_tags(self, ctx: commands.Context) -> None:
+        """Print tag options"""
+        await ctx.send("""```
+Gangs can be a source of information and illegal equipment, in which case treat them as you would any other Contact.
+Gangs can be tough, well-armed and brutal, but they’re seldom seasoned professionals like the characters. 
+If you mix it up with a gang, with a gang at your back, or if two gangs fight, they inflict and suffer harm like characters. 
+The larger gang inflicts +1 harm and suffers -1 harm for each size step difference between the two gangs;  
+a handful of people are a step below a small gang. 
+So if a large gang fights a Fixer and his small gang, that’s a difference of two size steps: the large gang inflicts +2 harm and suffers -2 harm
+```""")
+
     @commands.command(name='cred')
     async def print_cred_options(self, ctx: commands.Context) -> None:
         """Shows you what you can do with cred"""

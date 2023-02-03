@@ -1116,6 +1116,43 @@ Cred is a measure of the funds a character has access to.
 Before rolling to get the job, stake your Rep. {Maximum 3 per player}
 When getting paid you may take back double the amount of staked Rep in either Rep OR Cred.```""")
 
+    @commands.command(name='gangs', aliases=['gang'])
+    async def print_gangs(self, ctx: commands.Context) -> None:
+        """Print tag options"""
+        await ctx.send("""```
+Gangs can be a source of information and illegal equipment, in which case treat them as you would any other Contact.
+Gangs can be tough, well-armed and brutal, but they’re seldom seasoned professionals like the characters. 
+If you mix it up with a gang, with a gang at your back, or if two gangs fight, they inflict and suffer harm like characters. 
+The larger gang inflicts +1 harm and suffers -1 harm for each size step difference between the two gangs;  
+a handful of people are a step below a small gang. 
+So if a large gang fights a Fixer and his small gang, that’s a difference of two size steps: the large gang inflicts +2 harm and suffers -2 harm
+```""")
+
+    @commands.command(name='helporhinder', aliases=['fuckyou','helpmove','helporinterfere','ineedhelp','interferemove'])
+    async def print_helpOrHinder(self, ctx: commands.Context) -> None:
+        """Print help or interfere move"""
+        await ctx.send("""```
+When you help or hinder another character, roll Links with them.
+    7+: On a hit they take +1 or -2 forward, your choice
+    7-9:you are implicated in the results of the other character’s move and may expose yourself to danger, retribution, or cost
+```""")
+
+    @commands.command(name='tags', aliases=['tag'])
+    async def print_tags(self, ctx: commands.Context) -> None:
+            """Print tag options"""
+            await ctx.send("""```
+Fictional Tags: 
+    Vehicle: +discreet, +flashy, +rugged, +off-road, +workhorse, +huge, +slow, +crampped, +loud
+    Cyberware: +thermographic, +light amplification, +magnification, +flare compensation, +recording, +wide frequency, +dampening, +encrypted, +inaccessible partition, +high capactiy, +high speed, +jamming, +satellite relay
+    Crew: +small (<10), +medium(20-40), +large (50-100), +Huge (200+), +employees, +obvious, +disciplined, +loyal, +obvious, +mobile
+    Weapons: +flechette (double against armor), +linked (+2 harm and precisely define targets with +area), +autofire, +dangerous, +AP (Ignore 2 armor), +area, +messy, +quick, +reload, +numerous, +loud, +breach
+
+Negative Tags:
+    +damaging: On a miss the user of this cyberware takes +1 Harm.
+    +hardware decay: Each use of this cyberware gives -1 forward when using this cyberware again. Spending 1 cred per -1 forward on a hit the street roll can reset your cyberware.
+    +substandard: When selecting +tags for this cyberware select one less than stated. When adding your synth to a roll because of this cyberware, add half your synth instead.
+    +unreliable:  Weak hits using this cyberware count as a miss. ```""")
+
     @commands.command(name='cyberware')
     async def print_cyberware(self, ctx: commands.Context) -> None:
         """Print cybereware options"""
