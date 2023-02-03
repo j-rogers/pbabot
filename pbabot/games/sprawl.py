@@ -805,7 +805,7 @@ When you help or hinder another character, roll Links with them.
     7-9:you are implicated in the results of the other character’s move and may expose yourself to danger, retribution, or cost
 ```""")    
 
- @commands.command(name='gangs', aliases =['gang'])
+    @commands.command(name='gangs', aliases =['gang'])
     async def print_tags(self, ctx: commands.Context) -> None:
         """Print tag options"""
         await ctx.send("""```
